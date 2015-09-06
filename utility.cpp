@@ -108,6 +108,16 @@ double mean(vector<double> points) {
 		sum += points[f];
 	return sum / (double) points.size();
 }
+double variance(vector<double> x){
+ 	double sum=0.0;
+	double mn=mean(x);
+	for(double elem : x)
+	{
+	 sum +=pow(elem-mn,2);
+	}
+	return sum/(double)(x.size()-1);
+}
+
 /*
  * Read csv file into vector,
  *just used for testing

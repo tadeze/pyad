@@ -12,6 +12,7 @@
 class IsolationForest:public Forest{
     public:
 	IsolationForest();
+
 	IsolationForest(int _ntree,doubleframe* _df,
 			int _nsample,int _maxheight, bool _stopheight,bool _rsample);
 

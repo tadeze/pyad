@@ -35,7 +35,6 @@ Default value is 100.
 using namespace std;
 //log file
 ofstream logfile("treepath.csv");
-
 int main(int argc, char* argv[]) {
 	srand(time(NULL)); //randomize for random number generator.
 	/*parse argument from command line*/
@@ -51,7 +50,7 @@ int main(int argc, char* argv[]) {
 	verbose = verbose; //Clears warning for now.
 	bool rsample = nsample != 0;
 	bool stopheight = maxheight != 0;
-    
+
     // logfile<<"tree,index,spAttr,spValue"<<"\n";
 	
 	//	bool weightedTailAD=true; //weighed tail for Anderson-Darling test
@@ -63,8 +62,8 @@ int main(int argc, char* argv[]) {
 
    IsolationForest iff(ntree,dt,nsample,maxheight,stopheight,rsample); //build iForest
   
-   RForest rff(ntree,dt,nsample,maxheight,stopheight,rsample);
-   rff.rForest();     //build Rotation Forest
+  // RForest rff(ntree,dt,nsample,maxheight,stopheight,rsample);
+  // rff.rForest();     //build Rotation Forest
 
    /*
     * .........Parameters for convergent Forest..............
@@ -79,7 +78,7 @@ int main(int argc, char* argv[]) {
 	//std::cout<<"Number of trees required="<<ntree<<std::endl;
 	
 	vector<double> scores = iff.AnomalyScore(dt); //generate anomaly score
-	vector<double> rscores = rff.AnomalyScore(dt);
+//	vector<double> rscores = rff.AnomalyScore(dt);
     vector<vector<double> > pathLength = iff.pathLength(dt); //generate Depth all points in all trees
 	//vector<double> adscore = iff.ADtest(pathLength,weightedTailAD); //generate Anderson-Darling difference.
 
@@ -97,7 +96,7 @@ int main(int argc, char* argv[]) {
             })
         }
          }
-    */	outscore << "indx,ifscore,rfscore\n";
+    */	//outscore << "indx,ifscore,rfscore\n";
 	for (int j = 0; j < (int) scores.size(); j++) {
         if (metadata) {
             forseq(m,0,metadata->ncol,{
@@ -105,10 +104,10 @@ int main(int argc, char* argv[]) {
                 })
             }
 		
-		outscore << j << "," << scores[j]<<","<<rscores[j]<<"\n";
-//		for(int i=0;i<(int)pathLength[1].size();i++)
-	//		outscore<<','<<pathLength[j][i];
-//		outscore<<"\n"; // << "," << mean(pathLength[j]) << "\n";
+		outscore << j << "," << scores[j];//<<","<<rscores[j];
+		for(int i=0;i<(int)pathLength[1].size();i++)
+		outscore<<','<<pathLength[j][i];
+		outscore<<"\n"; // << "," << mean(pathLength[j]) << "\n";
     	
 	}
 	outscore.close();

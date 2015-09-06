@@ -31,6 +31,7 @@ public:
 		depth = 0;
 		isLeaf = false;
 		nodeSize = 0;
+
 	}
 	;
 

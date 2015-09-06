@@ -23,8 +23,8 @@ void Tree::iTree(std::vector<int> const &dIndex,const doubleframe *dt, int heigh
 
 	for (int j = 0; j < dt->ncol; j++)
 	{
-		tmp.push_back(dt->data[0][j]);
-		tmp.push_back(dt->data[0][j]);
+		tmp.push_back(dt->data[dIndex[0]][j]);
+		tmp.push_back(dt->data[dIndex[0]][j]);
 		minmax.push_back(tmp); //initialize max and min to random value
 		tmp.clear();
 	}
@@ -67,7 +67,9 @@ void Tree::iTree(std::vector<int> const &dIndex,const doubleframe *dt, int heigh
 	//Split the node into two
 	for (unsigned i = 0; i < dIndex.size(); i++)
 	{
-		if ( dt->data[dIndex.at(i)][splittingAtt] > splittingPoint)
+		if ( dt->data[dIndex.at(i)][splittingAtt] >= splittingPoint &&
+				(dt->data[dIndex.at(i)][splittingAtt]!=minmax[this->splittingAtt][0]))
+
 		{
 			lnodeData.push_back(dIndex.at(i));
 		}
@@ -76,6 +78,10 @@ void Tree::iTree(std::vector<int> const &dIndex,const doubleframe *dt, int heigh
 			rnodeData.push_back(dIndex.at(i));
 		}
 	}
+	//Logging points
+
+	//logfile <<treeIndx<<","<<this->splittingAtt<<","<<splittingPoint<<","<<minmax[this->splittingAtt][0]<<","<<minmax[this->splittingAtt][1]<<","
+	//		<<this->nodeSize<<","<<this->depth<<","<< dIndex[0]<<","<<dIndex[1]<<"\n";
 
 	leftChild = new Tree(); //&dataL,height+1,maxheight);
 	leftChild->parent = this;

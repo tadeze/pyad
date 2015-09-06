@@ -41,6 +41,8 @@ double randomD(double min, double max);
 template <typename T>
 T randomT(T min, T max);
 void swapInt(int a, int b, int* x);
+//template<typename T>
+double variance(std::vector<double> x);
 
 //template<typename T>
 double mean(std::vector<double> points);

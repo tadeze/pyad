@@ -29,7 +29,7 @@ IsolationForest::IsolationForest(int _ntree,doubleframe* _df,
 		Tree *tree = new Tree(); 
 		tree->iTree(sampleIndex,_df, 0, maxheight, stopheight);
 		this->trees.push_back(tree); //add tree to forest
-
+	//	Tree::treeIndx++;
 	 }
 
 }

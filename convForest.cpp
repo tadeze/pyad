@@ -37,19 +37,7 @@ void inserTopK(vector<pair<int,int> > &sl,int b)
 	}
 	sl.push_back(pair<int,int>(b,1));
 }
-//Sample data from the datset
-/*
-void getSample(vector<int> &sampleIndex,const int nsample,bool rSample)
-{
-	sampleIndex.clear();
-	if (rSample && nsample < dt->nrow)
-		sampleI(0, dt->nrow - 1, nsample, sampleIndex); //sample nsample
-	else
-		sampleI(0, dt->nrow - 1, dt->nrow, sampleIndex); //shuffle all index of the data if sampling is false
 
-
-
-}*/
 /*
  * @input two vector v1 and v2 a
  * @return proporation of intersection ,[0,1]
@@ -63,7 +51,20 @@ double topcommonK(vector<int> &v1,vector<int> &v2)
 	return (double)v3.size()/(double)v1.size();
 }
 
+/*
+double variance(vector<double> x){
+ 	double sum=0.0;
+	double mn=mean(x);
+	for(double elem : x)
+	{
+	 sum +=pow(elem-mn,2);
+	}
+	return sum/(double)(x.size()-1);
+}
 
+*/
+
+//convergent Forest
 void convForest::convergeIF(double tau,double alpha)
 {
 //	this->nsample = nsample;
@@ -184,16 +185,6 @@ void convForest::convergeIF(double tau,double alpha)
 
 //Sequential confidence interval stopping
 
-double variance(vector<double> x){
- 	double sum=0.0;
-	double mn=mean(x);
-	for(double elem : x)
-	{
-	 sum +=pow(elem-mn,2);
-	}
-	return sum/(double)(x.size()-1);
-}
-
 /*
  * Stopping confidence interval width on \theta (k)
  */
@@ -277,12 +268,6 @@ void convForest::confstop(double alpha)
 	  //converged = ntree>300; //    halfwidth <=tua;
       if(ntree>400) break;  	
 	}
-	
- //   theta_es=mean(theta_k);
-//    std::cout<<theta_es<<endl;
-//    double avgScore = score(theta_es,this->nsample);
-    //logfile<<"Current K="<<tk<<" K' = "<<mean(theta_k);
-   // logfile<<"index,score\n";
 
 }
 

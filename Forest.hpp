@@ -26,6 +26,7 @@ public:
 		ntree = 0;
 		nsample = 256;
 		dataset = NULL;
+
 	};
 Forest(int _ntree,doubleframe* _dataset,int _nsample,int _maxheight, bool _stopheight,bool _rsample)
     {
