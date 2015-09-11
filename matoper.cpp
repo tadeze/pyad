@@ -6,6 +6,7 @@
  */
 #include "RForest.hpp"
 #include<iostream>
+#include "utility.hpp"
 using namespace std;
 /*
 struct _doubleframe 
@@ -34,9 +35,16 @@ for(int i=0;i<10;i++)
     df->data[i] = new double[4];
 for(int i=0;i<10;i++)
  for(int j=0;j<4;++j)
-    df->data[i][j]=i*j; 
+    df->data[i][j]=randomD(2,10) ;
 //df->nrow=10;
 //df->ncol=4;
+df->data[9][3] = 13;
+df->data[9][1] = -4;
+df->data[3][0] = 20;
+df->data[4][0] = 9;
+df->data[4][2] = 2;
+df->data[4][3] =8;
+
 std::cout<<"Content of the frame is ";
 for(int i=0;i<10;i++)
 {
@@ -44,6 +52,7 @@ for(int i=0;i<10;i++)
         std::cout<<df->data[i][j]<<"\t";
     std::cout<<"\n";
 }
+
 
 //rf.buildForest(df);
 cout<<"Let's build reallforest on realdata\n";
