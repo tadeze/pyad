@@ -104,9 +104,9 @@ int main(int argc, char* argv[]) {
                 })
             }
 		
-		outscore << j << "," << scores[j];//<<","<<rscores[j];
-		for(int i=0;i<(int)pathLength[1].size();i++)
-		outscore<<','<<pathLength[j][i];
+		outscore << j << "," << scores[j]<<","<<mean(pathLength[j]);//<<","<<rscores[j];
+	//	for(int i=0;i<(int)pathLength[1].size();i++)
+	//	outscore<<','<<pathLength[j][i];
 		outscore<<"\n"; // << "," << mean(pathLength[j]) << "\n";
     	
 	}

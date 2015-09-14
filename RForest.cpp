@@ -51,7 +51,7 @@ MatrixXd RForest::convertToMatrix(std::vector<std::vector<double> > &data) {
 	return mat;
     }
 
-/* Convert struct data to Matrix
+/* Convert doubleframe data to Matrix
  *
  */
 
@@ -68,10 +68,7 @@ MatrixXd RForest::convertDfToMatrix(const doubleframe* data,
  * @input Matrix empty matrix
  * @input n size of matrix //will remove later and seed as well need to remove it
  */
- //std::mt19937 eng{std::random_device{}()}; //For production
- //std::default_random_engine eng(seed); //for debugging
-
-void RForest::generateRandomRotationMatrix(MatrixXd& M,int n)
+ void RForest::generateRandomRotationMatrix(MatrixXd& M,int n)
 {
 
    	std::normal_distribution<double> distribution(0.0, 1.0);
@@ -94,10 +91,16 @@ void RForest::generateRandomRotationMatrix(MatrixXd& M,int n)
 
 }
 
+/*
+* Rotate a give datafram data
+* @input dt  doubleframe data
+* @input M Rotation matrix
+* @return rotated Matrix data
+*/
 
 MatrixXd  RForest::rotateData(doubleframe* dt, MatrixXd& M){ 
-    std::vector<int> sampleIndex={5,6,8,3,2,9};
-    // getSample(sampleIndex,10,true);
+    std::vector<int> sampleIndex(this->nsample);
+	getSample(sampleIndex,nsample,rsample,dataset->nrow);
     MatrixXd  mData = convertDfToMatrix(dt,sampleIndex);
     return mData*M;
 }

@@ -51,18 +51,6 @@ double topcommonK(vector<int> &v1,vector<int> &v2)
 	return (double)v3.size()/(double)v1.size();
 }
 
-/*
-double variance(vector<double> x){
- 	double sum=0.0;
-	double mn=mean(x);
-	for(double elem : x)
-	{
-	 sum +=pow(elem-mn,2);
-	}
-	return sum/(double)(x.size()-1);
-}
-
-*/
 
 //convergent Forest
 void convForest::convergeIF(double tau,double alpha)

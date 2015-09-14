@@ -9,7 +9,7 @@
 
 
 using namespace std;
-default_random_engine gen(time(NULL));
+default_random_engine gen(400);
 /*
 int randomI(int min, int max) {
 	int num;
