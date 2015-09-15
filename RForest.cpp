@@ -68,19 +68,20 @@ MatrixXd RForest::convertDfToMatrix(const doubleframe* data,
  * @input Matrix empty matrix
  * @input n size of matrix //will remove later and seed as well need to remove it
  */
-void RForest::generateRandomRotationMatrix(MatrixXd& M,int n,int seed)
+ //std::mt19937 eng{std::random_device{}()}; //For production
+ //std::default_random_engine eng(seed); //for debugging
+
+void RForest::generateRandomRotationMatrix(MatrixXd& M,int n)
 {
 
-    std::mt19937 eng{std::random_device{}()}; //For production
-    //std::default_random_engine eng(seed); //for debugging
-	std::normal_distribution<double> distribution(0.0, 1.0);
+   	std::normal_distribution<double> distribution(0.0, 1.0);
 	MatrixXd A(n, n);
 	const VectorXd ones(VectorXd::Ones(n));
 	for (int i = 0; i<n; i++)
 	{
 		for (int j = 0; j<n; j++)
 		{
-			A(i, j) = distribution(eng); //generator);  //mtrand.randNorm(0, 1);
+			A(i, j) = distribution(this->eng); //generator);  //mtrand.randNorm(0, 1);
 
 		}
 	}
@@ -113,7 +114,7 @@ void RForest::rForest(){
             getSample(sampleIndex,nsample,rsample,dataset->nrow);
             
             MatrixXd rotMat(dataset->ncol,dataset->ncol);
-            generateRandomRotationMatrix(rotMat,dataset->ncol,n+1);
+            generateRandomRotationMatrix(rotMat,dataset->ncol);
             //Save rotation matrix
             this->rotMatrices.push_back(rotMat);
         //    logfile<<rotMat<<"\n";

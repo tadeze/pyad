@@ -107,7 +107,7 @@ double Tree::pathLength(double *inst)
 
  	//Logging the isolation process
  	//	logfile<<tmpVar<<","<<this->splittingAtt<<","<<this->splittingPoint<<"\n";
-	if (inst[this->splittingAtt] > this->splittingPoint)
+	if (inst[this->splittingAtt] >= this->splittingPoint)
 	{
 
 		return this->leftChild->pathLength(inst) + 1.0;

@@ -9,7 +9,8 @@
 
 
 using namespace std;
-default_random_engine gen(time(NULL));
+//default_random_engine gen(time(NULL));  //Production 
+default_random_engine gen(50);    //debuging
 /*
 int randomI(int min, int max) {
 	int num;
