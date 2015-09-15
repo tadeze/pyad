@@ -19,7 +19,7 @@ public:
 	int nsample;
     bool stopheight;
     int maxheight;
-    doubleframe* dataset;  //holds the original dataset
+    doubleframe* dataset;  // holds the original dataset
     Forest()
 	{
 		rsample = false;

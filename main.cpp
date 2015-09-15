@@ -62,8 +62,8 @@ int main(int argc, char* argv[]) {
 
    IsolationForest iff(ntree,dt,nsample,maxheight,stopheight,rsample); //build iForest
   
-   RForest rff(ntree,dt,nsample,maxheight,stopheight,rsample);
-   rff.rForest();     //build Rotation Forest
+  // RForest rff(ntree,dt,nsample,maxheight,stopheight,rsample);
+  // rff.rForest();     //build Rotation Forest
 
    /*
     * .........Parameters for convergent Forest..............
@@ -77,11 +77,10 @@ int main(int argc, char* argv[]) {
 	//ntree= iff.trees.size();
 	//std::cout<<"Number of trees required="<<ntree<<std::endl;
 	
-	vector<double> scores = iff.AnomalyScore(dt); //generate anomaly score
-	vector<double> rscores = rff.AnomalyScore(dt);
-    vector<vector<double> > pathLength = iff.pathLength(dt); //generate Depth all points in all trees
+//	vector<double> rscores = rff.AnomalyScore(dt);
+   vector<double> scores = iff.AnomalyScore(dt);
+   vector<vector<double> > pathLength = iff.pathLength(dt); //generate Depth all points in all trees
 	//vector<double> adscore = iff.ADtest(pathLength,weightedTailAD); //generate Anderson-Darling difference.
-
 	//Output file for score, averge depth and AD score
 	ofstream outscore(output_name);
    
@@ -95,21 +94,18 @@ int main(int argc, char* argv[]) {
                 outscore << "meta" << c << ",";
             })
         }
-      
-        }
+         }
     */	//outscore << "indx,ifscore,rfscore\n";
 	for (int j = 0; j < (int) scores.size(); j++) {
-        
         if (metadata) {
             forseq(m,0,metadata->ncol,{
                  //outscore << metadata->data[j][m] << ",";
                 })
             }
 		
-		outscore << j << "," << scores[j]<<","<<rscores[j];
-//		for(int i=0;i<(int)pathLength[1].size();i++)
-
-      //  outscore<<','<<pathLength[j][i];
+		outscore << j << "," << scores[j]<<","<<mean(pathLength[j]);//<<","<<rscores[j];
+	//	for(int i=0;i<(int)pathLength[1].size();i++)
+	//	outscore<<','<<pathLength[j][i];
 		outscore<<"\n"; // << "," << mean(pathLength[j]) << "\n";
     	
 	}

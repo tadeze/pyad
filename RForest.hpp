@@ -22,12 +22,10 @@
 #include "Forest.hpp"
 class RForest: public Forest {
 public:
-	std::vector<Eigen::MatrixXd> rotMatrices;
+   std::vector<Eigen::MatrixXd> rotMatrices;
    //std::mt19937 eng{std::random_device{}()}; //For production
-   std::default_random_engine eng;   //for debugging
+    std::default_random_engine eng;   //for debugging
 
-
-    int pnt;
 	void convertToDf(Eigen::MatrixXd &m, doubleframe* df);
 	void rotateInstance(double* inst, Eigen::MatrixXd &m,double* rotatedData);
 	void buildForest(doubleframe* df);
@@ -37,7 +35,7 @@ public:
 	Eigen::MatrixXd convertToMatrix(std::vector<std::vector<double> > &data);
 	Eigen::MatrixXd rotateData(doubleframe* dt, Eigen::MatrixXd& M);
 	Eigen::MatrixXd convertDfToMatrix(const doubleframe* data,
-			std::vector<int> &sampleIndex);
+	std::vector<int> &sampleIndex);
 	std::vector<double> pathLength(double *inst);
 	void rForest();
 
@@ -46,8 +44,8 @@ public:
 	RForest(int _ntree,doubleframe* _df,int _nsample,int _maxheight,
 			bool _stopheight,bool _rsample) :
 			Forest(_ntree, _df, _nsample, _maxheight, _stopheight, _rsample) {
-		pnt=0;
-        eng.seed(50);  
+
+        eng.seed(50);  //initialize random generator seed .
             }
 	;
 

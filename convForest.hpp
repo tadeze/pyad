@@ -19,6 +19,7 @@ public:
 	virtual ~convForest()=default;
 
 	void convergeIF(double tau,double alpha);
+
 //Sequential confidence interval stopping 
 	void confstop(double alpha);
 
