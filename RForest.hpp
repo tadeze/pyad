@@ -37,15 +37,17 @@ public:
 	Eigen::MatrixXd convertDfToMatrix(const doubleframe* data,
 	std::vector<int> &sampleIndex);
 	std::vector<double> pathLength(double *inst);
+	double getdepth(double* inst, Tree* tree,Eigen::MatrixXd &rotmat,double* transInst);
+	int rAdaptiveForest(double alpha);
 	void rForest();
 
-	//Constructor
+//Constructor
 
 	RForest(int _ntree,doubleframe* _df,int _nsample,int _maxheight,
 			bool _stopheight,bool _rsample) :
 			Forest(_ntree, _df, _nsample, _maxheight, _stopheight, _rsample) {
 
-        eng.seed(50);  //initialize random generator seed .
+        eng.seed(time(NULL));  //initialize random generator seed .
             }
 	;
 

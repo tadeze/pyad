@@ -69,7 +69,7 @@ void convForest::convergeIF(double tau,double alpha)
 	bool converged=false;
 
 	vector<pair<int ,int> > topk;
-	logfile<<"ntree,index,currentscore,probinter \n";
+ util::logfile<<"ntree,index,currentscore,probinter \n";
 	vector<int> topIndex(tk);
 	vector<int> prevIndex;
 	double prob =0;
@@ -92,7 +92,7 @@ void convForest::convergeIF(double tau,double alpha)
 			totalDepth[inst] += d;
 			squaredDepth[inst] +=d*d;
 			dbar=totalDepth[inst]/ntree;
-			scores = pow(2, -dbar / avgPL(this->nsample));
+			scores = pow(2, -dbar / util::avgPL(this->nsample));
 			pq.push( pair<int, double>(inst,scores));
 			
 
@@ -149,7 +149,7 @@ void convForest::convergeIF(double tau,double alpha)
 		    //	double halfwidth = 1.96*sqrt(var)/sqrt(ntree);
 		    //	double scoreWidth = pow(2, -(mn-halfwidth) / avgPL(this->nsample)) -pow(2, -(mn+halfwidth)/ avgPL(this->nsample));
 		    //	maxCIWidth=max(maxCIWidth,scoreWidth);
-			logfile<<ntree<<","<<pq.top().first<<","<<pq.top().second<<","<<prob<<"\n";
+			util::logfile<<ntree<<","<<pq.top().first<<","<<pq.top().second<<","<<prob<<"\n";
 			//logfile<<ntree<<","<<topk.at(i).first<<","<<pq.top().second<<","<<pow(2,-mn/avgPL(this->nsample))<<","<<var<<","<<scoreWidth<<"\n";
 			pq.pop();
 		}
@@ -193,7 +193,7 @@ void convForest::confstop(double alpha)
 	vector<double> theta_k; //top k score
 	vector<pair<int,double> > topk_ac; 
 	vector<pair<int ,double> > topk;	
-    logfile<<"point,ntree,depth\n";
+    util::logfile<<"point,ntree,depth\n";
     //logfile<<"tree,thetain,thetaacc\n";
 
     priority_queue<pair<int,double>,vector<pair<int,double> >, larger> pq;
@@ -218,12 +218,12 @@ void convForest::confstop(double alpha)
 			totalDepth[inst] += d;
 			squaredDepth[inst] +=d*d;
 			dbar=totalDepth[inst]/ntree; //Current average depth 
-			score = pow(2, -dbar / avgPL(this->nsample));
+			score = pow(2, -dbar / util::avgPL(this->nsample));
             //currentscore = pow(2,-d/avgPL(this->nsample));
 			pq.push(pair<int, double>(inst,score));
 			topk.push_back(pair<int,double>(inst,d));
 		    //topk_ac.push_back(pair<int,double>(inst,scores));
-            logfile<<inst<<","<<ntree<<","<<d<<"\n";   
+            util::logfile<<inst<<","<<ntree<<","<<d<<"\n";
 		}
 		
 	    //Sort shallowest at the top 
@@ -244,7 +244,7 @@ void convForest::confstop(double alpha)
 	    //double maxCIWidth =0;		
 		//double mn = mean(theta_k);
 		
-        double var = variance(theta_k);
+        double var = util::variance(theta_k);
 		double halfwidth=1.96*sqrt(var)/sqrt(ntree);	
 	
 

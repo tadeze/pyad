@@ -105,22 +105,27 @@ MatrixXd  RForest::rotateData(doubleframe* dt, MatrixXd& M){
     return mData*M;
 }
 
+/*
+ * Build rotation forest by rotating with random rotation matrices
+ */
 void RForest::rForest(){
     //Build the RForest model 
     std::vector<int> sampleIndex(this->nsample);
     doubleframe* sampleDf = new doubleframe();
     sampleDf->data = new double*[this->nsample];
     //logfile<<"point,tree,x1,x2\n";
+
     for(int n=0;n<ntree;n++)
           {
-            //zret sample datazr
+            //get sample data
             getSample(sampleIndex,nsample,rsample,dataset->nrow);
             
             MatrixXd rotMat(dataset->ncol,dataset->ncol);
             generateRandomRotationMatrix(rotMat,dataset->ncol);
+
             //Save rotation matrix
             this->rotMatrices.push_back(rotMat);
-        //    logfile<<rotMat<<"\n";
+
             //Rotate data and convert to doubleframe format
             MatrixXd rotData =convertDfToMatrix(dataset,sampleIndex)*rotMat;
             sampleDf->nrow = this->nsample;
@@ -129,8 +134,10 @@ void RForest::rForest(){
             
             //Fill the sampleIndex with indices of the sample rotated data
             sampleIndex.clear();
+
             for(int i=0;i<sampleDf->nrow;i++) sampleIndex.push_back(i);
             Tree *tree  = new Tree();
+
             tree->iTree(sampleIndex,sampleDf,0,maxheight,stopheight);
             this->trees.push_back(tree);
 
@@ -138,6 +145,113 @@ void RForest::rForest(){
     delete[] sampleDf->data;
     delete sampleDf;
 }
+
+
+
+
+
+
+
+/*
+ * Build Trees in adaptive ways
+ */
+
+
+int RForest::rAdaptiveForest(double alpha){
+    //Build the RForest model
+	double tk = ceil(alpha*2*dataset->nrow);
+    std::vector<int> sampleIndex(this->nsample);
+    doubleframe* sampleDf = new doubleframe();
+    sampleDf->data = new double*[this->nsample];
+    //logfile<<"point,tree,x1,x2\n";
+    bool converged = false;
+    int convCounter =0 ;
+    double ntree=0;
+    std::vector<int> topKIndex;
+    std::vector<int> prevTopKIndex;
+    std::vector<double> totalDepth(dataset->nrow,0);
+    double prob=0.0;
+    std::priority_queue<std::pair<int,double>,std::vector<std::pair<int,double> >, larger> pq;
+    double* transInst = new double[dataset->ncol];
+    while(!converged)
+    {
+    	pq= std::priority_queue<std::pair<int,double>,std::vector<std::pair<int,double> >,larger >();
+
+            //get sample data
+            getSample(sampleIndex,nsample,rsample,dataset->nrow);
+
+            MatrixXd rotMat(dataset->ncol,dataset->ncol);
+            generateRandomRotationMatrix(rotMat,dataset->ncol);
+            //Save rotation matrix
+            this->rotMatrices.push_back(rotMat);
+            //Rotate data and convert to doubleframe format
+            MatrixXd rotData =convertDfToMatrix(dataset,sampleIndex)*rotMat;
+            sampleDf->nrow = this->nsample;
+            sampleDf->ncol = rotMat.cols();
+            convertToDf(rotData,sampleDf);
+
+            //Fill the sampleIndex with indices of the sample rotated data
+            sampleIndex.clear();
+            for(int i=0;i<sampleDf->nrow;i++) sampleIndex.push_back(i);
+
+            Tree *tree  = new Tree();
+            tree->iTree(sampleIndex,sampleDf,0,maxheight,stopheight);
+            this->trees.push_back(tree);
+            ntree++;
+            double d,dbar;
+            topKIndex.clear();
+            for (int inst = 0; inst <dataset->nrow; inst++)
+            {
+            d = getdepth(dataset->data[inst],tree,rotMat,transInst);
+            totalDepth[inst] += d;
+            dbar=totalDepth[inst]/ntree;
+            pq.push(std::pair<int, double>(inst,dbar));
+           	}
+
+        for(int i=0;i<tk;i++)
+         {
+        	  	topKIndex.push_back(pq.top().first);
+            	pq.pop();
+
+        }
+        if(ntree==1)
+        {
+        	prevTopKIndex = topKIndex;
+        	continue;
+        }
+
+        prob=topcommonK(topKIndex,prevTopKIndex);
+        prevTopKIndex = topKIndex;
+        if(prob==1)
+             convCounter++;
+          else
+            convCounter=0;
+         converged = convCounter>5;
+
+
+         if(ntree<50)
+             	  converged=false;
+
+
+
+    }
+
+
+
+
+    delete transInst;
+    delete[] sampleDf->data;
+    delete sampleDf;
+return ntree;
+}
+
+
+
+
+
+
+
+
 /*
  * overrides method of pathLength for rotated data
  */
@@ -150,17 +264,20 @@ std::vector<double> RForest::pathLength(double *inst)
     double* transInst=new double[dataset->ncol];//NULL;
     for(std::vector<Tree*>::iterator it=this->trees.begin();it!=trees.end();it++)
     {
-    	rotateInstance(inst,this->rotMatrices[i],transInst);
-        double _depth = (*it)->pathLength(transInst);
+ // rotateInstance(inst,this->rotMatrices[i],transInst);
+    	double _depth = getdepth(inst,*it,this->rotMatrices[i],transInst);
     	depth.push_back(_depth);
         i++;
-   //     logfile<<pnt<<","<<i<<","<<*(transInst)<<","<<*(transInst+1)<<"\n";
- /*for(int i=0;i<dataset->ncol;i++) std::cout<<transInst[i]<<"\t";
- std::cout<<"\n------------Tree---------"<<i<<std::endl;
- */   }
+      }
 
-    delete transInst;
-    //delete transInst;
-    return depth;
+delete transInst;
+return depth;
 }
+double RForest::getdepth(double* inst, Tree* tree, MatrixXd &rotmat,double* transInst)
+{
 
+	rotateInstance(inst,rotmat,transInst);
+	double _depth = tree->pathLength(transInst);
+	return _depth;
+
+}

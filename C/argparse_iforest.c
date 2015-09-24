@@ -1,6 +1,6 @@
 #include "argparse_iforest.h"
 
-#define NOPTS 8
+#define NOPTS 10
 #define IOPT 0
 #define OOPT 1
 #define MOPT 2
@@ -9,6 +9,8 @@
 #define DOPT 5
 #define HOPT 6
 #define VOPT 7
+#define AOPT 8
+#define ROPT 9
 
 d(option)* option_spec() {
     d(option)* opts = vecalloc(option,NOPTS);
@@ -86,12 +88,35 @@ d(option)* option_spec() {
         .sarg = 'v',
         .larg = "verbose",
         .name = NULL,
-        .desc = "Toggle verbose ouput.",
+        .desc = "Toggle verbose output.",
         .default_value = "false",
         .value = NULL,
         .isflag = true,
         .flagged = false
     };
+
+    opts[AOPT] = (option){
+           .sarg = 'a',
+           .larg = "adaptive",
+           .name = NULL,
+           .desc = "Toggle whether to use adaptive tree growing process.",
+           .default_value = "false",
+           .value = NULL,
+           .isflag = true,
+           .flagged = false
+       };
+    opts[ROPT] = (option){
+           .sarg = 'r',
+           .larg = "rotate",
+           .name = NULL,
+           .desc = "Toggle whether to rotate data or not.",
+           .default_value = "false",
+           .value = NULL,
+           .isflag = true,
+           .flagged = false
+       };
+
+
     return opts;
 }
 

@@ -59,8 +59,8 @@ void Tree::iTree(std::vector<int> const &dIndex,const doubleframe *dt, int heigh
 	
 	//int randx = randomI(0, attributes.size());
 
-	this->splittingAtt = attributes[randomI(0,attributes.size()-1)]; //randx];
-	this->splittingPoint = randomD(minmax[this->splittingAtt][0],minmax[this->splittingAtt][1]);
+	this->splittingAtt = attributes[util::randomI(0,attributes.size()-1)]; //randx];
+	this->splittingPoint =util::randomD(minmax[this->splittingAtt][0],minmax[this->splittingAtt][1]);
 	
 	std::vector <int> lnodeData;
 	std::vector < int> rnodeData;
@@ -102,7 +102,7 @@ double Tree::pathLength(double *inst)
 
  	if (this->leftChild==NULL||this->rightChild==NULL)
         { ///referenced as null for some input data .
-               	return avgPL(this->nodeSize);
+               	return util::avgPL(this->nodeSize);
         }
 
  	//Logging the isolation process

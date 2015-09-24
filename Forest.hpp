@@ -57,9 +57,31 @@ virtual ~Forest()
 	std::vector<std::vector<double> > pathLength(doubleframe* data);
 	std::vector<double> ADtest(const std::vector<std::vector<double> > &pathlength, bool weighttotail);
 	std::vector<double> importance(double *inst);
-	double getdepth(double *inst,Tree* tree);
+	virtual double getdepth(double *inst,Tree* tree);
 	void getSample(std::vector<int> &sampleIndex,const int nsample,bool rSample,int nrow);
+	struct larger
+	{
+		bool operator()(const std::pair<int,double> p1,const std::pair<int,double> p2)
 
+		{
+			return p1.second <p2.second;
+		}
+	};
+
+	 /*
+	  * @input two vector v1 and v2
+	 * @return proporation of intersection ,[0,1]
+	 */
+
+
+	double topcommonK(std::vector<int> &v1,std::vector<int> &v2)
+	{
+		std::vector<int> v3;
+		std::sort(v1.begin(),v1.end());
+		std::sort(v2.begin(),v2.end());
+		std::set_intersection(v1.begin(),v1.end(),v2.begin(),v2.end(),back_inserter(v3));
+		return (double)v3.size()/(double)v1.size();
+	}
 
 
 };

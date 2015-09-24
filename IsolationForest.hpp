@@ -15,7 +15,8 @@ class IsolationForest:public Forest{
 
 	IsolationForest(int _ntree,doubleframe* _df,
 			int _nsample,int _maxheight, bool _stopheight,bool _rsample);
-
+	int adaptiveForest(double alpha);
+	void buildForest();
 	virtual ~IsolationForest()
 	{
 	}

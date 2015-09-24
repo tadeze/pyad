@@ -34,9 +34,8 @@ Default value is 100.
 #include "main.hpp"
 using namespace std;
 //log file
-ofstream logfile("treepath.csv");
+ofstream util::logfile("treepath.csv");
 int main(int argc, char* argv[]) {
-	srand(time(NULL)); //randomize for random number generator.
 	/*parse argument from command line*/
 	parsed_args* pargs = parse_args(argc, argv);
 	ntstring input_name = pargs->input_name;
@@ -50,21 +49,27 @@ int main(int argc, char* argv[]) {
 	verbose = verbose; //Clears warning for now.
 	bool rsample = nsample != 0;
 	bool stopheight = maxheight != 0;
-
-    // logfile<<"tree,index,spAttr,spValue"<<"\n";
-	
-	//	bool weightedTailAD=true; //weighed tail for Anderson-Darling test
+	bool adaptive = pargs->adaptive;
+	bool rotate = pargs->rotate;
+	adaptive=adaptive;
+	rotate = rotate;
 	ntstringframe* csv = read_csv(input_name, header, false, false);
 	ntstringframe* metadata = split_frame(ntstring, csv, metacol,true);
 	doubleframe* dt = conv_frame(double, ntstring, csv); //read data to the global variable
     nsample = nsample==0?dt->nrow:nsample;
+
+    // logfile<<"tree,index,spAttr,spValue"<<"\n";
+
+    	//	bool weightedTailAD=true; //weighed tail for Anderson-Darling test
+
     /* 	Basic IsolationForest  */
-
+   double alpha =0.01;
    IsolationForest iff(ntree,dt,nsample,maxheight,stopheight,rsample); //build iForest
-  
-  // RForest rff(ntree,dt,nsample,maxheight,stopheight,rsample);
-  // rff.rForest();     //build Rotation Forest
-
+   int ifntree= iff.adaptiveForest(alpha);
+   RForest rff(ntree,dt,nsample,maxheight,stopheight,rsample);
+ // rff.rForest();     //build Rotation Forest
+  int nt= rff.rAdaptiveForest(alpha);
+  std::cout<<"Number of trees used for if = "<<ifntree<<" and for RForest = "<<nt;
    /*
     * .........Parameters for convergent Forest..............
 	*/
@@ -78,7 +83,7 @@ int main(int argc, char* argv[]) {
 	//std::cout<<"Number of trees required="<<ntree<<std::endl;
 	
 	vector<double> scores = iff.AnomalyScore(dt); //generate anomaly score
-//	vector<double> rscores = rff.AnomalyScore(dt);
+	vector<double> rscores = rff.AnomalyScore(dt);
     vector<vector<double> > pathLength = iff.pathLength(dt); //generate Depth all points in all trees
 	//vector<double> adscore = iff.ADtest(pathLength,weightedTailAD); //generate Anderson-Darling difference.
 
@@ -104,14 +109,30 @@ int main(int argc, char* argv[]) {
                 })
             }
 		
-		outscore << j << "," << scores[j]<<","<<mean(pathLength[j]);//<<","<<rscores[j];
+		outscore << j << "," << scores[j]<<","<<util::mean(pathLength[j])<<","<<rscores[j];
 	//	for(int i=0;i<(int)pathLength[1].size();i++)
 	//	outscore<<','<<pathLength[j][i];
 		outscore<<"\n"; // << "," << mean(pathLength[j]) << "\n";
-    	
+    	//logfile
+
 	}
 	outscore.close();
-    logfile.close();
+    util::logfile.close();
 	return 0;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

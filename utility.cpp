@@ -6,29 +6,9 @@
  */
 
 #include "utility.hpp"
-
-
 using namespace std;
+namespace util {
 default_random_engine gen(400);
-/*
-int randomI(int min, int max) {
-	int num;
-	num = (int) (min + (rand() % (max - min)));
-	return num;
-}
-int randomI(int min,int max,set	<int>& exclude)
-{
-			int num;
-			num = (int) (min + (rand() % (max - min+1)));
-			return exclude.find(num)!=exclude.end()?randomI(min,max,exclude):num;
-			
-}
-
-double randomD(double min, double max) {
-	return ceil((min + ((double) rand() / (RAND_MAX)) * (max - min)) * 100)
-			/ 100;
-}
-*/
 
 template <typename T>
 T randomT(T min, T max)
@@ -79,16 +59,6 @@ cnt++;
 
 }
 
-
-double avgPL(int n) {
-
-	return (((n - 1) <= 0) ?
-			0.0 :
-			((2.0 * (log((double) (n - 1)) + 0.5772156649))
-					- (2.0 * (double) (n - 1)) / (1.0 + (double) (n - 1))));
-
-}
-
 double score(double depth,int n)
 {
 return pow(2,-depth/avgPL(n));
@@ -102,12 +72,19 @@ void swapInt(int a, int b, int* x) {
 }
 
 //template<typename T>
+/*
+ * Sample mean of points
+ */
 double mean(vector<double> points) {
 	double sum = 0;
 	for (int f = 0; f < (int) points.size(); f++)
 		sum += points[f];
 	return sum / (double) points.size();
 }
+
+/*
+ * Calculate sample variance from vector of doublen numbers
+ */
 double variance(vector<double> x){
  	double sum=0.0;
 	double mn=mean(x);
@@ -120,8 +97,9 @@ double variance(vector<double> x){
 
 /*
  * Read csv file into vector,
- *just used for testing
+ * used for testing
  */
+
 vector<vector<double> > readcsv(const char* filename, char delim = ',',
 		bool header = true) {
 	vector < vector<double> > values;
@@ -143,7 +121,7 @@ vector<vector<double> > readcsv(const char* filename, char delim = ',',
 }
 
 /*
- * CDF function
+ * Calculate the cumulative distribution function
  */
 map<double,double> ecdf(vector<double> points) {
 	map<double,double> cdfm;
@@ -179,6 +157,18 @@ vector<T> flatten(const vector<vector<T>>& v) {
         result.insert(result.end(), sub.begin(), sub.end());
     return result;
 }
+
+double avgPL(int n) {
+
+	return (((n - 1) <= 0) ?
+			0.0 :
+			((2.0 * (log((double) (n - 1)) + 0.5772156649))
+					- (2.0 * (double) (n - 1)) / (1.0 + (double) (n - 1))));
+
+}
+
+
+
 /*
  * Compute the Anderson-Darling distance for the depth distribution of each point
  * input: 2-d depth row X tree_depth
@@ -226,6 +216,7 @@ vector<double> ADdistance(vector<vector<double> > depths, bool weightToTail =
 		return scores;
 
 	}
+}
 
 /* UTITLITY_H_ */
 

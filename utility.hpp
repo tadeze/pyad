@@ -31,12 +31,13 @@ struct Data
 	std::vector<std::vector<double> > data;
 };
 */
-
+namespace util{
 //default_random_engine gen(time(NULL));
 int randomI(int min, int max);
 int randomEx(int min,int max,std::set<int>& exlude);
 void sampleI(int min, int max, int nsample, std::vector<int> &sampleIndx);
 double avgPL(int n);
+//inline
 double randomD(double min, double max);
 template <typename T>
 T randomT(T min, T max);
@@ -58,6 +59,7 @@ extern std::ofstream logfile;
 extern std::string tmpVar;
 double score(double depth,int n);
 //extern Data *dt;
+}
 #endif
 /* UTITLITY_H_ */
 
