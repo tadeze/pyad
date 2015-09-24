@@ -37,9 +37,9 @@ public:
 
 	virtual ~Tree()
 	{
-	delete leftChild;
-	delete rightChild;
-	//check if deleting the child is need.
+        delete leftChild; //check if deleting the child is need.
+        delete rightChild;
+
 	}
 	;
 	void iTree(std::vector<int> const &dIndex,const doubleframe* dt, int height, int maxHeight, bool stopheight);
