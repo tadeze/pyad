@@ -63,13 +63,14 @@ int main(int argc, char* argv[]) {
     	//	bool weightedTailAD=true; //weighed tail for Anderson-Darling test
 
     /* 	Basic IsolationForest  */
-   double alpha =0.01;
+  double alpha =0.01;
    IsolationForest iff(ntree,dt,nsample,maxheight,stopheight,rsample); //build iForest
-   int ifntree= iff.adaptiveForest(alpha);
+ //  iff.buildForest();
+  int ifntree= iff.adaptiveForest(alpha);
    RForest rff(ntree,dt,nsample,maxheight,stopheight,rsample);
  // rff.rForest();     //build Rotation Forest
   int nt= rff.rAdaptiveForest(alpha);
-  std::cout<<"Number of trees used for if = "<<ifntree<<" and for RForest = "<<nt;
+ std::cout<<"Number of trees used for if = "<<ifntree<<" and for RForest = "<<nt;
    /*
     * .........Parameters for convergent Forest..............
 	*/
