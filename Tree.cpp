@@ -78,11 +78,6 @@ void Tree::iTree(std::vector<int> const &dIndex,const doubleframe *dt, int heigh
 			rnodeData.push_back(dIndex.at(i));
 		}
 	}
-	//Logging points
-
-	//logfile <<treeIndx<<","<<this->splittingAtt<<","<<splittingPoint<<","<<minmax[this->splittingAtt][0]<<","<<minmax[this->splittingAtt][1]<<","
-	//		<<this->nodeSize<<","<<this->depth<<","<< dIndex[0]<<","<<dIndex[1]<<"\n";
-
 	leftChild = new Tree(); //&dataL,height+1,maxheight);
 	leftChild->parent = this;
 	leftChild->iTree(lnodeData,dt, this->depth + 1, maxheight, stopheight);
@@ -107,7 +102,7 @@ double Tree::pathLength(double *inst)
 
  	//Logging the isolation process
  	//	logfile<<tmpVar<<","<<this->splittingAtt<<","<<this->splittingPoint<<"\n";
-	if (inst[this->splittingAtt] > this->splittingPoint)
+	if (inst[this->splittingAtt] >= this->splittingPoint)
 	{
 
 		return this->leftChild->pathLength(inst) + 1.0;
