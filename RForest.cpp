@@ -157,7 +157,7 @@ void RForest::rForest(){
  */
 
 
-int RForest::rAdaptiveForest(double alpha){
+int RForest::rAdaptiveForest(double alpha,int stopLimit){
     //Build the RForest model
 	double tk = ceil(alpha*2*dataset->nrow);
     std::vector<int> sampleIndex(this->nsample);
@@ -173,6 +173,7 @@ int RForest::rAdaptiveForest(double alpha){
     double prob=0.0;
     std::priority_queue<std::pair<int,double>,std::vector<std::pair<int,double> >, larger> pq;
     double* transInst = new double[dataset->ncol];
+   //util::logfile<<"0,0,0,0,0,0,0,0,0\n";
     while(!converged)
     {
     	pq= std::priority_queue<std::pair<int,double>,std::vector<std::pair<int,double> >,larger >();
@@ -207,26 +208,30 @@ int RForest::rAdaptiveForest(double alpha){
             dbar=totalDepth[inst]/ntree;
             pq.push(std::pair<int, double>(inst,dbar));
            	}
-
+      //      util::logfile<<ntree<<",";
         for(int i=0;i<tk;i++)
          {
         	  	topKIndex.push_back(pq.top().first);
-            	pq.pop();
+        	//  	util::logfile<<pq.top().first<<",";
+        	  	pq.pop();
 
         }
+
         if(ntree==1)
         {
         	prevTopKIndex = topKIndex;
-        	continue;
+        //	util::logfile<<prob<<"\n";
+           	continue;
         }
 
         prob=topcommonK(topKIndex,prevTopKIndex);
         prevTopKIndex = topKIndex;
+        util::logfile<<prob<<"\n";
         if(prob==1)
              convCounter++;
           else
             convCounter=0;
-         converged = convCounter>5;
+         converged = convCounter>stopLimit;
 
 
          if(ntree<50)

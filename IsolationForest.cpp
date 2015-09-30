@@ -38,10 +38,11 @@ void IsolationForest::buildForest()
 
 }
 
-int IsolationForest::adaptiveForest(double alpha){
+int IsolationForest::adaptiveForest(double alpha,int stopLimit){
     //Build the RForest model
 	double tk = ceil(alpha*2*dataset->nrow);
     std::vector<int> sampleIndex(this->nsample);
+   // std::cout<<tk<<std::endl;
     //logfile<<"point,tree,x1,x2\n";
     bool converged = false;
     int convCounter =0 ;
@@ -51,6 +52,7 @@ int IsolationForest::adaptiveForest(double alpha){
     std::vector<double> totalDepth(dataset->nrow,0);
     double prob=0.0;
     std::priority_queue<std::pair<int,double>,std::vector<std::pair<int,double> >, larger> pq;
+
     while(!converged)
     {
     	pq= std::priority_queue<std::pair<int,double>,std::vector<std::pair<int,double> >,larger >();
@@ -72,26 +74,30 @@ int IsolationForest::adaptiveForest(double alpha){
             dbar=totalDepth[inst]/ntree;
             pq.push(std::pair<int, double>(inst,dbar));
            	}
-
+        //util::logfile<<ntree<<",";
         for(int i=0;i<tk;i++)
          {
         	  	topKIndex.push_back(pq.top().first);
-            	pq.pop();
+        	//  	util::logfile<<pq.top().first<<",";
+        	  	pq.pop();
 
         }
-        if(ntree==1)
+
+        if(ntree<2)
         {
         	prevTopKIndex = topKIndex;
+            util::logfile<<prob<<"\n";
         	continue;
         }
 
         prob=topcommonK(topKIndex,prevTopKIndex);
+       //util::logfile<<prob<<"\n";
         prevTopKIndex = topKIndex;
         if(prob==1)
              convCounter++;
           else
             convCounter=0;
-         converged = convCounter>5;
+         converged = convCounter>stopLimit;
 
 
 

@@ -38,7 +38,7 @@ public:
 	std::vector<int> &sampleIndex);
 	std::vector<double> pathLength(double *inst);
 	double getdepth(double* inst, Tree* tree,Eigen::MatrixXd &rotmat,double* transInst);
-	int rAdaptiveForest(double alpha);
+	int rAdaptiveForest(double alpha,int stopLimit);
 	void rForest();
 
 //Constructor

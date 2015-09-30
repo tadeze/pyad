@@ -11,7 +11,7 @@ struct parsed_args {
     int sampsize;
     int maxdepth;
     bool header;
-    bool adaptive;
+    int adaptive;
     bool rotate;
     bool verbose;
 };

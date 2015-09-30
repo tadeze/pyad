@@ -49,9 +49,9 @@ int main(int argc, char* argv[]) {
 	verbose = verbose; //Clears warning for now.
 	bool rsample = nsample != 0;
 	bool stopheight = maxheight != 0;
-	bool adaptive = pargs->adaptive;
+	int  stopLimit = pargs->adaptive;
 	bool rotate = pargs->rotate;
-	adaptive=adaptive;
+//	adaptive=adaptive;
 	rotate = rotate;
 	ntstringframe* csv = read_csv(input_name, header, false, false);
 	ntstringframe* metadata = split_frame(ntstring, csv, metacol,true);
@@ -63,13 +63,15 @@ int main(int argc, char* argv[]) {
     	//	bool weightedTailAD=true; //weighed tail for Anderson-Darling test
 
     /* 	Basic IsolationForest  */
-   double alpha =0.01;
+  double alpha =0.01;
    IsolationForest iff(ntree,dt,nsample,maxheight,stopheight,rsample); //build iForest
-   int ifntree= iff.adaptiveForest(alpha);
+ //  iff.buildForest();
+  int ifntree= iff.adaptiveForest(alpha,stopLimit);
    RForest rff(ntree,dt,nsample,maxheight,stopheight,rsample);
  // rff.rForest();     //build Rotation Forest
-  int nt= rff.rAdaptiveForest(alpha);
-  std::cout<<"Number of trees used for if = "<<ifntree<<" and for RForest = "<<nt;
+  int nt= rff.rAdaptiveForest(alpha,stopLimit);
+ std::cout<<"Number of trees used for if = "<<ifntree<<" and for RForest = "<<nt;
+std::cout<<"Stopping Limit "<<stopLimit;
    /*
     * .........Parameters for convergent Forest..............
 	*/
@@ -101,7 +103,8 @@ int main(int argc, char* argv[]) {
             })
         }
          }
-    */	//outscore << "indx,ifscore,rfscore\n";
+    */
+	outscore << "indx,ifscore,depth,rfscore\n";
 	for (int j = 0; j < (int) scores.size(); j++) {
         if (metadata) {
             forseq(m,0,metadata->ncol,{
