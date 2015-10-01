@@ -10,6 +10,28 @@ using namespace std;
 namespace util {
 default_random_engine gen(400);
 
+//default_random_engine gen(time(NULL));  //Production 
+/*
+int randomI(int min, int max) {
+	int num;
+	num = (int) (min + (rand() % (max - min)));
+	return num;
+}
+int randomI(int min,int max,set	<int>& exclude)
+{
+			int num;
+			num = (int) (min + (rand() % (max - min+1)));
+			return exclude.find(num)!=exclude.end()?randomI(min,max,exclude):num;
+			
+}
+
+double randomD(double min, double max) {
+	return ceil((min + ((double) rand() / (RAND_MAX)) * (max - min)) * 100)
+			/ 100;
+}
+*/
+
+
 template <typename T>
 T randomT(T min, T max)
 {

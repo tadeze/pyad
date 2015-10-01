@@ -88,7 +88,6 @@ std::cout<<"Stopping Limit "<<stopLimit;
 	vector<double> rscores = rff.AnomalyScore(dt);
     vector<vector<double> > pathLength = iff.pathLength(dt); //generate Depth all points in all trees
 	//vector<double> adscore = iff.ADtest(pathLength,weightedTailAD); //generate Anderson-Darling difference.
-
 	//Output file for score, averge depth and AD score
 	ofstream outscore(output_name);
    
