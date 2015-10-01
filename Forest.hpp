@@ -12,14 +12,16 @@
 #include "cincl.hpp"
 
 class Forest {
+private:
+		std::vector<Tree*> trees;
+		int ntree;
+		bool rsample;
+		int nsample;
+	    bool stopheight;
+	    int maxheight;
+	    doubleframe* dataset;  // holds the original dataset
 public:
-	std::vector<Tree*> trees;
-	int ntree;
-	bool rsample;
-	int nsample;
-    bool stopheight;
-    int maxheight;
-    doubleframe* dataset;  // holds the original dataset
+
     Forest()
 	{
 		rsample = false;

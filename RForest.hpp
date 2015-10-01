@@ -21,12 +21,15 @@
 #include "Eigen/QR"
 #include "Forest.hpp"
 class RForest: public Forest {
-public:
-   std::vector<Eigen::MatrixXd> rotMatrices;
+private:
+	std::vector<Eigen::MatrixXd> rotMatrices;
    //std::mt19937 eng{std::random_device{}()}; //For production
     std::default_random_engine eng;   //for debugging
 
-	void convertToDf(Eigen::MatrixXd &m, doubleframe* df);
+
+
+public:
+   	void convertToDf(Eigen::MatrixXd &m, doubleframe* df);
 	void rotateInstance(double* inst, Eigen::MatrixXd &m,double* rotatedData);
 	void buildForest(doubleframe* df);
 	void generateRandomRotationMatrix(Eigen::MatrixXd& M, int n );
@@ -48,8 +51,9 @@ public:
 			Forest(_ntree, _df, _nsample, _maxheight, _stopheight, _rsample) {
 
         eng.seed(time(NULL));  //initialize random generator seed .
-            }
-	;
+        //seeding for debugging
+        //eng.seed(40040);
+           };
 
 	RForest() {
 	}

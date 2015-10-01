@@ -67,7 +67,7 @@ void Tree::iTree(std::vector<int> const &dIndex,const doubleframe *dt, int heigh
 	//Split the node into two
 	for (unsigned i = 0; i < dIndex.size(); i++)
 	{
-		if ( dt->data[dIndex.at(i)][splittingAtt] >= splittingPoint &&
+		if ( dt->data[dIndex.at(i)][splittingAtt] <= splittingPoint &&
 				(dt->data[dIndex.at(i)][splittingAtt]!=minmax[this->splittingAtt][0]))
 
 		{
@@ -102,6 +102,7 @@ double Tree::pathLength(double *inst)
 
  	//Logging the isolation process
  	//	logfile<<tmpVar<<","<<this->splittingAtt<<","<<this->splittingPoint<<"\n";
+
 	if (inst[this->splittingAtt] >= this->splittingPoint)
 	{
 

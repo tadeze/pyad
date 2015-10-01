@@ -155,5 +155,6 @@ parsed_args* validate_args(d(option*) opts) {
     pargs->maxdepth = strtol(opts[DOPT].value,NULL,10);
     pargs->header = opts[HOPT].flagged;
     pargs->verbose = opts[VOPT].flagged;
+
     return pargs;
 }

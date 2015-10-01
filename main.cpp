@@ -87,7 +87,6 @@ int main(int argc, char* argv[]) {
 	vector<double> rscores = rff.AnomalyScore(dt);
     vector<vector<double> > pathLength = iff.pathLength(dt); //generate Depth all points in all trees
 	//vector<double> adscore = iff.ADtest(pathLength,weightedTailAD); //generate Anderson-Darling difference.
-
 	//Output file for score, averge depth and AD score
 	ofstream outscore(output_name);
    
@@ -122,9 +121,22 @@ int main(int argc, char* argv[]) {
 	return 0;
 }
 
+/*
+ * Sabsample data and build N-Forest based on the sabsamples using convergentiForest;
+ * Generate subsample index for the doubleframe and pass t
+ * @param doubledataframe
+ * @param number of Forest NF
+ */
+
+/*
+void subsampleNIForest(doubleframe* df, int nForest)
+{
 
 
 
+}
+
+*/
 
 
 
