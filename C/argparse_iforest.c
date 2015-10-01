@@ -99,10 +99,10 @@ d(option)* option_spec() {
            .sarg = 'a',
            .larg = "adaptive",
            .name = NULL,
-           .desc = "Toggle whether to use adaptive tree growing process.",
-           .default_value = "false",
+           .desc = "Number of common successive top K for adaptive process.",
+           .default_value = "5",
            .value = NULL,
-           .isflag = true,
+           .isflag = false,
            .flagged = false
        };
     opts[ROPT] = (option){
@@ -133,9 +133,11 @@ parsed_args* validate_args(d(option*) opts) {
         }
         for_each_in_vec(i,cn,pargs->metacol,(*cn)--;)
     }
+
     if (str_conv_strict(&(pargs->ntrees),int,opts[TOPT].value)) {
         err_and_exit(1,"Expected integer as number of trees.\n");
     }
+  
     if (pargs->ntrees<1) {
         err_and_exit(1,"Number of trees must be at least 1.\n");
     }
@@ -151,10 +153,15 @@ parsed_args* validate_args(d(option*) opts) {
     if (pargs->maxdepth<0) {
         err_and_exit(1,"Maximum depth can't be negative.\n");
     }
+   if (str_conv_strict(&(pargs->adaptive),int,opts[AOPT].value)) {
+        err_and_exit(1,"Expected integer as stopping Limit.\n");
+    }
+    
     pargs->sampsize = strtol(opts[SOPT].value,NULL,10);
     pargs->maxdepth = strtol(opts[DOPT].value,NULL,10);
     pargs->header = opts[HOPT].flagged;
     pargs->verbose = opts[VOPT].flagged;
-
-    return pargs;
+    pargs->adaptive =  strtol(opts[AOPT].value,NULL,10);  //added by Tadesse
+   
+return pargs;
 }

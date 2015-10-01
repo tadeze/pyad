@@ -38,11 +38,11 @@ void IsolationForest::buildForest()
 
 }
 
-int IsolationForest::adaptiveForest(double alpha){
+int IsolationForest::adaptiveForest(double alpha,int stopLimit){
     //Build the RForest model
 	double tk = ceil(alpha*2*dataset->nrow);
     std::vector<int> sampleIndex(this->nsample);
-    std::cout<<tk<<std::endl;
+   // std::cout<<tk<<std::endl;
     //logfile<<"point,tree,x1,x2\n";
     bool converged = false;
     int convCounter =0 ;
@@ -97,7 +97,7 @@ int IsolationForest::adaptiveForest(double alpha){
              convCounter++;
           else
             convCounter=0;
-         converged = convCounter>5;
+         converged = convCounter>stopLimit;
 
 
 

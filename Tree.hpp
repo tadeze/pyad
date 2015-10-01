@@ -39,6 +39,7 @@ public:
 
 	virtual ~Tree()
 	{
+<<<<<<< HEAD
 
         delete leftChild; //check if deleting the child is need.
         delete rightChild;

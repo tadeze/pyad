@@ -157,7 +157,7 @@ void RForest::rForest(){
  */
 
 
-int RForest::rAdaptiveForest(double alpha){
+int RForest::rAdaptiveForest(double alpha,int stopLimit){
     //Build the RForest model
 	double tk = ceil(alpha*2*dataset->nrow);
     std::vector<int> sampleIndex(this->nsample);
@@ -231,7 +231,7 @@ int RForest::rAdaptiveForest(double alpha){
              convCounter++;
           else
             convCounter=0;
-         converged = convCounter>5;
+         converged = convCounter>stopLimit;
 
 
          if(ntree<50)
