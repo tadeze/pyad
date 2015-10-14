@@ -65,13 +65,13 @@ int main(int argc, char* argv[]) {
     /* 	Basic IsolationForest  */
   double alpha =0.01;
    IsolationForest iff(ntree,dt,nsample,maxheight,stopheight,rsample); //build iForest
- //  iff.buildForest();
-  int ifntree= iff.adaptiveForest(alpha,stopLimit);
+   iff.buildForest();
+ int ifntree= iff.adaptiveForest(alpha,stopLimit);
    RForest rff(ntree,dt,nsample,maxheight,stopheight,rsample);
- // rff.rForest();     //build Rotation Forest
+  rff.rForest();     //build Rotation Forest
   int nt= rff.rAdaptiveForest(alpha,stopLimit);
- std::cout<<"Number of trees used for if = "<<ifntree<<" and for RForest = "<<nt;
-std::cout<<"Stopping Limit "<<stopLimit;
+std::cout<<"Number of trees used for if = "<<ifntree<<" and for RForest = "<<nt;
+//std::cout<<"Stopping Limit "<<nt;
    /*
     * .........Parameters for convergent Forest..............
 	*/
