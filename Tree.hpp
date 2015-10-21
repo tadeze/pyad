@@ -12,7 +12,7 @@
 
 class Tree
 {
-
+private:
 	Tree *leftChild;
 	Tree *rightChild;
 	Tree *parent;
@@ -21,8 +21,6 @@ class Tree
 	double splittingPoint;
 	int depth;
 	bool isLeaf;
-	
-
 public:
 	Tree()
 	{

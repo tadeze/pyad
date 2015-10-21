@@ -21,14 +21,14 @@
 #include "Eigen/QR"
 #include "Forest.hpp"
 class RForest: public Forest {
- 
+public:
 
  	std::vector<Eigen::MatrixXd> rotMatrices;
    	//std::mt19937 eng{std::random_device{}()}; //For production
   	std::default_random_engine eng;   //for debugging
 
 
-public:
+
 //Constructor
 	RForest(int _ntree,doubleframe* _df,int _nsample,int _maxheight,
 			bool _stopheight,bool _rsample) :
@@ -58,7 +58,5 @@ public:
 	void rForest();
 	int adaptiveForest(double alpha,int stopLimit); 
 
-
-};
 #endif /* RFOREST_H_ */
 

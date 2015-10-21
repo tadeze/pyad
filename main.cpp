@@ -137,6 +137,22 @@ int main(int argc, char* argv[]) {
 
 
 
+/*
+ * Sabsample data and build N-Forest based on the sabsamples using convergentiForest;
+ * Generate subsample index for the doubleframe and pass t
+ * @param doubledataframe
+ * @param number of Forest NF
+ */
+
+/*
+void subsampleNIForest(doubleframe* df, int nForest)
+{
+
+
+
+}
+
+*/
 
 
 
