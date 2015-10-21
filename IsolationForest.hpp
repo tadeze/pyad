@@ -15,13 +15,13 @@ class IsolationForest:public Forest{
 
 	IsolationForest(int _ntree,doubleframe* _df,
 			int _nsample,int _maxheight, bool _stopheight,bool _rsample);
-	int adaptiveForest(double alpha,int stopLimit);
+	//int adaptiveForest(double alpha,int stopLimit);
 	void buildForest();
 	virtual ~IsolationForest()
 	{
 	}
 	//convergent iForest
-
+  int adaptiveForest(double alpha,int stopLimit); 
 };
 
 

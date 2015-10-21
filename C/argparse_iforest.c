@@ -48,7 +48,7 @@ d(option)* option_spec() {
         .sarg = 't',
         .larg = "ntrees",
         .name = "N",
-        .desc = "Specify number of trees to build.",
+        .desc = "Specify number of trees to build.(Value 0 indicates to use adaptive tree growing) ",
         .default_value = "100",
         .value = NULL,
         .isflag = false,
@@ -138,7 +138,7 @@ parsed_args* validate_args(d(option*) opts) {
         err_and_exit(1,"Expected integer as number of trees.\n");
     }
   
-    if (pargs->ntrees<1) {
+    if (pargs->ntrees<0) {
         err_and_exit(1,"Number of trees must be at least 1.\n");
     }
     if (str_conv_strict(&(pargs->sampsize),int,opts[SOPT].value)) {

@@ -12,7 +12,7 @@ void  RForest::convertToDf(MatrixXd &m,doubleframe* df){
    
     for (int i=0; i<m.rows(); ++i)
     {
-     df->data[i] =&m.row(i).data()[0];//   &m(i,j);//  i.row(i).data()[j];
+     df->data[i] =&m.row(i).data()[0];//   
     }
 }
 
@@ -157,7 +157,7 @@ void RForest::rForest(){
  */
 
 
-int RForest::rAdaptiveForest(double alpha,int stopLimit){
+int RForest::adaptiveForest(double alpha,int stopLimit){
     //Build the RForest model
 	double tk = ceil(alpha*2*dataset->nrow);
     std::vector<int> sampleIndex(this->nsample);
@@ -226,7 +226,7 @@ int RForest::rAdaptiveForest(double alpha,int stopLimit){
 
         prob=topcommonK(topKIndex,prevTopKIndex);
         prevTopKIndex = topKIndex;
-        util::logfile<<prob<<"\n";
+       // util::logfile<<prob<<"\n";
         if(prob==1)
              convCounter++;
           else
@@ -252,11 +252,6 @@ return ntree;
 
 
 
-
-
-
-
-
 /*
  * overrides method of pathLength for rotated data
  */
@@ -278,6 +273,7 @@ std::vector<double> RForest::pathLength(double *inst)
 delete transInst;
 return depth;
 }
+
 double RForest::getdepth(double* inst, Tree* tree, MatrixXd &rotmat,double* transInst)
 {
 

@@ -50,47 +50,50 @@ int main(int argc, char* argv[]) {
 	bool rsample = nsample != 0;
 	bool stopheight = maxheight != 0;
 	int  stopLimit = pargs->adaptive;
-	bool rotate = pargs->rotate;
-//	adaptive=adaptive;
-	rotate = rotate;
+	//bool rotate = pargs->rotate;
 	ntstringframe* csv = read_csv(input_name, header, false, false);
 	ntstringframe* metadata = split_frame(ntstring, csv, metacol,true);
 	doubleframe* dt = conv_frame(double, ntstring, csv); //read data to the global variable
-    nsample = nsample==0?dt->nrow:nsample;
+        nsample = nsample==0?dt->nrow:nsample;
+       const double ALPHA=0.01;
+	string treereq(output_name);
+	 //treereq<input_name;
+  	ofstream treeReq(treereq+"_treerequired.csv"); 
 
-    // logfile<<"tree,index,spAttr,spValue"<<"\n";
+
+     treeReq<<"benchmark,iforest,rforest"<<"\n";
 
     	//	bool weightedTailAD=true; //weighed tail for Anderson-Darling test
 
-    /* 	Basic IsolationForest  */
-  double alpha =0.01;
-   IsolationForest iff(ntree,dt,nsample,maxheight,stopheight,rsample); //build iForest
-   iff.buildForest();
- int ifntree= iff.adaptiveForest(alpha,stopLimit);
-   RForest rff(ntree,dt,nsample,maxheight,stopheight,rsample);
-  rff.rForest();     //build Rotation Forest
-  int nt= rff.rAdaptiveForest(alpha,stopLimit);
-std::cout<<"Number of trees used for if = "<<ifntree<<" and for RForest = "<<nt;
-//std::cout<<"Stopping Limit "<<nt;
-   /*
-    * .........Parameters for convergent Forest..............
-	*/
-	//double tau=0.05;
-	//double alpha=0.01;
- 	//convForest iff(tau,alpha);
+//if ntree=0, then do adaptive way  
 
-    //iff.convergeIF(maxheight,stopheight,nsample,rsample,tau,alpha);
-    //iff.confstop(maxheight,stopheight,nsample,rsample,alpha);
-	//ntree= iff.trees.size();
-	//std::cout<<"Number of trees required="<<ntree<<std::endl;
-	
+   	/* Basic IsolationForest  */
+ 	 IsolationForest iff(ntree,dt,nsample,maxheight,stopheight,rsample); //build iForest
+ 	 RForest rff(ntree,dt,nsample,maxheight,stopheight,rsample);
+	 	
+		 if(ntree!=0) //build with specified number of trees  
+	{ 
+	 	iff.buildForest();
+     		rff.rForest();
+
+	}
+ 	else   //Build trees with adaptive method 
+	{ 	
+		int ifntree= iff.adaptiveForest(ALPHA,stopLimit);  //use convergence
+	  int nt= rff.adaptiveForest(ALPHA,stopLimit); 
+	treeReq<<input_name<<","<<ifntree<<","<<nt;
+	// std::cout<<"Number of trees used for if = "<<ifntree<<" and for RForest = "<<nt;
+	}
+
 	vector<double> scores = iff.AnomalyScore(dt); //generate anomaly score
+   	vector<vector<double> > pathLength = iff.pathLength(dt); //generate Depth all points in all trees
 	vector<double> rscores = rff.AnomalyScore(dt);
-    vector<vector<double> > pathLength = iff.pathLength(dt); //generate Depth all points in all trees
-	//vector<double> adscore = iff.ADtest(pathLength,weightedTailAD); //generate Anderson-Darling difference.
+//	vector<vector<double> >  rpathLength = rff.pathLength(dt);
+  //      string outputrforest;
+//	outputrforest="rforest_" + output_name;
 	//Output file for score, averge depth and AD score
 	ofstream outscore(output_name);
-   
+  //  	ofstream rfscore(outputrforest); 
      /*if (metadata!=NULL) {
         if (header) {
             for_each_in_vec(i,cname,metadata->colnames,{
@@ -103,7 +106,7 @@ std::cout<<"Number of trees used for if = "<<ifntree<<" and for RForest = "<<nt;
         }
          }
     */
-	outscore << "indx,ifscore,depth,rfscore\n";
+	outscore << "indx,ifscore,rfscore\n";
 	for (int j = 0; j < (int) scores.size(); j++) {
         if (metadata) {
             forseq(m,0,metadata->ncol,{
@@ -111,15 +114,23 @@ std::cout<<"Number of trees used for if = "<<ifntree<<" and for RForest = "<<nt;
                 })
             }
 		
-		outscore << j << "," << scores[j]<<","<<util::mean(pathLength[j])<<","<<rscores[j];
-	//	for(int i=0;i<(int)pathLength[1].size();i++)
-	//	outscore<<','<<pathLength[j][i];
-		outscore<<"\n"; // << "," << mean(pathLength[j]) << "\n";
+		outscore << j << "," << scores[j]<<"," ; //<<util::mean(pathLength[j])<<","<<rscores[j];
+		outscore<<rscores[j];
+/* //for generating all depth 
+		for(int i=0;i<(int)pathLength[1].size();i++)
+	{	
+		outscore<<','<<pathLength[j][i];
+	//	rfscore<<','<<rpathLength[j][i];
+	}
+*/
+	outscore<<"\n"; // << "," << mean(pathLength[j]) << "\n";
     	//logfile
 
 	}
+//	rfscore.close();
+	treeReq.close();
 	outscore.close();
-    util::logfile.close();
+        util::logfile.close();
 	return 0;
 }
 

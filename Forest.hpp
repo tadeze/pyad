@@ -17,10 +17,10 @@ public:
 	int ntree;
 	bool rsample;
 	int nsample;
-    bool stopheight;
-    int maxheight;
-    doubleframe* dataset;  // holds the original dataset
-    Forest()
+   	 bool stopheight;
+    	int maxheight;
+   	 doubleframe* dataset;  // holds the original dataset
+    	Forest()
 	{
 		rsample = false;
 		ntree = 0;
@@ -67,6 +67,8 @@ virtual ~Forest()
 			return p1.second <p2.second;
 		}
 	};
+    /* virtual function for adaptive forest*/
+     virtual int adaptiveForest(double alpha,int stopLimit); 
 
 	 /*
 	  * @input two vector v1 and v2

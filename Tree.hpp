@@ -12,7 +12,7 @@
 
 class Tree
 {
-public:
+
 	Tree *leftChild;
 	Tree *rightChild;
 	Tree *parent;
@@ -21,6 +21,9 @@ public:
 	double splittingPoint;
 	int depth;
 	bool isLeaf;
+	
+
+public:
 	Tree()
 	{
 		leftChild = NULL;
@@ -40,8 +43,8 @@ public:
         delete leftChild; //check if deleting the child is need.
         delete rightChild;
 
-	}
-;
+	};
+
 	void iTree(std::vector<int> const &dIndex,const doubleframe* dt, int height, int maxHeight, bool stopheight);
 	double pathLength(double *inst);
 

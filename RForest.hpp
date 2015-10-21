@@ -21,12 +21,28 @@
 #include "Eigen/QR"
 #include "Forest.hpp"
 class RForest: public Forest {
-public:
-   std::vector<Eigen::MatrixXd> rotMatrices;
-   //std::mt19937 eng{std::random_device{}()}; //For production
-    std::default_random_engine eng;   //for debugging
+ 
 
-	void convertToDf(Eigen::MatrixXd &m, doubleframe* df);
+ 	std::vector<Eigen::MatrixXd> rotMatrices;
+   	//std::mt19937 eng{std::random_device{}()}; //For production
+  	std::default_random_engine eng;   //for debugging
+
+
+public:
+//Constructor
+	RForest(int _ntree,doubleframe* _df,int _nsample,int _maxheight,
+			bool _stopheight,bool _rsample) :
+			Forest(_ntree, _df, _nsample, _maxheight, _stopheight, _rsample) {
+        //eng.seed(time(NULL));  //initialize random generator seed .
+	eng.seed(400); //For debugging 
+            };
+
+	RForest() {};
+	virtual ~RForest() {};
+
+
+//Methods
+ 	void convertToDf(Eigen::MatrixXd &m, doubleframe* df);
 	void rotateInstance(double* inst, Eigen::MatrixXd &m,double* rotatedData);
 	void buildForest(doubleframe* df);
 	void generateRandomRotationMatrix(Eigen::MatrixXd& M, int n );
@@ -38,26 +54,11 @@ public:
 	std::vector<int> &sampleIndex);
 	std::vector<double> pathLength(double *inst);
 	double getdepth(double* inst, Tree* tree,Eigen::MatrixXd &rotmat,double* transInst);
-	int rAdaptiveForest(double alpha,int stopLimit);
+	//int rAdaptiveForest(double alpha,int stopLimit);
 	void rForest();
+	int adaptiveForest(double alpha,int stopLimit); 
 
-//Constructor
 
-	RForest(int _ntree,doubleframe* _df,int _nsample,int _maxheight,
-			bool _stopheight,bool _rsample) :
-			Forest(_ntree, _df, _nsample, _maxheight, _stopheight, _rsample) {
-
-        eng.seed(time(NULL));  //initialize random generator seed .
-            }
-	;
-
-	RForest() {
-	}
-	;
-	virtual ~RForest() {
-
-	}
-	;
 };
 #endif /* RFOREST_H_ */
 
