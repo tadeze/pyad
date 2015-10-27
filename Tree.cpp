@@ -99,10 +99,20 @@ double Tree::pathLength(double *inst)
         { ///referenced as null for some input data .
                	return util::avgPL(this->nodeSize);
         }
+	//Range check added
+
+	double instAttVal = inst[this->splittingAtt]; 
+	if(instAttVal < this->minAttVal && util::randomD(instAttVal,this->minAttVal)<this->minAttVal)
+		return 1;
+
+	if(instAttVal >this->minAttVal && util::randomD(instAttVal,this->maxAttVal)>this->maxAttVal)
+		return 1;
+
+
 
  	//Logging the isolation process
  	//	logfile<<tmpVar<<","<<this->splittingAtt<<","<<this->splittingPoint<<"\n";
-	if (inst[this->splittingAtt] >= this->splittingPoint)
+	if ( instAttVal >= this->splittingPoint)
 	{
 
 		return this->leftChild->pathLength(inst) + 1.0;

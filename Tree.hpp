@@ -20,7 +20,8 @@ private:
 	int splittingAtt;
 	double splittingPoint;
 	int depth;
-	bool isLeaf;
+	//bool isLeaf;
+	double minAttVal,maxAttVal;
 public:
 	Tree()
 	{
@@ -30,9 +31,9 @@ public:
 		splittingAtt = -1;
 		splittingPoint = 999;
 		depth = 0;
-		isLeaf = false;
 		nodeSize = 0;
-
+		minAttVal=maxAttVal=0;
+		
 	}
 	;
 
