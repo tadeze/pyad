@@ -5,6 +5,7 @@
  *      Author: Tadeze
  */
 #include "Tree.hpp"
+bool Tree::rangeCheck=true;
 void Tree::iTree(std::vector<int> const &dIndex,const doubleframe *dt, int height, int maxheight, bool stopheight)
 {
 	this->depth = height; //Tree height
@@ -61,7 +62,8 @@ void Tree::iTree(std::vector<int> const &dIndex,const doubleframe *dt, int heigh
 
 	this->splittingAtt = attributes[util::randomI(0,attributes.size()-1)]; //randx];
 	this->splittingPoint =util::randomD(minmax[this->splittingAtt][0],minmax[this->splittingAtt][1]);
-	
+	this->minAttVal =minmax[this->splittingAtt][0];
+	this->maxAttVal = minmax[this->splittingAtt][1];
 	std::vector <int> lnodeData;
 	std::vector < int> rnodeData;
 	//Split the node into two
@@ -100,20 +102,22 @@ double Tree::pathLength(double *inst)
                	return util::avgPL(this->nodeSize);
         }
 	//Range check added
+       double instAttVal = inst[this->splittingAtt]; 
+	if(Tree::rangeCheck==true)
+ 	{ 
+		
+		if(instAttVal < this->minAttVal && util::randomD(instAttVal,this->minAttVal)<this->minAttVal)
+			return 1.0;
+		if(instAttVal >this->minAttVal && util::randomD(instAttVal,this->maxAttVal)>this->maxAttVal)
+			return 1.0;
 
-	double instAttVal = inst[this->splittingAtt]; 
-	if(instAttVal < this->minAttVal && util::randomD(instAttVal,this->minAttVal)<this->minAttVal)
-		return 1;
-
-	if(instAttVal >this->minAttVal && util::randomD(instAttVal,this->maxAttVal)>this->maxAttVal)
-		return 1;
-
-
+	}
 
  	//Logging the isolation process
  	//	logfile<<tmpVar<<","<<this->splittingAtt<<","<<this->splittingPoint<<"\n";
 	if ( instAttVal >= this->splittingPoint)
 	{
+
 
 		return this->leftChild->pathLength(inst) + 1.0;
 

@@ -20,9 +20,10 @@ private:
 	int splittingAtt;
 	double splittingPoint;
 	int depth;
-	//bool isLeaf;
+	
 	double minAttVal,maxAttVal;
 public:
+	static bool rangeCheck;
 	Tree()
 	{
 		leftChild = NULL;
@@ -33,7 +34,6 @@ public:
 		depth = 0;
 		nodeSize = 0;
 		minAttVal=maxAttVal=0;
-		
 	}
 	;
 

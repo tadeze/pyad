@@ -59,19 +59,17 @@ int main(int argc, char* argv[]) {
 	string treereq(output_name);
 	 //treereq<input_name;
   	ofstream treeReq(treereq+"_treerequired.csv"); 
-
-
-     treeReq<<"benchmark,iforest,rforest"<<"\n";
+       treeReq<<"benchmark,iforest,rforest"<<"\n";
 
     	//	bool weightedTailAD=true; //weighed tail for Anderson-Darling test
 
-//if ntree=0, then do adaptive way  
+         //if ntree=0, then do adaptive way  
 
    	/* Basic IsolationForest  */
  	 IsolationForest iff(ntree,dt,nsample,maxheight,stopheight,rsample); //build iForest
  	 RForest rff(ntree,dt,nsample,maxheight,stopheight,rsample);
 	 	
-		 if(ntree!=0) //build with specified number of trees  
+	 if(ntree!=0) //build with specified number of trees  
 	{ 
 	 	iff.buildForest();
      		rff.rForest();
@@ -79,19 +77,14 @@ int main(int argc, char* argv[]) {
 	}
  	else   //Build trees with adaptive method 
 	{ 	
-		int ifntree= iff.adaptiveForest(ALPHA,stopLimit);  //use convergence
-	  int nt= rff.adaptiveForest(ALPHA,stopLimit); 
+	int ifntree= iff.adaptiveForest(ALPHA,stopLimit);  //use convergence
+	int nt= rff.adaptiveForest(ALPHA,stopLimit); 
 	treeReq<<input_name<<","<<ifntree<<","<<nt;
-	// std::cout<<"Number of trees used for if = "<<ifntree<<" and for RForest = "<<nt;
 	}
 
 	vector<double> scores = iff.AnomalyScore(dt); //generate anomaly score
    	vector<vector<double> > pathLength = iff.pathLength(dt); //generate Depth all points in all trees
 	vector<double> rscores = rff.AnomalyScore(dt);
-//	vector<vector<double> >  rpathLength = rff.pathLength(dt);
-  //      string outputrforest;
-//	outputrforest="rforest_" + output_name;
-	//Output file for score, averge depth and AD score
 	ofstream outscore(output_name);
   //  	ofstream rfscore(outputrforest); 
      /*if (metadata!=NULL) {
@@ -133,26 +126,6 @@ int main(int argc, char* argv[]) {
         util::logfile.close();
 	return 0;
 }
-
-
-
-
-/*
- * Sabsample data and build N-Forest based on the sabsamples using convergentiForest;
- * Generate subsample index for the doubleframe and pass t
- * @param doubledataframe
- * @param number of Forest NF
- */
-
-/*
-void subsampleNIForest(doubleframe* df, int nForest)
-{
-
-
-
-}
-
-*/
 
 
 
