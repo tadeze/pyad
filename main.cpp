@@ -36,7 +36,8 @@ using namespace std;
 //log file
 ofstream util::logfile("treepath.csv");
 int main(int argc, char* argv[]) {
-	/*parse argument from command line*/
+
+    /*parse argument from command line*/
 	parsed_args* pargs = parse_args(argc, argv);
 	ntstring input_name = pargs->input_name;
 	ntstring output_name = pargs->output_name;
@@ -54,25 +55,21 @@ int main(int argc, char* argv[]) {
 	ntstringframe* csv = read_csv(input_name, header, false, false);
 	ntstringframe* metadata = split_frame(ntstring, csv, metacol,true);
 	doubleframe* dt = conv_frame(double, ntstring, csv); //read data to the global variable
-        nsample = nsample==0?dt->nrow:nsample;
-       const double ALPHA=0.01;
+    nsample = nsample==0?dt->nrow:nsample;
+    const double ALPHA=0.01;
 	string treereq(output_name);
 	 //treereq<input_name;
   	ofstream treeReq(treereq+"_treerequired.csv"); 
-       treeReq<<"benchmark,iforest,rforest"<<"\n";
-
-    	//	bool weightedTailAD=true; //weighed tail for Anderson-Darling test
-
-         //if ntree=0, then do adaptive way  
-
-   	/* Basic IsolationForest  */
+    treeReq<<"benchmark,iforest,rforest"<<"\n";
+   
+       /* Basic IsolationForest  */
  	 IsolationForest iff(ntree,dt,nsample,maxheight,stopheight,rsample); //build iForest
  	 RForest rff(ntree,dt,nsample,maxheight,stopheight,rsample);
 	 	
 	 if(ntree!=0) //build with specified number of trees  
 	{ 
 	 	iff.buildForest();
-     		rff.rForest();
+     	rff.rForest();
 
 	}
  	else   //Build trees with adaptive method 
@@ -86,7 +83,6 @@ int main(int argc, char* argv[]) {
    	vector<vector<double> > pathLength = iff.pathLength(dt); //generate Depth all points in all trees
 	vector<double> rscores = rff.AnomalyScore(dt);
 	ofstream outscore(output_name);
-  //  	ofstream rfscore(outputrforest); 
      /*if (metadata!=NULL) {
         if (header) {
             for_each_in_vec(i,cname,metadata->colnames,{
@@ -120,10 +116,9 @@ int main(int argc, char* argv[]) {
     	//logfile
 
 	}
-//	rfscore.close();
 	treeReq.close();
 	outscore.close();
-        util::logfile.close();
+    util::logfile.close();
 	return 0;
 }
 

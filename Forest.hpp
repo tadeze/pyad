@@ -17,10 +17,10 @@ public:
 	int ntree;
 	bool rsample;
 	int nsample;
-   	 bool stopheight;
-    	int maxheight;
-   	 doubleframe* dataset;  // holds the original dataset
-    	Forest()
+    bool stopheight;
+    int maxheight;
+   	doubleframe* dataset;  // holds the original dataset
+    Forest()
 	{
 		rsample = false;
 		ntree = 0;
@@ -45,11 +45,7 @@ virtual ~Forest()
 			delete (*it);
 
 		}
-       
-      //delete[] dataset->data;
-     // delete dataset;
-
-	}
+    }
 
 	double instanceScore(double *inst);
 	std::vector<double> AnomalyScore(doubleframe* df);

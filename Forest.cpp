@@ -52,7 +52,6 @@ std::vector<double> Forest::pathLength(double *inst)
 
 
 	}
-      // pnt++;   //for logging purpose
 	return depth;
 }
 
@@ -85,7 +84,6 @@ vector<double> IsolationForest::ADtest(const vector<vector<double> > &pathlength
 std::vector<double> Forest::importance(double *inst)
 {
 	//Need to be re-implemented
-	//Incorrect code
 	std::vector<double> depth;
 	for (std::vector<Tree*>::iterator it = this->trees.begin(); it != trees.end();
 			++it)
@@ -112,7 +110,7 @@ void Forest::getSample(std::vector<int> &sampleIndex,const int nsample,bool rsam
 
 int Forest::adaptiveForest(double alpha,int stopLimit)
 {
-//Just for removing warning of the compiler
+//For now remove warning compiler
  return (int)alpha*stopLimit;
 }
 
