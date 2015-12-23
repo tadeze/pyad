@@ -55,29 +55,33 @@ int main(int argc, char* argv[]) {
 	ntstringframe* csv = read_csv(input_name, header, false, false);
 	ntstringframe* metadata = split_frame(ntstring, csv, metacol,true);
 	doubleframe* dt = conv_frame(double, ntstring, csv); //read data to the global variable
-    nsample = nsample==0?dt->nrow:nsample;
-    const double ALPHA=0.01;
+    	nsample = nsample==0?dt->nrow:nsample;
+    	const double ALPHA=0.01;
 	string treereq(output_name);
+
+
 	 //treereq<input_name;
   	ofstream treeReq(treereq+"_treerequired.csv"); 
-    treeReq<<"benchmark,iforest,rforest"<<"\n";
+        treeReq<<"benchmark,iforest,rforest"<<"\n";
    
-       /* Basic IsolationForest  */
+         /* Basic IsolationForest  */
  	 IsolationForest iff(ntree,dt,nsample,maxheight,stopheight,rsample); //build iForest
  	 RForest rff(ntree,dt,nsample,maxheight,stopheight,rsample);
 	 	
 	 if(ntree!=0) //build with specified number of trees  
 	{ 
 	 	iff.buildForest();
-     	rff.rForest();
+     		rff.rForest();
 
 	}
  	else   //Build trees with adaptive method 
 	{ 	
-	int ifntree= iff.adaptiveForest(ALPHA,stopLimit);  //use convergence
-	int nt= rff.adaptiveForest(ALPHA,stopLimit); 
-	treeReq<<input_name<<","<<ifntree<<","<<nt;
+		int ifntree= iff.adaptiveForest(ALPHA,stopLimit);  //use convergence
+		int nt= rff.adaptiveForest(ALPHA,stopLimit); 
+		treeReq<<input_name<<","<<ifntree<<","<<nt;
 	}
+	
+	
 
 	vector<double> scores = iff.AnomalyScore(dt); //generate anomaly score
    	vector<vector<double> > pathLength = iff.pathLength(dt); //generate Depth all points in all trees
@@ -118,7 +122,7 @@ int main(int argc, char* argv[]) {
 	}
 	treeReq.close();
 	outscore.close();
-    util::logfile.close();
+   	 util::logfile.close();
 	return 0;
 }
 

@@ -34,6 +34,7 @@ struct Data
 */
 namespace util{
 //default_random_engine gen(time(NULL));
+
 int randomI(int min, int max);
 int randomEx(int min,int max,std::set<int>& exlude);
 void sampleI(int min, int max, int nsample, std::vector<int> &sampleIndx);

@@ -20,7 +20,6 @@ private:
 	int splittingAtt;
 	double splittingPoint;
 	int depth;
-	
 	double minAttVal,maxAttVal;
 public:
 	static bool rangeCheck;

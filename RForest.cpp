@@ -7,12 +7,13 @@ using namespace Eigen;
 
 /*Take Matrix and return doubleframe
  */
-void  RForest::convertToDf(MatrixXd &m,doubleframe* df){
+void  RForest::convertToDf(MatrixXd &m,doubleframe* df)
+{
 
    
     for (int i=0; i<m.rows(); ++i)
     {
-     df->data[i] =&m.row(i).data()[0];//   
+     	df->data[i] = &m.row(i).data()[0];//copy to dataframe   
     }
 }
 
@@ -21,10 +22,10 @@ void  RForest::convertToDf(MatrixXd &m,doubleframe* df){
 void RForest::rotateInstance(double* inst,MatrixXd &m,double* rotData)
 {
 
-int ncol = m.cols();
-MatrixXd matData = Map<MatrixXd>(inst,1,ncol);
-MatrixXd rotMat = matData*m;
-Map<MatrixXd>(rotData,rotMat.rows(),rotMat.cols()) = rotMat;
+	int ncol = m.cols();
+	MatrixXd matData = Map<MatrixXd>(inst,1,ncol);
+	MatrixXd rotMat = matData*m;
+	Map<MatrixXd>(rotData,rotMat.rows(),rotMat.cols()) = rotMat;
 
 }
 
@@ -33,7 +34,8 @@ Map<MatrixXd>(rotData,rotMat.rows(),rotMat.cols()) = rotMat;
  * Takes matrix and empty vector data
  * Fill the vector-2d with the matrix value
  */
-void RForest::convertToVector(MatrixXd &m, std::vector<std::vector<double> > &v){
+void RForest::convertToVector(MatrixXd &m, std::vector<std::vector<double> > &v)
+{
     for (int i=0; i<m.rows(); ++i)
     {
         const double* begin = &m.row(i).data()[0];
@@ -42,21 +44,24 @@ void RForest::convertToVector(MatrixXd &m, std::vector<std::vector<double> > &v)
 }
 
 /*
- * Takes dataset of vector<vector<double> and return Matrix of data
+ * Takes dataset of vector<vector<double> > and return Matrix of data
  */
-MatrixXd RForest::convertToMatrix(std::vector<std::vector<double> > &data) {
+MatrixXd RForest::convertToMatrix(std::vector<std::vector<double> > &data) 
+{
 	MatrixXd mat(data.size(), data[0].size());
 	for (int i = 0; i <(int)data.size(); i++)
 	      mat.row(i) =VectorXd::Map(&data[i][0],(int)data[i].size());
 	return mat;
-    }
+}
 
-/* Convert doubleframe data to Matrix
+/* 
+ * Convert doubleframe data to Matrix
  *
  */
 
 MatrixXd RForest::convertDfToMatrix(const doubleframe* data,
-        std::vector<int> &sampleIndex){
+        std::vector<int> &sampleIndex)
+{
 	MatrixXd mat((int)sampleIndex.size(), data->ncol);
 	for (int i = 0; i <(int)sampleIndex.size(); i++)
 	  mat.row(i) =VectorXd::Map(&data->data[sampleIndex[i]][0],data->ncol);
@@ -64,7 +69,7 @@ MatrixXd RForest::convertDfToMatrix(const doubleframe* data,
 }
 
 /*
- * Rotation matrix generator
+ * Rotation matrix generator reference paper:
  * @input Matrix empty matrix
  * @input n size of matrix //will remove later and seed as well need to remove it
  */
@@ -98,7 +103,8 @@ MatrixXd RForest::convertDfToMatrix(const doubleframe* data,
 * @return rotated Matrix data
 */
 
-MatrixXd  RForest::rotateData(doubleframe* dt, MatrixXd& M){ 
+MatrixXd  RForest::rotateData(doubleframe* dt, MatrixXd& M)
+{ 
     std::vector<int> sampleIndex(this->nsample);
 	getSample(sampleIndex,nsample,rsample,dataset->nrow);
     MatrixXd  mData = convertDfToMatrix(dt,sampleIndex);
@@ -108,7 +114,8 @@ MatrixXd  RForest::rotateData(doubleframe* dt, MatrixXd& M){
 /*
  * Build rotation forest by rotating with random rotation matrices
  */
-void RForest::rForest(){
+void RForest::rForest()
+{
     //Build the RForest model 
     std::vector<int> sampleIndex(this->nsample);
     doubleframe* sampleDf = new doubleframe();
@@ -147,19 +154,13 @@ void RForest::rForest(){
 }
 
 
-
-
-
-
-
 /*
  * Build Trees in adaptive ways
  */
 
-
 int RForest::adaptiveForest(double alpha,int stopLimit){
     //Build the RForest model
-	double tk = ceil(alpha*2*dataset->nrow);
+    double tk = ceil(alpha*2*dataset->nrow);
     std::vector<int> sampleIndex(this->nsample);
     doubleframe* sampleDf = new doubleframe();
     sampleDf->data = new double*[this->nsample];
@@ -244,9 +245,9 @@ int RForest::adaptiveForest(double alpha,int stopLimit){
 
 
 
-    delete transInst;
-    delete[] sampleDf->data;
-    delete sampleDf;
+delete transInst;
+delete[] sampleDf->data;
+delete sampleDf;
 return ntree;
 }
 
@@ -259,16 +260,13 @@ std::vector<double> RForest::pathLength(double *inst)
 {
     std::vector<double> depth;
     int i=0;
-   // pnt++;
-    //MatrixXd rotmat;
     double* transInst=new double[dataset->ncol];//NULL;
-    for(std::vector<Tree*>::iterator it=this->trees.begin();it!=trees.end();it++)
-    {
- // rotateInstance(inst,this->rotMatrices[i],transInst);
-    	double _depth = getdepth(inst,*it,this->rotMatrices[i],transInst);
-    	depth.push_back(_depth);
+    
+   for(std::vector<Tree*>::iterator it=this->trees.begin();it!=trees.end();it++)
+    {   
+    	depth.push_back(getdepth(inst,*it,this->rotMatrices[i],transInst));
         i++;
-      }
+     }
 
 delete transInst;
 return depth;
@@ -278,7 +276,6 @@ double RForest::getdepth(double* inst, Tree* tree, MatrixXd &rotmat,double* tran
 {
 
 	rotateInstance(inst,rotmat,transInst);
-	double _depth = tree->pathLength(transInst);
-	return _depth;
+	return tree->pathLength(transInst);
 
 }

@@ -44,49 +44,52 @@ T randomT(T min, T max)
 
 double randomD (double min,double max)
  {
- uniform_real_distribution<double> dist (min,max);
- return dist(gen);
+	 uniform_real_distribution<double> dist (min,max);
+	 return dist(gen);
  }
 
 
-int randomI(int min, int max) {
+int randomI(int min, int max) 
+{
 
 
-uniform_int_distribution<unsigned> dist(min,max);
-return dist(gen);
+	uniform_int_distribution<unsigned> dist(min,max);
+	return dist(gen);
 
 
 }
 
 int randomEx(int min,int max,set<int>& exlude)
 {
-			int num;
-			num =randomI(min,max);            //(int) (min + (rand() % (max - min+1)));
-			return exlude.find(num)!=exlude.end()?randomEx(min,max,exlude):num;
+	int num;
+	num =randomI(min,max);            //(int) (min + (rand() % (max - min+1)));
+	return exlude.find(num)!=exlude.end()?randomEx(min,max,exlude):num;
 			
 }
 void sampleI(int min,int max, int nsample,vector<int> &samples)
 {
-int cnt=0;
-int rndI;
-set<int> duplicate;
-while(cnt<nsample)
-{
-rndI = randomEx(min,max,duplicate);
-samples.push_back(rndI);
-duplicate.insert(rndI);
-cnt++;
+	int cnt=0;
+	int rndI;
+	set<int> duplicate;
+	while(cnt<nsample)
+	{
+		rndI = randomEx(min,max,duplicate);
+		samples.push_back(rndI);
+		duplicate.insert(rndI);
+		cnt++;
 
-}
+	}
 
 }
 
 double score(double depth,int n)
 {
-return pow(2,-depth/avgPL(n));
+	return pow(2,-depth/avgPL(n));
 }
 
-void swapInt(int a, int b, int* x) {
+template<typename T>
+void swapInt(int a, int b, T* x)
+ {
 	int hold;
 	hold = x[a];
 	x[a] = x[b];
@@ -149,7 +152,6 @@ map<double,double> ecdf(vector<double> points) {
 	map<double,double> cdfm;
 
 	sort(points.begin(), points.end());
-	//cout<<dup.size()<<endl;
 	int j = -1;
 	double len = (double) points.size();
 	for (unsigned i = 0; i < points.size(); ++i) {

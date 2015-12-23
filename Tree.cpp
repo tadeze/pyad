@@ -45,7 +45,7 @@ void Tree::iTree(std::vector<int> const &dIndex,const doubleframe *dt, int heigh
 	}
 
 	//use only valid attributes
-    std::vector<int> attributes;
+   	 std::vector<int> attributes;
 	for (int j = 0; j < dt->ncol; j++)
 	{      
 		if (minmax[j][0] < minmax[j][1])
@@ -73,11 +73,11 @@ void Tree::iTree(std::vector<int> const &dIndex,const doubleframe *dt, int heigh
 				(dt->data[dIndex.at(i)][splittingAtt]!=minmax[this->splittingAtt][0]))
 
 		{
-			lnodeData.push_back(dIndex.at(i));
+			rnodeData.push_back(dIndex.at(i));
 		}
 		else
 		{
-			rnodeData.push_back(dIndex.at(i));
+			lnodeData.push_back(dIndex.at(i));
 		}
 	}
 	leftChild = new Tree(); //&dataL,height+1,maxheight);
@@ -119,12 +119,12 @@ double Tree::pathLength(double *inst)
 	{
 
 
-		return this->leftChild->pathLength(inst) + 1.0;
+		return this->rightChild->pathLength(inst) + 1.0;
 
 	}
 	else
 	{
-		return this->rightChild->pathLength(inst) + 1.0;
+		return this->leftChild->pathLength(inst) + 1.0;
 	}
 }
 

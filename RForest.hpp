@@ -33,12 +33,12 @@ public:
 	RForest(int _ntree,doubleframe* _df,int _nsample,int _maxheight,
 			bool _stopheight,bool _rsample) :
 			Forest(_ntree, _df, _nsample, _maxheight, _stopheight, _rsample) {
-        //eng.seed(time(NULL));  //initialize random generator seed .
-	eng.seed(400); //For debugging 
+        	//eng.seed(time(NULL));  //initialize random generator seed .
+		eng.seed(400); //For debugging 
             };
 
 	RForest() {};
-	virtual ~RForest() {};
+	~RForest() {};
 
 
 //Methods
@@ -47,14 +47,13 @@ public:
 	void buildForest(doubleframe* df);
 	void generateRandomRotationMatrix(Eigen::MatrixXd& M, int n );
 	void convertToVector(Eigen::MatrixXd &m,
-			std::vector<std::vector<double> > &v);
+			     std::vector<std::vector<double> > &v);
 	Eigen::MatrixXd convertToMatrix(std::vector<std::vector<double> > &data);
 	Eigen::MatrixXd rotateData(doubleframe* dt, Eigen::MatrixXd& M);
 	Eigen::MatrixXd convertDfToMatrix(const doubleframe* data,
-	std::vector<int> &sampleIndex);
+					std::vector<int> &sampleIndex);
 	std::vector<double> pathLength(double *inst);
 	double getdepth(double* inst, Tree* tree,Eigen::MatrixXd &rotmat,double* transInst);
-	//int rAdaptiveForest(double alpha,int stopLimit);
 	void rForest();
 	int adaptiveForest(double alpha,int stopLimit); 
 
