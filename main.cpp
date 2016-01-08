@@ -87,7 +87,7 @@ int main(int argc, char* argv[]) {
    	vector<vector<double> > pathLength = iff.pathLength(dt); //generate Depth all points in all trees
 	vector<double> rscores = rff.AnomalyScore(dt);
 	ofstream outscore(output_name);
-     /*if (metadata!=NULL) {
+     if (metadata!=NULL) {
         if (header) {
             for_each_in_vec(i,cname,metadata->colnames,{
                 outscore << *cname << ",";
@@ -98,12 +98,12 @@ int main(int argc, char* argv[]) {
             })
         }
          }
-    */
+   
 	outscore << "indx,ifscore,rfscore\n";
 	for (int j = 0; j < (int) scores.size(); j++) {
         if (metadata) {
             forseq(m,0,metadata->ncol,{
-                 //outscore << metadata->data[j][m] << ",";
+                outscore << metadata->data[j][m] << ",";
                 })
             }
 		
