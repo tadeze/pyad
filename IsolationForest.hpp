@@ -22,6 +22,7 @@ class IsolationForest:public Forest{
 	}
 	//convergent iForest
   int adaptiveForest(double alpha,int stopLimit); 
+  void fixedTreeForest();
 };
 
 

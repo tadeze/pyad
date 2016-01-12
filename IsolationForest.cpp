@@ -14,6 +14,10 @@ IsolationForest::IsolationForest(int _ntree,doubleframe* _df,
 
 
 }
+void IsolationForest::fixedTreeForest()
+{
+    buildForest();
+}
 //Build forest using defined number of trees
 
 void IsolationForest::buildForest()

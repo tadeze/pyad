@@ -1,6 +1,6 @@
 #include "argparse_iforest.h"
 
-#define NOPTS 10
+#define NOPTS 13
 #define IOPT 0
 #define OOPT 1
 #define MOPT 2
@@ -11,7 +11,9 @@
 #define VOPT 7
 #define AOPT 8
 #define ROPT 9
-
+#define COPT 10
+#define POPT 11
+#define XOPT 12
 d(option)* option_spec() {
     d(option)* opts = vecalloc(option,NOPTS);
     opts[IOPT] = (option){
@@ -34,6 +36,17 @@ d(option)* option_spec() {
         .isflag = false,
         .flagged = false
     };
+    opts[XOPT] = (option){
+        .sarg = 'x',
+        .larg = "testfile",
+        .name = "FILE",
+        .desc = "Specify path to test file. (optional).",
+        .default_value = NULL,
+        .value = NULL,
+        .isflag = false,
+        .flagged = false
+    };
+  
     opts[MOPT] = (option){
         .sarg = 'm',
         .larg = "metacol",
@@ -115,6 +128,28 @@ d(option)* option_spec() {
            .isflag = true,
            .flagged = false
        };
+     opts[POPT] = (option){
+           .sarg = 'p',
+           .larg = "pathlength",
+           .name = NULL,
+           .desc = "Toggle whether to display all depth of the tree (Default is false)",
+           .default_value = "false",
+           .value = NULL,
+           .isflag = true,
+           .flagged = false
+       };
+    
+    opts[COPT]=(option){
+        .sarg='c',
+        .larg="columns",
+        .name="N",
+        .desc="specify number of columns to use.",
+        .default_value="0",
+        .value=NULL,
+        .isflag=false,
+        .flagged=false
+
+    };
 
 
     return opts;
@@ -126,6 +161,8 @@ parsed_args* validate_args(d(option*) opts) {
     if (pargs->input_name==NULL) err_and_exit(1,"Must specify path to input with option -i/--infile.\n");
     pargs->output_name = opts[OOPT].value;
     if (pargs->output_name==NULL) err_and_exit(1,"Must specify path to output with option -o/--outfile.\n");
+    pargs->test_name = opts[XOPT].value; //set test file if available
+  //  if(pargs->test_name==NULL)pargs->test_name = opts[IOPT].value;  //if not specified set test file to input file
     if (opts[MOPT].value) {
         pargs->metacol = parse_multi_ints(opts[MOPT].value);
         if (pargs->metacol==NULL) {
@@ -133,7 +170,7 @@ parsed_args* validate_args(d(option*) opts) {
         }
         for_each_in_vec(i,cn,pargs->metacol,(*cn)--;)
     }
-
+    
     if (str_conv_strict(&(pargs->ntrees),int,opts[TOPT].value)) {
         err_and_exit(1,"Expected integer as number of trees.\n");
     }
@@ -162,6 +199,8 @@ parsed_args* validate_args(d(option*) opts) {
     pargs->header = opts[HOPT].flagged;
     pargs->verbose = opts[VOPT].flagged;
     pargs->adaptive =  strtol(opts[AOPT].value,NULL,10);  //added by Tadesse
-   
-return pargs;
+    pargs->columns = strtol(opts[COPT].value,NULL,10);
+    pargs->rotate=opts[ROPT].flagged;
+    pargs->pathlength = opts[POPT].flagged;
+    return pargs;
 }

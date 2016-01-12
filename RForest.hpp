@@ -56,7 +56,7 @@ public:
 	double getdepth(double* inst, Tree* tree,Eigen::MatrixXd &rotmat,double* transInst);
 	void rForest();
 	int adaptiveForest(double alpha,int stopLimit); 
-
+    void fixedTreeForest();
 
 };
 #endif /* RFOREST_H_ */

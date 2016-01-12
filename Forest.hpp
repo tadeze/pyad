@@ -65,9 +65,11 @@ virtual ~Forest()
 	};
     /* virtual function for adaptive forest*/
      virtual int adaptiveForest(double alpha,int stopLimit); 
-
+    
+     /*Fixed tree forest */
+     virtual void fixedTreeForest() {};
 	 /*
-	  * @input two vector v1 and v2
+	  * @input two vector v1 and 
 	 * @return proporation of intersection ,[0,1]
 	 */
 

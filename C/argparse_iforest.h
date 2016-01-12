@@ -6,6 +6,7 @@
 struct parsed_args {
     char* input_name;
     char* output_name;
+    char* test_name;
     d(int*) metacol;
     int ntrees;
     int sampsize;
@@ -13,6 +14,8 @@ struct parsed_args {
     bool header;
     int adaptive;
     bool rotate;
+    bool pathlength;
+    int columns;
     bool verbose;
 };
 
