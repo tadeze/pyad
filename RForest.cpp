@@ -1,3 +1,4 @@
+//TODO: Random rotation with reduced dimension of ceil(sqrt(d)/2) +2
 #include "RForest.hpp"
 /*
  * Class for RandomRotation Matrix
@@ -114,6 +115,7 @@ void RForest::fixedTreeForest()
 {
     rForest();
 }
+
 /*
  * Build rotation forest by rotating with random rotation matrices
  */
@@ -132,7 +134,7 @@ void RForest::rForest()
             
             MatrixXd rotMat(dataset->ncol,dataset->ncol);
             generateRandomRotationMatrix(rotMat,dataset->ncol);
-
+            
             //Save rotation matrix
             this->rotMatrices.push_back(rotMat);
 
@@ -282,3 +284,48 @@ double RForest::getdepth(double* inst, Tree* tree, MatrixXd &rotmat,double* tran
 	return tree->pathLength(transInst);
 
 }
+
+/*
+ * Build rotation forest by rotating with reduced dimension of \sqrt(d)/2 +2
+ */
+void RForest::projectedForest()
+{
+    //Build the RForest model 
+    std::vector<int> sampleIndex(this->nsample);
+    doubleframe* sampleDf = new doubleframe();
+    sampleDf->data = new double*[this->nsample];
+    //logfile<<"point,tree,x1,x2\n";
+    int rfeatures = ceil(sqrt(sampleDf->ncol)/2)+2;
+    for(int n=0;n<ntree;n++)
+          {
+            //get sample data
+            getSample(sampleIndex,nsample,rsample,dataset->nrow);
+            
+            MatrixXd rotMat(rfeatures,rfeatures);
+            
+            generateRandomRotationMatrix(rotMat,dataset->ncol);
+          
+            //Save rotation matrix
+            this->rotMatrices.push_back(rotMat);
+
+            //Rotate data and convert to doubleframe format
+            MatrixXd rotData =convertDfToMatrix(dataset,sampleIndex)*rotMat;
+            sampleDf->nrow = this->nsample;
+            sampleDf->ncol = rotMat.cols();
+            convertToDf(rotData,sampleDf);
+            
+            //Fill the sampleIndex with indices of the sample rotated data
+            sampleIndex.clear();
+
+            for(int i=0;i<sampleDf->nrow;i++) sampleIndex.push_back(i);
+            Tree *tree  = new Tree();
+
+            tree->iTree(sampleIndex,sampleDf,0,maxheight,stopheight);
+            this->trees.push_back(tree);
+
+            }
+    delete[] sampleDf->data;
+    delete sampleDf;
+}
+
+

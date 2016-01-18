@@ -132,7 +132,7 @@ d(option)* option_spec() {
            .sarg = 'p',
            .larg = "pathlength",
            .name = NULL,
-           .desc = "Toggle whether to display all depth of the tree (Default is false)",
+           .desc = "Toggle whether to display  depth of all trees (Default is false)",
            .default_value = "false",
            .value = NULL,
            .isflag = true,

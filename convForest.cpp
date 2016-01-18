@@ -69,7 +69,7 @@ void convForest::convergeIF(double tau,double alpha)
 	bool converged=false;
 
 	vector<pair<int ,int> > topk;
- util::logfile<<"ntree,index,currentscore,probinter \n";
+    util::logfile<<"ntree,index,currentscore,probinter \n";
 	vector<int> topIndex(tk);
 	vector<int> prevIndex;
 	double prob =0;
@@ -84,7 +84,8 @@ void convForest::convergeIF(double tau,double alpha)
 		tree->iTree(sampleIndex,dataset, 0, maxheight, stopheight);
 		this->trees.push_back(tree);
 		ntree++;
-		double d,scores,dbar;
+		double d,dbar,scores;
+               //scores,dbar;
 		topIndex.clear();
 		for (int inst = 0; inst <dataset->nrow; inst++)
 		{

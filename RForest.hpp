@@ -57,7 +57,7 @@ public:
 	void rForest();
 	int adaptiveForest(double alpha,int stopLimit); 
     void fixedTreeForest();
-
+    void projectedForest();
 };
 #endif /* RFOREST_H_ */
 
