@@ -81,8 +81,9 @@ void buildForest(Forest &iff,const double ALPHA,int stopLimit,string output_name
     saveScoreToFile(scores,pathLength,metadata,output_name,savePathLength);
 }
 
-
-
+/* Static variable 
+ */
+ bool Tree::rangeCheck ;  //range check for Tree score calculation. 
 
 int main(int argc, char* argv[]) 
 {
@@ -91,7 +92,7 @@ int main(int argc, char* argv[])
 	parsed_args* pargs = parse_args(argc, argv);
 	ntstring input_name = pargs->input_name;
 	ntstring output_name = pargs->output_name;
-  d(int)* metacol = pargs->metacol;
+ 	 d(int)* metacol = pargs->metacol;
 	int ntree = pargs->ntrees;
 	int nsample = pargs->sampsize;
 	int maxheight = pargs->maxdepth;
@@ -101,6 +102,7 @@ int main(int argc, char* argv[])
 	bool rsample = nsample != 0;
 	bool stopheight = maxheight != 0;
 	int  stopLimit = pargs->adaptive;
+	bool rangecheck = pargs->rangecheck;	
   bool rotate = pargs->rotate;
   bool pathlength = pargs->pathlength;
   ntstringframe* csv = read_csv(input_name, header, false, false);
@@ -108,9 +110,10 @@ int main(int argc, char* argv[])
 	doubleframe* dt = conv_frame(double, ntstring, csv); //read data to the global variable
   nsample = nsample==0?dt->nrow:nsample;
   const double ALPHA=0.01;
+ Tree::rangeCheck = rangecheck; 
   
-  IsolationForest iff(ntree,dt,nsample,maxheight,stopheight,rsample); //build iForest
-  buildForest(iff,ALPHA,stopLimit,output_name,metadata,pathlength);
+IsolationForest iff(ntree,dt,nsample,maxheight,stopheight,rsample); //build iForest
+ buildForest(iff,ALPHA,stopLimit,output_name,metadata,pathlength);
     
   if(rotate)  //check for rotation forest
   {

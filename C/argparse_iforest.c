@@ -1,6 +1,6 @@
 #include "argparse_iforest.h"
 
-#define NOPTS 13
+#define NOPTS 14
 #define IOPT 0
 #define OOPT 1
 #define MOPT 2
@@ -14,6 +14,7 @@
 #define COPT 10
 #define POPT 11
 #define XOPT 12
+#define GOPT 13
 d(option)* option_spec() {
     d(option)* opts = vecalloc(option,NOPTS);
     opts[IOPT] = (option){
@@ -128,6 +129,7 @@ d(option)* option_spec() {
            .isflag = true,
            .flagged = false
        };
+
      opts[POPT] = (option){
            .sarg = 'p',
            .larg = "pathlength",
@@ -150,8 +152,17 @@ d(option)* option_spec() {
         .flagged=false
 
     };
-
-
+    opts[GOPT] = (option){
+           .sarg = 'g',
+           .larg = "rangecheck",
+           .name = NULL,
+           .desc = "Toggle whether to use range check or not during testing (Default false) ",
+           .default_value = "false",
+           .value = NULL,
+           .isflag = true,
+           .flagged = false
+       };
+  
     return opts;
 }
 
@@ -202,5 +213,6 @@ parsed_args* validate_args(d(option*) opts) {
     pargs->columns = strtol(opts[COPT].value,NULL,10);
     pargs->rotate=opts[ROPT].flagged;
     pargs->pathlength = opts[POPT].flagged;
+    pargs->rangecheck = opts[GOPT].flagged;  
     return pargs;
 }

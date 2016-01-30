@@ -17,6 +17,8 @@ struct parsed_args {
     bool pathlength;
     int columns;
     bool verbose;
+    bool rangecheck;
+	
 };
 
 

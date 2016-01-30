@@ -17,10 +17,11 @@ public:
 	int ntree;
 	bool rsample;
 	int nsample;
-    bool stopheight;
-    int maxheight;
-   	doubleframe* dataset;  // holds the original dataset
-    Forest()
+    	bool stopheight;
+    	int maxheight;
+   	bool rangecheck;
+	doubleframe* dataset;  // holds the original dataset
+    	Forest()
 	{
 		rsample = false;
 		ntree = 0;
@@ -28,14 +29,16 @@ public:
 		dataset = NULL;
 
 	};
-Forest(int _ntree,doubleframe* _dataset,int _nsample,int _maxheight, bool _stopheight,bool _rsample)
+Forest(int _ntree,doubleframe* _dataset,int _nsample,int _maxheight, bool _stopheight,bool _rsample)//bool _rangecheck)
     {
 	ntree=_ntree;
-    dataset=_dataset;
+    	dataset=_dataset;
 	nsample=_nsample;
 	stopheight=_stopheight;
 	maxheight=_maxheight;
  	rsample = _rsample;
+//	rangecheck=_rangecheck;	
+//	Tree::rangeCheck = rangecheck;
     };
 virtual ~Forest()
 	{

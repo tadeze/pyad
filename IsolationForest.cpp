@@ -34,6 +34,7 @@ void IsolationForest::buildForest()
 
 			//build tree
 			Tree *tree = new Tree();
+		//	tree->rangeCheck = this->rangecheck;
 			tree->iTree(sampleIndex,dataset, 0, maxheight, stopheight);
 			this->trees.push_back(tree); //add tree to forest
 		//	Tree::treeIndx++;
@@ -66,7 +67,8 @@ int IsolationForest::adaptiveForest(double alpha,int stopLimit){
 
             //Fill the sampleIndex with indices of the sample rotated data
             Tree *tree  = new Tree();
-            tree->iTree(sampleIndex,dataset,0,maxheight,stopheight);
+	//    tree->rangeCheck = this->rangecheck;
+	    tree->iTree(sampleIndex,dataset,0,maxheight,stopheight);
             this->trees.push_back(tree);
             ntree++;
             double d,dbar;

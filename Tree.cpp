@@ -5,7 +5,7 @@
  *      Author: Tadeze
  */
 #include "Tree.hpp"
-bool Tree::rangeCheck=true;
+//bool Tree::rangeCheck=true;
 void Tree::iTree(std::vector<int> const &dIndex,const doubleframe *dt, int height, int maxheight, bool stopheight)
 {
 	this->depth = height; //Tree height
