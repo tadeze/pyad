@@ -15,6 +15,7 @@
 #define POPT 11
 #define XOPT 12
 #define GOPT 13
+
 d(option)* option_spec() {
     d(option)* opts = vecalloc(option,NOPTS);
     opts[IOPT] = (option){
@@ -172,8 +173,9 @@ parsed_args* validate_args(d(option*) opts) {
     if (pargs->input_name==NULL) err_and_exit(1,"Must specify path to input with option -i/--infile.\n");
     pargs->output_name = opts[OOPT].value;
     if (pargs->output_name==NULL) err_and_exit(1,"Must specify path to output with option -o/--outfile.\n");
+  
     pargs->test_name = opts[XOPT].value; //set test file if available
-  //  if(pargs->test_name==NULL)pargs->test_name = opts[IOPT].value;  //if not specified set test file to input file
+   if(pargs->test_name==NULL)pargs->test_name = opts[IOPT].value;  //if not specified set test file to input file
     if (opts[MOPT].value) {
         pargs->metacol = parse_multi_ints(opts[MOPT].value);
         if (pargs->metacol==NULL) {
