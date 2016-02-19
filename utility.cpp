@@ -8,29 +8,9 @@
 #include "utility.hpp"
 using namespace std;
 namespace util {
-default_random_engine gen(400);  //Debugging 
+default_random_engine gen(400);  //Debugging
 
-//default_random_engine gen(time(NULL));  //Production 
-/*
-int randomI(int min, int max) {
-	int num;
-	num = (int) (min + (rand() % (max - min)));
-	return num;
-}
-int randomI(int min,int max,set	<int>& exclude)
-{
-			int num;
-			num = (int) (min + (rand() % (max - min+1)));
-			return exclude.find(num)!=exclude.end()?randomI(min,max,exclude):num;
-			
-}
-
-double randomD(double min, double max) {
-	return ceil((min + ((double) rand() / (RAND_MAX)) * (max - min)) * 100)
-			/ 100;
-}
-*/
-
+//default_random_engine gen(time(NULL));  //Production
 
 template <typename T>
 T randomT(T min, T max)
@@ -51,7 +31,6 @@ double randomD (double min,double max)
 
 int randomI(int min, int max) 
 {
-
 
 	uniform_int_distribution<unsigned> dist(min,max);
 	return dist(gen);
@@ -110,7 +89,7 @@ double mean(vector<double> points) {
 /*
  * Calculate sample variance from vector of doublen numbers
  */
-double variance(vector<double> x){
+double variance(vector<double> &x){
  	double sum=0.0;
 	double mn=mean(x);
 	for(double elem : x)
@@ -119,6 +98,17 @@ double variance(vector<double> x){
 	}
 	return sum/(double)(x.size()-1);
 }
+
+/* T-confidence interval
+ *
+ */
+double tconf(vector<double> &points,double sigma=0.95)
+{
+	double sd = sqrt(variance(points));
+	double tvalue = 1.64*sd/(double)sqrt(points.size());
+	return tvalue;
+}
+
 
 /*
  * Read csv file into vector,
@@ -198,7 +188,6 @@ double avgPL(int n) {
  * input: 2-d depth row X tree_depth
  * return 1-D score of each point
  */
-
 
 vector<double> ADdistance(vector<vector<double> > depths, bool weightToTail =
 		false) {

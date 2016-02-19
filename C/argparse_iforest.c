@@ -1,6 +1,6 @@
 #include "argparse_iforest.h"
 
-#define NOPTS 14
+#define NOPTS 16
 #define IOPT 0
 #define OOPT 1
 #define MOPT 2
@@ -15,6 +15,8 @@
 #define POPT 11
 #define XOPT 12
 #define GOPT 13
+#define JOPT 14
+#define QOPT 15
 
 d(option)* option_spec() {
     d(option)* opts = vecalloc(option,NOPTS);
@@ -163,6 +165,27 @@ d(option)* option_spec() {
            .isflag = true,
            .flagged = false
        };
+
+    opts[JOPT] = (option){
+        .sarg = 'j',
+        .larg = "precision",
+        .name = "P",
+        .desc = "Specify rho precision confidence interval for stopping criteria Value (0.01 to 0.08) works",
+        .default_value = "-3.0",
+        .value = NULL,
+        .isflag = false,
+        .flagged = false
+    };
+    opts[QOPT] = (option){
+            .sarg = 'q',
+            .larg = "alpha",
+            .name = "Q",
+            .desc = "Anomaly proportion. Default 0.01",
+            .default_value = "0.01",
+            .value = NULL,
+            .isflag = false,
+            .flagged = false
+        };
   
     return opts;
 }
@@ -216,5 +239,8 @@ parsed_args* validate_args(d(option*) opts) {
     pargs->rotate=opts[ROPT].flagged;
     pargs->pathlength = opts[POPT].flagged;
     pargs->rangecheck = opts[GOPT].flagged;  
+    pargs->precision = strtof(opts[JOPT].value,NULL);
+    pargs->alpha= strtof(opts[QOPT].value,NULL);
+    //strtof();
     return pargs;
 }

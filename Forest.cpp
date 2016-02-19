@@ -113,4 +113,7 @@ int Forest::adaptiveForest(double alpha,int stopLimit)
 //For now remove warning compiler
  return (int)alpha*stopLimit;
 }
-
+int Forest::confTree(double alpha,double rho, int init_tree){
+	//For now remove warning
+	return (int)alpha*rho*init_tree;
+}

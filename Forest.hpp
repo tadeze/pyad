@@ -71,6 +71,8 @@ virtual ~Forest()
     
      /*Fixed tree forest */
      virtual void fixedTreeForest() {};
+
+     virtual int confTree(double alpha,double rho,int init_tree);
 	 /*
 	  * @input two vector v1 and 
 	 * @return proporation of intersection ,[0,1]

@@ -245,7 +245,7 @@ void convForest::confstop(double alpha)
 	    //double maxCIWidth =0;		
 		//double mn = mean(theta_k);
 		
-        double var = util::variance(theta_k);
+        double var =  util::variance(theta_k);
 		double halfwidth=1.96*sqrt(var)/sqrt(ntree);	
 	
 
@@ -256,7 +256,11 @@ void convForest::confstop(double alpha)
         //converged = ntree>1;
 	  //converged = ntree>300; //    halfwidth <=tua;
       if(ntree>400) break;  	
-	}
+}
+
+
+
+
 
 }
 

@@ -23,6 +23,7 @@ class IsolationForest:public Forest{
 	//convergent iForest
   int adaptiveForest(double alpha,int stopLimit); 
   void fixedTreeForest();
+   int confTree(double alpha,double rho,int init_tree);
 };
 
 

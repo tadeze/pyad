@@ -32,9 +32,8 @@ struct Data
 	std::vector<std::vector<double> > data;
 };
 */
+////default_random_engine gen(time(NULL));
 namespace util{
-//default_random_engine gen(time(NULL));
-
 int randomI(int min, int max);
 int randomEx(int min,int max,std::set<int>& exlude);
 void sampleI(int min, int max, int nsample, std::vector<int> &sampleIndx);
@@ -45,10 +44,12 @@ template <typename T>
 T randomT(T min, T max);
 void swapInt(int a, int b, int* x);
 //template<typename T>
-double variance(std::vector<double> x);
+double variance(std::vector<double> &x);
 
 //template<typename T>
 double mean(std::vector<double> points);
+
+double tconf(std::vector<double> &points, double sigma);
 
 std::vector<std::vector<double> > readcsv(const char* filename, char delim,
 		bool header);
