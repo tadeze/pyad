@@ -40,6 +40,11 @@ ofstream util::logfile("treepath.csv");
 void saveScoreToFile(std::vector<double> &scores,std::vector<std::vector<double> > &pathLength,const ntstringframe* metadata, string fName,bool savePathLength=false)
 {
 
+
+  //Compute the AUC of the score 
+  vector<double> groundtruth(scores.size(),0);
+  // make 0/1 from label 
+
   ofstream outscore(fName);
   if(!savePathLength)
 	 outscore << "groundtruth,score\n";
@@ -48,6 +53,8 @@ void saveScoreToFile(std::vector<double> &scores,std::vector<std::vector<double>
       if (metadata)
         {
           outscore<<metadata->data[j][0]<<",";
+          if(metadata->data[j][0]=="anomaly" || metadata->data[j][0] ==1)
+            groundtruth[j] = 1;
          }
 		
 	outscore  << scores[j]; //<<util::mean(pathLength[j])<<","<<rscores[j];
@@ -64,6 +71,14 @@ void saveScoreToFile(std::vector<double> &scores,std::vector<std::vector<double>
 	}
 
   outscore.close();
+
+double AUC(std::vector<double> &labels, std::vector<double> &scores,int n,int posclass);
+
+
+// compute AUC and display it 
+double auc = metric::AUC(groundtruth,scores,scores.size(),0);
+
+std::cout<<" Auc generated "<< auc;
 
 }
 
@@ -88,6 +103,9 @@ void buildForest(Forest &iff, doubleframe* test_dt, const double alpha,int stopL
     vector<double> scores = iff.AnomalyScore(test_dt); //generate anomaly score
    	vector<vector<double> > pathLength = iff.pathLength(test_dt); //generate Depth all points in all trees
     saveScoreToFile(scores,pathLength,metadata,output_name,savePathLength);
+
+
+
 }
 
 /* Static variable 

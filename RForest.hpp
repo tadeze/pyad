@@ -24,8 +24,8 @@ class RForest: public Forest {
  
 
  	std::vector<Eigen::MatrixXd> rotMatrices;
-   	//std::mt19937 eng{std::random_device{}()}; //For production
-  	std::default_random_engine eng;   //for debugging
+   	std::mt19937 eng{std::random_device{}()}; //For production
+  	//std::default_random_engine eng;   //for debugging
 
 
 public:
@@ -33,8 +33,8 @@ public:
 	RForest(int _ntree,doubleframe* _df,int _nsample,int _maxheight,
 			bool _stopheight,bool _rsample) :
 			Forest(_ntree, _df, _nsample, _maxheight, _stopheight, _rsample) {
-        	//eng.seed(time(NULL));  //initialize random generator seed .
-		eng.seed(400); //For debugging 
+       // 	eng.seed(time(NULL));  //initialize random generator seed .
+	//	eng.seed(400); //For debugging 
             };
 
 	RForest() {};
