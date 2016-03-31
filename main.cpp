@@ -53,8 +53,8 @@ void saveScoreToFile(std::vector<double> &scores,std::vector<std::vector<double>
       if (metadata)
         {
           outscore<<metadata->data[j][0]<<",";
-          if(metadata->data[j][0]=="anomaly" || metadata->data[j][0] ==1)
-            groundtruth[j] = 1;
+          //if(metadata->data[j][0]=="anomaly" || metadata->data[j][0] ==1)
+            //groundtruth[j] = 1;
          }
 		
 	outscore  << scores[j]; //<<util::mean(pathLength[j])<<","<<rscores[j];
@@ -72,13 +72,13 @@ void saveScoreToFile(std::vector<double> &scores,std::vector<std::vector<double>
 
   outscore.close();
 
-double AUC(std::vector<double> &labels, std::vector<double> &scores,int n,int posclass);
+//double AUC(std::vector<double> &labels, std::vector<double> &scores,int n,int posclass);
 
 
 // compute AUC and display it 
-double auc = metric::AUC(groundtruth,scores,scores.size(),0);
+//double auc = metric::AUC(groundtruth,scores,scores.size(),0);
 
-std::cout<<" Auc generated "<< auc;
+//std::cout<<" Auc generated "<< auc;
 
 }
 
