@@ -56,6 +56,10 @@ std::vector<std::vector<double> > readcsv(const char* filename, char delim,
 //extern std::ofstream ffile; //("log.txt");
 std::map<double,double> ecdf(std::vector<double> points);
 std::vector<double> ADdistance(const std::vector<std::vector<double> > &depths, bool weightToTail);
+
+//void convertVtoDf(std::vector<std::vector<double> > &sourceVec,doubleframe* df);
+
+
 //extern doubleframe* dt;
 //log file
 extern std::ofstream logfile;

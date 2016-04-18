@@ -231,5 +231,30 @@ vector<double> ADdistance(vector<vector<double> > depths, bool weightToTail =
 	}
 }
 
+/*
+ * Convert vector-2d to doubleframe
+ */
+/*
+void convertVtoDf(std::vector<std::vector<double> > &sourceVec,doubleframe* df)
+{
+	int _ncol =(int) sourceVec[0].size();
+	int _nrow =(int) sourceVec.size();
+
+	for(int i=0;i<_nrow;i++)
+	{
+		for(int j=0;j<_ncol;j++)
+		{
+			df->data[i][j] = sourceVec[i][j];
+
+		}
+	}
+	df->ncol = _ncol;
+	df->nrow = _nrow;
+
+}
+*/
+
+
+
 /* UTITLITY_H_ */
 
