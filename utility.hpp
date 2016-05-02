@@ -20,20 +20,22 @@
 #include<algorithm>
 #include<map>
 #include<set>
-#include "cincl.hpp"
+//#include "cincl.hpp"
 #include<random>
 #include<utility>
 
-/*
-struct Data
+
+
+
+////default_random_engine gen(time(NULL));
+namespace util{
+struct doubleframe
 {
 	int ncol;
 	int nrow;
 	std::vector<std::vector<double> > data;
+	//std::vector<std::vector<double> > data;
 };
-*/
-////default_random_engine gen(time(NULL));
-namespace util{
 int randomI(int min, int max);
 int randomEx(int min,int max,std::set<int>& exlude);
 void sampleI(int min, int max, int nsample, std::vector<int> &sampleIndx);

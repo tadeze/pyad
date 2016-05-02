@@ -9,6 +9,7 @@
 #define CONVFOREST_H_
 
 #include "Forest.hpp"
+using namespace util;
 class convForest: public Forest {
 public:
 	int tau;

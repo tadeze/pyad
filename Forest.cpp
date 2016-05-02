@@ -27,7 +27,7 @@ double Forest::instanceScore(double *inst)
 /*
  * Score for  a set of dataframe in dataset
  */
-std::vector<double> Forest::AnomalyScore(doubleframe* df)
+std::vector<double> Forest::AnomalyScore(util::doubleframe* df)
 {
 	std::vector<double> scores;
 	//iterate through all points
@@ -57,7 +57,7 @@ std::vector<double> Forest::pathLength(double *inst)
 
 /* PathLength for all points
 */
-std::vector<std::vector<double> > Forest::pathLength(doubleframe*  data)
+std::vector<std::vector<double> > Forest::pathLength(util::doubleframe*  data)
 {
 	std::vector < std::vector<double> > depths;
 	for (int r = 0; r < data->nrow; r++)

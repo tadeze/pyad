@@ -9,7 +9,7 @@
 #define FOREST_H_
 #include "utility.hpp"
 #include "Tree.hpp"
-#include "cincl.hpp"
+//#include "cincl.hpp"
 
 class Forest {
 public:
@@ -20,8 +20,9 @@ public:
     	bool stopheight;
     	int maxheight;
    	bool rangecheck;
-	doubleframe* dataset;  // holds the original dataset
-    	Forest()
+	//doubleframe* dataset;  // holds the original dataset
+    util::doubleframe* dataset;
+    Forest()
 	{
 		rsample = false;
 		ntree = 0;
@@ -29,7 +30,7 @@ public:
 		dataset = NULL;
 
 	};
-Forest(int _ntree,doubleframe* _dataset,int _nsample,int _maxheight, bool _stopheight,bool _rsample)//bool _rangecheck)
+Forest(int _ntree,util::doubleframe* _dataset,int _nsample,int _maxheight, bool _stopheight,bool _rsample)//bool _rangecheck)
     {
 	ntree=_ntree;
     	dataset=_dataset;
@@ -51,9 +52,9 @@ virtual ~Forest()
     }
 
 	double instanceScore(double *inst);
-	std::vector<double> AnomalyScore(doubleframe* df);
+	std::vector<double> AnomalyScore(util::doubleframe* df);
 	virtual std::vector<double> pathLength(double *inst);
-	std::vector<std::vector<double> > pathLength(doubleframe* data);
+	std::vector<std::vector<double> > pathLength(util::doubleframe* data);
 	std::vector<double> meandepth();
 	std::vector<double> ADtest(const std::vector<std::vector<double> > &pathlength, bool weighttotail);
 	std::vector<double> importance(double *inst);

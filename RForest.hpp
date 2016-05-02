@@ -20,6 +20,8 @@
 #include "Eigen/Dense"
 #include "Eigen/QR"
 #include "Forest.hpp"
+//#include "cincl.hpp"
+using namespace util;
 class RForest: public Forest {
  
 

@@ -13,7 +13,7 @@ class IsolationForest:public Forest{
     public:
 	IsolationForest();
 
-	IsolationForest(int _ntree,doubleframe* _df,
+	IsolationForest(int _ntree, util::doubleframe* _df,
 			int _nsample,int _maxheight, bool _stopheight,bool _rsample);
 	//int adaptiveForest(double alpha,int stopLimit);
 	void buildForest();
@@ -23,7 +23,7 @@ class IsolationForest:public Forest{
 	//convergent iForest
   int adaptiveForest(double alpha,int stopLimit); 
   void fixedTreeForest();
-   int confTree(double alpha,double rho,int init_tree);
+  int confTree(double alpha,double rho,int init_tree);
 };
 
 

@@ -5,8 +5,8 @@
  *      Author: Tadeze
  */
 #include "Tree.hpp"
-//bool Tree::rangeCheck=true;
-void Tree::iTree(std::vector<int> const &dIndex,const doubleframe *dt, int height, int maxheight, bool stopheight)
+bool Tree::rangeCheck=true;
+void Tree::iTree(std::vector<int> const &dIndex,const util::doubleframe *dt, int height, int maxheight, bool stopheight)
 {
 	this->depth = height; //Tree height
 	// Set size of the node
@@ -128,14 +128,3 @@ double Tree::pathLength(double *inst)
 	}
 }
 
-/*
- * Change direction whenever feature f encountered
- *
-double Tree::fPathLength(double *inst,int f)
-{
-
-
-return 1.0;
-
-}
-*/

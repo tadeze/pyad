@@ -77,7 +77,7 @@ void saveScoreToFile(std::vector<double> &scores,std::vector<std::vector<double>
 }
 
 
-void buildForest(Forest &iff, doubleframe* test_dt, const double alpha,int stopLimit,float rho,
+void buildForest(Forest &iff, util::doubleframe* test_dt, const double alpha,int stopLimit,float rho,
 		string output_name,ntstringframe* metadata,bool savePathLength)
 {
     if(iff.ntree>0)
@@ -104,7 +104,7 @@ saveScoreToFile(scores,pathLength,metadata,output_name,savePathLength);
 }
 
 //overloaded function
-void buildForestPy(Forest &iff, doubleframe* test_dt, const double alpha,int stopLimit,float rho)
+void buildForestPy(Forest &iff, util::doubleframe* test_dt, const double alpha,int stopLimit,float rho)
 
 {
     if(iff.ntree>0)
@@ -163,7 +163,15 @@ vector<vector<double> > syntheticData(int D, int N)
 	     return data;
 	}
 
+util::doubleframe convertdf(doubleframe* df){
+    util::doubleframe *dt = new util::doubleframe();
+    dt->ncol = df->ncol;
+    dt->nrow = df->nrow;
+    dt->data = df->data;
+    return dt;
 
+
+}
 
 /* Static variable 
  */
@@ -195,20 +203,26 @@ int main(int argc, char* argv[])
        //Input file to dataframe
     ntstringframe* csv = read_csv(input_name, header, false, false);
     ntstringframe* metadata = split_frame(ntstring, csv, metacol,true);
-	doubleframe* dt = conv_frame(double, ntstring, csv); //read data to the global variable
+	doubleframe* dt_ = conv_frame(double, ntstring, csv); //read data to the global variable
     
    
     
     //Test file to data frame 
   ntstringframe* csv_test = read_csv(test_name, header, false, false);
   metadata = split_frame(ntstring, csv_test, metacol,true);
-  doubleframe* test_dt=dt;
+  doubleframe* test_dt_ =dt_;
   
   if(test_name==input_name)
-       test_dt = dt;
+       test_dt_ = dt_;
   else
-      test_dt = conv_frame(double, ntstring, csv_test); //read data to the global variable
+      test_dt_ = conv_frame(double, ntstring, csv_test); //read data to the global variable
    
+// Conversion starts here
+  util::doubleframe *dt = convertdf(dt_);
+  util::doubleframe *test_dt =convertdf(test_dt_);
+  //conversion ends here
+
+
   nsample = nsample==0?dt->nrow:nsample;
    //const double ALPHA=0.01;
   Tree::rangeCheck = rangecheck;
@@ -216,7 +230,7 @@ int main(int argc, char* argv[])
   /*
    * Test for pyForest
    * TODO: Synthetic data genrating class
-   */
+   *
   int N=30;
   int D=5;
  vector<vector<double> > data = syntheticData(N,D);
@@ -233,6 +247,7 @@ pforest.trainForest(data,ntree, nsample,maxheight,rotate,stopLimit==0,
 	 std::cout<<sc<<"\n";
  }
 
+*/
 
 
  IsolationForest iff(ntree,dt,nsample,maxheight,stopheight,rsample); //build iForest

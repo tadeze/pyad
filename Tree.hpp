@@ -8,7 +8,7 @@
 #ifndef TREE_H_
 #define TREE_H_
 #include "utility.hpp"
-#include "cincl.hpp"
+//#include "cincl.hpp"
 
 class Tree
 {
@@ -43,7 +43,7 @@ public:
 
 	};
 
-	void iTree(std::vector<int> const &dIndex,const doubleframe* dt, int height, int maxHeight, bool stopheight);
+	void iTree(std::vector<int> const &dIndex, const util::doubleframe *dt, int height, int maxHeight, bool stopheight);
 	double pathLength(double *inst);
 
 };
