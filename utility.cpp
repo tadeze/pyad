@@ -232,14 +232,7 @@ vector<double> ADdistance(vector<vector<double> > depths, bool weightToTail =
 }
 
 
-util::dataset *makeDataset(std::vector<std::vector<double> > &data)
-{
-	util::dataset *dt = new util::dataset();
-	dt->data = data;
-	dt->ncol = (int)data[0].size();
-	dt->nrow = (int)data.size();
-	return dt;
-} //Tested it workd well
+//Tested it workd well
 
 
 /*

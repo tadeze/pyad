@@ -5,6 +5,7 @@
  *      Author: Tadeze
  */
 #include "Tree.hpp"
+#include<stack>
 bool Tree::rangeCheck=true;
 void Tree::iTree(std::vector<int> const &dIndex,const util::dataset *dt, int height, int maxheight, bool stopheight)
 {
@@ -91,10 +92,44 @@ void Tree::iTree(std::vector<int> const &dIndex,const util::dataset *dt, int hei
 }
 
 
+
+
+
+
+
 /*
+ * takes instance as vector of double
+ *//*
  * takes instance as vector of double
  */
 double Tree::pathLength(std::vector<double> &inst)
+{
+
+    double instAttVal = inst[this->splittingAtt];
+	if(Tree::rangeCheck==true)
+ 	{
+
+		if(instAttVal < this->minAttVal && util::randomD(instAttVal,this->minAttVal)<this->minAttVal)
+			return 1.0;
+		if(instAttVal >this->minAttVal && util::randomD(instAttVal,this->maxAttVal)>this->maxAttVal)
+			return 1.0;
+	}
+
+	double depth=0.0;
+	Tree *temp =this;
+	while(temp!=NULL){
+		instAttVal = inst[temp->splittingAtt];
+		if ( instAttVal >= temp->splittingPoint)
+					temp= temp->rightChild;
+		else
+			temp = temp->leftChild;
+
+		depth +=1.0;
+	}
+return depth+util::avgPL(temp->nodeSize);
+}
+//For efficient use the above
+double Tree::pathLengthM(std::vector<double> &inst)
 {
 
  	if (this->leftChild==NULL||this->rightChild==NULL)
@@ -127,4 +162,42 @@ double Tree::pathLength(std::vector<double> &inst)
 		return this->leftChild->pathLength(inst) + 1.0;
 	}
 }
+
+
+
+
+
+
+int Tree::maxTreeDepth()
+{
+
+	if (!this) return 0;
+	std::stack<Tree*> s;
+	s.push(this);
+	int maxDepth=0;
+	Tree *prev =NULL;
+	 while (!s.empty()) {
+	    Tree *curr = s.top();
+	    if (!prev || prev->leftChild == curr || prev->rightChild== curr) {
+	    if(curr->leftChild)
+	    	s.push(curr->leftChild);
+	     else if (curr->rightChild)
+	        s.push(curr->rightChild);
+	    }
+	    else if (curr->leftChild == prev) {
+	      if (curr->rightChild)
+	        s.push(curr->rightChild);
+	    }
+	    else {
+	      s.pop();
+	    }
+
+	    prev = curr;
+	    if ((int)s.size() > maxDepth)
+	      maxDepth = s.size();
+	  }
+	  return maxDepth;
+
+
+	}
 
