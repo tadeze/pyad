@@ -67,3 +67,8 @@ TEST_F(FacadeForestTest, avgDepth){
 	 EXPECT_GT(scores[50],7);
 
 }
+
+TEST_F(FacadeForestTest, factorial){
+	long n=9;
+	EXPECT_EQ(ff.factorial(n),362880);
+}

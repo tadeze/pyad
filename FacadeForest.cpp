@@ -120,7 +120,34 @@ std::vector<double> FacadeForest::averageDepth() {
 return meandepth;
 }
 
+long FacadeForest::factorial(int n){
+	long fact =1;
+	for(int i=1;i<=n;i++)
+		fact *=i;
+	return fact;
+}
 
+
+double FacadeForest::sum_array(double* input_array, int length) {
+
+  /* Initialize sum */
+  double sum = 0.;
+
+  /* Compute sum of array elements */
+  for (int i=0; i < length; i++)
+    sum += input_array[i];
+
+  return sum;
+}
+/* Define function implementation */
+void FacadeForest::get_rand_array(double* output_array, int length) {
+
+  /* Populate input NumPy array with random numbers */
+  for (int i=0; i < length; i++)
+    output_array[i] = ((double) rand()) / RAND_MAX;
+
+  return;
+}
 
 
 

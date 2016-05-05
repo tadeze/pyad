@@ -78,17 +78,6 @@ public:
         FacadeForest::rangecheck = rangecheck;
     }
 
-    //Methods
-
-    void trainForest(std::vector<std::vector<double> > &traindf,int _ntree,
-    		int _nsample,int _maxheight, bool _rotate, bool _adaptive,
-    		    		bool _rangecheck,double _rho,int _stopLimit);
-    void testForest(std::vector<std::vector<double> > &testdf);
-    void saveModel(std::string modelName);
-    //Forest loadModel(std::string modelName);
-    std::vector<double> getScore();
-    std::vector<std::vector<double> > PathLength();
-    std::vector<double> averageDepth();
 
 	const Forest* getIff() const {
 		return iff;
@@ -101,6 +90,22 @@ public:
 	const util::dataset* getTraindf() const {
 		return traindf;
 	}
+
+
+    //Methods
+
+    void trainForest(std::vector<std::vector<double> > &traindf,int _ntree,
+    		int _nsample,int _maxheight, bool _rotate, bool _adaptive,
+    		    		bool _rangecheck,double _rho,int _stopLimit);
+    void testForest(std::vector<std::vector<double> > &testdf);
+    void saveModel(std::string modelName);
+    //Forest loadModel(std::string modelName);
+    std::vector<double> getScore();
+    std::vector<std::vector<double> > PathLength();
+    std::vector<double> averageDepth();
+    long factorial(int n);
+    double sum_array(double* input_array, int length);
+    void get_rand_array(double* output_array, int length);
 };
 
 
