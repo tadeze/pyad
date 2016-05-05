@@ -31,17 +31,17 @@ Default value is 100.
  Print this help message and exit.
  */
 
-#include "main.hpp"
-#include "PyForest.hpp"
+#include "FacadeForest.hpp"
 using namespace std;
 
 //log file
 ofstream util::logfile("treepath.csv");
 
+/*
 //Save score to flat file
-void saveScoreToFile(std::vector<double> &scores,std::vector<std::vector<double> > &pathLength,const ntstringframe* metadata, string fName,bool savePathLength=false)
+void saveScoreToFile(std::vector<double> &scores,std::vector<std::vector<double> > &pathLength,
+		const ntstringframe* metadata, string fName,bool savePathLength=false)
 {
-
 
   //Compute the AUC of the score 
   vector<double> groundtruth(scores.size(),0);
@@ -103,7 +103,7 @@ saveScoreToFile(scores,pathLength,metadata,output_name,savePathLength);
 
 }
 
-//overloaded function
+overloaded function
 void buildForestPy(Forest &iff, util::doubleframe* test_dt, const double alpha,int stopLimit,float rho)
 
 {
@@ -130,19 +130,26 @@ void buildForestPy(Forest &iff, util::doubleframe* test_dt, const double alpha,i
 
 //saveScoreToFile(scores,pathLength,metadata,output_name,savePathLength);
 
-
-
 }
-
+*/
 /*
  * Display vector data
  */
-void dispalyVec(vector<double> &data)
+
+void displayVec(vector<double> &data)
 {
     for(double row : data)
     {
-        std::cout<<row<<"\n";
+        std::cout<<row<<"\t";
     }
+}
+
+void displayVec(vector<vector<double> > data){
+	for(auto row : data)
+	{
+		displayVec(row);
+	}
+	std::cout<<"\n";
 }
 
 
@@ -163,24 +170,19 @@ vector<vector<double> > syntheticData(int D, int N)
 	     return data;
 	}
 
-util::doubleframe convertdf(doubleframe* df){
-    util::doubleframe *dt = new util::doubleframe();
-    dt->ncol = df->ncol;
-    dt->nrow = df->nrow;
-    dt->data = df->data;
-    return dt;
-
-
-}
 
 /* Static variable 
  */
-bool Tree::rangeCheck ;  //range check for Tree score calculation.
+//bool Tree::rangeCheck ;  //range check for Tree score calculation.
 
-int main(int argc, char* argv[]) 
+/* Static variable 
+ */
+/*
+void parseInput(int argc, char* argv[])
 {
+    // bool Tree::rangeCheck ;  //range check for Tree score calculation. 
 
-    /*parse argument from command line*/
+    parse argument from command line
 	parsed_args* pargs = parse_args(argc, argv);
 	ntstring input_name = pargs->input_name;
 	ntstring output_name = pargs->output_name;
@@ -203,31 +205,25 @@ int main(int argc, char* argv[])
        //Input file to dataframe
     ntstringframe* csv = read_csv(input_name, header, false, false);
     ntstringframe* metadata = split_frame(ntstring, csv, metacol,true);
-	doubleframe* dt_ = conv_frame(double, ntstring, csv); //read data to the global variable
+	doubleframe* dt = conv_frame(double, ntstring, csv); //read data to the global variable
     
    
     
     //Test file to data frame 
   ntstringframe* csv_test = read_csv(test_name, header, false, false);
   metadata = split_frame(ntstring, csv_test, metacol,true);
-  doubleframe* test_dt_ =dt_;
+  doubleframe* test_dt =dt;
   
   if(test_name==input_name)
-       test_dt_ = dt_;
+       test_dt = dt;
   else
-      test_dt_ = conv_frame(double, ntstring, csv_test); //read data to the global variable
+      test_dt = conv_frame(double, ntstring, csv_test); //read data to the global variable
    
-// Conversion starts here
-  util::doubleframe *dt = convertdf(dt_);
-  util::doubleframe *test_dt =convertdf(test_dt_);
-  //conversion ends here
-
-
-  nsample = nsample==0?dt->nrow:nsample;
-   //const double ALPHA=0.01;
-  Tree::rangeCheck = rangecheck;
+    nsample = nsample==0?dt->nrow:nsample;
+    //const double ALPHA=0.01;
+   Tree::rangeCheck = rangecheck; 
    
-  /*
+
    * Test for pyForest
    * TODO: Synthetic data genrating class
    *
@@ -248,7 +244,7 @@ pforest.trainForest(data,ntree, nsample,maxheight,rotate,stopLimit==0,
  }
 
 */
-
+/*
 
  IsolationForest iff(ntree,dt,nsample,maxheight,stopheight,rsample); //build iForest
  buildForest(iff,test_dt,alpha,stopLimit,rho,output_name,metadata,pathlength);
@@ -261,8 +257,64 @@ pforest.trainForest(data,ntree, nsample,maxheight,rotate,stopLimit==0,
  }
 
   //Anomaly score and path length
-  util::logfile.close();
-  return 0;
+
+
+}
+*/
+
+
+util::dataset *makeDatasetM(std::vector<std::vector<double> > &data)
+{
+	util::dataset *dt = new util::dataset();
+	dt->data = data;
+	dt->ncol = (int)data[0].size();
+	dt->nrow = (int)data.size();
+	return dt;
+}
+
+
+
+int main(int argc, char* argv[]) 
+{
+   //parseInput(argc,argv);
+	//Tree::rangeCheck = true;
+   std::string filename("synth2d.csv");
+   std::vector<std::vector<double> > data = util::readcsv((char*) &filename[0],',',true);
+    
+   // std::cout<<data.size()<<","<<data[0].size()<<" Row/column"<<std::endl;
+
+ // From facadeForest
+   FacadeForest ff;
+
+//   std::vector<std::vector<double> > &traindf,int _ntree,
+//       		int _nsample,int _maxheight, bool _rotate, bool _adaptive,
+//       		    		bool _rangecheck,double _rho,int _stopLimit);
+   ff.trainForest(data,100,256,0,false,false,false,0.01,0);
+   std::cout<<ff.getNsample()<<" =="<<ff.getNtree()<<std::endl;
+   std::cout<<"Size of training set"<<ff.getTraindf()->nrow<<endl;
+   ff.testForest(data);
+   std::vector<double> score  = ff.getScore();
+   for(auto sc : score){
+       	std::cout<<sc<<std::endl;
+
+       }
+	//displayVec(ff.getTraindf()->data);
+
+   /* util::dataset *dt = makeDataset(data);
+
+    std::cout<<dt->nrow<<","<<dt->ncol<<" Row/column"<<std::endl;
+
+    IsolationForest iff(100,dt,256,0,false,false);
+    iff.fixedTreeForest();
+    std::vector<double> score = iff.AnomalyScore(dt);
+    for(auto sc : score){
+    	std::cout<<sc<<std::endl;
+
+    }
+    delete dt;
+*/
+   util::logfile.close();
+   	return 0;
 }
 
 

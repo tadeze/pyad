@@ -7,7 +7,7 @@
 
 #include "Forest.hpp"
 
-double Forest::getdepth(double* inst,Tree* tree)
+double Forest::getdepth(std::vector<double> inst,Tree* tree)
 {
 	return tree->pathLength(inst);
 }
@@ -15,7 +15,7 @@ double Forest::getdepth(double* inst,Tree* tree)
 /*
  * Accepts single point (row) and return Anomaly Score
  */
-double Forest::instanceScore(double *inst)
+double Forest::instanceScore(std::vector<double> &inst)
 {
 
 	double avgPathLength = util::mean(pathLength(inst));
@@ -27,7 +27,7 @@ double Forest::instanceScore(double *inst)
 /*
  * Score for  a set of dataframe in dataset
  */
-std::vector<double> Forest::AnomalyScore(util::doubleframe* df)
+std::vector<double> Forest::AnomalyScore(util::dataset* df)
 {
 	std::vector<double> scores;
 	//iterate through all points
@@ -41,7 +41,7 @@ std::vector<double> Forest::AnomalyScore(util::doubleframe* df)
  * Return instance depth in all trees
 */
 
-std::vector<double> Forest::pathLength(double *inst)
+std::vector<double> Forest::pathLength(std::vector<double> &inst)
 {
 	std::vector<double> depth;
 	for (std::vector<Tree*>::iterator it = this->trees.begin(); it != trees.end();
@@ -57,7 +57,7 @@ std::vector<double> Forest::pathLength(double *inst)
 
 /* PathLength for all points
 */
-std::vector<std::vector<double> > Forest::pathLength(util::doubleframe*  data)
+std::vector<std::vector<double> > Forest::pathLength(util::dataset*  data)
 {
 	std::vector < std::vector<double> > depths;
 	for (int r = 0; r < data->nrow; r++)
@@ -80,7 +80,7 @@ vector<double> IsolationForest::ADtest(const vector<vector<double> > &pathlength
  * output: feature importance
  * status: Incomplete!!
  */
-std::vector<double> Forest::importance(double *inst)
+std::vector<double> Forest::importance(std::vector<double> &inst)
 {
 	//Need to be re-implemented
 	std::vector<double> depth;

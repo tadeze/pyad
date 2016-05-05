@@ -8,9 +8,9 @@
 #include "utility.hpp"
 using namespace std;
 namespace util {
-//default_random_engine gen(400);  //Debugging
+default_random_engine gen(400);  //Debugging
 
-default_random_engine gen(time(NULL));  //Production
+//default_random_engine gen(time(NULL));  //Production
 
 template <typename T>
 T randomT(T min, T max)
@@ -230,6 +230,17 @@ vector<double> ADdistance(vector<vector<double> > depths, bool weightToTail =
 
 	}
 }
+
+
+util::dataset *makeDataset(std::vector<std::vector<double> > &data)
+{
+	util::dataset *dt = new util::dataset();
+	dt->data = data;
+	dt->ncol = (int)data[0].size();
+	dt->nrow = (int)data.size();
+	return dt;
+} //Tested it workd well
+
 
 /*
  * Convert vector-2d to doubleframe

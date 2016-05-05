@@ -29,13 +29,16 @@
 
 ////default_random_engine gen(time(NULL));
 namespace util{
-struct doubleframe
+struct dataset
 {
 	int ncol;
 	int nrow;
 	std::vector<std::vector<double> > data;
 	//std::vector<std::vector<double> > data;
 };
+
+util::dataset *makeDataset(std::vector<std::vector<double> > &data);
+
 int randomI(int min, int max);
 int randomEx(int min,int max,std::set<int>& exlude);
 void sampleI(int min, int max, int nsample, std::vector<int> &sampleIndx);

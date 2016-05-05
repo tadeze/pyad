@@ -6,7 +6,7 @@
  */
 
 #include "IsolationForest.hpp"
-IsolationForest::IsolationForest(int _ntree,util::doubleframe* _df,
+IsolationForest::IsolationForest(int _ntree,util::dataset* _df,
 		int _nsample,int _maxheight, bool _stopheight,bool _rsample)
 :Forest(_ntree,_df,_nsample,_maxheight,_stopheight,_rsample)
 {
@@ -30,12 +30,12 @@ void IsolationForest::buildForest()
 
 			//Sample and shuffle the data.
 			sampleIndex.clear();
-			getSample(sampleIndex,nsample,rsample,dataset->nrow);
+			getSample(sampleIndex,nsample,rsample,dataframe->nrow);
 
 			//build tree
 			Tree *tree = new Tree();
 		//	tree->rangeCheck = this->rangecheck;
-			tree->iTree(sampleIndex,dataset, 0, maxheight, stopheight);
+			tree->iTree(sampleIndex,dataframe, 0, maxheight, stopheight);
 			this->trees.push_back(tree); //add tree to forest
 		//	Tree::treeIndx++;
 		 }
@@ -45,7 +45,7 @@ void IsolationForest::buildForest()
 
 int IsolationForest::adaptiveForest(double alpha,int stopLimit){
     //Build the RForest model
-	double tk = ceil(alpha*2*dataset->nrow);
+	double tk = ceil(alpha*2*dataframe->nrow);
     std::vector<int> sampleIndex(this->nsample);
    // std::cout<<tk<<std::endl;
     //logfile<<"point,tree,x1,x2\n";
@@ -54,7 +54,7 @@ int IsolationForest::adaptiveForest(double alpha,int stopLimit){
     double ntree=0;
     std::vector<int> topKIndex;
     std::vector<int> prevTopKIndex;
-    std::vector<double> totalDepth(dataset->nrow,0);
+    std::vector<double> totalDepth(dataframe->nrow,0);
     double prob=0.0;
     std::priority_queue<std::pair<int,double>,std::vector<std::pair<int,double> >, larger> pq;
 
@@ -63,19 +63,19 @@ int IsolationForest::adaptiveForest(double alpha,int stopLimit){
     	pq= std::priority_queue<std::pair<int,double>,std::vector<std::pair<int,double> >,larger >();
 
             //get sample data
-            getSample(sampleIndex,nsample,rsample,dataset->nrow);
+            getSample(sampleIndex,nsample,rsample,dataframe->nrow);
 
             //Fill the sampleIndex with indices of the sample rotated data
             Tree *tree  = new Tree();
 	//    tree->rangeCheck = this->rangecheck;
-	    tree->iTree(sampleIndex,dataset,0,maxheight,stopheight);
+	    tree->iTree(sampleIndex,dataframe,0,maxheight,stopheight);
             this->trees.push_back(tree);
             ntree++;
             double d,dbar;
             topKIndex.clear();
-            for (int inst = 0; inst <dataset->nrow; inst++)
+            for (int inst = 0; inst <dataframe->nrow; inst++)
             {
-            d = this->getdepth(dataset->data[inst],tree);
+            d = this->getdepth(dataframe->data[inst],tree);
             totalDepth[inst] += d;
             dbar=totalDepth[inst]/ntree;
             pq.push(std::pair<int, double>(inst,dbar));
@@ -92,7 +92,7 @@ int IsolationForest::adaptiveForest(double alpha,int stopLimit){
         if(ntree<2)
         {
         	prevTopKIndex = topKIndex;
-            util::logfile<<prob<<"\n";
+//            util::logfile<<prob<<"\n";
         	continue;
         }
 
@@ -130,13 +130,13 @@ struct smaller
 
 int IsolationForest::confTree(double alpha, double rho, int init_tree) {
 	//Build the RForest model
-	double tk = ceil(alpha  * dataset->nrow);
+	double tk = ceil(alpha  * dataframe->nrow);
 	std::vector<int> sample_index(this->nsample);
 
 	bool converged = false;
 	double ntree = 0;
-	std::vector<double> total_depth(dataset->nrow, 0);
-	std::vector<std::vector<double> > exp_depth(dataset->nrow,std::vector<double>(0));
+	std::vector<double> total_depth(dataframe->nrow, 0);
+	std::vector<std::vector<double> > exp_depth(dataframe->nrow,std::vector<double>(0));
 	std::priority_queue<std::pair<int, double>,
 			std::vector<std::pair<int, double> >, smaller> pq; //holds top shallowest depth
 
@@ -147,16 +147,16 @@ int IsolationForest::confTree(double alpha, double rho, int init_tree) {
 				std::vector<std::pair<int, double> >, smaller>();
 
 		//get sample data
-		getSample(sample_index, nsample, rsample, dataset->nrow);
+		getSample(sample_index, nsample, rsample, dataframe->nrow);
 
 		//Fill the sampleIndex with indices
 		Tree *tree = new Tree();
-		tree->iTree(sample_index, dataset, 0, maxheight, stopheight);
+		tree->iTree(sample_index, dataframe, 0, maxheight, stopheight);
 		this->trees.push_back(tree);
 		ntree++;
 
-		for (int inst = 0; inst < dataset->nrow; inst++) {
-			current_depth = this->getdepth(dataset->data[inst], tree);
+		for (int inst = 0; inst < dataframe->nrow; inst++) {
+			current_depth = this->getdepth(dataframe->data[inst], tree);
 			total_depth[inst] += current_depth;
 			dbar = total_depth[inst] / ntree;
 			pq.push(std::pair<int, double>(inst, dbar)); //keep track of top k instance

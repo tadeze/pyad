@@ -31,7 +31,7 @@ double AUC(vector<double> &labels, vector<double> &scores,int n,int posclass) {
 
     /* Then calculate the actual are under the ROC curve */
 	double              A       = 0;
-	double              fprev   = INT_MIN; //-infinity
+	double              fprev   = -99999;//INT_MIN; //-infinity
 	unsigned long long	FP      = 0, 
                         TP      = 0,
                         FPprev  = 0, 

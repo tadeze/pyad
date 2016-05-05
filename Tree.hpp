@@ -43,8 +43,8 @@ public:
 
 	};
 
-	void iTree(std::vector<int> const &dIndex, const util::doubleframe *dt, int height, int maxHeight, bool stopheight);
-	double pathLength(double *inst);
+	void iTree(std::vector<int> const &dIndex, const util::dataset *dt, int height, int maxHeight, bool stopheight);
+	double pathLength(std::vector<double> &inst);
 
 };
 

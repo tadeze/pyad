@@ -17,23 +17,23 @@ public:
 	int ntree;
 	bool rsample;
 	int nsample;
-    	bool stopheight;
-    	int maxheight;
+    bool stopheight;
+    int maxheight;
    	bool rangecheck;
-	//doubleframe* dataset;  // holds the original dataset
-    util::doubleframe* dataset;
+	//dataset* dataset;  // holds the original dataset
+    util::dataset* dataframe;
     Forest()
 	{
 		rsample = false;
 		ntree = 0;
 		nsample = 256;
-		dataset = NULL;
+		dataframe = NULL;
 
 	};
-Forest(int _ntree,util::doubleframe* _dataset,int _nsample,int _maxheight, bool _stopheight,bool _rsample)//bool _rangecheck)
+Forest(int _ntree,util::dataset* _dataset,int _nsample,int _maxheight, bool _stopheight,bool _rsample)//bool _rangecheck)
     {
 	ntree=_ntree;
-    	dataset=_dataset;
+    dataframe=_dataset;
 	nsample=_nsample;
 	stopheight=_stopheight;
 	maxheight=_maxheight;
@@ -51,14 +51,15 @@ virtual ~Forest()
 		}
     }
 
-	double instanceScore(double *inst);
-	std::vector<double> AnomalyScore(util::doubleframe* df);
-	virtual std::vector<double> pathLength(double *inst);
-	std::vector<std::vector<double> > pathLength(util::doubleframe* data);
+	double instanceScore(std::vector<double> &inst);
+	std::vector<double> AnomalyScore(util::dataset* df);
+	virtual std::vector<double> pathLength(std::vector<double> &inst);
+	std::vector<std::vector<double> > pathLength(util::dataset* data);
 	std::vector<double> meandepth();
 	std::vector<double> ADtest(const std::vector<std::vector<double> > &pathlength, bool weighttotail);
-	std::vector<double> importance(double *inst);
-	virtual double getdepth(double *inst,Tree* tree);
+	std::vector<double> importance(std::vector<double> &inst);
+	//virtual double getdepth(double *inst,Tree* tree);
+	virtual double getdepth(std::vector<double> inst, Tree *tree);
 	void getSample(std::vector<int> &sampleIndex,const int nsample,bool rSample,int nrow);
 	struct larger
 	{

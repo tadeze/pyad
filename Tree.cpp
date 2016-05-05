@@ -6,7 +6,7 @@
  */
 #include "Tree.hpp"
 bool Tree::rangeCheck=true;
-void Tree::iTree(std::vector<int> const &dIndex,const util::doubleframe *dt, int height, int maxheight, bool stopheight)
+void Tree::iTree(std::vector<int> const &dIndex,const util::dataset *dt, int height, int maxheight, bool stopheight)
 {
 	this->depth = height; //Tree height
 	// Set size of the node
@@ -94,7 +94,7 @@ void Tree::iTree(std::vector<int> const &dIndex,const util::doubleframe *dt, int
 /*
  * takes instance as vector of double
  */
-double Tree::pathLength(double *inst)
+double Tree::pathLength(std::vector<double> &inst)
 {
 
  	if (this->leftChild==NULL||this->rightChild==NULL)
