@@ -1,4 +1,5 @@
 //TODO: Random rotation with reduced dimension of ceil(sqrt(d)/2) +2
+//TODO: Remove the doubleframe and replace with dataset array.
 #include "RForest.hpp"
 /*
  * Class for RandomRotation Matrix
@@ -8,7 +9,7 @@ using namespace Eigen;
 
 /*Take Matrix and return doubleframe
  */
-void  RForest::convertToDf(MatrixXd &m,doubleframe* df)
+void  RForest::convertToDf(MatrixXd &m,dataset* df)
 {
 
    
@@ -20,7 +21,7 @@ void  RForest::convertToDf(MatrixXd &m,doubleframe* df)
 
 /* Rotate data instance with rotation matrix
  */
-void RForest::rotateInstance(double* inst,MatrixXd &m,double* rotData)
+void RForest::rotateInstance(std::vector<double> &inst,MatrixXd &m,double* rotData)
 {
 
 	int ncol = m.cols();
@@ -59,7 +60,7 @@ MatrixXd RForest::convertToMatrix(std::vector<std::vector<double> > &data)
  * Convert doubleframe data to Matrix
  *
  */
-
+/*
 MatrixXd RForest::convertDfToMatrix(const doubleframe* data,
         std::vector<int> &sampleIndex)
 {
@@ -67,7 +68,7 @@ MatrixXd RForest::convertDfToMatrix(const doubleframe* data,
 	for (int i = 0; i <(int)sampleIndex.size(); i++)
 	  mat.row(i) =VectorXd::Map(&data->data[sampleIndex[i]][0],data->ncol);
 	return mat;
-}
+}*/
 
 /*
  * Rotation matrix generator reference paper:
@@ -104,10 +105,10 @@ MatrixXd RForest::convertDfToMatrix(const doubleframe* data,
 * @return rotated Matrix data
 */
 
-MatrixXd  RForest::rotateData(doubleframe* dt, MatrixXd& M)
+MatrixXd  RForest::rotateData(dataset* dt, MatrixXd& M)
 { 
     std::vector<int> sampleIndex(this->nsample);
-	getSample(sampleIndex,nsample,rsample,dataset->nrow);
+	getSample(sampleIndex,nsample,rsample,dt->nrow);
     MatrixXd  mData = convertDfToMatrix(dt,sampleIndex);
     return mData*M;
 }

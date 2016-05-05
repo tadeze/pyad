@@ -102,7 +102,7 @@ void Tree::iTree(std::vector<int> const &dIndex,const util::dataset *dt, int hei
  *//*
  * takes instance as vector of double
  */
-double Tree::pathLength(std::vector<double> &inst)
+double Tree::pathLengthM(std::vector<double> &inst)
 {
 
     double instAttVal = inst[this->splittingAtt];
@@ -129,7 +129,7 @@ double Tree::pathLength(std::vector<double> &inst)
 return depth+util::avgPL(temp->nodeSize);
 }
 //For efficient use the above
-double Tree::pathLengthM(std::vector<double> &inst)
+double Tree::pathLength(std::vector<double> &inst)
 {
 
  	if (this->leftChild==NULL||this->rightChild==NULL)

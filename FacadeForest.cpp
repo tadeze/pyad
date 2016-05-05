@@ -109,7 +109,7 @@ std::vector<std::vector<double> > FacadeForest::PathLength() {
 }
 
 std::vector<double> FacadeForest::averageDepth() {
-	std::vector<double> meandepth(testdf->nrow);
+	std::vector<double> meandepth;
 	for(std::vector<double> row : this->PathLength())
 	{
 		meandepth.push_back(util::mean(row));

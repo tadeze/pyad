@@ -85,7 +85,7 @@ public:
     		    		bool _rangecheck,double _rho,int _stopLimit);
     void testForest(std::vector<std::vector<double> > &testdf);
     void saveModel(std::string modelName);
-    Forest loadModel(std::string modelName);
+    //Forest loadModel(std::string modelName);
     std::vector<double> getScore();
     std::vector<std::vector<double> > PathLength();
     std::vector<double> averageDepth();
