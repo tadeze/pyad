@@ -26,7 +26,14 @@ FacadeForest::FacadeForest()
 
 
 }
-
+util::dataset *makeDataset(std::vector<std::vector<double> > &data)
+{
+	util::dataset *dt = new util::dataset();
+	dt->data = data;
+	dt->ncol = (int)data[0].size();
+	dt->nrow = (int)data.size();
+	return dt;
+}
 
 void FacadeForest::trainForest(std::vector<std::vector<double> > &traindf,int _ntree,int _nsample,int _maxheight,
 		bool _rotate, bool _adaptive,bool _rangecheck,double _rho,int _stopLimit){

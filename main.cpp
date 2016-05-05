@@ -263,14 +263,7 @@ pforest.trainForest(data,ntree, nsample,maxheight,rotate,stopLimit==0,
 */
 
 
-util::dataset *makeDatasetM(std::vector<std::vector<double> > &data)
-{
-	util::dataset *dt = new util::dataset();
-	dt->data = data;
-	dt->ncol = (int)data[0].size();
-	dt->nrow = (int)data.size();
-	return dt;
-}
+
 
 
 

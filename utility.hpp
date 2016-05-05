@@ -37,7 +37,7 @@ struct dataset
 	//std::vector<std::vector<double> > data;
 };
 
-util::dataset *makeDataset(std::vector<std::vector<double> > &data);
+//util::dataset *makeDataset(std::vector<std::vector<double> > &data);
 
 int randomI(int min, int max);
 int randomEx(int min,int max,std::set<int>& exlude);
