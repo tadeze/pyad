@@ -132,38 +132,29 @@ return depth+util::avgPL(temp->nodeSize);
 double Tree::pathLength(std::vector<double> &inst)
 {
 
- 	if (this->leftChild==NULL||this->rightChild==NULL)
-        { ///referenced as null for some input data .
-               	return util::avgPL(this->nodeSize);
-        }
-	//Range check added
-       double instAttVal = inst[this->splittingAtt]; 
+    double instAttVal = inst[this->splittingAtt];
 	if(Tree::rangeCheck==true)
- 	{ 
-		
+ 	{
+
 		if(instAttVal < this->minAttVal && util::randomD(instAttVal,this->minAttVal)<this->minAttVal)
 			return 1.0;
 		if(instAttVal >this->minAttVal && util::randomD(instAttVal,this->maxAttVal)>this->maxAttVal)
 			return 1.0;
-
 	}
 
- 	//Logging the isolation process
- 	//	logfile<<tmpVar<<","<<this->splittingAtt<<","<<this->splittingPoint<<"\n";
-	if ( instAttVal >= this->splittingPoint)
-	{
+	double depth=0.0;
+	Tree *temp =this;
+	while(temp!=NULL){
+		instAttVal = inst[temp->splittingAtt];
+		if ( instAttVal >= temp->splittingPoint)
+					temp= temp->rightChild;
+		else
+			temp = temp->leftChild;
 
-
-		return this->rightChild->pathLength(inst) + 1.0;
-
+		depth +=1.0;
 	}
-	else
-	{
-		return this->leftChild->pathLength(inst) + 1.0;
-	}
+return depth+util::avgPL(temp->nodeSize);
 }
-
-
 
 
 
