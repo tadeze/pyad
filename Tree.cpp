@@ -128,11 +128,19 @@ double Tree::pathLengthM(std::vector<double> &inst)
 	}
 return depth+util::avgPL(temp->nodeSize);
 }
-//For efficient use the above
+
+/*
+ * takes instance as vector of double
+ */
 double Tree::pathLength(std::vector<double> &inst)
 {
 
-    double instAttVal = inst[this->splittingAtt];
+ 	if (this->leftChild==NULL||this->rightChild==NULL)
+        { ///referenced as null for some input data .
+               	return util::avgPL(this->nodeSize);
+        }
+	//Range check added
+       double instAttVal = inst[this->splittingAtt];
 	if(Tree::rangeCheck==true)
  	{
 
@@ -140,20 +148,22 @@ double Tree::pathLength(std::vector<double> &inst)
 			return 1.0;
 		if(instAttVal >this->minAttVal && util::randomD(instAttVal,this->maxAttVal)>this->maxAttVal)
 			return 1.0;
+
 	}
 
-	double depth=0.0;
-	Tree *temp =this;
-	while(temp!=NULL){
-		instAttVal = inst[temp->splittingAtt];
-		if ( instAttVal >= temp->splittingPoint)
-					temp= temp->rightChild;
-		else
-			temp = temp->leftChild;
+ 	//Logging the isolation process
+ 	//	logfile<<tmpVar<<","<<this->splittingAtt<<","<<this->splittingPoint<<"\n";
+	if ( instAttVal >= this->splittingPoint)
+	{
 
-		depth +=1.0;
+
+		return this->rightChild->pathLength(inst) + 1.0;
+
 	}
-return depth+util::avgPL(temp->nodeSize);
+	else
+	{
+		return this->leftChild->pathLength(inst) + 1.0;
+	}
 }
 
 

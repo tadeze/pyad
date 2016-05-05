@@ -60,7 +60,7 @@ void FacadeForest::trainForest(std::vector<std::vector<double> > &traindf,int _n
 
 	}
 
-//	else{
+//	else{ skip for now
 //		//RForest rff(ntree,this->traindf,nsample,maxheight,stopheight,rsample);
 //		//string rot_output(output_name);
 //		//buildForest(rff,test_dt,alpha,stopLimit,rho,"rotate_"+rot_output,metadata,pathlength);
@@ -68,7 +68,10 @@ void FacadeForest::trainForest(std::vector<std::vector<double> > &traindf,int _n
 //		///For now skip it
 //	continue;
 //	}
-
+//
+	if(adaptive)
+		iff->adaptiveForest(ALPHA,stoplimit);
+	else
 	iff->fixedTreeForest();  //just for now build fixed tree
 
 
