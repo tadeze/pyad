@@ -20,8 +20,7 @@ private:
     util::dataset *traindf;
     util::dataset *testdf;
     Forest *iff;
-    float const ALPHA=0.01;
-public:
+  public:
     //constructor and Destructor
     virtual ~FacadeForest(){
     delete traindf;
@@ -46,17 +45,10 @@ public:
         return maxheight;
     }
 
-    void setMaxdepth(int maxdepth) {
-        FacadeForest::maxheight = maxdepth;
-    }
-
-
 
     bool isAdaptive() const {
         return adaptive;
     }
-
-
 
     bool isRangecheck() const {
         return rangecheck;
@@ -71,7 +63,7 @@ public:
 		return iff;
 	}
 
-	const util::dataset* getTestdf() const {
+	/*const util::dataset* getTestdf() const {
 		return testdf;
 	}
 
@@ -79,24 +71,31 @@ public:
 		return traindf;
 	}
 
-
+*/
     //Methods
 
     void trainForest(std::vector<std::vector<double> > &traindf,int _ntree,
     		int _nsample,int _maxheight, bool _rotate, bool _adaptive,
     		    		bool _rangecheck,double _rho,int _stopLimit);
+    void trainForest(std::vector<std::vector<double> > &traindf,int _ntree,
+        		int _nsample,int _maxheight, bool _rotate){
+    	trainForest(traindf, _ntree, _nsample, _maxheight, _rotate,false,true,0.01,5);
+    };
+
+
     void testForest(std::vector<std::vector<double> > &testdf);
     void saveModel(std::string modelName);
     //Forest loadModel(std::string modelName);
     std::vector<double> getScore();
     std::vector<std::vector<double> > pathLength();
     std::vector<double> averageDepth();
-
-    /* Testing SWIG */
     long factorial(int n);
+    /* Testing SWIG
+;
     double sum_array(double* input_array, int length);
     void get_rand_array(double* output_array, int length);
     void sum_all( int nrow,int ncol,double* input_array);
+    */
     void displayData();
 };
 
