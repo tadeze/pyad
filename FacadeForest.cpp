@@ -13,13 +13,13 @@ FacadeForest::FacadeForest() {
 	ntree = 0;
 	nsample = 0;
 	rotate = false;
-	maxheight = 0;
+	maxHeight = 0;
 	adaptive = false;
-	rangecheck = false;
+	rangeCheck = false;
 	traindf = nullptr;
 	testdf = nullptr;
 	rho = 0.01;
-	stoplimit = 0;
+	stopLimit = 0;
 	iff = nullptr;
 
 }
@@ -38,24 +38,24 @@ void FacadeForest::trainForest(std::vector<std::vector<double> > &traindf,
 	ntree = _ntree;
 	nsample = _nsample;
 	rotate = _rotate;
-	maxheight = _maxheight;
+	maxHeight = _maxheight;
 	adaptive = _adaptive;
-	rangecheck = _rangecheck;
+	rangeCheck = _rangecheck;
 	rho = _rho;
-	stoplimit = _stopLimit;
+	stopLimit = _stopLimit;
 
 	bool rsample = nsample != 0;
-	bool stopheight = maxheight != 0;
+	bool stopheight = maxHeight != 0;
 	this->traindf = makeDataset(traindf);
 
 	if (!rotate) {
 		IsolationForest *iforest = new IsolationForest(ntree, this->traindf,
-					nsample, maxheight, stopheight, rsample); //build iForest
+					nsample, maxHeight, stopheight, rsample); //build iForest
 			iff = iforest;
 		}
 	else{
 		IsolationForest *iforest = new IsolationForest(ntree, this->traindf,
-							nsample, maxheight, stopheight, rsample); //build iForest
+							nsample, maxHeight, stopheight, rsample); //build iForest
 		//std::cout<<"Output from rforest\n";
 		iff = iforest;
 
@@ -63,7 +63,7 @@ void FacadeForest::trainForest(std::vector<std::vector<double> > &traindf,
 
 	try {
 				if (adaptive)
-					iff->adaptiveForest(rho, stoplimit);
+					iff->adaptiveForest(rho, stopLimit);
 				else
 					iff->fixedTreeForest();  //just for now build fixed tree
 			} catch (std::exception& e) {
@@ -89,11 +89,8 @@ void FacadeForest::testForest(std::vector<std::vector<double> > &_testdf) {
 
 std::vector<double> FacadeForest::getScore() {
 
-//	if(testdf==nullptr)
-//		return std::exit(0); //For now just exit
-	// std::vector<double> scores = {2,3,0.4,0.9,78};
+
 	return iff->AnomalyScore(testdf);
-	//return this->testdf->data[0];
 
 }
 

@@ -32,8 +32,8 @@ protected:
 };
 
 TEST_F(FacadeForestTest, creatFF){
-	ASSERT_EQ(ff.getNsample(),256);
-	ASSERT_EQ(ff.getNtree(),100);
+	ASSERT_EQ(ff.getNSample(),256);
+	ASSERT_EQ(ff.getNTree(),100);
 	ASSERT_EQ(ff.getTraindf()->nrow,105);
 
 }

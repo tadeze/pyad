@@ -11,12 +11,12 @@ class FacadeForest {
 private:
     int ntree;
     int nsample;
-    int maxheight;
+    int maxHeight;
     bool rotate;
     bool adaptive;
-    bool rangecheck;
+    bool rangeCheck;
     double rho;
-    int stoplimit;
+    int stopLimit;
     util::dataset *traindf;
     util::dataset *testdf;
     Forest *iff;
@@ -29,11 +29,11 @@ private:
     };
     FacadeForest();
 
-    int getNtree() const {
+    int getNTree() const {
         return ntree;
     }
 
-    int getNsample() const {
+    int getNSample() const {
         return nsample;
     }
 
@@ -41,21 +41,23 @@ private:
         FacadeForest::nsample = nsample;
     }*/
 
-    int getMaxdepth() const {
-        return maxheight;
+    int getMaxDepth() const {
+        return maxHeight;
     }
 
 
     bool isAdaptive() const {
         return adaptive;
     }
-
-    bool isRangecheck() const {
-        return rangecheck;
+    bool isRotate() const {
+        return rotate;
+    }
+    bool isRangeCheck() const {
+        return rangeCheck;
     }
 
-    void setRangecheck(bool rangecheck) {
-        FacadeForest::rangecheck = rangecheck;
+    void setRangeCheck(bool rangecheck) {
+        FacadeForest::rangeCheck = rangecheck;
     }
 
 
@@ -63,7 +65,7 @@ private:
 		return iff;
 	}
 
-	/*const util::dataset* getTestdf() const {
+	const util::dataset* getTestdf() const {
 		return testdf;
 	}
 
@@ -71,7 +73,7 @@ private:
 		return traindf;
 	}
 
-*/
+
     //Methods
 
     void trainForest(std::vector<std::vector<double> > &traindf,int _ntree,
