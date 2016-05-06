@@ -3,7 +3,7 @@
 //
 
 #include "FacadeForest.hpp"
-
+#include<exception>
 
 void FacadeForest::saveModel(std::string modelName) {
 std::cout<<modelName<<" Place holder";
@@ -51,11 +51,12 @@ void FacadeForest::trainForest(std::vector<std::vector<double> > &traindf,int _n
 	bool rsample = nsample != 0;
 	bool stopheight = maxheight != 0;
 	this->traindf = makeDataset(traindf);
-
+	IsolationForest *iforest = new IsolationForest(ntree,this->traindf,nsample,maxheight,stopheight,rsample); //build iForest
+	iff = iforest;
+	iff->fixedTreeForest();
+	/*
 	if(!rotate)
 	{
-		IsolationForest *iforest = new IsolationForest(ntree,this->traindf,nsample,maxheight,stopheight,rsample); //build iForest
-		iff = iforest;
 
 
 	}
@@ -69,12 +70,17 @@ void FacadeForest::trainForest(std::vector<std::vector<double> > &traindf,int _n
 //	continue;
 //	}
 //
+	try{
 	if(adaptive)
 		iff->adaptiveForest(ALPHA,stoplimit);
 	else
 	iff->fixedTreeForest();  //just for now build fixed tree
-
-
+	}
+	catch (std::exception& e)
+	  {
+	    std::cout << "Standard exception: " << e.what() << std::endl;
+	  }
+*/
 }
 
 
@@ -99,13 +105,14 @@ std::vector<double> FacadeForest::getScore() {
 
 //	if(testdf==nullptr)
 //		return std::exit(0); //For now just exit
-	 std::vector<double> scores = {2,3,0.4,0.9,78};
-    return scores;//iff->AnomalyScore(testdf);
+	// std::vector<double> scores = {2,3,0.4,0.9,78};
+    return iff->AnomalyScore(testdf);
+    //return this->testdf->data[0];
 
 }
 
 
-std::vector<std::vector<double> > FacadeForest::PathLength() {
+std::vector<std::vector<double> > FacadeForest::pathLength() {
 
 	return iff->pathLength(testdf);
 
@@ -113,7 +120,7 @@ std::vector<std::vector<double> > FacadeForest::PathLength() {
 
 std::vector<double> FacadeForest::averageDepth() {
 	std::vector<double> meandepth;
-	for(std::vector<double> row : this->PathLength())
+	for(std::vector<double> row : this->pathLength())
 	{
 		meandepth.push_back(util::mean(row));
 	}
@@ -147,6 +154,17 @@ void FacadeForest::get_rand_array(double* output_array, int length) {
     output_array[i] = ((double) rand()) / RAND_MAX;
 
   return;
+}
+
+void FacadeForest::displayData()
+{
+	std::cout<<" Dimension of training data ("<<this->traindf->nrow<<","<<this->traindf->ncol<<")\n";
+	for(auto row : this->traindf->data){
+		for(auto cell : row)
+			std::cout<<cell<<"\t";
+		std::cout<<"\n";
+	}
+
 }
 
 void FacadeForest::sum_all( int nrow,int ncol,double* input_array){

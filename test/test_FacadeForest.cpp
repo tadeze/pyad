@@ -49,7 +49,7 @@ TEST_F(FacadeForestTest, creaScore){
 }
 TEST_F(FacadeForestTest, pathLength){
 
-	std::vector<std::vector<double> > depths = ff.PathLength();
+	std::vector<std::vector<double> > depths = ff.pathLength();
 	EXPECT_EQ(depths.size(),105);  //Make sure dimension first
 	EXPECT_EQ(depths[0].size(),100);
 

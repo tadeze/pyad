@@ -34,17 +34,13 @@ public:
         return ntree;
     }
 
-    void setNtree(int ntree) {
-        FacadeForest::ntree = ntree;
-    }
-
     int getNsample() const {
         return nsample;
     }
 
-    void setNsample(int nsample) {
+  /*  void setNsample(int nsample) {
         FacadeForest::nsample = nsample;
-    }
+    }*/
 
     int getMaxdepth() const {
         return maxheight;
@@ -54,21 +50,13 @@ public:
         FacadeForest::maxheight = maxdepth;
     }
 
-    bool isRotate() const {
-        return rotate;
-    }
 
-    void setRotate(bool rotate) {
-        FacadeForest::rotate = rotate;
-    }
 
     bool isAdaptive() const {
         return adaptive;
     }
 
-    void setAdaptive(bool adaptive) {
-        FacadeForest::adaptive = adaptive;
-    }
+
 
     bool isRangecheck() const {
         return rangecheck;
@@ -101,7 +89,7 @@ public:
     void saveModel(std::string modelName);
     //Forest loadModel(std::string modelName);
     std::vector<double> getScore();
-    std::vector<std::vector<double> > PathLength();
+    std::vector<std::vector<double> > pathLength();
     std::vector<double> averageDepth();
 
     /* Testing SWIG */
@@ -109,6 +97,7 @@ public:
     double sum_array(double* input_array, int length);
     void get_rand_array(double* output_array, int length);
     void sum_all( int nrow,int ncol,double* input_array);
+    void displayData();
 };
 
 
