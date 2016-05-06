@@ -1,5 +1,0 @@
-# Compilation process
-
-swig -c++ -python pyFacade.swig
-g++ -fPIC -c FacadeForest.hpp utility.cpp Tree.cpp Forest.cpp IsolationForest.cpp FacadeForest.cpp pyFacade_wrap.cxx  -I/home/tadeze/anaconda/include/python2.7 -std=c++11
-g++ -shared utility.o Tree.o  Forest.o IsolationForest.o FacadeForest.o pyFacade_wrap.o  -o _pyFacade.so -std=c++11

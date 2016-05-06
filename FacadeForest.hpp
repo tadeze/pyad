@@ -103,10 +103,20 @@ public:
     std::vector<double> getScore();
     std::vector<std::vector<double> > PathLength();
     std::vector<double> averageDepth();
+
+    /* Testing SWIG */
     long factorial(int n);
     double sum_array(double* input_array, int length);
     void get_rand_array(double* output_array, int length);
+    void sum_all( int nrow,int ncol,double* input_array);
 };
 
 
 #endif //IFOREST_ADDIN_FacadeForest_HPP
+
+
+
+
+
+
+

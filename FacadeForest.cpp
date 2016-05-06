@@ -99,8 +99,8 @@ std::vector<double> FacadeForest::getScore() {
 
 //	if(testdf==nullptr)
 //		return std::exit(0); //For now just exit
-
-    return iff->AnomalyScore(testdf);
+	 std::vector<double> scores = {2,3,0.4,0.9,78};
+    return scores;//iff->AnomalyScore(testdf);
 
 }
 
@@ -149,6 +149,31 @@ void FacadeForest::get_rand_array(double* output_array, int length) {
   return;
 }
 
+void FacadeForest::sum_all( int nrow,int ncol,double* input_array){
+	int index =0;
+	for(int i=0;i<nrow;i++){
+		for(int j=0;j<ncol;j++){
 
+
+			input_array[index] = input_array[index]*2;
+			index++;
+		}
+
+	}
+
+
+	  return ;
+
+
+	/*std::vector<std::vector<double> > data;
+	for(int i=0;i<nrow;i++){
+		std::vector<double> row;
+		for(int j=0;j<ncol;j++){
+			row.push_back(input_array[i][j]);
+		}
+		data.push_back(row);
+	}*/
+//return 0.9;
+}
 
 
