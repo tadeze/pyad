@@ -90,5 +90,5 @@ PFLAGS=--std=c++11 -Wall -Werror -g
 %.o:%.cpp %.hpp $(GTEST_HEADERS) ../%.hpp
 	$(PP) $(PFLAGS) $(CXXFLAGS)  -I $(INCLUDES) -c $< -o $@
 
-test_iforest:  utility.o Tree.o Forest.o IsolationForest.o metric.o test_metric.o Addition.o  Addition_test.o test_tree.o test_utility.o FacadeForest.o test_FacadeForest.o test_Forest.o gtest_main.a
+test_iforest:  utility.o Tree.o Forest.o IsolationForest.o metric.o test_metric.o test_tree.o test_utility.o FacadeForest.o test_FacadeForest.o test_Forest.o gtest_main.a
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -L$(INCLUDES) -lpthread $^ -o $@
