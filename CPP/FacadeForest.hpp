@@ -7,6 +7,8 @@
 #include "main.hpp"
 //#include "utility.hpp"
 
+
+
 class FacadeForest {
 private:
     int ntree;
@@ -20,6 +22,12 @@ private:
     util::dataset *traindf;
     util::dataset *testdf;
     Forest *iff;
+
+    const int FOREST_NOT_TRAINED=1;
+    const int NO_TEST_DATA =2;
+    const int OK =0;
+
+    
   public:
     //constructor and Destructor
     virtual ~FacadeForest(){
@@ -28,6 +36,7 @@ private:
     delete iff;
     };
     FacadeForest();
+
 
     int getNTree() const {
         return ntree;
@@ -99,6 +108,7 @@ private:
     void sum_all( int nrow,int ncol,double* input_array);
     */
     void displayData();
+    int isValidModel() const;
 };
 
 

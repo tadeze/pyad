@@ -31,6 +31,23 @@ util::dataset *makeDataset(std::vector<std::vector<double> > &data) {
 	return dt;
 }
 
+//Check if the forest is built correctly 
+int FacadeForest::isValidModel() const{
+ 
+    if(iff==nullptr)
+       //std::cout<<"Forest model not yet trained\n";
+     return FOREST_NOT_TRAINED;
+ 
+     //Check if test data is available 
+    if(testdf==nullptr || testdf->nrow==0)
+        	return NO_TEST_DATA;
+   	
+   	return OK;	
+   	/*catch (std::exception& e) {
+			std::cout << "Standard exception: " << e.what() << std::endl;
+*/
+    //return true;
+}
 void FacadeForest::trainForest(std::vector<std::vector<double> > &traindf,
 		int _ntree, int _nsample, int _maxheight, bool _rotate, bool _adaptive,
 		bool _rangecheck, double _rho, int _stopLimit) {
@@ -89,19 +106,26 @@ void FacadeForest::testForest(std::vector<std::vector<double> > &_testdf) {
 
 std::vector<double> FacadeForest::getScore() {
 
-
+    //Make sure the forest is built and test data is available
+     //isValidModel()      
+   
 	return iff->AnomalyScore(testdf);
 
 }
 
 std::vector<std::vector<double> > FacadeForest::pathLength() {
-
+   /*  if(!isValidModel())
+         std::exit(1);
+   */
 	return iff->pathLength(testdf);
 
 }
 
 std::vector<double> FacadeForest::averageDepth() {
-	std::vector<double> meandepth;
+    /*if(!isValidModel())
+      std::exit(1);
+    */
+      std::vector<double> meandepth;
 	for (std::vector<double> row : this->pathLength()) {
 		meandepth.push_back(util::mean(row));
 	}
