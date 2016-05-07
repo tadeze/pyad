@@ -451,16 +451,16 @@ static const char *__pyx_f[] = {
 };
 
 /*--- Type declarations ---*/
-struct __pyx_obj_9pyiForest_PyForest;
+struct __pyx_obj_9pyiForest_IsolationForest;
 
 /* "cython/_pyForest.pyx":29
  *         bool isRotate()
  *         int isValidModel()
- * cdef class PyForest:             # <<<<<<<<<<<<<<
+ * cdef class IsolationForest:             # <<<<<<<<<<<<<<
  *     cdef FacadeForest *thisptr
  * 
  */
-struct __pyx_obj_9pyiForest_PyForest {
+struct __pyx_obj_9pyiForest_IsolationForest {
   PyObject_HEAD
   FacadeForest *thisptr;
 };
@@ -724,7 +724,7 @@ static int __Pyx_InitStrings(__Pyx_StringTabEntry *t);
 /* Module declarations from 'libcpp' */
 
 /* Module declarations from 'pyiForest' */
-static PyTypeObject *__pyx_ptype_9pyiForest_PyForest = 0;
+static PyTypeObject *__pyx_ptype_9pyiForest_IsolationForest = 0;
 static std::vector<double>  __pyx_convert_vector_from_py_double(PyObject *); /*proto*/
 static std::vector<std::vector<double> >  __pyx_convert_vector_from_py_std_3a__3a_vector_3c_double_3e___(PyObject *); /*proto*/
 static PyObject *__pyx_convert_vector_to_py_double(const std::vector<double>  &); /*proto*/
@@ -737,27 +737,27 @@ static PyObject *__pyx_builtin_object;
 static PyObject *__pyx_builtin_staticmethod;
 static PyObject *__pyx_builtin_NameError;
 static PyObject *__pyx_builtin_range;
-static int __pyx_pf_9pyiForest_8PyForest___cinit__(struct __pyx_obj_9pyiForest_PyForest *__pyx_v_self); /* proto */
-static void __pyx_pf_9pyiForest_8PyForest_2__dealloc__(struct __pyx_obj_9pyiForest_PyForest *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_9pyiForest_8PyForest_4factorial(struct __pyx_obj_9pyiForest_PyForest *__pyx_v_self, PyObject *__pyx_v_n); /* proto */
-static PyObject *__pyx_pf_9pyiForest_8PyForest_6getNTree(struct __pyx_obj_9pyiForest_PyForest *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_9pyiForest_8PyForest_8getNSample(struct __pyx_obj_9pyiForest_PyForest *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_9pyiForest_8PyForest_10getMaxDepth(struct __pyx_obj_9pyiForest_PyForest *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_9pyiForest_8PyForest_12isAdaptive(struct __pyx_obj_9pyiForest_PyForest *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_9pyiForest_8PyForest_14isRangeCheck(struct __pyx_obj_9pyiForest_PyForest *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_9pyiForest_8PyForest_16isRotate(struct __pyx_obj_9pyiForest_PyForest *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_9pyiForest_8PyForest_18isValidModel(struct __pyx_obj_9pyiForest_PyForest *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_9pyiForest_8PyForest_20trainForest(struct __pyx_obj_9pyiForest_PyForest *__pyx_v_self, PyObject *__pyx_v__traindf, PyObject *__pyx_v__ntree, PyObject *__pyx_v__nsample, PyObject *__pyx_v__maxheight, PyObject *__pyx_v__rotate, PyObject *__pyx_v__adaptive, PyObject *__pyx_v__rangecheck, PyObject *__pyx_v__rho, PyObject *__pyx_v__stoplimit); /* proto */
-static PyObject *__pyx_pf_9pyiForest_8PyForest_22testForest(struct __pyx_obj_9pyiForest_PyForest *__pyx_v_self, PyObject *__pyx_v_testdata); /* proto */
-static PyObject *__pyx_pf_9pyiForest_8PyForest_24validate_model(struct __pyx_obj_9pyiForest_PyForest *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_9pyiForest_8PyForest_26getScore(struct __pyx_obj_9pyiForest_PyForest *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_9pyiForest_8PyForest_28pathLength(struct __pyx_obj_9pyiForest_PyForest *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_9pyiForest_8PyForest_30averageDepth(struct __pyx_obj_9pyiForest_PyForest *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_9pyiForest_8PyForest_32displayData(struct __pyx_obj_9pyiForest_PyForest *__pyx_v_self); /* proto */
+static int __pyx_pf_9pyiForest_15IsolationForest___cinit__(struct __pyx_obj_9pyiForest_IsolationForest *__pyx_v_self); /* proto */
+static void __pyx_pf_9pyiForest_15IsolationForest_2__dealloc__(struct __pyx_obj_9pyiForest_IsolationForest *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_9pyiForest_15IsolationForest_4factorial(struct __pyx_obj_9pyiForest_IsolationForest *__pyx_v_self, PyObject *__pyx_v_n); /* proto */
+static PyObject *__pyx_pf_9pyiForest_15IsolationForest_6getNTree(struct __pyx_obj_9pyiForest_IsolationForest *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_9pyiForest_15IsolationForest_8getNSample(struct __pyx_obj_9pyiForest_IsolationForest *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_9pyiForest_15IsolationForest_10getMaxDepth(struct __pyx_obj_9pyiForest_IsolationForest *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_9pyiForest_15IsolationForest_12isAdaptive(struct __pyx_obj_9pyiForest_IsolationForest *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_9pyiForest_15IsolationForest_14isRangeCheck(struct __pyx_obj_9pyiForest_IsolationForest *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_9pyiForest_15IsolationForest_16isRotate(struct __pyx_obj_9pyiForest_IsolationForest *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_9pyiForest_15IsolationForest_18isValidModel(struct __pyx_obj_9pyiForest_IsolationForest *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_9pyiForest_15IsolationForest_20trainForest(struct __pyx_obj_9pyiForest_IsolationForest *__pyx_v_self, PyObject *__pyx_v__traindf, PyObject *__pyx_v__ntree, PyObject *__pyx_v__nsample, PyObject *__pyx_v__maxheight, PyObject *__pyx_v__rotate, PyObject *__pyx_v__adaptive, PyObject *__pyx_v__rangecheck, PyObject *__pyx_v__rho, PyObject *__pyx_v__stoplimit); /* proto */
+static PyObject *__pyx_pf_9pyiForest_15IsolationForest_22testForest(struct __pyx_obj_9pyiForest_IsolationForest *__pyx_v_self, PyObject *__pyx_v_testdata); /* proto */
+static PyObject *__pyx_pf_9pyiForest_15IsolationForest_24validate_model(struct __pyx_obj_9pyiForest_IsolationForest *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_9pyiForest_15IsolationForest_26getScore(struct __pyx_obj_9pyiForest_IsolationForest *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_9pyiForest_15IsolationForest_28pathLength(struct __pyx_obj_9pyiForest_IsolationForest *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_9pyiForest_15IsolationForest_30averageDepth(struct __pyx_obj_9pyiForest_IsolationForest *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_9pyiForest_15IsolationForest_32displayData(struct __pyx_obj_9pyiForest_IsolationForest *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_9pyiForest_13DataValidator___init__(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_9pyiForest_13DataValidator_2validate_dataset(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_dataset); /* proto */
 static PyObject *__pyx_pf_9pyiForest_13DataValidator_4validate_model(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_error_flag); /* proto */
-static PyObject *__pyx_tp_new_9pyiForest_PyForest(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
+static PyObject *__pyx_tp_new_9pyiForest_IsolationForest(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
 static char __pyx_k_OK[] = "OK";
 static char __pyx_k_np[] = "np";
 static char __pyx_k_doc[] = "__doc__";
@@ -896,22 +896,22 @@ static PyObject *__pyx_codeobj__15;
  */
 
 /* Python wrapper */
-static int __pyx_pw_9pyiForest_8PyForest_1__cinit__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static int __pyx_pw_9pyiForest_8PyForest_1__cinit__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static int __pyx_pw_9pyiForest_15IsolationForest_1__cinit__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static int __pyx_pw_9pyiForest_15IsolationForest_1__cinit__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   int __pyx_r;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__cinit__ (wrapper)", 0);
   if (unlikely(PyTuple_GET_SIZE(__pyx_args) > 0)) {
     __Pyx_RaiseArgtupleInvalid("__cinit__", 1, 0, 0, PyTuple_GET_SIZE(__pyx_args)); return -1;}
   if (unlikely(__pyx_kwds) && unlikely(PyDict_Size(__pyx_kwds) > 0) && unlikely(!__Pyx_CheckKeywordStrings(__pyx_kwds, "__cinit__", 0))) return -1;
-  __pyx_r = __pyx_pf_9pyiForest_8PyForest___cinit__(((struct __pyx_obj_9pyiForest_PyForest *)__pyx_v_self));
+  __pyx_r = __pyx_pf_9pyiForest_15IsolationForest___cinit__(((struct __pyx_obj_9pyiForest_IsolationForest *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static int __pyx_pf_9pyiForest_8PyForest___cinit__(struct __pyx_obj_9pyiForest_PyForest *__pyx_v_self) {
+static int __pyx_pf_9pyiForest_15IsolationForest___cinit__(struct __pyx_obj_9pyiForest_IsolationForest *__pyx_v_self) {
   int __pyx_r;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__cinit__", 0);
@@ -948,17 +948,17 @@ static int __pyx_pf_9pyiForest_8PyForest___cinit__(struct __pyx_obj_9pyiForest_P
  */
 
 /* Python wrapper */
-static void __pyx_pw_9pyiForest_8PyForest_3__dealloc__(PyObject *__pyx_v_self); /*proto*/
-static void __pyx_pw_9pyiForest_8PyForest_3__dealloc__(PyObject *__pyx_v_self) {
+static void __pyx_pw_9pyiForest_15IsolationForest_3__dealloc__(PyObject *__pyx_v_self); /*proto*/
+static void __pyx_pw_9pyiForest_15IsolationForest_3__dealloc__(PyObject *__pyx_v_self) {
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__dealloc__ (wrapper)", 0);
-  __pyx_pf_9pyiForest_8PyForest_2__dealloc__(((struct __pyx_obj_9pyiForest_PyForest *)__pyx_v_self));
+  __pyx_pf_9pyiForest_15IsolationForest_2__dealloc__(((struct __pyx_obj_9pyiForest_IsolationForest *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
 }
 
-static void __pyx_pf_9pyiForest_8PyForest_2__dealloc__(struct __pyx_obj_9pyiForest_PyForest *__pyx_v_self) {
+static void __pyx_pf_9pyiForest_15IsolationForest_2__dealloc__(struct __pyx_obj_9pyiForest_IsolationForest *__pyx_v_self) {
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__dealloc__", 0);
 
@@ -992,19 +992,19 @@ static void __pyx_pf_9pyiForest_8PyForest_2__dealloc__(struct __pyx_obj_9pyiFore
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_9pyiForest_8PyForest_5factorial(PyObject *__pyx_v_self, PyObject *__pyx_v_n); /*proto*/
-static PyObject *__pyx_pw_9pyiForest_8PyForest_5factorial(PyObject *__pyx_v_self, PyObject *__pyx_v_n) {
+static PyObject *__pyx_pw_9pyiForest_15IsolationForest_5factorial(PyObject *__pyx_v_self, PyObject *__pyx_v_n); /*proto*/
+static PyObject *__pyx_pw_9pyiForest_15IsolationForest_5factorial(PyObject *__pyx_v_self, PyObject *__pyx_v_n) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("factorial (wrapper)", 0);
-  __pyx_r = __pyx_pf_9pyiForest_8PyForest_4factorial(((struct __pyx_obj_9pyiForest_PyForest *)__pyx_v_self), ((PyObject *)__pyx_v_n));
+  __pyx_r = __pyx_pf_9pyiForest_15IsolationForest_4factorial(((struct __pyx_obj_9pyiForest_IsolationForest *)__pyx_v_self), ((PyObject *)__pyx_v_n));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_9pyiForest_8PyForest_4factorial(struct __pyx_obj_9pyiForest_PyForest *__pyx_v_self, PyObject *__pyx_v_n) {
+static PyObject *__pyx_pf_9pyiForest_15IsolationForest_4factorial(struct __pyx_obj_9pyiForest_IsolationForest *__pyx_v_self, PyObject *__pyx_v_n) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   int __pyx_t_1;
@@ -1040,7 +1040,7 @@ static PyObject *__pyx_pf_9pyiForest_8PyForest_4factorial(struct __pyx_obj_9pyiF
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_2);
-  __Pyx_AddTraceback("pyiForest.PyForest.factorial", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("pyiForest.IsolationForest.factorial", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -1057,19 +1057,19 @@ static PyObject *__pyx_pf_9pyiForest_8PyForest_4factorial(struct __pyx_obj_9pyiF
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_9pyiForest_8PyForest_7getNTree(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyObject *__pyx_pw_9pyiForest_8PyForest_7getNTree(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_9pyiForest_15IsolationForest_7getNTree(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_9pyiForest_15IsolationForest_7getNTree(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("getNTree (wrapper)", 0);
-  __pyx_r = __pyx_pf_9pyiForest_8PyForest_6getNTree(((struct __pyx_obj_9pyiForest_PyForest *)__pyx_v_self));
+  __pyx_r = __pyx_pf_9pyiForest_15IsolationForest_6getNTree(((struct __pyx_obj_9pyiForest_IsolationForest *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_9pyiForest_8PyForest_6getNTree(struct __pyx_obj_9pyiForest_PyForest *__pyx_v_self) {
+static PyObject *__pyx_pf_9pyiForest_15IsolationForest_6getNTree(struct __pyx_obj_9pyiForest_IsolationForest *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -1103,7 +1103,7 @@ static PyObject *__pyx_pf_9pyiForest_8PyForest_6getNTree(struct __pyx_obj_9pyiFo
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("pyiForest.PyForest.getNTree", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("pyiForest.IsolationForest.getNTree", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -1120,19 +1120,19 @@ static PyObject *__pyx_pf_9pyiForest_8PyForest_6getNTree(struct __pyx_obj_9pyiFo
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_9pyiForest_8PyForest_9getNSample(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyObject *__pyx_pw_9pyiForest_8PyForest_9getNSample(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_9pyiForest_15IsolationForest_9getNSample(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_9pyiForest_15IsolationForest_9getNSample(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("getNSample (wrapper)", 0);
-  __pyx_r = __pyx_pf_9pyiForest_8PyForest_8getNSample(((struct __pyx_obj_9pyiForest_PyForest *)__pyx_v_self));
+  __pyx_r = __pyx_pf_9pyiForest_15IsolationForest_8getNSample(((struct __pyx_obj_9pyiForest_IsolationForest *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_9pyiForest_8PyForest_8getNSample(struct __pyx_obj_9pyiForest_PyForest *__pyx_v_self) {
+static PyObject *__pyx_pf_9pyiForest_15IsolationForest_8getNSample(struct __pyx_obj_9pyiForest_IsolationForest *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -1166,7 +1166,7 @@ static PyObject *__pyx_pf_9pyiForest_8PyForest_8getNSample(struct __pyx_obj_9pyi
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("pyiForest.PyForest.getNSample", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("pyiForest.IsolationForest.getNSample", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -1183,19 +1183,19 @@ static PyObject *__pyx_pf_9pyiForest_8PyForest_8getNSample(struct __pyx_obj_9pyi
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_9pyiForest_8PyForest_11getMaxDepth(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyObject *__pyx_pw_9pyiForest_8PyForest_11getMaxDepth(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_9pyiForest_15IsolationForest_11getMaxDepth(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_9pyiForest_15IsolationForest_11getMaxDepth(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("getMaxDepth (wrapper)", 0);
-  __pyx_r = __pyx_pf_9pyiForest_8PyForest_10getMaxDepth(((struct __pyx_obj_9pyiForest_PyForest *)__pyx_v_self));
+  __pyx_r = __pyx_pf_9pyiForest_15IsolationForest_10getMaxDepth(((struct __pyx_obj_9pyiForest_IsolationForest *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_9pyiForest_8PyForest_10getMaxDepth(struct __pyx_obj_9pyiForest_PyForest *__pyx_v_self) {
+static PyObject *__pyx_pf_9pyiForest_15IsolationForest_10getMaxDepth(struct __pyx_obj_9pyiForest_IsolationForest *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -1229,7 +1229,7 @@ static PyObject *__pyx_pf_9pyiForest_8PyForest_10getMaxDepth(struct __pyx_obj_9p
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("pyiForest.PyForest.getMaxDepth", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("pyiForest.IsolationForest.getMaxDepth", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -1246,19 +1246,19 @@ static PyObject *__pyx_pf_9pyiForest_8PyForest_10getMaxDepth(struct __pyx_obj_9p
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_9pyiForest_8PyForest_13isAdaptive(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyObject *__pyx_pw_9pyiForest_8PyForest_13isAdaptive(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_9pyiForest_15IsolationForest_13isAdaptive(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_9pyiForest_15IsolationForest_13isAdaptive(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("isAdaptive (wrapper)", 0);
-  __pyx_r = __pyx_pf_9pyiForest_8PyForest_12isAdaptive(((struct __pyx_obj_9pyiForest_PyForest *)__pyx_v_self));
+  __pyx_r = __pyx_pf_9pyiForest_15IsolationForest_12isAdaptive(((struct __pyx_obj_9pyiForest_IsolationForest *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_9pyiForest_8PyForest_12isAdaptive(struct __pyx_obj_9pyiForest_PyForest *__pyx_v_self) {
+static PyObject *__pyx_pf_9pyiForest_15IsolationForest_12isAdaptive(struct __pyx_obj_9pyiForest_IsolationForest *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -1292,7 +1292,7 @@ static PyObject *__pyx_pf_9pyiForest_8PyForest_12isAdaptive(struct __pyx_obj_9py
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("pyiForest.PyForest.isAdaptive", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("pyiForest.IsolationForest.isAdaptive", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -1309,19 +1309,19 @@ static PyObject *__pyx_pf_9pyiForest_8PyForest_12isAdaptive(struct __pyx_obj_9py
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_9pyiForest_8PyForest_15isRangeCheck(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyObject *__pyx_pw_9pyiForest_8PyForest_15isRangeCheck(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_9pyiForest_15IsolationForest_15isRangeCheck(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_9pyiForest_15IsolationForest_15isRangeCheck(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("isRangeCheck (wrapper)", 0);
-  __pyx_r = __pyx_pf_9pyiForest_8PyForest_14isRangeCheck(((struct __pyx_obj_9pyiForest_PyForest *)__pyx_v_self));
+  __pyx_r = __pyx_pf_9pyiForest_15IsolationForest_14isRangeCheck(((struct __pyx_obj_9pyiForest_IsolationForest *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_9pyiForest_8PyForest_14isRangeCheck(struct __pyx_obj_9pyiForest_PyForest *__pyx_v_self) {
+static PyObject *__pyx_pf_9pyiForest_15IsolationForest_14isRangeCheck(struct __pyx_obj_9pyiForest_IsolationForest *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -1355,7 +1355,7 @@ static PyObject *__pyx_pf_9pyiForest_8PyForest_14isRangeCheck(struct __pyx_obj_9
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("pyiForest.PyForest.isRangeCheck", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("pyiForest.IsolationForest.isRangeCheck", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -1372,19 +1372,19 @@ static PyObject *__pyx_pf_9pyiForest_8PyForest_14isRangeCheck(struct __pyx_obj_9
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_9pyiForest_8PyForest_17isRotate(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyObject *__pyx_pw_9pyiForest_8PyForest_17isRotate(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_9pyiForest_15IsolationForest_17isRotate(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_9pyiForest_15IsolationForest_17isRotate(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("isRotate (wrapper)", 0);
-  __pyx_r = __pyx_pf_9pyiForest_8PyForest_16isRotate(((struct __pyx_obj_9pyiForest_PyForest *)__pyx_v_self));
+  __pyx_r = __pyx_pf_9pyiForest_15IsolationForest_16isRotate(((struct __pyx_obj_9pyiForest_IsolationForest *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_9pyiForest_8PyForest_16isRotate(struct __pyx_obj_9pyiForest_PyForest *__pyx_v_self) {
+static PyObject *__pyx_pf_9pyiForest_15IsolationForest_16isRotate(struct __pyx_obj_9pyiForest_IsolationForest *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -1418,7 +1418,7 @@ static PyObject *__pyx_pf_9pyiForest_8PyForest_16isRotate(struct __pyx_obj_9pyiF
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("pyiForest.PyForest.isRotate", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("pyiForest.IsolationForest.isRotate", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -1435,19 +1435,19 @@ static PyObject *__pyx_pf_9pyiForest_8PyForest_16isRotate(struct __pyx_obj_9pyiF
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_9pyiForest_8PyForest_19isValidModel(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyObject *__pyx_pw_9pyiForest_8PyForest_19isValidModel(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_9pyiForest_15IsolationForest_19isValidModel(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_9pyiForest_15IsolationForest_19isValidModel(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("isValidModel (wrapper)", 0);
-  __pyx_r = __pyx_pf_9pyiForest_8PyForest_18isValidModel(((struct __pyx_obj_9pyiForest_PyForest *)__pyx_v_self));
+  __pyx_r = __pyx_pf_9pyiForest_15IsolationForest_18isValidModel(((struct __pyx_obj_9pyiForest_IsolationForest *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_9pyiForest_8PyForest_18isValidModel(struct __pyx_obj_9pyiForest_PyForest *__pyx_v_self) {
+static PyObject *__pyx_pf_9pyiForest_15IsolationForest_18isValidModel(struct __pyx_obj_9pyiForest_IsolationForest *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -1481,7 +1481,7 @@ static PyObject *__pyx_pf_9pyiForest_8PyForest_18isValidModel(struct __pyx_obj_9
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("pyiForest.PyForest.isValidModel", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("pyiForest.IsolationForest.isValidModel", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -1498,9 +1498,9 @@ static PyObject *__pyx_pf_9pyiForest_8PyForest_18isValidModel(struct __pyx_obj_9
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_9pyiForest_8PyForest_21trainForest(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static char __pyx_doc_9pyiForest_8PyForest_20trainForest[] = "\n        Train Forest \n        ";
-static PyObject *__pyx_pw_9pyiForest_8PyForest_21trainForest(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static PyObject *__pyx_pw_9pyiForest_15IsolationForest_21trainForest(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static char __pyx_doc_9pyiForest_15IsolationForest_20trainForest[] = "\n        Train Forest \n        ";
+static PyObject *__pyx_pw_9pyiForest_15IsolationForest_21trainForest(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v__traindf = 0;
   PyObject *__pyx_v__ntree = 0;
   PyObject *__pyx_v__nsample = 0;
@@ -1621,18 +1621,18 @@ static PyObject *__pyx_pw_9pyiForest_8PyForest_21trainForest(PyObject *__pyx_v_s
   __pyx_L5_argtuple_error:;
   __Pyx_RaiseArgtupleInvalid("trainForest", 0, 1, 9, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 54; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
   __pyx_L3_error:;
-  __Pyx_AddTraceback("pyiForest.PyForest.trainForest", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("pyiForest.IsolationForest.trainForest", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_9pyiForest_8PyForest_20trainForest(((struct __pyx_obj_9pyiForest_PyForest *)__pyx_v_self), __pyx_v__traindf, __pyx_v__ntree, __pyx_v__nsample, __pyx_v__maxheight, __pyx_v__rotate, __pyx_v__adaptive, __pyx_v__rangecheck, __pyx_v__rho, __pyx_v__stoplimit);
+  __pyx_r = __pyx_pf_9pyiForest_15IsolationForest_20trainForest(((struct __pyx_obj_9pyiForest_IsolationForest *)__pyx_v_self), __pyx_v__traindf, __pyx_v__ntree, __pyx_v__nsample, __pyx_v__maxheight, __pyx_v__rotate, __pyx_v__adaptive, __pyx_v__rangecheck, __pyx_v__rho, __pyx_v__stoplimit);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_9pyiForest_8PyForest_20trainForest(struct __pyx_obj_9pyiForest_PyForest *__pyx_v_self, PyObject *__pyx_v__traindf, PyObject *__pyx_v__ntree, PyObject *__pyx_v__nsample, PyObject *__pyx_v__maxheight, PyObject *__pyx_v__rotate, PyObject *__pyx_v__adaptive, PyObject *__pyx_v__rangecheck, PyObject *__pyx_v__rho, PyObject *__pyx_v__stoplimit) {
+static PyObject *__pyx_pf_9pyiForest_15IsolationForest_20trainForest(struct __pyx_obj_9pyiForest_IsolationForest *__pyx_v_self, PyObject *__pyx_v__traindf, PyObject *__pyx_v__ntree, PyObject *__pyx_v__nsample, PyObject *__pyx_v__maxheight, PyObject *__pyx_v__rotate, PyObject *__pyx_v__adaptive, PyObject *__pyx_v__rangecheck, PyObject *__pyx_v__rho, PyObject *__pyx_v__stoplimit) {
   CYTHON_UNUSED int __pyx_v_adaptive;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
@@ -1885,7 +1885,7 @@ static PyObject *__pyx_pf_9pyiForest_8PyForest_20trainForest(struct __pyx_obj_9p
   __Pyx_XDECREF(__pyx_t_2);
   __Pyx_XDECREF(__pyx_t_3);
   __Pyx_XDECREF(__pyx_t_4);
-  __Pyx_AddTraceback("pyiForest.PyForest.trainForest", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("pyiForest.IsolationForest.trainForest", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v__nsample);
@@ -1903,19 +1903,19 @@ static PyObject *__pyx_pf_9pyiForest_8PyForest_20trainForest(struct __pyx_obj_9p
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_9pyiForest_8PyForest_23testForest(PyObject *__pyx_v_self, PyObject *__pyx_v_testdata); /*proto*/
-static PyObject *__pyx_pw_9pyiForest_8PyForest_23testForest(PyObject *__pyx_v_self, PyObject *__pyx_v_testdata) {
+static PyObject *__pyx_pw_9pyiForest_15IsolationForest_23testForest(PyObject *__pyx_v_self, PyObject *__pyx_v_testdata); /*proto*/
+static PyObject *__pyx_pw_9pyiForest_15IsolationForest_23testForest(PyObject *__pyx_v_self, PyObject *__pyx_v_testdata) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("testForest (wrapper)", 0);
-  __pyx_r = __pyx_pf_9pyiForest_8PyForest_22testForest(((struct __pyx_obj_9pyiForest_PyForest *)__pyx_v_self), ((PyObject *)__pyx_v_testdata));
+  __pyx_r = __pyx_pf_9pyiForest_15IsolationForest_22testForest(((struct __pyx_obj_9pyiForest_IsolationForest *)__pyx_v_self), ((PyObject *)__pyx_v_testdata));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_9pyiForest_8PyForest_22testForest(struct __pyx_obj_9pyiForest_PyForest *__pyx_v_self, PyObject *__pyx_v_testdata) {
+static PyObject *__pyx_pf_9pyiForest_15IsolationForest_22testForest(struct __pyx_obj_9pyiForest_IsolationForest *__pyx_v_self, PyObject *__pyx_v_testdata) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -1996,7 +1996,7 @@ static PyObject *__pyx_pf_9pyiForest_8PyForest_22testForest(struct __pyx_obj_9py
   __Pyx_XDECREF(__pyx_t_2);
   __Pyx_XDECREF(__pyx_t_3);
   __Pyx_XDECREF(__pyx_t_4);
-  __Pyx_AddTraceback("pyiForest.PyForest.testForest", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("pyiForest.IsolationForest.testForest", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -2013,19 +2013,19 @@ static PyObject *__pyx_pf_9pyiForest_8PyForest_22testForest(struct __pyx_obj_9py
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_9pyiForest_8PyForest_25validate_model(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyObject *__pyx_pw_9pyiForest_8PyForest_25validate_model(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_9pyiForest_15IsolationForest_25validate_model(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_9pyiForest_15IsolationForest_25validate_model(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("validate_model (wrapper)", 0);
-  __pyx_r = __pyx_pf_9pyiForest_8PyForest_24validate_model(((struct __pyx_obj_9pyiForest_PyForest *)__pyx_v_self));
+  __pyx_r = __pyx_pf_9pyiForest_15IsolationForest_24validate_model(((struct __pyx_obj_9pyiForest_IsolationForest *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_9pyiForest_8PyForest_24validate_model(struct __pyx_obj_9pyiForest_PyForest *__pyx_v_self) {
+static PyObject *__pyx_pf_9pyiForest_15IsolationForest_24validate_model(struct __pyx_obj_9pyiForest_IsolationForest *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   int __pyx_t_1;
@@ -2096,7 +2096,7 @@ static PyObject *__pyx_pf_9pyiForest_8PyForest_24validate_model(struct __pyx_obj
   goto __pyx_L0;
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_2);
-  __Pyx_AddTraceback("pyiForest.PyForest.validate_model", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("pyiForest.IsolationForest.validate_model", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -2113,19 +2113,19 @@ static PyObject *__pyx_pf_9pyiForest_8PyForest_24validate_model(struct __pyx_obj
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_9pyiForest_8PyForest_27getScore(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyObject *__pyx_pw_9pyiForest_8PyForest_27getScore(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_9pyiForest_15IsolationForest_27getScore(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_9pyiForest_15IsolationForest_27getScore(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("getScore (wrapper)", 0);
-  __pyx_r = __pyx_pf_9pyiForest_8PyForest_26getScore(((struct __pyx_obj_9pyiForest_PyForest *)__pyx_v_self));
+  __pyx_r = __pyx_pf_9pyiForest_15IsolationForest_26getScore(((struct __pyx_obj_9pyiForest_IsolationForest *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_9pyiForest_8PyForest_26getScore(struct __pyx_obj_9pyiForest_PyForest *__pyx_v_self) {
+static PyObject *__pyx_pf_9pyiForest_15IsolationForest_26getScore(struct __pyx_obj_9pyiForest_IsolationForest *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -2192,7 +2192,7 @@ static PyObject *__pyx_pf_9pyiForest_8PyForest_26getScore(struct __pyx_obj_9pyiF
   __Pyx_XDECREF(__pyx_t_1);
   __Pyx_XDECREF(__pyx_t_2);
   __Pyx_XDECREF(__pyx_t_3);
-  __Pyx_AddTraceback("pyiForest.PyForest.getScore", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("pyiForest.IsolationForest.getScore", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -2209,19 +2209,19 @@ static PyObject *__pyx_pf_9pyiForest_8PyForest_26getScore(struct __pyx_obj_9pyiF
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_9pyiForest_8PyForest_29pathLength(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyObject *__pyx_pw_9pyiForest_8PyForest_29pathLength(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_9pyiForest_15IsolationForest_29pathLength(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_9pyiForest_15IsolationForest_29pathLength(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("pathLength (wrapper)", 0);
-  __pyx_r = __pyx_pf_9pyiForest_8PyForest_28pathLength(((struct __pyx_obj_9pyiForest_PyForest *)__pyx_v_self));
+  __pyx_r = __pyx_pf_9pyiForest_15IsolationForest_28pathLength(((struct __pyx_obj_9pyiForest_IsolationForest *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_9pyiForest_8PyForest_28pathLength(struct __pyx_obj_9pyiForest_PyForest *__pyx_v_self) {
+static PyObject *__pyx_pf_9pyiForest_15IsolationForest_28pathLength(struct __pyx_obj_9pyiForest_IsolationForest *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -2288,7 +2288,7 @@ static PyObject *__pyx_pf_9pyiForest_8PyForest_28pathLength(struct __pyx_obj_9py
   __Pyx_XDECREF(__pyx_t_1);
   __Pyx_XDECREF(__pyx_t_2);
   __Pyx_XDECREF(__pyx_t_3);
-  __Pyx_AddTraceback("pyiForest.PyForest.pathLength", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("pyiForest.IsolationForest.pathLength", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -2305,19 +2305,19 @@ static PyObject *__pyx_pf_9pyiForest_8PyForest_28pathLength(struct __pyx_obj_9py
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_9pyiForest_8PyForest_31averageDepth(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyObject *__pyx_pw_9pyiForest_8PyForest_31averageDepth(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_9pyiForest_15IsolationForest_31averageDepth(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_9pyiForest_15IsolationForest_31averageDepth(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("averageDepth (wrapper)", 0);
-  __pyx_r = __pyx_pf_9pyiForest_8PyForest_30averageDepth(((struct __pyx_obj_9pyiForest_PyForest *)__pyx_v_self));
+  __pyx_r = __pyx_pf_9pyiForest_15IsolationForest_30averageDepth(((struct __pyx_obj_9pyiForest_IsolationForest *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_9pyiForest_8PyForest_30averageDepth(struct __pyx_obj_9pyiForest_PyForest *__pyx_v_self) {
+static PyObject *__pyx_pf_9pyiForest_15IsolationForest_30averageDepth(struct __pyx_obj_9pyiForest_IsolationForest *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -2384,7 +2384,7 @@ static PyObject *__pyx_pf_9pyiForest_8PyForest_30averageDepth(struct __pyx_obj_9
   __Pyx_XDECREF(__pyx_t_1);
   __Pyx_XDECREF(__pyx_t_2);
   __Pyx_XDECREF(__pyx_t_3);
-  __Pyx_AddTraceback("pyiForest.PyForest.averageDepth", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("pyiForest.IsolationForest.averageDepth", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -2401,19 +2401,19 @@ static PyObject *__pyx_pf_9pyiForest_8PyForest_30averageDepth(struct __pyx_obj_9
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_9pyiForest_8PyForest_33displayData(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyObject *__pyx_pw_9pyiForest_8PyForest_33displayData(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_9pyiForest_15IsolationForest_33displayData(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_9pyiForest_15IsolationForest_33displayData(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("displayData (wrapper)", 0);
-  __pyx_r = __pyx_pf_9pyiForest_8PyForest_32displayData(((struct __pyx_obj_9pyiForest_PyForest *)__pyx_v_self));
+  __pyx_r = __pyx_pf_9pyiForest_15IsolationForest_32displayData(((struct __pyx_obj_9pyiForest_IsolationForest *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_9pyiForest_8PyForest_32displayData(struct __pyx_obj_9pyiForest_PyForest *__pyx_v_self) {
+static PyObject *__pyx_pf_9pyiForest_15IsolationForest_32displayData(struct __pyx_obj_9pyiForest_IsolationForest *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -2447,7 +2447,7 @@ static PyObject *__pyx_pf_9pyiForest_8PyForest_32displayData(struct __pyx_obj_9p
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("pyiForest.PyForest.displayData", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("pyiForest.IsolationForest.displayData", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -3133,7 +3133,7 @@ static PyObject *__pyx_convert_vector_to_py_std_3a__3a_vector_3c_double_3e___(co
   return __pyx_r;
 }
 
-static PyObject *__pyx_tp_new_9pyiForest_PyForest(PyTypeObject *t, CYTHON_UNUSED PyObject *a, CYTHON_UNUSED PyObject *k) {
+static PyObject *__pyx_tp_new_9pyiForest_IsolationForest(PyTypeObject *t, CYTHON_UNUSED PyObject *a, CYTHON_UNUSED PyObject *k) {
   PyObject *o;
   if (likely((t->tp_flags & Py_TPFLAGS_IS_ABSTRACT) == 0)) {
     o = (*t->tp_alloc)(t, 0);
@@ -3141,13 +3141,13 @@ static PyObject *__pyx_tp_new_9pyiForest_PyForest(PyTypeObject *t, CYTHON_UNUSED
     o = (PyObject *) PyBaseObject_Type.tp_new(t, __pyx_empty_tuple, 0);
   }
   if (unlikely(!o)) return 0;
-  if (unlikely(__pyx_pw_9pyiForest_8PyForest_1__cinit__(o, __pyx_empty_tuple, NULL) < 0)) {
+  if (unlikely(__pyx_pw_9pyiForest_15IsolationForest_1__cinit__(o, __pyx_empty_tuple, NULL) < 0)) {
     Py_DECREF(o); o = 0;
   }
   return o;
 }
 
-static void __pyx_tp_dealloc_9pyiForest_PyForest(PyObject *o) {
+static void __pyx_tp_dealloc_9pyiForest_IsolationForest(PyObject *o) {
   #if PY_VERSION_HEX >= 0x030400a1
   if (unlikely(Py_TYPE(o)->tp_finalize) && (!PyType_IS_GC(Py_TYPE(o)) || !_PyGC_FINALIZED(o))) {
     if (PyObject_CallFinalizerFromDealloc(o)) return;
@@ -3157,38 +3157,38 @@ static void __pyx_tp_dealloc_9pyiForest_PyForest(PyObject *o) {
     PyObject *etype, *eval, *etb;
     PyErr_Fetch(&etype, &eval, &etb);
     ++Py_REFCNT(o);
-    __pyx_pw_9pyiForest_8PyForest_3__dealloc__(o);
+    __pyx_pw_9pyiForest_15IsolationForest_3__dealloc__(o);
     --Py_REFCNT(o);
     PyErr_Restore(etype, eval, etb);
   }
   (*Py_TYPE(o)->tp_free)(o);
 }
 
-static PyMethodDef __pyx_methods_9pyiForest_PyForest[] = {
-  {"factorial", (PyCFunction)__pyx_pw_9pyiForest_8PyForest_5factorial, METH_O, 0},
-  {"getNTree", (PyCFunction)__pyx_pw_9pyiForest_8PyForest_7getNTree, METH_NOARGS, 0},
-  {"getNSample", (PyCFunction)__pyx_pw_9pyiForest_8PyForest_9getNSample, METH_NOARGS, 0},
-  {"getMaxDepth", (PyCFunction)__pyx_pw_9pyiForest_8PyForest_11getMaxDepth, METH_NOARGS, 0},
-  {"isAdaptive", (PyCFunction)__pyx_pw_9pyiForest_8PyForest_13isAdaptive, METH_NOARGS, 0},
-  {"isRangeCheck", (PyCFunction)__pyx_pw_9pyiForest_8PyForest_15isRangeCheck, METH_NOARGS, 0},
-  {"isRotate", (PyCFunction)__pyx_pw_9pyiForest_8PyForest_17isRotate, METH_NOARGS, 0},
-  {"isValidModel", (PyCFunction)__pyx_pw_9pyiForest_8PyForest_19isValidModel, METH_NOARGS, 0},
-  {"trainForest", (PyCFunction)__pyx_pw_9pyiForest_8PyForest_21trainForest, METH_VARARGS|METH_KEYWORDS, __pyx_doc_9pyiForest_8PyForest_20trainForest},
-  {"testForest", (PyCFunction)__pyx_pw_9pyiForest_8PyForest_23testForest, METH_O, 0},
-  {"validate_model", (PyCFunction)__pyx_pw_9pyiForest_8PyForest_25validate_model, METH_NOARGS, 0},
-  {"getScore", (PyCFunction)__pyx_pw_9pyiForest_8PyForest_27getScore, METH_NOARGS, 0},
-  {"pathLength", (PyCFunction)__pyx_pw_9pyiForest_8PyForest_29pathLength, METH_NOARGS, 0},
-  {"averageDepth", (PyCFunction)__pyx_pw_9pyiForest_8PyForest_31averageDepth, METH_NOARGS, 0},
-  {"displayData", (PyCFunction)__pyx_pw_9pyiForest_8PyForest_33displayData, METH_NOARGS, 0},
+static PyMethodDef __pyx_methods_9pyiForest_IsolationForest[] = {
+  {"factorial", (PyCFunction)__pyx_pw_9pyiForest_15IsolationForest_5factorial, METH_O, 0},
+  {"getNTree", (PyCFunction)__pyx_pw_9pyiForest_15IsolationForest_7getNTree, METH_NOARGS, 0},
+  {"getNSample", (PyCFunction)__pyx_pw_9pyiForest_15IsolationForest_9getNSample, METH_NOARGS, 0},
+  {"getMaxDepth", (PyCFunction)__pyx_pw_9pyiForest_15IsolationForest_11getMaxDepth, METH_NOARGS, 0},
+  {"isAdaptive", (PyCFunction)__pyx_pw_9pyiForest_15IsolationForest_13isAdaptive, METH_NOARGS, 0},
+  {"isRangeCheck", (PyCFunction)__pyx_pw_9pyiForest_15IsolationForest_15isRangeCheck, METH_NOARGS, 0},
+  {"isRotate", (PyCFunction)__pyx_pw_9pyiForest_15IsolationForest_17isRotate, METH_NOARGS, 0},
+  {"isValidModel", (PyCFunction)__pyx_pw_9pyiForest_15IsolationForest_19isValidModel, METH_NOARGS, 0},
+  {"trainForest", (PyCFunction)__pyx_pw_9pyiForest_15IsolationForest_21trainForest, METH_VARARGS|METH_KEYWORDS, __pyx_doc_9pyiForest_15IsolationForest_20trainForest},
+  {"testForest", (PyCFunction)__pyx_pw_9pyiForest_15IsolationForest_23testForest, METH_O, 0},
+  {"validate_model", (PyCFunction)__pyx_pw_9pyiForest_15IsolationForest_25validate_model, METH_NOARGS, 0},
+  {"getScore", (PyCFunction)__pyx_pw_9pyiForest_15IsolationForest_27getScore, METH_NOARGS, 0},
+  {"pathLength", (PyCFunction)__pyx_pw_9pyiForest_15IsolationForest_29pathLength, METH_NOARGS, 0},
+  {"averageDepth", (PyCFunction)__pyx_pw_9pyiForest_15IsolationForest_31averageDepth, METH_NOARGS, 0},
+  {"displayData", (PyCFunction)__pyx_pw_9pyiForest_15IsolationForest_33displayData, METH_NOARGS, 0},
   {0, 0, 0, 0}
 };
 
-static PyTypeObject __pyx_type_9pyiForest_PyForest = {
+static PyTypeObject __pyx_type_9pyiForest_IsolationForest = {
   PyVarObject_HEAD_INIT(0, 0)
-  "pyiForest.PyForest", /*tp_name*/
-  sizeof(struct __pyx_obj_9pyiForest_PyForest), /*tp_basicsize*/
+  "pyiForest.IsolationForest", /*tp_name*/
+  sizeof(struct __pyx_obj_9pyiForest_IsolationForest), /*tp_basicsize*/
   0, /*tp_itemsize*/
-  __pyx_tp_dealloc_9pyiForest_PyForest, /*tp_dealloc*/
+  __pyx_tp_dealloc_9pyiForest_IsolationForest, /*tp_dealloc*/
   0, /*tp_print*/
   0, /*tp_getattr*/
   0, /*tp_setattr*/
@@ -3215,7 +3215,7 @@ static PyTypeObject __pyx_type_9pyiForest_PyForest = {
   0, /*tp_weaklistoffset*/
   0, /*tp_iter*/
   0, /*tp_iternext*/
-  __pyx_methods_9pyiForest_PyForest, /*tp_methods*/
+  __pyx_methods_9pyiForest_IsolationForest, /*tp_methods*/
   0, /*tp_members*/
   0, /*tp_getset*/
   0, /*tp_base*/
@@ -3225,7 +3225,7 @@ static PyTypeObject __pyx_type_9pyiForest_PyForest = {
   0, /*tp_dictoffset*/
   0, /*tp_init*/
   0, /*tp_alloc*/
-  __pyx_tp_new_9pyiForest_PyForest, /*tp_new*/
+  __pyx_tp_new_9pyiForest_IsolationForest, /*tp_new*/
   0, /*tp_free*/
   0, /*tp_is_gc*/
   0, /*tp_bases*/
@@ -3569,10 +3569,10 @@ PyMODINIT_FUNC PyInit_pyiForest(void)
   /*--- Variable export code ---*/
   /*--- Function export code ---*/
   /*--- Type init code ---*/
-  if (PyType_Ready(&__pyx_type_9pyiForest_PyForest) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 29; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __pyx_type_9pyiForest_PyForest.tp_print = 0;
-  if (PyObject_SetAttrString(__pyx_m, "PyForest", (PyObject *)&__pyx_type_9pyiForest_PyForest) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 29; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __pyx_ptype_9pyiForest_PyForest = &__pyx_type_9pyiForest_PyForest;
+  if (PyType_Ready(&__pyx_type_9pyiForest_IsolationForest) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 29; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_type_9pyiForest_IsolationForest.tp_print = 0;
+  if (PyObject_SetAttrString(__pyx_m, "IsolationForest", (PyObject *)&__pyx_type_9pyiForest_IsolationForest) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 29; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_ptype_9pyiForest_IsolationForest = &__pyx_type_9pyiForest_IsolationForest;
   /*--- Type import code ---*/
   /*--- Variable import code ---*/
   /*--- Function import code ---*/

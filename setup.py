@@ -33,9 +33,10 @@ EMAIL = "tadesse.habte@gmail.com"
 
 #LICENSE = "Apache 2.0"
 
-SRC_DIR = "CPP/"
-PACKAGES = [SRC_DIR]
-CYTH_DIR="cython/"
+SRC_DIR = "src/CPP/"
+CYTH_DIR="src/"
+PACKAGES =[CYTH_DIR]
+
 ext_1 = Extension("pyiForest",
                  sources=[CYTH_DIR+"_pyForest.pyx", SRC_DIR+"FacadeForest.cpp",SRC_DIR+"utility.cpp",
                  SRC_DIR+"Tree.cpp",SRC_DIR+"Forest.cpp",SRC_DIR+"IsolationForest.cpp"],

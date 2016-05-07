@@ -1,11 +1,14 @@
-from pyiForest import PyForest
+import os
+import sys
+sys.path.insert(0,os.path.abspath('..'))
+from pyiForest import IsolationForest
 from unittest import main, TestCase
 import numpy as np
 import pandas as pd
 class TestPyForest(TestCase):
 
   def setUp(self):
-      self.ff =  PyForest()
+      self.ff =  IsolationForest()
       #self.w = np.arange(30).reshape(10,3)
 
       #set for dataset
