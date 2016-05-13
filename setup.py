@@ -36,9 +36,10 @@ EMAIL = "tadesse.habte@gmail.com"
 SRC_DIR = "src/CPP/"
 CYTH_DIR="src/"
 PACKAGES =[CYTH_DIR]
-
+ #CYTH_DIR+"_pyForest.pyx",
 ext_1 = Extension("pyiForest",
-                 sources=[CYTH_DIR+"_pyForest.pyx", SRC_DIR+"FacadeForest.cpp",SRC_DIR+"utility.cpp",
+                 sources=[CYTH_DIR+"_pyForest.pyx",
+ SRC_DIR+"FacadeForest.cpp",SRC_DIR+"utility.cpp",
                  SRC_DIR+"Tree.cpp",SRC_DIR+"Forest.cpp",SRC_DIR+"IsolationForest.cpp"],
                  language="c++",
                  extra_compile_args=['-std=c++11'],

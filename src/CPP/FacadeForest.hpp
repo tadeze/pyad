@@ -27,7 +27,7 @@ private:
     const int NO_TEST_DATA =2;
     const int OK =0;
 
-    
+
   public:
     //constructor and Destructor
     virtual ~FacadeForest(){
@@ -100,7 +100,8 @@ private:
     std::vector<double> getScore();
     std::vector<std::vector<double> > pathLength();
     std::vector<double> averageDepth();
-    long factorial(int n);
+
+
     /* Testing SWIG
 ;
     double sum_array(double* input_array, int length);
@@ -113,10 +114,3 @@ private:
 
 
 #endif //IFOREST_ADDIN_FacadeForest_HPP
-
-
-
-
-
-
-

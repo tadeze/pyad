@@ -31,18 +31,18 @@ util::dataset *makeDataset(std::vector<std::vector<double> > &data) {
 	return dt;
 }
 
-//Check if the forest is built correctly 
+//Check if the forest is built correctly
 int FacadeForest::isValidModel() const{
- 
+
     if(iff==nullptr)
        //std::cout<<"Forest model not yet trained\n";
      return FOREST_NOT_TRAINED;
- 
-     //Check if test data is available 
+
+     //Check if test data is available
     if(testdf==nullptr || testdf->nrow==0)
         	return NO_TEST_DATA;
-   	
-   	return OK;	
+
+   	return OK;
    	/*catch (std::exception& e) {
 			std::cout << "Standard exception: " << e.what() << std::endl;
 */
@@ -107,8 +107,8 @@ void FacadeForest::testForest(std::vector<std::vector<double> > &_testdf) {
 std::vector<double> FacadeForest::getScore() {
 
     //Make sure the forest is built and test data is available
-     //isValidModel()      
-   
+     //isValidModel()
+
 	return iff->AnomalyScore(testdf);
 
 }
@@ -132,13 +132,6 @@ std::vector<double> FacadeForest::averageDepth() {
 	return meandepth;
 }
 
-long FacadeForest::factorial(int n) {
-	long fact = 1;
-	for (int i = 1; i <= n; i++)
-		fact *= i;
-	return fact;
-}
-
 
 
 void FacadeForest::displayData() {
@@ -151,4 +144,3 @@ void FacadeForest::displayData() {
 	}
 
 }
-

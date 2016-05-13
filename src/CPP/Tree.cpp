@@ -7,6 +7,23 @@
 #include "Tree.hpp"
 #include<stack>
 bool Tree::rangeCheck=true;
+
+util::dataset *Tree::makeDataset(std::vector<std::vector<double> > &data) {
+	util::dataset *dt = new util::dataset();
+	dt->data = data;
+	dt->ncol = (int) data[0].size();
+	dt->nrow = (int) data.size();
+	return dt;
+}
+
+
+void Tree::iTree(std::vector<int> const &dIndex,
+        std::vector<std::vector<double> > traindata, int height, int maxheight, bool stopheight)
+{
+    util::dataset *dt =makeDataset(traindata);
+   this->iTree(dIndex,dt,height,maxheight,stopheight);
+  delete dt;
+}
 void Tree::iTree(std::vector<int> const &dIndex,const util::dataset *dt, int height, int maxheight, bool stopheight)
 {
 	this->depth = height; //Tree height

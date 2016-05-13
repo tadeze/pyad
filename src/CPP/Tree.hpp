@@ -21,6 +21,7 @@ private:
 	double splittingPoint;
 	int depth;
 	double minAttVal,maxAttVal;
+    util::dataset *makeDataset(std::vector<std::vector<double> > &data); 
 public:
 	static bool rangeCheck;
 	Tree()
@@ -42,9 +43,11 @@ public:
         delete rightChild;
 
 	};
-
+    
 	void iTree(std::vector<int> const &dIndex, const util::dataset *dt, int height, int maxHeight, bool stopheight);
-	double pathLength(std::vector<double> &inst);
+	void iTree(std::vector<int> const &dIndex, std::vector<std::vector<double> > traindata, int height, int maxHeight, bool stopheight);
+	
+    double pathLength(std::vector<double> &inst);
 	double pathLengthM(std::vector<double> &inst);
 	int maxTreeDepth();
 
