@@ -12,7 +12,7 @@ class TestPyForest(TestCase):
       #self.w = np.arange(30).reshape(10,3)
 
       #set for dataset
-      filename ='synth2d.csv'
+      filename ='synth2d.dt'
       pd_data = pd.read_csv(filename,header=0)
 
       #Forest configuration initialization
