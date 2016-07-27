@@ -8,7 +8,6 @@
 #ifndef ISOLATIONFOREST_HPP_
 #define ISOLATIONFOREST_HPP_
 #include "Forest.hpp"
-
 class IsolationForest:public Forest{
     public:
 	IsolationForest();

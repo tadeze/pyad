@@ -9,7 +9,10 @@
 #define FOREST_H_
 #include "utility.hpp"
 #include "Tree.hpp"
+#include "json/json.hpp"
+using json = nlohmann::json;
 //#include "cincl.hpp"
+
 
 class Forest {
 public:
@@ -38,7 +41,7 @@ Forest(int _ntree,util::dataset* _dataset,int _nsample,int _maxheight, bool _sto
 	stopheight=_stopheight;
 	maxheight=_maxheight;
  	rsample = _rsample;
-//	rangecheck=_rangecheck;	
+//	rangecheck=_rangecheck;
 //	Tree::rangeCheck = rangecheck;
     };
 virtual ~Forest()
@@ -70,14 +73,14 @@ virtual ~Forest()
 		}
 	};
     /* virtual function for adaptive forest*/
-     virtual int adaptiveForest(double alpha,int stopLimit); 
-    
+     virtual int adaptiveForest(double alpha,int stopLimit);
+
      /*Fixed tree forest */
      virtual void fixedTreeForest() {};
 
      virtual int confTree(double alpha,double rho,int init_tree);
 	 /*
-	  * @input two vector v1 and 
+	  * @input two vector v1 and
 	 * @return proporation of intersection ,[0,1]
 	 */
 
@@ -91,6 +94,63 @@ virtual ~Forest()
 		return (double)v3.size()/(double)v1.size();
 	}
 
+// Serialize
+
+json serialize_tree(Tree* tree){
+json j;
+if(tree->leftChild!=NULL)
+{
+
+j["splittingatt"] = tree->splittingAtt;
+j["splittingPoint"] = tree->splittingPoint;
+j["depth"]= tree->depth;
+j["nodesize"]= tree->nodeSize;
+j["minAttVal"] = tree->minAttVal;
+j["maxAttVal"] = tree->maxAttVal;
+j["lchild"] = serialize_tree(tree->leftChild);
+j["rchild"] = serialize_tree(tree->rightChild);
+
+}
+/*
+else{
+    j["lchild"] = nullptr;
+    j[1] = nullptr;
+}*/
+return j;
+
+}
+
+json to_json() {
+json j;
+j["ntree"] = ntree;
+j["rsample"] = rsample;
+j["maxheight"] = maxheight;
+j["stopheight"] = stopheight;
+j["rangecheck"]= rangecheck;
+for(int i=0 ;i<ntree;i++){
+j["trees"][i]=serialize_tree(trees[i]);
+}
+
+
+
+return j;
+}
+//Deserialize
+
+*Forest deseralize(std::string modelname){
+    std::ifstream in(modelname);
+    if(in==NULL)
+        return NULL;
+    json jff;
+    in >>jff;
+    Forest *iff;
+   iff->nsample = jff["nsample"];
+   iff->rsample = jff["rsample"];
+   iff->maxheight = jff["maxheight"];
+   iff->stopheight = jff["stopheight"];
+   iff->rangecheck = jff["rangecheck"];
+
+}
 
 };
 #endif /* FOREST_H_ */

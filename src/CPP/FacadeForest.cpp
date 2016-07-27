@@ -4,11 +4,7 @@
 
 #include "FacadeForest.hpp"
 #include<exception>
-
-void FacadeForest::saveModel(std::string modelName) {
-	std::cout << modelName << " Place holder";
-}
-
+#include<fstream>
 FacadeForest::FacadeForest() {
 	ntree = 0;
 	nsample = 0;
@@ -144,3 +140,13 @@ void FacadeForest::displayData() {
 	}
 
 }
+ void FacadeForest::saveModel(std::string modelName) {
+  // Save the json representation 
+  
+ std::string jsonstr = iff->to_json().dump();
+ std::ofstream  out(modelName);
+
+ out<<jsonstr;
+ //std::cout<<jsonstr<<" Json representation "<<modelName;
+
+ }

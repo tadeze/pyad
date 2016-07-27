@@ -84,7 +84,7 @@ private:
 
 
     //Methods
-
+    
     void trainForest(std::vector<std::vector<double> > &traindf,int _ntree,
     		int _nsample,int _maxheight, bool _rotate, bool _adaptive,
     		    		bool _rangecheck,double _rho,int _stopLimit);

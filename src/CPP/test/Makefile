@@ -75,7 +75,7 @@ gtest_main.a : gtest-all.o gtest_main.o
 CC=gcc
 CFLAGS=--std=c99 -D_GNU_SOURCE -Wall -Werror -g
 PP=g++
-INCLUDES=../Eigen/
+INCLUDES=../Eigen/ 
 PFLAGS=--std=c++11 -Wall -Werror -g
 
 #../C/%.o: ../C/%.c ../C/%.h
@@ -84,11 +84,11 @@ PFLAGS=--std=c++11 -Wall -Werror -g
 #cincl.o: ../C/common.o ../C/object.o ../C/strfun.o ../C/readwrite.o ../C/argparse.o ../C/argparse_iforest.o ../C/frames.o
 #	ld -r ../C/common.o ../C/object.o ../C/strfun.o ../C/readwrite.o ../C/argparse.o ../C/argparse_iforest.o ../C/frames.o -o cincl.o
 
-%.o: ../%.cpp ../%.hpp
+%.o: ../%.cpp ../%.hpp ../json/json.hpp 
 	$(PP) $(PFLAGS) -I $(INCLUDES) -c $< -o $@
 
 %.o:%.cpp %.hpp $(GTEST_HEADERS) ../%.hpp
 	$(PP) $(PFLAGS) $(CXXFLAGS)  -I $(INCLUDES) -c $< -o $@
 
-test_iforest:  utility.o Tree.o Forest.o IsolationForest.o metric.o test_metric.o test_tree.o test_utility.o FacadeForest.o test_FacadeForest.o test_Forest.o gtest_main.a
+test_iforest: utility.o Tree.o Forest.o IsolationForest.o metric.o test_metric.o test_tree.o test_utility.o FacadeForest.o test_FacadeForest.o test_Forest.o gtest_main.a
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -L$(INCLUDES) -lpthread $^ -o $@

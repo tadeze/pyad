@@ -12,7 +12,7 @@
 
 class Tree
 {
-private:
+public:
 	Tree *leftChild;
 	Tree *rightChild;
 	Tree *parent;
@@ -22,9 +22,12 @@ private:
 	int depth;
 	double minAttVal,maxAttVal;
     util::dataset *makeDataset(std::vector<std::vector<double> > &data); 
-public:
-	static bool rangeCheck;
-	Tree()
+
+
+    
+    static bool rangeCheck;
+    
+    Tree()
 	{
 		leftChild = NULL;
 		rightChild = NULL;
@@ -49,8 +52,7 @@ public:
 	
     double pathLength(std::vector<double> &inst);
 	double pathLengthM(std::vector<double> &inst);
-	int maxTreeDepth();
-
+	int maxTreeDepth(); 
 
 };
 
