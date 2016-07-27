@@ -73,6 +73,7 @@ TEST_F(FacadeForestTest, factorial){
 	EXPECT_EQ(ff.factorial(n),362880);
 }
 */
+
 TEST_F(FacadeForestTest, saveModel){
 	ff.saveModel("Forest.json");
     long n=9;
@@ -80,4 +81,10 @@ TEST_F(FacadeForestTest, saveModel){
 }
 
 
+TEST_F(FacadeForestTest, LoadModel){
+    FacadeForest new_if;
+   new_if.loadModel("Forest.json");
+    //long n=9;
+	EXPECT_EQ(new_if.getIff()->ntree,100);
+}
 

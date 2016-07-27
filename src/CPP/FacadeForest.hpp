@@ -37,7 +37,7 @@ private:
     };
     FacadeForest();
 
-
+    
     int getNTree() const {
         return ntree;
     }
@@ -96,7 +96,7 @@ private:
 
     void testForest(std::vector<std::vector<double> > &testdf);
     void saveModel(std::string modelName);
-    //Forest loadModel(std::string modelName);
+    void loadModel(std::string modelName);
     std::vector<double> getScore();
     std::vector<std::vector<double> > pathLength();
     std::vector<double> averageDepth();
