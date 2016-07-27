@@ -137,19 +137,21 @@ return j;
 }
 //Deserialize
 
-*Forest deseralize(std::string modelname){
+Forest deseralize(std::string modelname){
     std::ifstream in(modelname);
-    if(in==NULL)
-        return NULL;
+     Forest iff;
+  
+    if(in==nullptr)
+        return iff;
     json jff;
     in >>jff;
-    Forest *iff;
-   iff->nsample = jff["nsample"];
-   iff->rsample = jff["rsample"];
-   iff->maxheight = jff["maxheight"];
-   iff->stopheight = jff["stopheight"];
-   iff->rangecheck = jff["rangecheck"];
-
+  //iff->nsample = jff["nsample"];
+   iff.nsample = jff["rsample"];
+   iff.maxheight = jff["maxheight"];
+   iff.stopheight = jff["stopheight"];
+   iff.rangecheck = jff["rangecheck"];
+   iff.ntree = jff["ntree"];
+  return iff;
 }
 
 };

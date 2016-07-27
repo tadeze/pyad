@@ -150,3 +150,9 @@ void FacadeForest::displayData() {
  //std::cout<<jsonstr<<" Json representation "<<modelName;
 
  }
+void FacadeForest::loadModel(std::string modelName)
+{
+    iff = &(iff->deseralize(modelName));
+    //TODO: Not yet finished the deserialization process
+    
+}
