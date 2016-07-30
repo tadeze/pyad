@@ -103,13 +103,14 @@ json serialize_bfs(Tree* tree)
 	json jroot;
 
 	// Define empty queute
-	std::queue<*Tree> qtree ;
+	std::queue<Tree*> qtree ;
 	qtree.push(tree);
     int i=0;
 	while(!qtree.empty())
     { 
         json j;
-        Tree* nextTree = qtree.pop();
+        Tree* nextTree = qtree.front();
+        qtree.pop();
         if(nextTree==nullptr)
             j = nullptr;
         else
@@ -121,9 +122,10 @@ json serialize_bfs(Tree* tree)
       jroot[i] = j;
       qtree.push(nextTree->leftChild);
       qtree.push(nextTree->rightChild);
+      i++;
     }
 
-return j;
+return jroot;
 
 }
 
@@ -159,7 +161,8 @@ j["maxheight"] = maxheight;
 j["stopheight"] = stopheight;
 j["rangecheck"]= rangecheck;
 for(int i=0 ;i<ntree;i++){
-j["trees"][i]=serialize_bfs(trees[i]);
+
+j["trees"][i]=serialize_tree(trees[i]);
 }
 
 
