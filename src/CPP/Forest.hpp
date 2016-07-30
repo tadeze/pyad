@@ -7,16 +7,16 @@
 
 #ifndef FOREST_H_
 #define FOREST_H_
-#include "utility.hpp"
+//#include "utility.hpp"
 #include "Tree.hpp"
 #include "json/json.hpp"
 using json = nlohmann::json;
 //#include "cincl.hpp"
-
-
 class Forest {
 public:
+    
 	std::vector<Tree*> trees;
+
 	int ntree;
 	bool rsample;
 	int nsample;
@@ -96,6 +96,37 @@ virtual ~Forest()
 
 // Serialize
 
+//Serialize using BFS approach 
+
+json serialize_bfs(Tree* tree)
+{
+	json jroot;
+
+	// Define empty queute
+	std::queue<*Tree> qtree ;
+	qtree.push(tree);
+    int i=0;
+	while(!qtree.empty())
+    { 
+        json j;
+        Tree* nextTree = qtree.pop();
+        if(nextTree==nullptr)
+            j = nullptr;
+        else
+        {
+        j["depth"] = nextTree->depth;
+        j["splittingAtt"] = nextTree->splittingAtt;
+        }
+       
+      jroot[i] = j;
+      qtree.push(nextTree->leftChild);
+      qtree.push(nextTree->rightChild);
+    }
+
+return j;
+
+}
+
 json serialize_tree(Tree* tree){
 json j;
 if(tree->leftChild!=NULL)
@@ -128,7 +159,7 @@ j["maxheight"] = maxheight;
 j["stopheight"] = stopheight;
 j["rangecheck"]= rangecheck;
 for(int i=0 ;i<ntree;i++){
-j["trees"][i]=serialize_tree(trees[i]);
+j["trees"][i]=serialize_bfs(trees[i]);
 }
 
 
@@ -137,20 +168,30 @@ return j;
 }
 //Deserialize
 
-Forest deseralize(std::string modelname){
+Forest *deseralize(std::string modelname){
+	std::ofstream logg("error.log");
     std::ifstream in(modelname);
-     Forest iff;
+     Forest *iff = new Forest();
   
     if(in==nullptr)
         return iff;
     json jff;
-    in >>jff;
+    in>>jff;
   //iff->nsample = jff["nsample"];
-   iff.nsample = jff["rsample"];
-   iff.maxheight = jff["maxheight"];
-   iff.stopheight = jff["stopheight"];
-   iff.rangecheck = jff["rangecheck"];
-   iff.ntree = jff["ntree"];
+   iff->rsample = jff["rsample"];
+   iff->maxheight = jff["maxheight"];
+   iff->stopheight = jff["stopheight"];
+   iff->rangecheck = jff["rangecheck"];
+   iff->ntree = jff["ntree"];
+   
+   //logg <<iff->rSample;
+   logg <<iff->maxheight;
+   logg <<iff->stopheight;
+   logg<<iff->rangecheck ; 
+   logg<<iff->ntree;
+   
+
+  logg.close();
   return iff;
 }
 

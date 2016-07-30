@@ -10,7 +10,7 @@
 #include "Forest.hpp"
 class IsolationForest:public Forest{
     public:
-	IsolationForest();
+	IsolationForest(){};
 
 	IsolationForest(int _ntree, util::dataset* _df,
 			int _nsample,int _maxheight, bool _stopheight,bool _rsample);
