@@ -28,7 +28,7 @@ protected:
     	 //Forest(int _ntree,util::dataset* _dataset,int _nsample,int _maxheight, bool _stopheight,bool _rsample)
 
     	 //Let read data from
-    	 std::string filename("test2d.csv"); //../synth2d.csv");
+    	 std::string filename("../synth2d.csv");
     	 data= util::readcsv((char*) &filename[0],',',true);
     	 //ff = new FacadeForest();
     	  dataset = makeDataset(data);
@@ -69,9 +69,9 @@ TEST_F(ForestTest,serialize)
    ASSERT_EQ(jj["ntree"],ff->ntree);
    ASSERT_EQ(jj["nsample"],ff->nsample);
 
-   //   std::ofstream ll("forest.json");
- //  ll<<jj;
- //  ll.close();
+      std::ofstream ll("forest.json");
+   ll<<jj;
+   ll.close();
 
 }
 TEST_F(ForestTest,deserialize)
@@ -80,9 +80,9 @@ TEST_F(ForestTest,deserialize)
    forest.deseralize_bfs("forest.json");
   ASSERT_EQ(forest.ntree,ntree);
   ASSERT_EQ(forest.nsample,nsample);
-
-    
-    ASSERT_EQ(6,6);
+  ASSERT_EQ(forest.trees[2]->leftChild->nodeSize,
+          ff->trees[2]->leftChild->nodeSize); //just take two random node and check they are equal 
+  
 }
 //Test remaining module in child
 

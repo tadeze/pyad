@@ -111,7 +111,7 @@ json serialize_bfs(Tree* tree)
         Tree* nextTree = qtree.front();
         qtree.pop();
         if(nextTree==NULL){
-            j = NULL;
+            j["depth"] = -999;
         }
         else
         {
@@ -220,11 +220,19 @@ void deseralize_bfs(std::string modelname)
             //jright =
             if(iNode<(numNodes-1)) jright =&jff["trees"][i][iNode+1];
              // rootTree[iNode+1];
-  
-            node->leftChild = new Tree();
-            assignTree(node->leftChild,jleft);
-            qTree.push(node->leftChild);
-            if(jright!=NULL)
+            
+            if(jleft!=NULL && (*jleft)["depth"]>0)
+            {
+                 node->leftChild = new Tree();
+                 assignTree(node->leftChild,jleft);
+                 qTree.push(node->leftChild);
+            }
+            else
+            {
+            
+            }
+
+            if(jright!=NULL && (*jright)["depth"]>0)
             {
                 node->rightChild = new Tree();
                 assignTree(node->rightChild,jright);
