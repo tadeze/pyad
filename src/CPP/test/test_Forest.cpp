@@ -28,7 +28,7 @@ protected:
     	 //Forest(int _ntree,util::dataset* _dataset,int _nsample,int _maxheight, bool _stopheight,bool _rsample)
 
     	 //Let read data from
-    	 std::string filename("../synth2d.csv");
+    	 std::string filename("test2d.csv"); //../synth2d.csv");
     	 data= util::readcsv((char*) &filename[0],',',true);
     	 //ff = new FacadeForest();
     	  dataset = makeDataset(data);
@@ -52,28 +52,36 @@ protected:
 };
 
 TEST_F(ForestTest, createForest){
-	ASSERT_EQ(ff->nsample,nsample);
+    ff->fixedTreeForest();
+    ASSERT_EQ(ff->nsample,nsample);
 	ASSERT_EQ(ff->ntree,ntree);
 	ASSERT_FALSE(ff->rsample);
 	ASSERT_EQ(ff->maxheight,maxheight);
 
 }
-/*
-TEST_F(ForestTest,serializeTree){
-// Serialize tree
-//int  tree = (int)ff->trees.size();
-//ASSERT_EQ(tree,ntree);
-//std::string dumped =  ff->serialize_tree(tree).dump();
 
-//EXPECT_EQ(dumped.size(),5);
-
-}*/
 TEST_F(ForestTest,serialize)
 {
-    ASSERT_EQ(9,9);
+   // ASSERT_EQ(9,9);
+    // Test serialization of the Forest.
+    ff->fixedTreeForest();
+    json jj =  ff->to_json();
+   ASSERT_EQ(jj["ntree"],ff->ntree);
+   ASSERT_EQ(jj["nsample"],ff->nsample);
+
+   //   std::ofstream ll("forest.json");
+ //  ll<<jj;
+ //  ll.close();
+
 }
 TEST_F(ForestTest,deserialize)
 {
+   Forest forest;
+   forest.deseralize_bfs("forest.json");
+  ASSERT_EQ(forest.ntree,ntree);
+  ASSERT_EQ(forest.nsample,nsample);
+
+    
     ASSERT_EQ(6,6);
 }
 //Test remaining module in child

@@ -92,38 +92,78 @@ virtual ~Forest()
 		std::set_intersection(v1.begin(),v1.end(),v2.begin(),v2.end(),back_inserter(v3));
 		return (double)v3.size()/(double)v1.size();
 	}
-void assTree(Tree *tree,json jnode)
-{
 
-    tree->splittingPoint = jnode["splittingatt"];
-    tree->splittingPoint = jnode["splittingPoint"];
-    tree->depth = jnode["depth"];
-    tree->nodeSize =  jnode["nodesize"];
-    tree->minAttVal = jnode["minAttVal"];
-    tree->maxAttVal = jnode["maxAttVal"];
-    
+
+/* Serialize using BFS traversal
+ */
+
+json serialize_bfs(Tree* tree)
+{
+	json jroot;
+
+	// Define empty queute
+	std::queue<Tree*> qtree ;
+	qtree.push(tree);
+    int i=0;
+	while(!qtree.empty())
+    { 
+        json j;
+        Tree* nextTree = qtree.front();
+        qtree.pop();
+        if(nextTree==NULL){
+            j = NULL;
+        }
+        else
+        {
+            j["depth"] = nextTree->depth;
+            j["splittingAtt"] = nextTree->splittingAtt;
+            j["splittingPoint"] = nextTree->splittingPoint;
+            j["depth"]= nextTree->depth;
+            j["nodesize"]=nextTree->nodeSize;
+            j["minAttVal"] = nextTree->minAttVal;
+            j["maxAttVal"] = nextTree->maxAttVal;
+
+            qtree.push(nextTree->leftChild);
+            qtree.push(nextTree->rightChild);
+     
+        
+        }
+       
+      jroot.push_back(j);
+     i++;
+    }
+
+return jroot;
 }
 
+
+
+
+json to_json() {
+json j;
+j["ntree"] = ntree;
+j["rsample"] = rsample;
+j["maxheight"] = maxheight;
+j["stopheight"] = stopheight;
+j["rangecheck"]= rangecheck;
+j["nsample"] = nsample;
+
+for(int i=0 ;i<ntree;i++){
+
+//j["trees"][i]=serialize_tree(trees[i]);
+
+j["trees"][i]=serialize_bfs(trees[i]);
+//j["trees"][i] = trees[i]->to_json();
+}
+
+return j;
+}
+
+/* Assign tree with json value
+ */
 void assignTree(Tree* tr,json* rtree)
 {
-
-   // std::ofstream logg("verror.log");
  
-  // json* rtree = &jff["trees"][2];
-
-    
-  //json jtree = jff["trees"][2];
-   //logg << jtree["splittingAtt"];
-   /*
-   logg <<(*rtree)[2];
-   logg<<(*rtree)[2]["depth"]<<std::endl;
-  logg<<(*rtree)[2]["splittingPoint"]<<std::endl;
- logg<<(*rtree)[2]["splittingAtt"]<<std::endl;
- logg<<(*rtree)[2]["nodesize"]<<std::endl;
- logg<<(*rtree)[2]["minAttVal"]<<std::endl;
-   logg <<(*rtree).size();
-   */
-  
    tr->depth = (*rtree)["depth"];
    tr->splittingAtt = (*rtree)["splittingAtt"];
    tr->splittingPoint= (*rtree)["splittingPoint"];
@@ -133,7 +173,10 @@ void assignTree(Tree* tr,json* rtree)
 }
 
 
-// Deserialize using 
+/* Deserialize using bfs constructed JSON file 
+ * @param modelname: Json filename
+ */
+
 void deseralize_bfs(std::string modelname)
 {
   //	std::ofstream logg("error.log");
@@ -204,105 +247,6 @@ void deseralize_bfs(std::string modelname)
 
 
 
-
-json to_json() {
-json j;
-j["ntree"] = ntree;
-j["rsample"] = rsample;
-j["maxheight"] = maxheight;
-j["stopheight"] = stopheight;
-j["rangecheck"]= rangecheck;
-j["nsample"] = nsample;
-for(int i=0 ;i<ntree;i++){
-
-//j["trees"][i]=serialize_tree(trees[i]);
-
-j["trees"][i]=trees[i]->to_json();    //serialize_bfs(trees[i]);
-
-}
-
-return j;
-}
-
-// Serialize
-
-//Serialize using BFS approach 
-
-json serialize_bfs(Tree* tree)
-{
-	json jroot;
-
-	// Define empty queute
-	std::queue<Tree*> qtree ;
-	qtree.push(tree);
-    int i=0;
-	while(!qtree.empty())
-    { 
-        json j;
-        Tree* nextTree = qtree.front();
-        qtree.pop();
-        if(nextTree==NULL){
-            j = NULL;
-        }
-        else
-        {
-            j["depth"] = nextTree->depth;
-            j["splittingAtt"] = nextTree->splittingAtt;
-            j["splittingPoint"] = nextTree->splittingPoint;
-            j["depth"]= nextTree->depth;
-            j["nodesize"]=nextTree->nodeSize;
-            j["minAttVal"] = nextTree->minAttVal;
-            j["maxAttVal"] = nextTree->maxAttVal;
-
-            qtree.push(nextTree->leftChild);
-            qtree.push(nextTree->rightChild);
-     
-        
-        }
-       
-      jroot.push_back(j);
-     i++;
-    }
-
-return jroot;
-
-}
-
-
-
-
-
-
-
-
-//Deserialize
-
-Forest *deseralize(std::string modelname){
-	std::ofstream logg("error.log");
-    std::ifstream in(modelname);
-     Forest *iff = new Forest();
-  
-    if(in==nullptr)
-        return iff;
-    json jff;
-    in>>jff;
-   iff->nsample = jff["nsample"];
-   iff->rsample = jff["rsample"];
-   iff->maxheight = jff["maxheight"];
-   iff->stopheight = jff["stopheight"];
-   iff->rangecheck = jff["rangecheck"];
-   iff->ntree = jff["ntree"];
-   
-   //logg <<iff->rSample;
-   logg <<iff->maxheight;
-   logg <<iff->stopheight;
-   logg<<iff->rangecheck ; 
-   logg<<iff->ntree;
-   
-
-  logg.close();
-  return iff;
-}
 
 };
 #endif /* FOREST_H_ */
