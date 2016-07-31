@@ -9,7 +9,6 @@
 #define FOREST_H_
 //#include "utility.hpp"
 #include "Tree.hpp"
-#include "json/json.hpp"
 using json = nlohmann::json;
 //#include "cincl.hpp"
 class Forest {
@@ -93,6 +92,137 @@ virtual ~Forest()
 		std::set_intersection(v1.begin(),v1.end(),v2.begin(),v2.end(),back_inserter(v3));
 		return (double)v3.size()/(double)v1.size();
 	}
+void assTree(Tree *tree,json jnode)
+{
+
+    tree->splittingPoint = jnode["splittingatt"];
+    tree->splittingPoint = jnode["splittingPoint"];
+    tree->depth = jnode["depth"];
+    tree->nodeSize =  jnode["nodesize"];
+    tree->minAttVal = jnode["minAttVal"];
+    tree->maxAttVal = jnode["maxAttVal"];
+    
+}
+
+void assignTree(Tree* tr,json* rtree)
+{
+
+   // std::ofstream logg("verror.log");
+ 
+  // json* rtree = &jff["trees"][2];
+
+    
+  //json jtree = jff["trees"][2];
+   //logg << jtree["splittingAtt"];
+   /*
+   logg <<(*rtree)[2];
+   logg<<(*rtree)[2]["depth"]<<std::endl;
+  logg<<(*rtree)[2]["splittingPoint"]<<std::endl;
+ logg<<(*rtree)[2]["splittingAtt"]<<std::endl;
+ logg<<(*rtree)[2]["nodesize"]<<std::endl;
+ logg<<(*rtree)[2]["minAttVal"]<<std::endl;
+   logg <<(*rtree).size();
+   */
+  
+   tr->depth = (*rtree)["depth"];
+   tr->splittingAtt = (*rtree)["splittingAtt"];
+   tr->splittingPoint= (*rtree)["splittingPoint"];
+   tr->nodeSize = (*rtree)["nodesize"];
+   tr->minAttVal  = (*rtree)["minAttVal"];
+   tr->maxAttVal = (*rtree)["maxAttVal"];
+}
+
+
+// Deserialize using 
+void deseralize_bfs(std::string modelname)
+{
+  //	std::ofstream logg("error.log");
+    std::ifstream in(modelname);
+    //Forest *iff = new Forest();
+  // Will handl file read in the facadlayer 
+
+    json jff;
+    
+   in>>jff;
+   this->nsample = jff["nsample"];
+   this->rsample = jff["rsample"];
+   this->maxheight = jff["maxheight"];
+   this->stopheight = jff["stopheight"];
+   this->rangecheck = jff["rangecheck"];
+   this->ntree = jff["ntree"];
+   
+   for(int i=0;i<this->ntree;i++)
+   {
+    // json* rootTree = &jff["trees"][i];
+     Tree* root;
+     std::queue<Tree*> qTree;
+     int iNode =0;
+     int numNodes = (jff["trees"][i]).size();    //rootTree.size();
+     while(iNode<numNodes)
+     {
+         if(iNode==0)  //root node 
+         {
+            root = new Tree();
+            assignTree(root, &jff["trees"][i][iNode]); //;ootTree[i]);
+            qTree.push(root);
+            iNode++;
+         }
+         else
+         { 
+            Tree* node = qTree.front();
+            qTree.pop();
+            json* jleft = &jff["trees"][i][iNode];//ootTree[iNode];  
+            json* jright=NULL;
+
+            //jright =
+            if(iNode<(numNodes-1)) jright =&jff["trees"][i][iNode+1];
+             // rootTree[iNode+1];
+  
+            node->leftChild = new Tree();
+            assignTree(node->leftChild,jleft);
+            qTree.push(node->leftChild);
+            if(jright!=NULL)
+            {
+                node->rightChild = new Tree();
+                assignTree(node->rightChild,jright);
+                qTree.push(node->rightChild);
+            }
+            iNode +=2;
+         }
+     }
+
+    this->trees.push_back(root);
+
+   }
+/* 
+   
+  Tree* tr = new Tree();
+  //json* rtree = &jff["trees"][2];
+    assignTree(tr,&jff["trees"][2][1]);//  rtree[2]);
+  */   
+}
+
+
+
+
+json to_json() {
+json j;
+j["ntree"] = ntree;
+j["rsample"] = rsample;
+j["maxheight"] = maxheight;
+j["stopheight"] = stopheight;
+j["rangecheck"]= rangecheck;
+j["nsample"] = nsample;
+for(int i=0 ;i<ntree;i++){
+
+//j["trees"][i]=serialize_tree(trees[i]);
+
+j["trees"][i]=trees[i]->to_json();    //serialize_bfs(trees[i]);
+
+}
+
+return j;
+}
 
 // Serialize
 
@@ -111,64 +241,40 @@ json serialize_bfs(Tree* tree)
         json j;
         Tree* nextTree = qtree.front();
         qtree.pop();
-        if(nextTree==nullptr)
-            j = nullptr;
+        if(nextTree==NULL){
+            j = NULL;
+        }
         else
         {
-        j["depth"] = nextTree->depth;
-        j["splittingAtt"] = nextTree->splittingAtt;
+            j["depth"] = nextTree->depth;
+            j["splittingAtt"] = nextTree->splittingAtt;
+            j["splittingPoint"] = nextTree->splittingPoint;
+            j["depth"]= nextTree->depth;
+            j["nodesize"]=nextTree->nodeSize;
+            j["minAttVal"] = nextTree->minAttVal;
+            j["maxAttVal"] = nextTree->maxAttVal;
+
+            qtree.push(nextTree->leftChild);
+            qtree.push(nextTree->rightChild);
+     
+        
         }
        
-      jroot[i] = j;
-      qtree.push(nextTree->leftChild);
-      qtree.push(nextTree->rightChild);
-      i++;
+      jroot.push_back(j);
+     i++;
     }
 
 return jroot;
 
 }
 
-json serialize_tree(Tree* tree){
-json j;
-if(tree->leftChild!=NULL)
-{
-
-j["splittingatt"] = tree->splittingAtt;
-j["splittingPoint"] = tree->splittingPoint;
-j["depth"]= tree->depth;
-j["nodesize"]= tree->nodeSize;
-j["minAttVal"] = tree->minAttVal;
-j["maxAttVal"] = tree->maxAttVal;
-j["lchild"] = serialize_tree(tree->leftChild);
-j["rchild"] = serialize_tree(tree->rightChild);
-
-}
-/*
-else{
-    j["lchild"] = nullptr;
-    j[1] = nullptr;
-}*/
-return j;
-
-}
-
-json to_json() {
-json j;
-j["ntree"] = ntree;
-j["rsample"] = rsample;
-j["maxheight"] = maxheight;
-j["stopheight"] = stopheight;
-j["rangecheck"]= rangecheck;
-for(int i=0 ;i<ntree;i++){
-
-j["trees"][i]=serialize_tree(trees[i]);
-}
 
 
 
-return j;
-}
+
+
+
+
 //Deserialize
 
 Forest *deseralize(std::string modelname){
@@ -180,7 +286,7 @@ Forest *deseralize(std::string modelname){
         return iff;
     json jff;
     in>>jff;
-  //iff->nsample = jff["nsample"];
+   iff->nsample = jff["nsample"];
    iff->rsample = jff["rsample"];
    iff->maxheight = jff["maxheight"];
    iff->stopheight = jff["stopheight"];

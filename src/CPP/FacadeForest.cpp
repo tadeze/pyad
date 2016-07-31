@@ -141,6 +141,7 @@ void FacadeForest::displayData() {
 
 }
 
+
 void FacadeForest::saveModel(std::string modelName) {
   // Save the json representation 
   
@@ -152,16 +153,18 @@ void FacadeForest::saveModel(std::string modelName) {
 
  }
 
+
+
 void FacadeForest::loadModel(std::string modelName)
 {
     
    std::ifstream in(modelName);
    std::ofstream logg("error.log");
 
-    IsolationForest *iff = new IsolationForest();
+    //IsolationForest *iff = new IsolationForest();
  	
-    json jff;
-    in>>jff;
+   // json jff;
+   // in>>jff;
     /*
     logg<<jff["rsample"];
    
@@ -170,7 +173,7 @@ void FacadeForest::loadModel(std::string modelName)
  logg<<jff["stopheight"];
  logg<<jff["rangecheck"];
   */
-
+/*
   //iff->nsample = j
    logg<<"IsolationForest \n";
    try {
@@ -194,9 +197,10 @@ void FacadeForest::loadModel(std::string modelName)
   //return iff;
 
 
+*/
 
-
-    //iff = iff->deseralize(modelName);
+    iff->deseralize_bfs(modelName);
+    // iff->deseralize(modelName);
     //TODO: Not yet finished the deserialization process
     
 }

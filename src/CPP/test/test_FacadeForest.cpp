@@ -18,7 +18,8 @@ protected:
      {
 
     	 //Let read data from
-    	 std::string filename("../synth2d.csv");
+    	 //std::string filename("../synth2d.csv");
+         std::string filename("test2d.csv");
     	 data= util::readcsv((char*) &filename[0],',',true);
     	 ff.trainForest(data,100,256,0,false,false,false,0.01,0);  //Just train a forest
     	 ff.testForest(data);
@@ -75,16 +76,19 @@ TEST_F(FacadeForestTest, factorial){
 */
 
 TEST_F(FacadeForestTest, saveModel){
-	ff.saveModel("Forest_q.json");
+	ff.saveModel("qtrial.json");
     long n=9;
 	EXPECT_EQ(9,n);
 }
 
 
 TEST_F(FacadeForestTest, LoadModel){
-  //  FacadeForest new_if;
+ //   FacadeForest fff;
 //   ff.loadModel("Forest.json");
     //long n=9;
-	EXPECT_EQ(100,100);
+
+//    fff.loadModel("qtrial.json");
+//    EXPECT_EQ(fff.getIff()->ntree,100);
+ASSERT_EQ(9,9);
 }
 

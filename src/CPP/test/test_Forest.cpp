@@ -9,6 +9,7 @@
 
 #include "../Forest.hpp"
 #include "gtest/gtest.h"
+#include "../IsolationForest.hpp"
 class ForestTest : public ::testing::Test
 {
 protected:
@@ -31,7 +32,7 @@ protected:
     	 data= util::readcsv((char*) &filename[0],',',true);
     	 //ff = new FacadeForest();
     	  dataset = makeDataset(data);
-    	  ff = new Forest(ntree,dataset,nsample,maxheight,stopheight,rsample);
+    	  ff = new IsolationForest(ntree,dataset,nsample,maxheight,stopheight,rsample);
 
      }
      util::dataset *makeDataset(std::vector<std::vector<double> > &data)
@@ -57,6 +58,23 @@ TEST_F(ForestTest, createForest){
 	ASSERT_EQ(ff->maxheight,maxheight);
 
 }
+/*
+TEST_F(ForestTest,serializeTree){
+// Serialize tree
+//int  tree = (int)ff->trees.size();
+//ASSERT_EQ(tree,ntree);
+//std::string dumped =  ff->serialize_tree(tree).dump();
 
+//EXPECT_EQ(dumped.size(),5);
+
+}*/
+TEST_F(ForestTest,serialize)
+{
+    ASSERT_EQ(9,9);
+}
+TEST_F(ForestTest,deserialize)
+{
+    ASSERT_EQ(6,6);
+}
 //Test remaining module in child
 

@@ -9,7 +9,7 @@
 #define TREE_H_
 #include "utility.hpp"
 //#include "cincl.hpp"
-
+using json= nlohmann::json;
 class Tree
 {
 public:
@@ -22,7 +22,8 @@ public:
 	int depth;
 	double minAttVal,maxAttVal;
     util::dataset *makeDataset(std::vector<std::vector<double> > &data); 
-
+    json to_json();
+    void from_json();
 
     
     static bool rangeCheck;

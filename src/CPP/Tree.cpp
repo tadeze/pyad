@@ -218,4 +218,52 @@ int Tree::maxTreeDepth()
 
 
 	}
+//Need to be fixed later. 
+json Tree::to_json()
+{
+	json jroot,j;
+
+	// Define empty queute
+	std::queue<Tree*> qtree ;
+	qtree.push(this);
+    while(!qtree.empty())
+    { 
+        
+        Tree* nextTree = qtree.front();
+        qtree.pop();
+        if(nextTree==NULL){
+            j = NULL;
+        }
+        else
+        {
+
+            j["depth"] = nextTree->depth;
+            j["splittingAtt"] = nextTree->splittingAtt;
+            j["splittingPoint"] = nextTree->splittingPoint;
+            j["depth"]= nextTree->depth;
+            j["nodesize"]=nextTree->nodeSize;
+            j["minAttVal"] = nextTree->minAttVal;
+            j["maxAttVal"] = nextTree->maxAttVal;
+
+         //if(nextTree->leftChild!=NULL){ //Assuming balanced tree
+            qtree.push(nextTree->leftChild);
+            qtree.push(nextTree->rightChild);
+          }
+     jroot.push_back(j);
+        
+        /*
+        else {
+
+         jroot.push_back(NULL);
+         jroot.push_back(NULL);
+         }
+*/
+        
+       
+        }
+
+return jroot;
+
+}
+
 
