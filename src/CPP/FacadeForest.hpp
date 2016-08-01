@@ -29,7 +29,7 @@ private:
         
   public:
     
-    enum FOREST{IFOREST,RFOREST,CFOREST};
+   // enum FOREST{IFOREST,RFOREST,CFOREST};
 
     //constructor and Destructor
     virtual ~FacadeForest(){
@@ -99,7 +99,7 @@ private:
 
     void testForest(std::vector<std::vector<double> > &testdf);
     void saveModel(std::string modelName);
-    void loadModel(std::string modelName,FOREST type);
+    void loadModel(std::string modelName,std::string forest_type);
     std::vector<double> getScore();
     std::vector<std::vector<double> > pathLength();
     std::vector<double> averageDepth();

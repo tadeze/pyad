@@ -160,13 +160,14 @@ void FacadeForest::saveModel(std::string modelName) {
 
 
 
-void FacadeForest::loadModel(std::string modelName,FOREST type)
+void FacadeForest::loadModel(std::string modelName,std::string forest_type="iforest")
+        //FOREST type=FOREST::IFOREST)
 {
     
    std::ifstream in(modelName);
    if(in!=NULL)
    {    
-       if(type ==FOREST::IFOREST)
+       if(forest_type =="iforest")
        {
            iff = new IsolationForest();
            iff->deseralize_bfs(in);

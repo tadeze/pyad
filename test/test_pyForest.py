@@ -25,10 +25,6 @@ class TestPyForest(TestCase):
               self.rho,self.stoplimit)
       self.ff.testForest(self.np_data)
 
-  def test_factorial(self):
-      self.assertEqual(self.ff.factorial(6),6*120)
-  def test_factorial_again(self):
-      self.assertGreater(self.ff.factorial(2),0)
   def test_pyForest_avgDepth(self):
       avg_depth = self.ff.averageDepth()
       self.assertEqual(len(avg_depth),self.np_data.shape[0])

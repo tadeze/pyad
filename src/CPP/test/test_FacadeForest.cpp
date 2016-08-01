@@ -35,7 +35,7 @@ protected:
 TEST_F(FacadeForestTest, creatFF){
 	ASSERT_EQ(ff.getNSample(),256);
 	ASSERT_EQ(ff.getNTree(),100);
-	ASSERT_EQ(ff.getTraindf()->nrow,105);
+	ASSERT_EQ(ff.getTraindf()->nrow,100);
 
 }
 
@@ -84,7 +84,7 @@ TEST_F(FacadeForestTest, saveModel){
 
 TEST_F(FacadeForestTest, LoadModel){
     FacadeForest facaf;
-    facaf.loadModel("qtrial.json",FacadeForest::FOREST::IFOREST);
+    facaf.loadModel("qtrial.json","iforest"); // FacadeForest::FOREST::IFOREST);
    ASSERT_EQ(facaf.getIff()->ntree,100);
    //Empty file 
    /*facaf = new FacadeForest();
