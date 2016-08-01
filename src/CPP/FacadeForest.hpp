@@ -26,9 +26,11 @@ private:
     const int FOREST_NOT_TRAINED=1;
     const int NO_TEST_DATA =2;
     const int OK =0;
-
-
+        
   public:
+    
+    enum FOREST{IFOREST,RFOREST,CFOREST};
+
     //constructor and Destructor
     virtual ~FacadeForest(){
     delete traindf;
@@ -40,6 +42,7 @@ private:
     
     int getNTree() const {
         return ntree;
+        
     }
 
     int getNSample() const {
@@ -96,18 +99,11 @@ private:
 
     void testForest(std::vector<std::vector<double> > &testdf);
     void saveModel(std::string modelName);
-    void loadModel(std::string modelName);
+    void loadModel(std::string modelName,FOREST type);
     std::vector<double> getScore();
     std::vector<std::vector<double> > pathLength();
     std::vector<double> averageDepth();
 
-
-    /* Testing SWIG
-;
-    double sum_array(double* input_array, int length);
-    void get_rand_array(double* output_array, int length);
-    void sum_all( int nrow,int ncol,double* input_array);
-    */
     void displayData();
     int isValidModel() const;
 };

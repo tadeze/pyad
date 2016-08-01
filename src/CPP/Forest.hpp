@@ -125,7 +125,6 @@ json serialize_bfs(Tree* tree)
 
             qtree.push(nextTree->leftChild);
             qtree.push(nextTree->rightChild);
-     
         
         }
        
@@ -149,8 +148,6 @@ j["rangecheck"]= rangecheck;
 j["nsample"] = nsample;
 
 for(int i=0 ;i<ntree;i++){
-
-//j["trees"][i]=serialize_tree(trees[i]);
 
 j["trees"][i]=serialize_bfs(trees[i]);
 //j["trees"][i] = trees[i]->to_json();
@@ -177,12 +174,9 @@ void assignTree(Tree* tr,json* rtree)
  * @param modelname: Json filename
  */
 
-void deseralize_bfs(std::string modelname)
+void deseralize_bfs(std::ifstream &in) //std::string modelname)
 {
-  //	std::ofstream logg("error.log");
-    std::ifstream in(modelname);
-    //Forest *iff = new Forest();
-  // Will handl file read in the facadlayer 
+    //std::ifstream in(modelname); //need to move file read to facade layer.
 
     json jff;
     
@@ -206,7 +200,7 @@ void deseralize_bfs(std::string modelname)
          if(iNode==0)  //root node 
          {
             root = new Tree();
-            assignTree(root, &jff["trees"][i][iNode]); //;ootTree[i]);
+            assignTree(root, &jff["trees"][i][iNode]); 
             qTree.push(root);
             iNode++;
          }
@@ -217,9 +211,7 @@ void deseralize_bfs(std::string modelname)
             json* jleft = &jff["trees"][i][iNode];//ootTree[iNode];  
             json* jright=NULL;
 
-            //jright =
             if(iNode<(numNodes-1)) jright =&jff["trees"][i][iNode+1];
-             // rootTree[iNode+1];
             
             if(jleft!=NULL && (*jleft)["depth"]>0)
             {
@@ -245,12 +237,6 @@ void deseralize_bfs(std::string modelname)
     this->trees.push_back(root);
 
    }
-/* 
-   
-  Tree* tr = new Tree();
-  //json* rtree = &jff["trees"][2];
-    assignTree(tr,&jff["trees"][2][1]);//  rtree[2]);
-  */   
 }
 
 

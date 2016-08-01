@@ -144,63 +144,36 @@ void FacadeForest::displayData() {
 
 void FacadeForest::saveModel(std::string modelName) {
   // Save the json representation 
-  
- std::string jsonstr = iff->to_json().dump();
- std::ofstream  out(modelName);
-
- out<<jsonstr;
+ try{
+     json  jsonstr = iff->to_json();
+     std::ofstream  out(modelName);
+     out<<jsonstr;
+     out.close();
+  }
+  catch(std::exception e){
+      std::cout<<e.what();
+  }
  //std::cout<<jsonstr<<" Json representation "<<modelName;
+ 
 
  }
 
 
 
-void FacadeForest::loadModel(std::string modelName)
+void FacadeForest::loadModel(std::string modelName,FOREST type)
 {
     
    std::ifstream in(modelName);
-   std::ofstream logg("error.log");
-
-    //IsolationForest *iff = new IsolationForest();
- 	
-   // json jff;
-   // in>>jff;
-    /*
-    logg<<jff["rsample"];
-   
- logg<<jff["maxheight"];
- 
- logg<<jff["stopheight"];
- logg<<jff["rangecheck"];
-  */
-/*
-  //iff->nsample = j
-   logg<<"IsolationForest \n";
-   try {
-   //iff->nsample =jff["nsample"];   
-   iff->maxheight = jff["maxheight"];
-   iff->stopheight = jff["stopheight"];
-   iff->rangecheck = jff["rangecheck"];
-   iff->ntree = jff["ntree"];
-    
-   logg<<iff->nsample<<std::endl; 
-   logg<<iff->maxheight<<std::endl;
-   logg<<iff->stopheight<<std::endl;
-   logg<<iff->rangecheck<<std::endl ; 
-   logg<<iff->ntree<<std::endl;
-   }
-   catch(std::exception &e){
- logg<<e.what();
+   if(in!=NULL)
+   {    
+       if(type ==FOREST::IFOREST)
+       {
+           iff = new IsolationForest();
+           iff->deseralize_bfs(in);
+        
+       }
    }
 
-  logg.close();
-  //return iff;
-
-
-*/
-
-    iff->deseralize_bfs(modelName);
-    // iff->deseralize(modelName);
-    //TODO: Not yet finished the deserialization process
-    
 }
+
+

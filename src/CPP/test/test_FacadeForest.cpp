@@ -76,19 +76,20 @@ TEST_F(FacadeForestTest, factorial){
 */
 
 TEST_F(FacadeForestTest, saveModel){
-	ff.saveModel("qtrial.json");
-    long n=9;
-	EXPECT_EQ(9,n);
+ int n =9;	
+    ff.saveModel("qtrial.json");
+    EXPECT_EQ(9,n);
 }
 
 
 TEST_F(FacadeForestTest, LoadModel){
- //   FacadeForest fff;
-//   ff.loadModel("Forest.json");
-    //long n=9;
-
-//    fff.loadModel("qtrial.json");
-//    EXPECT_EQ(fff.getIff()->ntree,100);
-ASSERT_EQ(9,9);
+    FacadeForest facaf;
+    facaf.loadModel("qtrial.json",FacadeForest::FOREST::IFOREST);
+   ASSERT_EQ(facaf.getIff()->ntree,100);
+   //Empty file 
+   /*facaf = new FacadeForest();
+   facaf.load("empty.json",FacadeForest::FOREST::IFOREST);
+   ASSERT_NULL(facaf.getIff());
+*/
 }
 
