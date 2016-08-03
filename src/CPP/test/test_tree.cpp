@@ -19,8 +19,8 @@ protected:
      {
 
     	 //Let read data from
-        // std::string filename("../synth2d.csv");
-         std::string filename("test2d.csv");
+         std::string filename("../synth2d.csv");
+        // std::string filename("test2d.csv");
 
          std::vector<std::vector<double> > data = util::readcsv((char*) &filename[0],',',true);
     	 dataset = makeDataset(data);
@@ -74,7 +74,7 @@ TEST_F(TreeTest,compareDepth)
 
  EXPECT_LT(alldepth[0],20);
  EXPECT_EQ(alldepth[1],3);
- EXPECT_EQ(alldepth[50],8);
+ EXPECT_GT(alldepth[50],5);
 
 }
 TEST_F(TreeTest, to_json)

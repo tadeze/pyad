@@ -24,10 +24,12 @@ def main():
     parser.add_argument('-m','--skipcolumn',help="Skip columns")
     parser.add_argument('-g','--gtcolumn',help='ground truth column',type=int)
     parser.add_argument('-c','--column',help='Column to include defualt use all column')
+    parser.add_argument('-m','--model',help='Trained saved model, (optional)')
 
 
     args = parser.parse_args()
     input_data = pd.read_csv(args.input.name,header=0)
+
     if args.gtcolumn is not None:
         gt = input_data.iloc[:,args.gtcolumn-1]
     if args.testfile is not None:

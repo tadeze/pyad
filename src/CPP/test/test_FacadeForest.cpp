@@ -18,8 +18,8 @@ protected:
      {
 
     	 //Let read data from
-    	 //std::string filename("../synth2d.csv");
-         std::string filename("test2d.csv");
+    	 std::string filename("../synth2d.csv"); //For unit testing example 
+         //std::string filename("test2d.csv");   //For small test case 
     	 data= util::readcsv((char*) &filename[0],',',true);
     	 ff.trainForest(data,100,256,0,false,false,false,0.01,0);  //Just train a forest
     	 ff.testForest(data);
@@ -35,7 +35,7 @@ protected:
 TEST_F(FacadeForestTest, creatFF){
 	ASSERT_EQ(ff.getNSample(),256);
 	ASSERT_EQ(ff.getNTree(),100);
-	ASSERT_EQ(ff.getTraindf()->nrow,100);
+	ASSERT_EQ(ff.getTraindf()->nrow,105);
 
 }
 
