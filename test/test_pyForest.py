@@ -20,29 +20,31 @@ class TestPyForest(TestCase):
       self.ntree,self.nsample,self.maxheight =10,10,0
       self.rotate=self.adaptive=self.rangecheck=False
       self.rho,self.stoplimit =0.1,5
-      self.ff.trainForest(self.np_data,self.ntree,self.nsample,
-              self.maxheight,self.adaptive,self.rotate,self.rangecheck,
+
+      self.ff.train_forest(self.np_data,self.ntree,self.nsample,
+              self.maxheight,self.rotate,self.adaptive,self.rangecheck,
               self.rho,self.stoplimit)
-      self.ff.testForest(self.np_data)
+      self.ff.test_forest(self.np_data)
 
   def test_pyForest_avgDepth(self):
-      avg_depth = self.ff.averageDepth()
+      avg_depth = self.ff.average_depth()
       self.assertEqual(len(avg_depth),self.np_data.shape[0])
   def test_pyForest_score(self):
-      self.assertEqual(len(self.ff.getScore()),self.np_data.shape[0])
+      self.assertEqual(len(self.ff.anomaly_score()),self.np_data.shape[0])
   def test_pyForest_getNTree(self):
-      self.assertEqual(self.ff.getNTree(),self.ntree)
+      self.assertEqual(self.ff.get_ntree(),self.ntree)
 
   def test_pyForest_getNSample(self):
-      self.assertEqual(self.ff.getNSample(),self.nsample)
+      self.assertEqual(self.ff.get_nsample(),self.nsample)
   def test_pyForest_getMaxDepth(self):
-      self.assertEqual(self.ff.getMaxDepth(),self.maxheight)
+      self.assertEqual(self.ff.get_max_depth(),self.maxheight)
   def test_pyForest_isAdaptive(self):
-      self.assertTrue(self.adaptive==self.ff.isAdaptive())
+      self.assertFalse(self.ff.is_adaptive())
+
   def test_pyForest_isRangCheck(self):
-      self.assertTrue(self.rangecheck==self.ff.isRangeCheck())
+      self.assertTrue(self.rangecheck==self.ff.is_range_check())
   def test_pyForest_isRotate(self):
-      self.assertTrue(self.rotate==self.ff.isRotate())
+      self.assertTrue(self.rotate==self.ff.is_rotate())
 
 
 
