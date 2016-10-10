@@ -1,20 +1,3 @@
-# from distutils.core import setup, Extension
-# import numpy
-# from Cython.Distutils import build_ext
-# import os
-# os.environ["CC"] = "g++"
-# os.environ["CXX"] = "g++"
-# setup(
-#     cmdclass={'build_ext': build_ext},
-#     ext_modules=[Extension("pyForest",
-#                  sources=["_pyForest.pyx", "../FacadeForest.cpp","../utility.cpp","../Tree.cpp","../Forest.cpp","../IsolationForest.cpp"],
-#                  language="c++",
-#                  extra_compile_args=['-std=c++11'],
-#                  include_dirs=[numpy.get_include()])],
-#     )
-
-
-
 from setuptools import setup, Extension
 from Cython.Distutils import build_ext
 import numpy
@@ -33,7 +16,7 @@ EMAIL = "tadesse.habte@gmail.com"
 
 #LICENSE = "Apache 2.0"
 
-SRC_DIR = "src/CPP/"
+SRC_DIR = "src/cpp/"
 CYTH_DIR="src/"
 PACKAGES =[CYTH_DIR]
  #CYTH_DIR+"_pyForest.pyx",
