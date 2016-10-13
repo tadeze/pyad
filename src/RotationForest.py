@@ -3,6 +3,7 @@ Rotate dataset before applying isolation forest
 """
 import numpy as np
 import pyiForest as pf
+import cPickle
 #from _pyForest import FacadeForest
 def random_rotation_matrix(n):
     A = np.random.normal(size=[n,n])
@@ -63,12 +64,19 @@ class RotationForest(object):
         avg_depth =self.average_depth(_testdf)
         scores = np.power(2, (-1*avg_depth / bst(self.nsample)))
         return scores
+    def save_model(self,modelName):
+        cPickle.dump(self,open(modelName,'w'))
 
+
+    def load_model(self,modelName):
+        return cPickle.load(open(modelName,"r"))
 if __name__ == '__main__':
     import pandas as pd
     df = pd.read_csv('../test/synth2d.dt')
     rf = RotationForest(_ntree=10,_nsample=50)
     rf.train_forest(df.as_matrix())
     print rf.score_forest(df.as_matrix()).shape
-
+    rf.save_model("rforest.pk")
+    rr = rf.load_model("rforest.pk")
+    print isinstance(rr,RotationForest)
     #print df.head(5)

@@ -34,4 +34,4 @@ class TestRotationForest(TestCase):
     def test_score_forest(self):
         self.assertEqual(len(self.rf.score_forest(self.np_data)), self.np_data.shape[0])
 if __name__ == '__main__':
-
+    main()
