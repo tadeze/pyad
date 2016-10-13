@@ -1,12 +1,10 @@
-import os
-import sys
+import sys,os
 sys.path.insert(0,os.path.abspath('..'))
 from pyiForest import IsolationForest,IsolationTree
 from unittest import main, TestCase
 import numpy as np
 import pandas as pd
 from src.RotationForest import RotationForest
-
 
 class TestRotationForest(TestCase):
     def setUp(self):
