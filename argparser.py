@@ -25,11 +25,10 @@ def main():
     parser.add_argument('-g','--gtcolumn',help='ground truth column',type=int)
     parser.add_argument('-c','--column',help='Column to include defualt use all column')
     parser.add_argument('-m','--model',help='Trained saved model, (optional)')
-
-
     args = parser.parse_args()
-    input_data = pd.read_csv(args.input.name,header=0)
 
+    # Read inputs
+    input_data = pd.read_csv(args.input.name,header=0)
     if args.gtcolumn is not None:
         gt = input_data.iloc[:,args.gtcolumn-1]
     if args.testfile is not None:
@@ -53,15 +52,11 @@ def main():
         input_data = input_data.iloc[:,col_set]
         test_data = test_data.iloc[:,col_set]
 
-
     ntree = args.ntree
     nsample = args.nsample
     input_data = input_data.as_matrix()
     test_data = test_data.as_matrix()
-    print ntree
-    print nsample
-    print input_data.shape
-    print type(test_data)
+
     iff = iForest(ntree=ntree,train_data=input_data,test_data=test_data,nsample=nsample)
     sc = iff.getScore()
     if args.gtcolumn is not None:
@@ -69,8 +64,6 @@ def main():
     else:
         out_pd = pd.DataFrame(sc)
     out_pd.to_csv(args.output.name,delimiter=",",index=False)
-    # import the pyiForest
-    print iff.getNSample(),iff.getNTree()
 
 if __name__ == '__main__':
     main()
