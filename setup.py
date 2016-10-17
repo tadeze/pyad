@@ -7,7 +7,7 @@ os.environ["CXX"] = "g++"
 
 NAME = "pyiForest"
 VERSION = "0.1"
-DESCR = "A python wrapper to c++ iForest code in Cython"
+DESCR = "A python wrapper for c++ iForest using Cython"
 URL = "http://eecs.oregonstate.edu"
 REQUIRES = ['numpy', 'cython']
 
@@ -21,7 +21,7 @@ CYTH_DIR="src/"
 PACKAGES =[CYTH_DIR]
  #CYTH_DIR+"_pyForest.pyx",
 ext_1 = Extension("pyiForest",
-                 sources=[CYTH_DIR+"_pyForest.pyx",
+                 sources=[CYTH_DIR+"_pyForest.pyx",#CYTH_DIR+"_pyTree.pyx",
  SRC_DIR+"FacadeForest.cpp",SRC_DIR+"utility.cpp",
                  SRC_DIR+"Tree.cpp",SRC_DIR+"Forest.cpp",SRC_DIR+"IsolationForest.cpp"],
                  language="c++",
