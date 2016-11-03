@@ -10,10 +10,12 @@
 **Build**
 
 Build inside the code directory using. 
+
 `python setup.py build_ext --inplace`
 
 **Install package**
 
 To install library to the python library directory.
+
 `python setup.py install`
   
