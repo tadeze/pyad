@@ -8,12 +8,7 @@ def iForest(ntree,nsample,train_data,test_data,max_height=0,stop_height=0):
       iff.trainForest(train_data,ntree,nsample,max_height)
       iff.testForest(test_data)
       return iff
-
-
-
-
 def main():
-
     parser = argparse.ArgumentParser(description="iForest usage switches")
     parser.add_argument('-t','--ntree',type=int,help="Required for number of trees",required = True)
     parser.add_argument('-i','--input',type=argparse.FileType('r'),help="Required input file",required = True)
@@ -21,8 +16,8 @@ def main():
     parser.add_argument('-x','--testfile',type=argparse.FileType('r'),help="Required for testing file (optional)")
     parser.add_argument('-s','--nsample',type=int,default=512, help="Number of samples defualt 512")
     parser.add_argument('-r','--rotate', action='store_true',help='Rotate data if checked rotates')
-    parser.add_argument('-m','--skipcolumn',help="Skip columns")
-    parser.add_argument('-g','--gtcolumn',help='ground truth column',type=int)
+#    parser.add_argument('-m','--skipcolumn',help="Column to skip,")
+    parser.add_argument('-g','--gtcolumn',help='ground truth/label column',type=int)
     parser.add_argument('-c','--column',help='Column to include defualt use all column')
     parser.add_argument('-m','--model',help='Trained saved model, (optional)')
     args = parser.parse_args()

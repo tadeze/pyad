@@ -7,7 +7,7 @@
 #include "Tree.hpp"
 #include<stack>
 bool Tree::rangeCheck=true;
-
+double const MISSING_VALUE = -9999;
 util::dataset *Tree::makeDataset(std::vector<std::vector<double> > &data) {
 	util::dataset *dt = new util::dataset();
 	dt->data = data;
@@ -167,6 +167,18 @@ double Tree::pathLength(std::vector<double> &inst)
 			return 1.0;
 
 	}
+	//Checking missing data for the attribute. 
+
+	if(instAttVal==MISSING_VALUE)
+	{
+
+	double leftNodeSize = (double)this->leftChild->nodeSize/(double)this->nodeSize;
+
+	return 	 (1.0-leftNodeSize)*(this->rightChild->pathLength(inst) + 1.0)+
+leftNodeSize*(this->leftChild->pathLength(inst) + 1.0);
+
+ 	}
+
 
  	//Logging the isolation process
  	//	logfile<<tmpVar<<","<<this->splittingAtt<<","<<this->splittingPoint<<"\n";
@@ -188,7 +200,6 @@ double Tree::pathLength(std::vector<double> &inst)
 
 int Tree::maxTreeDepth()
 {
-
 	if (!this) return 0;
 	std::stack<Tree*> s;
 	s.push(this);
@@ -216,8 +227,7 @@ int Tree::maxTreeDepth()
 	  }
 	  return maxDepth;
 
-
-	}
+}
 //Need to be fixed later. 
 json Tree::to_json()
 {
@@ -250,16 +260,6 @@ json Tree::to_json()
             qtree.push(nextTree->rightChild);
           }
      jroot.push_back(j);
-        
-        /*
-        else {
-
-         jroot.push_back(NULL);
-         jroot.push_back(NULL);
-         }
-*/
-        
-       
         }
 
 return jroot;
