@@ -6,12 +6,20 @@
  */
 
 #include "IsolationForest.hpp"
+struct smaller
+{
+	bool operator()(const std::pair<int,double> p1,const std::pair<int,double> p2)
+
+	{
+		return p1.second >p2.second;
+	}
+};
+
+
 IsolationForest::IsolationForest(int _ntree,util::dataset* _df,
 		int _nsample,int _maxheight, bool _stopheight,bool _rsample)
 :Forest(_ntree,_df,_nsample,_maxheight,_stopheight,_rsample)
 {
-
-
 
 }
 void IsolationForest::fixedTreeForest()
@@ -118,15 +126,6 @@ int IsolationForest::adaptiveForest(double alpha,int stopLimit){
 
 return ntree;
 }
-
-struct smaller
-{
-	bool operator()(const std::pair<int,double> p1,const std::pair<int,double> p2)
-
-	{
-		return p1.second >p2.second;
-	}
-};
 
 int IsolationForest::confTree(double alpha, double rho, int init_tree) {
 	//Build the RForest model

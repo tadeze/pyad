@@ -37,6 +37,15 @@ std::vector<double> Forest::AnomalyScore(util::dataset* df)
 	}
 	return scores;
 }
+
+/*
+ * Trace path of a piont in a tree.
+ */
+
+
+
+
+
 /*
  * Return instance depth in all trees
 */
@@ -55,6 +64,8 @@ std::vector<double> Forest::pathLength(std::vector<double> &inst)
 	return depth;
 }
 
+
+
 /* PathLength for all points
 */
 std::vector<std::vector<double> > Forest::pathLength(util::dataset*  data)
@@ -65,16 +76,6 @@ std::vector<std::vector<double> > Forest::pathLength(util::dataset*  data)
 	return depths;
 }
 
-/*
- * Anderson_Darling test from the pathlength
- */
-/*
-vector<double> IsolationForest::ADtest(const vector<vector<double> > &pathlength,bool weighttotail)
-{
-
-//Will fix later
-	return ADdistance(pathlength,weighttotail);
-}*/
 /* Compute the feature importance of a point
  * input: *inst data instance
  * output: feature importance
