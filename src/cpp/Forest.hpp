@@ -83,7 +83,6 @@ virtual ~Forest()
 	 * @return proporation of intersection ,[0,1]
 	 */
 
-
 	double topcommonK(std::vector<int> &v1,std::vector<int> &v2)
 	{
 		std::vector<int> v3;
@@ -92,6 +91,47 @@ virtual ~Forest()
 		std::set_intersection(v1.begin(),v1.end(),v2.begin(),v2.end(),back_inserter(v3));
 		return (double)v3.size()/(double)v1.size();
 	}
+
+
+json tracePath(Tree* tree)
+{
+	json jroot;
+
+	// Define empty queute
+	std::queue<Tree*> qtree ;
+	qtree.push(tree);
+    int i=0;
+	while(!qtree.empty())
+    {
+        json j;
+        Tree* nextTree = qtree.front();
+        qtree.pop();
+        if(nextTree==NULL){
+            j["depth"] = -999;
+        }
+        else
+        {
+            j["depth"] = nextTree->depth;
+            j["splittingAtt"] = nextTree->splittingAtt;
+            j["splittingPoint"] = nextTree->splittingPoint;
+            j["depth"]= nextTree->depth;
+            j["nodesize"]=nextTree->nodeSize;
+            j["minAttVal"] = nextTree->minAttVal;
+            j["maxAttVal"] = nextTree->maxAttVal;
+
+
+            qtree.push(nextTree->leftChild);
+            qtree.push(nextTree->rightChild);
+
+        }
+
+      jroot.push_back(j);
+     i++;
+    }
+
+return jroot;
+}
+
 
 
 /* Serialize using BFS traversal
@@ -106,7 +146,7 @@ json serialize_bfs(Tree* tree)
 	qtree.push(tree);
     int i=0;
 	while(!qtree.empty())
-    { 
+    {
         json j;
         Tree* nextTree = qtree.front();
         qtree.pop();
@@ -125,9 +165,9 @@ json serialize_bfs(Tree* tree)
 
             qtree.push(nextTree->leftChild);
             qtree.push(nextTree->rightChild);
-        
+
         }
-       
+
       jroot.push_back(j);
      i++;
     }

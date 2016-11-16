@@ -7,7 +7,8 @@
 #include "Tree.hpp"
 #include<stack>
 bool Tree::rangeCheck=true;
-double const MISSING_VALUE = -9999;
+double const MISSING_VALUE = -9999.0;
+
 util::dataset *Tree::makeDataset(std::vector<std::vector<double> > &data) {
 	util::dataset *dt = new util::dataset();
 	dt->data = data;
@@ -20,10 +21,12 @@ util::dataset *Tree::makeDataset(std::vector<std::vector<double> > &data) {
 void Tree::iTree(std::vector<int> const &dIndex,
         std::vector<std::vector<double> > traindata, int height, int maxheight, bool stopheight)
 {
-    util::dataset *dt =makeDataset(traindata);
+   util::dataset *dt =makeDataset(traindata);
    this->iTree(dIndex,dt,height,maxheight,stopheight);
-  delete dt;
+   delete dt;
 }
+
+
 void Tree::iTree(std::vector<int> const &dIndex,const util::dataset *dt, int height, int maxheight, bool stopheight)
 {
 	this->depth = height; //Tree height
@@ -32,19 +35,20 @@ void Tree::iTree(std::vector<int> const &dIndex,const util::dataset *dt, int hei
 	//stop growing if condition
 	if (dIndex.size() <= 1 || (stopheight && this->depth > maxheight))
 	{
-		//this->isLeaf = true;
 		return;
 	}
 	//*** Need modification
 	//Initialize minmax array for holding max and min of an attributes
+
 	std::vector<std::vector<double> > minmax;
 	std::vector<double> tmp;
 
 	for (int j = 0; j < dt->ncol; j++)
 	{
+	//initialize max and min to random value
 		tmp.push_back(dt->data[dIndex[0]][j]);
 		tmp.push_back(dt->data[dIndex[0]][j]);
-		minmax.push_back(tmp); //initialize max and min to random value
+		minmax.push_back(tmp);
 		tmp.clear();
 	}
   
@@ -76,14 +80,12 @@ void Tree::iTree(std::vector<int> const &dIndex,const util::dataset *dt, int hei
 		return;
 	//Randomly pick an attribute and a split point
 	
-	//int randx = randomI(0, attributes.size());
-
 	this->splittingAtt = attributes[util::randomI(0,attributes.size()-1)]; //randx];
 	this->splittingPoint =util::randomD(minmax[this->splittingAtt][0],minmax[this->splittingAtt][1]);
 	this->minAttVal =minmax[this->splittingAtt][0];
 	this->maxAttVal = minmax[this->splittingAtt][1];
 	std::vector <int> lnodeData;
-	std::vector < int> rnodeData;
+	std::vector <int> rnodeData;
 	//Split the node into two
 	for (unsigned i = 0; i < dIndex.size(); i++)
 	{
@@ -193,6 +195,9 @@ leftNodeSize*(this->leftChild->pathLength(inst) + 1.0);
 	{
 		return this->leftChild->pathLength(inst) + 1.0;
 	}
+
+
+
 }
 
 
