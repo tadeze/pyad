@@ -113,7 +113,7 @@ void Tree::iTree(std::vector<int> const &dIndex,const util::dataset *dt, int hei
 
 
 //Need to be fixed later. 
-json Tree::tracePathi(std::vector<double> inst)
+json Tree::tracePath(std::vector<double> &inst)
 {
 	json jroot,j;
 	// Define empty queute
@@ -140,15 +140,16 @@ while(!qtree.empty())
 			if((instAttVal < this->minAttVal && util::randomD(instAttVal,this->minAttVal)<this->minAttVal) ||
 			(instAttVal >this->minAttVal && util::randomD(instAttVal,this->maxAttVal)>this->maxAttVal))
 				{
-					depth+=1.0;
-				 	break;
+				depth+=1.0;
+				 continue;	
 				}
 		}
 
- 		instAttVal = inst[temp->splittingAtt];
+
+ 		instAttVal = inst[nextTree->splittingAtt];
 
 
-		if ( instAttVal >= temp->splittingPoint)
+		if ( instAttVal >= nextTree->splittingPoint)
 		   qtree.push(nextTree->rightChild);
 	//	temp= temp->rightChild;
 		else
@@ -190,11 +191,6 @@ return jroot;
 double Tree::pathLengthM(std::vector<double> &inst)
 {
 
-        json jroot,j;
-	// Define empty queute
-	std::queue<Tree*> qtree ;
-	qtree.push(this);
-    
 
 	double instAttVal = inst[this->splittingAtt];
 	double depth=0.0;

@@ -34,10 +34,10 @@ public:
     int getDepth() { return this->depth;}
     double getMinAttVal() {return this->minAttVal;}
     double getMaxAttVal() { return this->maxAttVal;}
-    Tree lChild() { return this->leftChild;}
-    Tree rChild() {return this->rightChild;}
+    Tree* lChild() { return this->leftChild;}
+    Tree* rChild() {return this->rightChild;}
     static bool rangeCheck;
-    
+    json tracePath(std::vector<double> &inst); 
     Tree()
 	{
 		leftChild = NULL;
