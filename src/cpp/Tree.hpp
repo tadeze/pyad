@@ -12,6 +12,9 @@
 using json= nlohmann::json;
 class Tree
 {
+;
+
+public:
     Tree *leftChild;
 	Tree *rightChild;
 	Tree *parent;
@@ -21,17 +24,18 @@ class Tree
 	int depth;
 	double minAttVal,maxAttVal;
 
-public:
 	util::dataset *makeDataset(std::vector<std::vector<double> > &data);
     json to_json();
     void from_json();
-
-    int getNodeSize(){ return nodeSize;}
-    int getSplittingAtt() { return splittingAtt;}
-    double getSplittingPoint() { return splittingPoint;}
-    int getDepth() { return depth;}
-    int
-    
+    /** Later the property will be private this will be their access point */
+    int getNodeSize(){ return this->nodeSize;}
+    int getSplittingAtt() { return this->splittingAtt;}
+    double getSplittingPoint() { return this->splittingPoint;}
+    int getDepth() { return this->depth;}
+    double getMinAttVal() {return this->minAttVal;}
+    double getMaxAttVal() { return this->maxAttVal;}
+    Tree lChild() { return this->leftChild;}
+    Tree rChild() {return this->rightChild;}
     static bool rangeCheck;
     
     Tree()

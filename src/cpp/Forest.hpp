@@ -92,7 +92,7 @@ virtual ~Forest()
 		return (double)v3.size()/(double)v1.size();
 	}
 
-
+/*
 json tracePath(Tree* tree)
 {
 	json jroot;
@@ -132,7 +132,7 @@ json tracePath(Tree* tree)
 return jroot;
 }
 
-
+*/
 
 /* Serialize using BFS traversal
  */
