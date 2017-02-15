@@ -37,7 +37,7 @@ public:
     Tree* lChild() { return this->leftChild;}
     Tree* rChild() {return this->rightChild;}
     static bool rangeCheck;
-    
+    json tracePath(std::vector<double> &inst); 
     Tree()
 	{
 		leftChild = NULL;

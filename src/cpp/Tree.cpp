@@ -112,6 +112,73 @@ void Tree::iTree(std::vector<int> const &dIndex,const util::dataset *dt, int hei
 
 
 
+//Need to be fixed later. 
+json Tree::tracePath(std::vector<double> &inst)
+{
+	json jroot,j;
+	// Define empty queute
+	std::queue<Tree*> qtree ;
+	qtree.push(this);
+ 
+	double instAttVal = inst[this->splittingAtt];
+	double depth=0.0;
+	   
+while(!qtree.empty())
+    { 
+        
+        Tree* nextTree = qtree.front();
+        qtree.pop();
+        if(nextTree==NULL){
+            j = NULL;
+           break;
+        }
+        else
+        {
+		if(Tree::rangeCheck==true)
+ 		{
+
+			if((instAttVal < this->minAttVal && util::randomD(instAttVal,this->minAttVal)<this->minAttVal) ||
+			(instAttVal >this->minAttVal && util::randomD(instAttVal,this->maxAttVal)>this->maxAttVal))
+				{
+				depth+=1.0;
+				 continue;	
+				}
+		}
+
+
+ 		instAttVal = inst[nextTree->splittingAtt];
+
+
+		if ( instAttVal >= nextTree->splittingPoint)
+		   qtree.push(nextTree->rightChild);
+	//	temp= temp->rightChild;
+		else
+		  	 qtree.push(nextTree->leftChild);
+	
+	//temp = temp->leftChild;
+         
+	
+            j["depth"] = nextTree->depth;
+            j["splittingAtt"] = nextTree->splittingAtt;
+            j["splittingPoint"] = nextTree->splittingPoint;
+            j["depth"]= nextTree->depth;
+            j["nodesize"]=nextTree->nodeSize;
+            j["minAttVal"] = nextTree->minAttVal;
+            j["maxAttVal"] = nextTree->maxAttVal;
+	  
+         
+	//if(nextTree->leftChild!=NULL){ //Assuming balanced tree
+           // qtree.push(nextTree->leftChild);
+           // qtree.push(nextTree->rightChild);
+          }
+     jroot.push_back(j);
+        }
+
+return jroot;
+
+}
+
+
 
 
 
@@ -124,28 +191,30 @@ void Tree::iTree(std::vector<int> const &dIndex,const util::dataset *dt, int hei
 double Tree::pathLengthM(std::vector<double> &inst)
 {
 
-    double instAttVal = inst[this->splittingAtt];
-	if(Tree::rangeCheck==true)
- 	{
 
-		if(instAttVal < this->minAttVal && util::randomD(instAttVal,this->minAttVal)<this->minAttVal)
-			return 1.0;
-		if(instAttVal >this->minAttVal && util::randomD(instAttVal,this->maxAttVal)>this->maxAttVal)
-			return 1.0;
-	}
-
+	double instAttVal = inst[this->splittingAtt];
 	double depth=0.0;
 	Tree *temp =this;
 	while(temp!=NULL){
-		instAttVal = inst[temp->splittingAtt];
+	
+		if(Tree::rangeCheck==true)
+ 		{
+
+			if(instAttVal < this->minAttVal && util::randomD(instAttVal,this->minAttVal)<this->minAttVal)
+				return depth+1.0;
+			if(instAttVal >this->minAttVal && util::randomD(instAttVal,this->maxAttVal)>this->maxAttVal)
+				return depth+1.0;
+		}
+ 		instAttVal = inst[temp->splittingAtt];
 		if ( instAttVal >= temp->splittingPoint)
-					temp= temp->rightChild;
+			temp= temp->rightChild;
 		else
 			temp = temp->leftChild;
 
 		depth +=1.0;
 	}
-return depth+util::avgPL(temp->nodeSize);
+
+	return depth+util::avgPL(temp->nodeSize);
 }
 
 /*
@@ -153,6 +222,7 @@ return depth+util::avgPL(temp->nodeSize);
  */
 double Tree::pathLength(std::vector<double> &inst)
 {
+
 
  	if (this->leftChild==NULL||this->rightChild==NULL)
         { ///referenced as null for some input data .
@@ -233,6 +303,9 @@ int Tree::maxTreeDepth()
 	  return maxDepth;
 
 }
+
+
+
 //Need to be fixed later. 
 json Tree::to_json()
 {
@@ -270,5 +343,4 @@ json Tree::to_json()
 return jroot;
 
 }
-
 
