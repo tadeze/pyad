@@ -26,9 +26,9 @@ private:
     const int FOREST_NOT_TRAINED=1;
     const int NO_TEST_DATA =2;
     const int OK =0;
-        
+
   public:
-    
+
    // enum FOREST{IFOREST,RFOREST,CFOREST};
 
     //constructor and Destructor
@@ -39,10 +39,10 @@ private:
     };
     FacadeForest();
 
-    
+
     int getNTree() const {
         return ntree;
-        
+
     }
 
     int getNSample() const {
@@ -87,7 +87,7 @@ private:
 
 
     //Methods
-    
+
     void trainForest(std::vector<std::vector<double> > &traindf,int _ntree,
     		int _nsample,int _maxheight, bool _rotate, bool _adaptive,
     		    		bool _rangecheck,double _rho,int _stopLimit);

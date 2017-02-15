@@ -131,19 +131,21 @@ std::vector<double> FacadeForest::averageDepth() {
 
 
 void FacadeForest::displayData() {
-	std::cout << " Dimension of training data (" << this->traindf->nrow << ","
+
+	/*std::cout << " Dimension of training data (" << this->traindf->nrow << ","
 			<< this->traindf->ncol << ")\n";
 	for (auto row : this->traindf->data) {
 		for (auto cell : row)
 			std::cout << cell << "\t";
 		std::cout << "\n";
 	}
-
+*/
+std::cout<<"Display method called";
 }
 
 
 void FacadeForest::saveModel(std::string modelName) {
-  // Save the json representation 
+  // Save the json representation
  try{
      json  jsonstr = iff->to_json();
      std::ofstream  out(modelName);
@@ -154,7 +156,7 @@ void FacadeForest::saveModel(std::string modelName) {
       std::cout<<e.what();
   }
  //std::cout<<jsonstr<<" Json representation "<<modelName;
- 
+
 
  }
 
@@ -163,18 +165,16 @@ void FacadeForest::saveModel(std::string modelName) {
 void FacadeForest::loadModel(std::string modelName,std::string forest_type="iforest")
         //FOREST type=FOREST::IFOREST)
 {
-    
+
    std::ifstream in(modelName);
    if(in!=NULL)
-   {    
+   {
        if(forest_type =="iforest")
        {
            iff = new IsolationForest();
            iff->deseralize_bfs(in);
-        
+
        }
    }
 
 }
-
-
