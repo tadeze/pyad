@@ -1,0 +1,6 @@
+project(pyiforest)
+add_definitions(-std=c++11)
+set(HEADER_FILES Tree.hpp Forest.hpp IsolationForest.hpp utility.hpp main.hpp json/json.hpp FacadeForest.hpp metric.hpp)
+set(SOURCE_FILES Tree.cpp Forest.cpp IsolationForest.cpp utility.cpp FacadeForest.cpp metric.cpp)
+#add_subdirectory(Eigen)
+add_library(iforestlib STATIC ${SOURCE_FILES} ${HEADER_FILES})
