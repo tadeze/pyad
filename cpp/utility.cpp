@@ -258,6 +258,11 @@ void convertVtoDf(std::vector<std::vector<double> > &sourceVec,doubleframe* df)
 }
 */
 
+std::string util::filename() {
+	std::string filename("/home/tadeze/projects/pyiForestCmake/test/unittest/synth2d.dt");
+	return filename;
+}
+
 
 
 /* UTITLITY_H_ */

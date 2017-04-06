@@ -32,6 +32,8 @@ Default value is 100.
  */
 
 #include "FacadeForest.hpp"
+
+
 using namespace std;
 
 //log file
@@ -271,7 +273,7 @@ int main(int argc, char* argv[])
 {
    //parseInput(argc,argv);
 	//Tree::rangeCheck = true;
-   std::string filename("synth2d.csv");
+   std::string filename = util::filename();
    std::vector<std::vector<double> > data = util::readcsv((char*) &filename[0],',',true);
     
    // std::cout<<data.size()<<","<<data[0].size()<<" Row/column"<<std::endl;
@@ -283,7 +285,7 @@ int main(int argc, char* argv[])
 //       		int _nsample,int _maxheight, bool _rotate, bool _adaptive,
 //       		    		bool _rangecheck,double _rho,int _stopLimit);
    ff.trainForest(data,100,256,0,false,false,false,0.01,0);
-   std::cout<<ff.getNsample()<<" =="<<ff.getNtree()<<std::endl;
+   std::cout<<ff.getNSample()<<" =="<<ff.getNTree()<<std::endl;
    std::cout<<"Size of training set"<<ff.getTraindf()->nrow<<endl;
    ff.testForest(data);
    std::vector<double> score  = ff.getScore();

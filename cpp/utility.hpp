@@ -30,7 +30,7 @@
 
 ////default_random_engine gen(time(NULL));
 namespace util{
-struct dataset
+	struct dataset
 {
 	int ncol;
 	int nrow;
@@ -72,6 +72,8 @@ extern std::ofstream logfile;
 extern std::string tmpVar;
 double score(double depth,int n);
 //extern Data *dt;
+	extern  std::string filename();
+
 }
 #endif
 /* UTITLITY_H_ */
