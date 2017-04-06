@@ -9,7 +9,7 @@
 
 **Build**
 
-Build inside the code directory using. 
+Inside the python directory build using
 
 `python setup.py build_ext --inplace`
 
