@@ -2485,7 +2485,6 @@ static PyObject *__pyx_pw_9pyiForest_15IsolationForest_23train(PyObject *__pyx_v
 }
 
 static PyObject *__pyx_pf_9pyiForest_15IsolationForest_22train(struct __pyx_obj_9pyiForest_IsolationForest *__pyx_v_self, PyObject *__pyx_v_traindf, PyObject *__pyx_v_ntree, PyObject *__pyx_v_nsample, PyObject *__pyx_v_maxheight, PyObject *__pyx_v_rotate, PyObject *__pyx_v_adaptive, PyObject *__pyx_v_rangecheck, PyObject *__pyx_v_rho, PyObject *__pyx_v_stoplimit) {
-  Py_ssize_t __pyx_v__nsample;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -2497,12 +2496,14 @@ static PyObject *__pyx_pf_9pyiForest_15IsolationForest_22train(struct __pyx_obj_
   std::vector<std::vector<double> >  __pyx_t_7;
   int __pyx_t_8;
   int __pyx_t_9;
-  bool __pyx_t_10;
+  int __pyx_t_10;
   bool __pyx_t_11;
   bool __pyx_t_12;
-  double __pyx_t_13;
-  int __pyx_t_14;
+  bool __pyx_t_13;
+  double __pyx_t_14;
+  int __pyx_t_15;
   __Pyx_RefNannySetupContext("train", 0);
+  __Pyx_INCREF(__pyx_v_nsample);
   __Pyx_INCREF(__pyx_v_adaptive);
 
   /* "src/_pyForest.pyx":162
@@ -2605,7 +2606,7 @@ static PyObject *__pyx_pf_9pyiForest_15IsolationForest_22train(struct __pyx_obj_
  *             print("You set 0 number of trees, then it is adaptive way of growing")
  *             adaptive=True             # <<<<<<<<<<<<<<
  *         if nsample >len(traindf):
- *             _nsample=len(traindf)
+ *             nsample=len(traindf)
  */
     __Pyx_INCREF(Py_True);
     __Pyx_DECREF_SET(__pyx_v_adaptive, Py_True);
@@ -2623,7 +2624,7 @@ static PyObject *__pyx_pf_9pyiForest_15IsolationForest_22train(struct __pyx_obj_
  *             print("You set 0 number of trees, then it is adaptive way of growing")
  *             adaptive=True
  *         if nsample >len(traindf):             # <<<<<<<<<<<<<<
- *             _nsample=len(traindf)
+ *             nsample=len(traindf)
  *             print("Number of samples cann't be greater than sample size,then data will be used")
  */
   __pyx_t_6 = PyObject_Length(__pyx_v_traindf); if (unlikely(__pyx_t_6 == -1)) __PYX_ERR(0, 168, __pyx_L1_error)
@@ -2638,16 +2639,19 @@ static PyObject *__pyx_pf_9pyiForest_15IsolationForest_22train(struct __pyx_obj_
     /* "src/_pyForest.pyx":169
  *             adaptive=True
  *         if nsample >len(traindf):
- *             _nsample=len(traindf)             # <<<<<<<<<<<<<<
+ *             nsample=len(traindf)             # <<<<<<<<<<<<<<
  *             print("Number of samples cann't be greater than sample size,then data will be used")
  *         if maxheight<0:
  */
     __pyx_t_6 = PyObject_Length(__pyx_v_traindf); if (unlikely(__pyx_t_6 == -1)) __PYX_ERR(0, 169, __pyx_L1_error)
-    __pyx_v__nsample = __pyx_t_6;
+    __pyx_t_3 = PyInt_FromSsize_t(__pyx_t_6); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 169, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_3);
+    __Pyx_DECREF_SET(__pyx_v_nsample, __pyx_t_3);
+    __pyx_t_3 = 0;
 
     /* "src/_pyForest.pyx":170
  *         if nsample >len(traindf):
- *             _nsample=len(traindf)
+ *             nsample=len(traindf)
  *             print("Number of samples cann't be greater than sample size,then data will be used")             # <<<<<<<<<<<<<<
  *         if maxheight<0:
  *             raise NameError("Max depth cann't be negative")
@@ -2658,13 +2662,13 @@ static PyObject *__pyx_pf_9pyiForest_15IsolationForest_22train(struct __pyx_obj_
  *             print("You set 0 number of trees, then it is adaptive way of growing")
  *             adaptive=True
  *         if nsample >len(traindf):             # <<<<<<<<<<<<<<
- *             _nsample=len(traindf)
+ *             nsample=len(traindf)
  *             print("Number of samples cann't be greater than sample size,then data will be used")
  */
   }
 
   /* "src/_pyForest.pyx":171
- *             _nsample=len(traindf)
+ *             nsample=len(traindf)
  *             print("Number of samples cann't be greater than sample size,then data will be used")
  *         if maxheight<0:             # <<<<<<<<<<<<<<
  *             raise NameError("Max depth cann't be negative")
@@ -2689,7 +2693,7 @@ static PyObject *__pyx_pf_9pyiForest_15IsolationForest_22train(struct __pyx_obj_
     __PYX_ERR(0, 172, __pyx_L1_error)
 
     /* "src/_pyForest.pyx":171
- *             _nsample=len(traindf)
+ *             nsample=len(traindf)
  *             print("Number of samples cann't be greater than sample size,then data will be used")
  *         if maxheight<0:             # <<<<<<<<<<<<<<
  *             raise NameError("Max depth cann't be negative")
@@ -2714,7 +2718,7 @@ static PyObject *__pyx_pf_9pyiForest_15IsolationForest_22train(struct __pyx_obj_
  *         if rho >1:
  *             raise NameError("rho value should be less than 1")             # <<<<<<<<<<<<<<
  * 
- *         return self.thisptr.trainForest(traindf,ntree,_nsample,maxheight,rotate,adaptive,rangecheck,rho,stoplimit)
+ *         return self.thisptr.trainForest(traindf,ntree,nsample,maxheight,rotate,adaptive,rangecheck,rho,stoplimit)
  */
     __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_NameError, __pyx_tuple__3, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 174, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
@@ -2734,20 +2738,21 @@ static PyObject *__pyx_pf_9pyiForest_15IsolationForest_22train(struct __pyx_obj_
   /* "src/_pyForest.pyx":176
  *             raise NameError("rho value should be less than 1")
  * 
- *         return self.thisptr.trainForest(traindf,ntree,_nsample,maxheight,rotate,adaptive,rangecheck,rho,stoplimit)             # <<<<<<<<<<<<<<
+ *         return self.thisptr.trainForest(traindf,ntree,nsample,maxheight,rotate,adaptive,rangecheck,rho,stoplimit)             # <<<<<<<<<<<<<<
  * 
  *     def score(self,test_data):
  */
   __Pyx_XDECREF(__pyx_r);
   __pyx_t_7 = __pyx_convert_vector_from_py_std_3a__3a_vector_3c_double_3e___(__pyx_v_traindf); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 176, __pyx_L1_error)
   __pyx_t_8 = __Pyx_PyInt_As_int(__pyx_v_ntree); if (unlikely((__pyx_t_8 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 176, __pyx_L1_error)
-  __pyx_t_9 = __Pyx_PyInt_As_int(__pyx_v_maxheight); if (unlikely((__pyx_t_9 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 176, __pyx_L1_error)
-  __pyx_t_10 = __Pyx_PyObject_IsTrue(__pyx_v_rotate); if (unlikely((__pyx_t_10 == (bool)-1) && PyErr_Occurred())) __PYX_ERR(0, 176, __pyx_L1_error)
-  __pyx_t_11 = __Pyx_PyObject_IsTrue(__pyx_v_adaptive); if (unlikely((__pyx_t_11 == (bool)-1) && PyErr_Occurred())) __PYX_ERR(0, 176, __pyx_L1_error)
-  __pyx_t_12 = __Pyx_PyObject_IsTrue(__pyx_v_rangecheck); if (unlikely((__pyx_t_12 == (bool)-1) && PyErr_Occurred())) __PYX_ERR(0, 176, __pyx_L1_error)
-  __pyx_t_13 = __pyx_PyFloat_AsDouble(__pyx_v_rho); if (unlikely((__pyx_t_13 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 176, __pyx_L1_error)
-  __pyx_t_14 = __Pyx_PyInt_As_int(__pyx_v_stoplimit); if (unlikely((__pyx_t_14 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 176, __pyx_L1_error)
-  __pyx_t_3 = __Pyx_void_to_None(__pyx_v_self->thisptr->trainForest(__pyx_t_7, __pyx_t_8, __pyx_v__nsample, __pyx_t_9, __pyx_t_10, __pyx_t_11, __pyx_t_12, __pyx_t_13, __pyx_t_14)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 176, __pyx_L1_error)
+  __pyx_t_9 = __Pyx_PyInt_As_int(__pyx_v_nsample); if (unlikely((__pyx_t_9 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 176, __pyx_L1_error)
+  __pyx_t_10 = __Pyx_PyInt_As_int(__pyx_v_maxheight); if (unlikely((__pyx_t_10 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 176, __pyx_L1_error)
+  __pyx_t_11 = __Pyx_PyObject_IsTrue(__pyx_v_rotate); if (unlikely((__pyx_t_11 == (bool)-1) && PyErr_Occurred())) __PYX_ERR(0, 176, __pyx_L1_error)
+  __pyx_t_12 = __Pyx_PyObject_IsTrue(__pyx_v_adaptive); if (unlikely((__pyx_t_12 == (bool)-1) && PyErr_Occurred())) __PYX_ERR(0, 176, __pyx_L1_error)
+  __pyx_t_13 = __Pyx_PyObject_IsTrue(__pyx_v_rangecheck); if (unlikely((__pyx_t_13 == (bool)-1) && PyErr_Occurred())) __PYX_ERR(0, 176, __pyx_L1_error)
+  __pyx_t_14 = __pyx_PyFloat_AsDouble(__pyx_v_rho); if (unlikely((__pyx_t_14 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 176, __pyx_L1_error)
+  __pyx_t_15 = __Pyx_PyInt_As_int(__pyx_v_stoplimit); if (unlikely((__pyx_t_15 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 176, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_void_to_None(__pyx_v_self->thisptr->trainForest(__pyx_t_7, __pyx_t_8, __pyx_t_9, __pyx_t_10, __pyx_t_11, __pyx_t_12, __pyx_t_13, __pyx_t_14, __pyx_t_15)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 176, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __pyx_r = __pyx_t_3;
   __pyx_t_3 = 0;
@@ -2770,6 +2775,7 @@ static PyObject *__pyx_pf_9pyiForest_15IsolationForest_22train(struct __pyx_obj_
   __Pyx_AddTraceback("pyiForest.IsolationForest.train", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
+  __Pyx_XDECREF(__pyx_v_nsample);
   __Pyx_XDECREF(__pyx_v_adaptive);
   __Pyx_XGIVEREF(__pyx_r);
   __Pyx_RefNannyFinishContext();
@@ -2777,7 +2783,7 @@ static PyObject *__pyx_pf_9pyiForest_15IsolationForest_22train(struct __pyx_obj_
 }
 
 /* "src/_pyForest.pyx":178
- *         return self.thisptr.trainForest(traindf,ntree,_nsample,maxheight,rotate,adaptive,rangecheck,rho,stoplimit)
+ *         return self.thisptr.trainForest(traindf,ntree,nsample,maxheight,rotate,adaptive,rangecheck,rho,stoplimit)
  * 
  *     def score(self,test_data):             # <<<<<<<<<<<<<<
  *         """
@@ -2872,7 +2878,7 @@ static PyObject *__pyx_pf_9pyiForest_15IsolationForest_24score(struct __pyx_obj_
   goto __pyx_L0;
 
   /* "src/_pyForest.pyx":178
- *         return self.thisptr.trainForest(traindf,ntree,_nsample,maxheight,rotate,adaptive,rangecheck,rho,stoplimit)
+ *         return self.thisptr.trainForest(traindf,ntree,nsample,maxheight,rotate,adaptive,rangecheck,rho,stoplimit)
  * 
  *     def score(self,test_data):             # <<<<<<<<<<<<<<
  *         """
@@ -10153,7 +10159,7 @@ static int __Pyx_InitCachedConstants(void) {
  *         if rho >1:
  *             raise NameError("rho value should be less than 1")             # <<<<<<<<<<<<<<
  * 
- *         return self.thisptr.trainForest(traindf,ntree,_nsample,maxheight,rotate,adaptive,rangecheck,rho,stoplimit)
+ *         return self.thisptr.trainForest(traindf,ntree,nsample,maxheight,rotate,adaptive,rangecheck,rho,stoplimit)
  */
   __pyx_tuple__3 = PyTuple_Pack(1, __pyx_kp_s_rho_value_should_be_less_than_1); if (unlikely(!__pyx_tuple__3)) __PYX_ERR(0, 174, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__3);
