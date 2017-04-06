@@ -5,7 +5,7 @@ add_subdirectory(cpp)
 include_directories(cpp)
 set(SOURCE_FILES cpp/main.cpp)
 add_subdirectory(test)
-
+add_subdirectory(python)
 add_executable(pyiforest ${SOURCE_FILES})
 target_link_libraries(pyiforest iforestlib)
 

@@ -2,7 +2,9 @@
 using namespace std;
 namespace metric {
 
-
+double add(double a, double b){
+	return a+b;
+}
 /* Caculate the trapezoidal area bound by the quad (X1,X2,Y1,Y2)*/
 double trapezoidArea(double X1, double X2, double Y1, double Y2) {
 	double base   = std::abs(X1-X2);
