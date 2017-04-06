@@ -19,13 +19,10 @@ protected:
      {
 
     	 //Let read data from
-    	 //std::string filename("synth2d.dt"); //refer common_util.hpp
-         //std::string filename("test2d.csv");   //For small test case
          std::string filename = common::filename();
     	 data= util::readcsv((char*) &filename[0],',',true);
     	 ff.trainForest(data,100,256,0,false,false,false,0.01,0);  //Just train a forest
-    	 ff.testForest(data);
-
+	   	 ff.testForest(data);
      }
 
      virtual void TearDown()
@@ -70,17 +67,12 @@ TEST_F(FacadeForestTest, avgDepth){
 	 EXPECT_GT(scores[50],7);
 
 }
-/*
-TEST_F(FacadeForestTest, factorial){
-	long n=9;
-	EXPECT_EQ(ff.factorial(n),362880);
-}
-*/
 
 TEST_F(FacadeForestTest, saveModel){
- int n =9;	
     ff.saveModel("qtrial.json");
-    EXPECT_EQ(9,n);
+    std::ifstream in("qtrial.json");
+    //check if the file is not empty
+    ASSERT_FALSE(in.peek()==std::ifstream::traits_type::eof());
 }
 
 

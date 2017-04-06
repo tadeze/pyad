@@ -77,27 +77,18 @@ TEST_F(ForestTest,serialize)
 
 }
 
-
-TEST_F(ForestTest,deserialize)
-{
+TEST_F(ForestTest,deserialize){
    Forest* forest;
-   ff->fixedTreeForest();
-   std::ofstream ll("tforest.json");
-   ll<<ff->to_json();
-   ll.close();
-IsolationForest iff;
-forest = &iff;
+   IsolationForest iff;
+    forest = &iff;
+    std::ifstream in("forest.json");
+    //json jj;
+    //in>>jj;
+    forest->from_json(in);
+   ASSERT_EQ(forest->ntree,ntree);
+   ASSERT_EQ(forest->nsample,nsample);
+    //just take two random node and check they are equal
 
-
-
-   std::ifstream in("tforest.json");
-   forest->deseralize_bfs(in);
-  ASSERT_EQ(forest->ntree,ntree);
-  ASSERT_EQ(forest->nsample,nsample);
-  
-  ASSERT_EQ(forest->trees[2]->leftChild->nodeSize,
-          ff->trees[2]->leftChild->nodeSize); //just take two random node and check they are equal 
-  
 }
 //Test remaining module in child
 
