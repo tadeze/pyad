@@ -1,0 +1,211 @@
+import numpy as np
+import cPickle
+from libcpp.vector cimport vector
+cdef extern from "cpp/Tree.hpp":
+  cdef cppclass Tree:
+        Tree()
+        void iTree(vector[int] & ,vector[vector[double]],int,int,bool)
+        double pathLength(vector[double] &)
+        int maxTreeDepth()
+        int getNodeSize()
+        int getSplittingAtt()
+        double getSplittingPoint()
+        int getDepth()
+        double getMinAttVal()
+        double getMaxAttVal()
+        Tree lChild()
+        Tree rChild()
+        #void saveModel(string model_name)
+        #void loadModel(string model_name,string forest_type)
+
+cdef class IsolationTree:
+    cdef Tree *thisptr
+
+    def __init__(self):
+        self.thisptr =new Tree()
+    def __dealloc__(self):
+        del self.thisptr
+    def iTree(self,train_index,train_data,height=0,maxheight=0,stopheight=False):
+        """
+
+        Returns: number of trees used for building the forest
+
+        """
+        return self.thisptr.iTree(train_index,train_data,height,maxheight,stopheight)
+
+    def path_length(self,test_data):
+        """
+        Returns: Maximum depth of the trees
+
+        """
+        return self.thisptr.pathLength(test_data)
+
+    def max_depth(self):
+        """
+        Return: True if the Forest is built with adaptive way
+        """
+        return self.thisptr.maxTreeDepth()
+    def get_nodesize(self):
+        return self.thisptr.getNodeSize()
+    def get_splittingAtt(self):
+        return self.thisptr.getSplittingAtt()
+    def get_splittingPoint(self):
+        return self.thisptr.getSplittingPoint()
+    def get_depth(self):
+        return self.thisptr.getDepth()
+    def get_minAttVal(self):
+        return self.thisptr.getMinAttVal()
+    def get_maxAttVal(self):
+        return self.thisptr.getMaxAttVal()
+   # def get_rightChild(self):
+   #     return self.thisptr.rChild()
+   # def get_leftChild(self):
+   #     return self.thisptr.lChild()
+
+class IForest(object):
+
+    def __init__(self, train_df=None, ntree=100, nsample=512,
+                 max_height=0, adaptive=False, rangecheck=True, check_missing_value=True):
+        self.nsample= nsample
+        self.ntree= ntree
+        self.rangecheck = rangecheck
+        self.adaptive = adaptive
+        self.maxheight =max_height
+        self.check_missing_value = check_missing_value
+        self.rot_trees=[]
+        if train_df is not None:
+            self.train_df = train_df
+            self.train_forest(self.train_df)
+
+
+    def train(self, train_df):
+        """ Train forest
+        :type train_df: numpy.ndarray training dataset
+        """
+
+        assert isinstance(train_df, np.ndarray)
+        nrow,ncol = train_df.shape
+
+        for tree in range(self.ntree):
+            # generate rotation matrix
+            sample_index = np.random.choice(nrow,self.nsample,False)
+            itree = IsolationTree()
+            itree.iTree(sample_index, train_df, 0, self.maxheight)
+            self.rot_trees.append({"tree":itree})
+
+    def depth(self,test_df):
+        depth=[]
+
+        for rottree in self.rot_trees:
+            #rot_mat = rottree["rotmat"]
+            tree = rottree["tree"]
+            #rotate data
+            depth.append(tree.path_length(test_df))
+        return depth
+
+    def average_depth(self,test_df):
+        assert isinstance(test_df, np.ndarray)
+        avg_depth = [np.mean(self.depth(row)) for row in test_df]
+        return np.array(avg_depth)
+
+
+    def score(self,test_df):
+        #score of allpoints
+        bst=lambda n: 0.0 if (n-1)<=0 else (2.0*np.log(n-1) +0.5772156649) - 2.0*(n-1)/n
+        avg_depth =self.average_depth(test_df)
+        scores = np.power(2, (-1*avg_depth / bst(self.nsample)))
+        return scores
+    #@staticmethod
+    def save(self,model_name):
+        # First save trees and rotation matrix.
+        cPickle.dump(self,open(model_name,'w'))
+
+
+    def load(self,model_name):
+        return cPickle.load(open(model_name,"r"))
+
+
+
+
+class RotationForest(object):
+    """
+    Build Rotation Forest based on Isolation Trees
+    """
+    rot_trees=[]
+
+
+    def __init__(self,traindf=None,ntree=100,nsample=512,
+                 maxheight=0,adaptive=False,rangecheck=True,reduce_dim=False):
+        self.nsample= nsample
+        self.ntree= ntree
+        self.rangecheck = rangecheck
+        self.adaptive = adaptive
+        self.maxheight = maxheight
+        self.reduce_dim = reduce_dim
+        self.sample_rotation=[]
+
+    @staticmethod
+    def random_rotation_matrix(n,m=None):
+        if m is None: m=n
+        A = np.random.normal(size=[n,m])
+        Q,R = np.linalg.qr(A)
+        M = Q.dot(np.diag(np.sign(np.diag(R))))
+        if np.linalg.det(M)<0:
+            M[:,0] = -M[:,0]
+        return M
+
+
+    def train(self,traindf):
+        """ Train forest"""
+        assert isinstance(traindf,np.ndarray)
+        nrow,ncol = traindf.shape
+        if self.reduce_dim and ncol>3:
+            r = np.ceil((2+np.sqrt(ncol)/2))
+            self.sample_rotation = np.random.choice(ncol,r,False)
+
+        for tree in range(self.ntree):
+            # generate rotation matrix
+            rotMat = RotationForest.random_rotation_matrix(ncol)
+            rotated_data = np.dot(traindf,rotMat)
+            sample_index = np.random.choice(nrow,self.nsample,False)
+            itree = IsolationTree()
+            if len(self.sample_rotation) >0:
+                rotated_data = rotated_data[:,self.sample_rotation]
+
+            itree.iTree(sample_index,rotated_data,0,self.maxheight)
+            self.rot_trees.append({"rotmat":rotMat,"tree":itree})
+
+    def depth(self,testdf):
+        depth=[]
+
+        for rottree in self.rot_trees:
+            rot_mat = rottree["rotmat"]
+            tree = rottree["tree"]
+            #rotate data
+            rotated_dt = np.dot(testdf,rot_mat)
+            depth.append(tree.path_length(rotated_dt))
+        return depth
+
+    def average_depth(self,testdf):
+        assert isinstance(testdf, np.ndarray)
+        if len(self.sample_rotation)>0:
+            testdf = testdf[:,self.sample_rotation]
+        avg_depth = [np.mean(self.depth(row)) for row in testdf]
+        return np.array(avg_depth)
+
+
+    def score(self,testdf):
+        #score of allpoints
+        bst=lambda n: 0.0 if (n-1)<=0 else (2.0*np.log(n-1) +0.5772156649) - 2.0*(n-1)/n
+        avg_depth =self.average_depth(testdf)
+        scores = np.power(2, (-1*avg_depth / bst(self.nsample)))
+        return scores
+
+    #@staticmethod
+    def save(self,model_name):
+        # First save trees and rotation matrix.
+        cPickle.dump(self,open(model_name,'w'))
+
+
+    def load(self,model_name):
+        return cPickle.load(open(model_name,"r"))
