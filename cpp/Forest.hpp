@@ -15,36 +15,29 @@ class Forest {
 public:
     
 	std::vector<Tree*> trees;
-
 	int ntree;
 	bool rsample;
 	int nsample;
     bool stopheight;
     int maxheight;
    	bool rangecheck;
-	//dataset* dataset;  // holds the original dataset
     util::dataset* dataframe;
-    Forest()
-	{
+    Forest() {
 		rsample = false;
 		ntree = 0;
 		nsample = 256;
 		dataframe = NULL;
-
 	};
-Forest(int _ntree,util::dataset* _dataset,int _nsample,int _maxheight, bool _stopheight,bool _rsample)//bool _rangecheck)
-    {
+Forest(int _ntree,util::dataset* _dataset,int _nsample,
+       int _maxheight, bool _stopheight,bool _rsample){
 	ntree=_ntree;
     dataframe=_dataset;
 	nsample=_nsample;
 	stopheight=_stopheight;
 	maxheight=_maxheight;
  	rsample = _rsample;
-//	rangecheck=_rangecheck;
-//	Tree::rangeCheck = rangecheck;
-    };
-virtual ~Forest()
-	{
+   };
+virtual ~Forest() {
 		for (std::vector<Tree*>::iterator it = trees.begin(); it != trees.end();
 				++it)
 		{
@@ -60,7 +53,6 @@ virtual ~Forest()
 	std::vector<double> meandepth();
 	std::vector<double> ADtest(const std::vector<std::vector<double> > &pathlength, bool weighttotail);
 	std::vector<double> importance(std::vector<double> &inst);
-	//virtual double getdepth(double *inst,Tree* tree);
 	virtual double getdepth(std::vector<double> inst, Tree *tree);
 	void getSample(std::vector<int> &sampleIndex,const int nsample,bool rSample,int nrow);
 	struct larger
@@ -92,47 +84,6 @@ virtual ~Forest()
 		return (double)v3.size()/(double)v1.size();
 	}
 
-/*
-json tracePath(Tree* tree)
-{
-	json jroot;
-
-	// Define empty queute
-	std::queue<Tree*> qtree ;
-	qtree.push(tree);
-    int i=0;
-	while(!qtree.empty())
-    {
-        json j;
-        Tree* nextTree = qtree.front();
-        qtree.pop();
-        if(nextTree==NULL){
-            j["depth"] = -999;
-        }
-        else
-        {
-            j["depth"] = nextTree->depth;
-            j["splittingAtt"] = nextTree->splittingAtt;
-            j["splittingPoint"] = nextTree->splittingPoint;
-            j["depth"]= nextTree->depth;
-            j["nodesize"]=nextTree->nodeSize;
-            j["minAttVal"] = nextTree->minAttVal;
-            j["maxAttVal"] = nextTree->maxAttVal;
-
-
-            qtree.push(nextTree->leftChild);
-            qtree.push(nextTree->rightChild);
-
-        }
-
-      jroot.push_back(j);
-     i++;
-    }
-
-return jroot;
-}
-
-*/
 
 /* Serialize using BFS traversal
  */

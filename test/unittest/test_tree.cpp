@@ -28,8 +28,9 @@ protected:
          std::vector<std::vector<double> > data = util::readcsv((char*) &filename[0],',',true);
     	 dataset = makeDataset(data);
     	 tr = new Tree();
-   		std::vector<int> dataIndex(dataset->nrow);
-   		for(int i=0;i<dataset->nrow;i++) dataIndex.push_back(i);
+   		std::vector<int> dataIndex;//(dataset->nrow);
+   		for(int i=0;i<dataset->nrow;i++)
+            dataIndex.push_back(i);
    		tr->iTree(dataIndex,dataset,0,0,false);
      }
 
@@ -80,15 +81,38 @@ TEST_F(TreeTest,compareDepth)
  EXPECT_GT(alldepth[50],5);
 
 }
+
+
 TEST_F(TreeTest, to_json)
 {
-    std::ofstream in("logerr.log");
-    // convert tr to json 
-   //json jj =  tr->to_json();
-//   in<<jj;
- // EXPECT_EQ(jj[0]["depth"],0);
-EXPECT_EQ(1,1);
+    std::ofstream out("singletree.json");
+    // convert tr to json
+    auto jj =  tr->to_json();
+    out<<jj;
+    std::ifstream in("singletree.json");
+    EXPECT_NE(in,nullptr);
+    // / EXPECT_EQ(jj[0]["depth"],0);
+
+//EXPECT_EQ(1,1);
 }
 
 
+TEST_F(TreeTest, from_json){
+    std::ifstream in("singletree.json");
+    json savedTree;
+    in>>savedTree;
+    Tree *tt = new Tree();
+    tt->from_json(savedTree);
+    EXPECT_EQ(dataset->nrow,tr->nodeSize);
+    //auto rootnodesize = savedTree["nodesiz"]
+    EXPECT_EQ((int)savedTree[0]["nodesize"],tr->nodeSize);
+    EXPECT_EQ(tt->nodeSize,tr->nodeSize);
 
+    EXPECT_EQ(tt->leftChild->splittingPoint,savedTree[1]["splittingPoint"]);
+    EXPECT_EQ(tt->leftChild->nodeSize,
+              savedTree[1]["nodesize"]);
+    EXPECT_EQ(tt->rightChild->nodeSize,
+              savedTree[2]["nodesize"]);
+
+    delete tt;
+}

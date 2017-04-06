@@ -12,17 +12,6 @@ double Forest::getdepth(std::vector<double> inst,Tree* tree)
 	return tree->pathLength(inst);
 }
 
-/*
-void Forest::tracePath(std::vector<double> inst)
-{
-for(int tr=0;tr<this->ntree;tr++){
-
-
-}
-return tree->pathLength(inst);
-}
-*/
-
 
 /*
  * Accepts single point (row) and return Anomaly Score
