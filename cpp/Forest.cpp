@@ -12,17 +12,6 @@ double Forest::getdepth(std::vector<double> inst,Tree* tree)
 	return tree->pathLength(inst);
 }
 
-/*
-void Forest::tracePath(std::vector<double> inst)
-{
-for(int tr=0;tr<this->ntree;tr++){
-
-
-}
-return tree->pathLength(inst);
-}
-*/
-
 
 /*
  * Accepts single point (row) and return Anomaly Score
@@ -128,4 +117,96 @@ int Forest::adaptiveForest(double alpha,int stopLimit)
 int Forest::confTree(double alpha,double rho, int init_tree){
 	//For now remove warning
 	return (int)alpha*rho*init_tree;
+}
+
+// Serialization
+
+json Forest::to_json() {
+    json j;
+    j["ntree"] = ntree;
+    j["rsample"] = rsample;
+    j["maxheight"] = maxheight;
+    j["stopheight"] = stopheight;
+    j["rangecheck"]= rangecheck;
+    j["nsample"] = nsample;
+
+    for(int i=0 ;i<ntree;i++){
+        //j["trees"][i]=serialize_bfs(trees[i]);
+    j["trees"][i] = trees[i]->to_json();
+
+    }
+
+    return j;
+
+}
+
+void Forest::from_json(std::ifstream &input) {
+    json jff;
+    input>>jff;
+
+    this->nsample = jff["nsample"];
+    this->rsample = jff["rsample"];
+    this->maxheight = jff["maxheight"];
+    this->stopheight = jff["stopheight"];
+    this->rangecheck = jff["rangecheck"];
+    this->ntree = jff["ntree"];
+
+    for(int i=0;i<this->ntree;i++) {
+        // json* rootTree = &jff["trees"][i];
+        Tree *rootTree = new Tree();
+        rootTree->from_json(jff["trees"][i]);
+        this->trees.push_back(rootTree);
+    }
+       /* int iNode =0;
+        int numNodes = (jff["trees"][i]).size();
+
+
+
+
+
+        std::queue<Tree*> qTree;
+        int iNode =0;
+        int numNodes = (jff["trees"][i]).size();    //rootTree.size();
+        while(iNode<numNodes)
+        {
+            if(iNode==0)  //root node
+            {
+                root = new Tree();
+                assignTree(root, &jff["trees"][i][iNode]);
+                qTree.push(root);
+                iNode++;
+            }
+            else
+            {
+                Tree* node = qTree.front();
+                qTree.pop();
+                json* jleft = &jff["trees"][i][iNode];//ootTree[iNode];
+                json* jright=NULL;
+
+                if(iNode<(numNodes-1)) jright =&jff["trees"][i][iNode+1];
+
+                if(jleft!=NULL && (*jleft)["depth"]>0)
+                {
+                    node->leftChild = new Tree();
+                    assignTree(node->leftChild,jleft);
+                    qTree.push(node->leftChild);
+                }
+                else
+                {
+
+                }
+
+                if(jright!=NULL && (*jright)["depth"]>0)
+                {
+                    node->rightChild = new Tree();
+                    assignTree(node->rightChild,jright);
+                    qTree.push(node->rightChild);
+                }
+                iNode +=2;
+            }
+        }
+
+        this->trees.push_back(root);
+    }*/
+
 }

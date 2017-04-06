@@ -170,7 +170,7 @@ void FacadeForest::loadModel(std::string modelName,std::string forest_type="ifor
        if(forest_type =="iforest")
        {
            iff = new IsolationForest();
-           iff->deseralize_bfs(in);
+           iff->from_json(in);
         
        }
    }

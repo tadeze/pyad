@@ -8,6 +8,7 @@
 #include<stack>
 bool Tree::rangeCheck=true;
 double const MISSING_VALUE = -9999.0;
+int const NULL_TREE_CHILD_DEPTH = -999;
 
 util::dataset *Tree::makeDataset(std::vector<std::vector<double> > &data) {
 	util::dataset *dt = new util::dataset();
@@ -51,7 +52,7 @@ void Tree::iTree(std::vector<int> const &dIndex,const util::dataset *dt, int hei
 		minmax.push_back(tmp);
 		tmp.clear();
 	}
-  
+
     //Compute max and min of each attribute
 	for (unsigned i = 0; i <dIndex.size() ; i++)
 	{
@@ -69,7 +70,7 @@ void Tree::iTree(std::vector<int> const &dIndex,const util::dataset *dt, int hei
 	//use only valid attributes
    	 std::vector<int> attributes;
 	for (int j = 0; j < dt->ncol; j++)
-	{      
+	{
 		if (minmax[j][0] < minmax[j][1])
 		{
 			attributes.push_back(j);
@@ -79,7 +80,7 @@ void Tree::iTree(std::vector<int> const &dIndex,const util::dataset *dt, int hei
 	if (attributes.size() == 0)
 		return;
 	//Randomly pick an attribute and a split point
-	
+
 	this->splittingAtt = attributes[util::randomI(0,attributes.size()-1)]; //randx];
 	this->splittingPoint =util::randomD(minmax[this->splittingAtt][0],minmax[this->splittingAtt][1]);
 	this->minAttVal =minmax[this->splittingAtt][0];
@@ -112,20 +113,20 @@ void Tree::iTree(std::vector<int> const &dIndex,const util::dataset *dt, int hei
 
 
 
-//Need to be fixed later. 
+//Need to be fixed later.
 json Tree::tracePath(std::vector<double> &inst)
 {
 	json jroot,j;
 	// Define empty queute
 	std::queue<Tree*> qtree ;
 	qtree.push(this);
- 
+
 	double instAttVal = inst[this->splittingAtt];
 	double depth=0.0;
-	   
+
 while(!qtree.empty())
-    { 
-        
+    {
+
         Tree* nextTree = qtree.front();
         qtree.pop();
         if(nextTree==NULL){
@@ -141,7 +142,7 @@ while(!qtree.empty())
 			(instAttVal >this->minAttVal && util::randomD(instAttVal,this->maxAttVal)>this->maxAttVal))
 				{
 				depth+=1.0;
-				 continue;	
+				 continue;
 				}
 		}
 
@@ -154,10 +155,10 @@ while(!qtree.empty())
 	//	temp= temp->rightChild;
 		else
 		  	 qtree.push(nextTree->leftChild);
-	
+
 	//temp = temp->leftChild;
-         
-	
+
+
             j["depth"] = nextTree->depth;
             j["splittingAtt"] = nextTree->splittingAtt;
             j["splittingPoint"] = nextTree->splittingPoint;
@@ -165,8 +166,8 @@ while(!qtree.empty())
             j["nodesize"]=nextTree->nodeSize;
             j["minAttVal"] = nextTree->minAttVal;
             j["maxAttVal"] = nextTree->maxAttVal;
-	  
-         
+
+
 	//if(nextTree->leftChild!=NULL){ //Assuming balanced tree
            // qtree.push(nextTree->leftChild);
            // qtree.push(nextTree->rightChild);
@@ -196,7 +197,7 @@ double Tree::pathLengthM(std::vector<double> &inst)
 	double depth=0.0;
 	Tree *temp =this;
 	while(temp!=NULL){
-	
+
 		if(Tree::rangeCheck==true)
  		{
 
@@ -239,7 +240,7 @@ double Tree::pathLength(std::vector<double> &inst)
 			return 1.0;
 
 	}
-	//Checking missing data for the attribute. 
+	//Checking missing data for the attribute.
 
 	if(instAttVal==MISSING_VALUE)
 	{
@@ -304,43 +305,85 @@ int Tree::maxTreeDepth()
 
 }
 
+json Tree::to_json(){
 
-
-//Need to be fixed later. 
-json Tree::to_json()
-{
-	json jroot,j;
+	json jroot;
 
 	// Define empty queute
 	std::queue<Tree*> qtree ;
 	qtree.push(this);
-    while(!qtree.empty())
-    { 
-        
-        Tree* nextTree = qtree.front();
-        qtree.pop();
-        if(nextTree==NULL){
-            j = NULL;
+	int i=0;
+	while(!qtree.empty()) {
+		json j;
+		Tree* nextTree = qtree.front();
+		qtree.pop();
+		if(nextTree==NULL){
+			j["depth"] =  NULL_TREE_CHILD_DEPTH;
+		}
+		else {
+			j["depth"] = nextTree->depth;
+			j["splittingAtt"] = nextTree->splittingAtt;
+			j["splittingPoint"] = nextTree->splittingPoint;
+			j["depth"]= nextTree->depth;
+			j["nodesize"]=nextTree->nodeSize;
+			j["minAttVal"] = nextTree->minAttVal;
+			j["maxAttVal"] = nextTree->maxAttVal;
+			qtree.push(nextTree->leftChild);
+			qtree.push(nextTree->rightChild);
+		}
+
+		jroot.push_back(j);
+		i++;
+	}
+
+	return jroot;
+
+}
+
+
+void assignTree(Tree* tr,json* rtree){
+
+    tr->depth = (*rtree)["depth"];
+    tr->splittingAtt = (*rtree)["splittingAtt"];
+    tr->splittingPoint= (*rtree)["splittingPoint"];
+    tr->nodeSize = (*rtree)["nodesize"];
+    tr->minAttVal  = (*rtree)["minAttVal"];
+    tr->maxAttVal = (*rtree)["maxAttVal"];
+}
+void Tree::from_json(json &jsontree){
+    Tree* root;
+    std::queue<Tree*> qTree;
+    int iNode =0;
+    auto numNodes = jsontree.size();    //rootTree.size();
+    while(iNode<numNodes){
+        if(iNode==0){  //root node
+            root = this;//new Tree();
+            assignTree(root, &jsontree[iNode]);
+            qTree.push(root);
+            iNode++;
         }
-        else
-        {
+        else {
+            Tree* node = qTree.front();
+            qTree.pop();
+            json* jleft = &jsontree[iNode];//ootTree[iNode];
+            json* jright=NULL;
 
-            j["depth"] = nextTree->depth;
-            j["splittingAtt"] = nextTree->splittingAtt;
-            j["splittingPoint"] = nextTree->splittingPoint;
-            j["depth"]= nextTree->depth;
-            j["nodesize"]=nextTree->nodeSize;
-            j["minAttVal"] = nextTree->minAttVal;
-            j["maxAttVal"] = nextTree->maxAttVal;
+            if(iNode<(numNodes-1))
+                jright =&jsontree[iNode+1];
 
-         //if(nextTree->leftChild!=NULL){ //Assuming balanced tree
-            qtree.push(nextTree->leftChild);
-            qtree.push(nextTree->rightChild);
-          }
-     jroot.push_back(j);
+            if(jleft!=NULL && (*jleft)["depth"]>0) {
+                node->leftChild = new Tree();
+                assignTree(node->leftChild,jleft);
+                qTree.push(node->leftChild);
+            }
+            if(jright!=NULL && (*jright)["depth"]>0){
+                node->rightChild = new Tree();
+                assignTree(node->rightChild,jright);
+                qTree.push(node->rightChild);
+            }
+            iNode +=2;
         }
-
-return jroot;
+    }
 
 }
 

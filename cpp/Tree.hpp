@@ -12,7 +12,6 @@
 using json= nlohmann::json;
 class Tree
 {
-;
 
 public:
     Tree *leftChild;
@@ -25,8 +24,7 @@ public:
 	double minAttVal,maxAttVal;
 
 	util::dataset *makeDataset(std::vector<std::vector<double> > &data);
-    json to_json();
-    void from_json();
+
     /** Later the property will be private this will be their access point */
     int getNodeSize(){ return this->nodeSize;}
     int getSplittingAtt() { return this->splittingAtt;}
@@ -63,7 +61,10 @@ public:
 	
     double pathLength(std::vector<double> &inst);
 	double pathLengthM(std::vector<double> &inst);
-	int maxTreeDepth(); 
+	int maxTreeDepth();
+    json to_json();
+    void from_json(json &jsontree);
+
 
 };
 
