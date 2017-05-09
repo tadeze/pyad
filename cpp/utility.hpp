@@ -48,7 +48,8 @@ double avgPL(int n);
 double randomD(double min, double max);
 template <typename T>
 T randomT(T min, T max);
-void swapInt(int a, int b, int* x);
+	template <typename T>
+void swapInt(T a, T b, T* x);
 //template<typename T>
 double variance(std::vector<double> &x);
 

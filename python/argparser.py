@@ -1,5 +1,5 @@
 import argparse
-import numpy as np
+#import numpy as np
 import pandas as pd
 import itertools
 from pyiForest import IsolationForest
@@ -58,7 +58,7 @@ def main():
         out_pd = pd.concat([pd.DataFrame(gt),pd.DataFrame(sc,columns=['score'])],axis=1)
     else:
         out_pd = pd.DataFrame(sc)
-    out_pd.to_csv(args.output.name,delimiter=",",index=False)
+    out_pd.to_csv(args.output.name,index=False)
 
 if __name__ == '__main__':
     main()

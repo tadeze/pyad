@@ -189,8 +189,7 @@ return jroot;
  *//*
  * takes instance as vector of double
  */
-double Tree::pathLengthM(std::vector<double> &inst)
-{
+double Tree::pathLengthM(std::vector<double> &inst){
 
 
 	double instAttVal = inst[this->splittingAtt];
@@ -221,8 +220,7 @@ double Tree::pathLengthM(std::vector<double> &inst)
 /*
  * takes instance as vector of double
  */
-double Tree::pathLength(std::vector<double> &inst)
-{
+double Tree::pathLength(std::vector<double> &inst){
 
 
  	if (this->leftChild==NULL||this->rightChild==NULL)
@@ -271,11 +269,7 @@ leftNodeSize*(this->leftChild->pathLength(inst) + 1.0);
 
 }
 
-
-
-
-int Tree::maxTreeDepth()
-{
+int Tree::maxTreeDepth(){
 	if (!this) return 0;
 	std::stack<Tree*> s;
 	s.push(this);
@@ -304,7 +298,6 @@ int Tree::maxTreeDepth()
 	  return maxDepth;
 
 }
-
 json Tree::to_json(){
 
 	json jroot;
@@ -339,8 +332,6 @@ json Tree::to_json(){
 	return jroot;
 
 }
-
-
 void assignTree(Tree* tr,json* rtree){
 
     tr->depth = (*rtree)["depth"];
