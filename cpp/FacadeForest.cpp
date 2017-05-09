@@ -44,7 +44,7 @@ int FacadeForest::isValidModel() const{
 */
     //return true;
 }
-void FacadeForest::trainForest(std::vector<std::vector<double> > &traindf,
+int FacadeForest::trainForest(std::vector<std::vector<double> > &traindf,
 		int _ntree, int _nsample, int _maxheight, bool _rotate, bool _adaptive,
 		bool _rangecheck, double _rho, int _stopLimit) {
 
@@ -76,13 +76,14 @@ void FacadeForest::trainForest(std::vector<std::vector<double> > &traindf,
 
 	try {
 				if (adaptive)
-					iff->adaptiveForest(rho, stopLimit);
+					ntree = iff->adaptiveForest(rho, stopLimit);
+
 				else
 					iff->fixedTreeForest();  //just for now build fixed tree
 			} catch (std::exception& e) {
 				std::cout << "Standard exception: " << e.what() << std::endl;
 			}
-
+	return ntree;  //Return number of trees used. Useful incase of adaptive tree growing
 }
 
 void FacadeForest::testForest(std::vector<std::vector<double> > &_testdf) {
@@ -171,7 +172,8 @@ void FacadeForest::loadModel(std::string modelName,std::string forest_type="ifor
        {
            iff = new IsolationForest();
            iff->from_json(in);
-        
+
+
        }
    }
 

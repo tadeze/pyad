@@ -41,12 +41,12 @@ private:
 
     
     int getNTree() const {
-        return ntree;
+        return iff->ntree;
         
     }
 
     int getNSample() const {
-        return nsample;
+        return iff->nsample;
     }
 
   /*  void setNsample(int nsample) {
@@ -54,12 +54,12 @@ private:
     }*/
 
     int getMaxDepth() const {
-        return maxHeight;
+        return iff->maxheight;
     }
 
 
     bool isAdaptive() const {
-        return adaptive;
+        return this->adaptive;
     }
     bool isRotate() const {
         return rotate;
@@ -88,12 +88,12 @@ private:
 
     //Methods
     
-    void trainForest(std::vector<std::vector<double> > &traindf,int _ntree,
+    int trainForest(std::vector<std::vector<double> > &traindf,int _ntree,
     		int _nsample,int _maxheight, bool _rotate, bool _adaptive,
     		    		bool _rangecheck,double _rho,int _stopLimit);
-    void trainForest(std::vector<std::vector<double> > &traindf,int _ntree,
+    int trainForest(std::vector<std::vector<double> > &traindf,int _ntree,
         		int _nsample,int _maxheight, bool _rotate){
-    	trainForest(traindf, _ntree, _nsample, _maxheight, _rotate,false,true,0.01,5);
+    	return trainForest(traindf, _ntree, _nsample, _maxheight, _rotate,false,true,0.01,5);
     };
 
 

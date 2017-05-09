@@ -108,7 +108,7 @@ void Forest::getSample(std::vector<int> &sampleIndex,const int nsample,bool rsam
 
 
 }
-
+/*
 int Forest::adaptiveForest(double alpha,int stopLimit)
 {
 //For now remove warning compiler
@@ -118,7 +118,7 @@ int Forest::confTree(double alpha,double rho, int init_tree){
 	//For now remove warning
 	return (int)alpha*rho*init_tree;
 }
-
+*/
 // Serialization
 
 json Forest::to_json() {

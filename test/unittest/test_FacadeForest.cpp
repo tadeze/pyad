@@ -21,7 +21,7 @@ protected:
     	 //Let read data from
          std::string filename = common::filename();
     	 data= util::readcsv((char*) &filename[0],',',true);
-    	 ff.trainForest(data,100,256,0,false,false,false,0.01,0);  //Just train a forest
+    	 int tree_used = ff.trainForest(data,100,256,0,false,false,false,0.01,0);  //Just train a forest
 	   	 ff.testForest(data);
      }
 
@@ -85,5 +85,13 @@ TEST_F(FacadeForestTest, LoadModel){
    facaf.load("empty.json",FacadeForest::FOREST::IFOREST);
    ASSERT_NULL(facaf.getIff());
 */
+}
+TEST_F(FacadeForestTest,adaptiveTrain){
+	FacadeForest adaptForest;
+
+	int ntree = adaptForest.trainForest(data,100,256,0,false,true,false,0.01,0);  //Just train a forest
+	ASSERT_EQ(100,ntree);
+
+
 }
 
