@@ -223,14 +223,12 @@ double Tree::pathLengthM(std::vector<double> &inst){
 double Tree::pathLength(std::vector<double> &inst){
 
 
- 	if (this->leftChild==NULL||this->rightChild==NULL)
-        { ///referenced as null for some input data .
+ 	if (this->leftChild==NULL||this->rightChild==NULL) { ///referenced as null for some input data .
                	return util::avgPL(this->nodeSize);
         }
 	//Range check added
-       double instAttVal = inst[this->splittingAtt];
-	if(Tree::rangeCheck==true)
- 	{
+    double instAttVal = inst[this->splittingAtt];
+	if(Tree::rangeCheck==true) {
 
 		if(instAttVal < this->minAttVal && util::randomD(instAttVal,this->minAttVal)<this->minAttVal)
 			return 1.0;
@@ -240,8 +238,7 @@ double Tree::pathLength(std::vector<double> &inst){
 	}
 	//Checking missing data for the attribute.
 
-	if(instAttVal==MISSING_VALUE)
-	{
+	if(instAttVal==MISSING_VALUE) {
 
 	double leftNodeSize = (double)this->leftChild->nodeSize/(double)this->nodeSize;
 
@@ -253,15 +250,14 @@ leftNodeSize*(this->leftChild->pathLength(inst) + 1.0);
 
  	//Logging the isolation process
  	//	logfile<<tmpVar<<","<<this->splittingAtt<<","<<this->splittingPoint<<"\n";
-	if ( instAttVal >= this->splittingPoint)
-	{
+
+	if (instAttVal >= this->splittingPoint) {
 
 
 		return this->rightChild->pathLength(inst) + 1.0;
 
 	}
-	else
-	{
+	else {
 		return this->leftChild->pathLength(inst) + 1.0;
 	}
 
@@ -269,6 +265,34 @@ leftNodeSize*(this->leftChild->pathLength(inst) + 1.0);
 
 }
 
+
+
+//std::vector<std::vector<double>>
+//std::map<int,double>
+struct Contrib Tree::featureContribution(std::vector<double> &inst){
+
+    Tree *root = this;
+    double instAttVal;
+    double depth =0.0;
+    Contrib contribution;
+    while((root->rightChild != NULL) || (root->leftChild!=NULL)) {
+        instAttVal = inst[root->splittingAtt];
+
+        //contributions[root->splittingAtt] = depth + util::avgPL(root->nodeSize);
+
+        if (instAttVal >= root->splittingPoint)
+             root = root->rightChild;
+        else
+            root = root->leftChild ;
+        depth = depth +1.0;
+        if (root->splittingAtt!=-1)
+        contribution.addcont(root->splittingAtt,depth+util::avgPL(root->nodeSize));
+
+    }
+    depth = util::avgPL(root->nodeSize) + depth;
+    return contribution;//.featureContribution();
+
+}
 int Tree::maxTreeDepth(){
 	if (!this) return 0;
 	std::stack<Tree*> s;
@@ -332,7 +356,7 @@ json Tree::to_json(){
 	return jroot;
 
 }
-void assignTree(Tree* tr,json* rtree){
+void Tree::assignTree(Tree* tr,json* rtree){
 
     tr->depth = (*rtree)["depth"];
     tr->splittingAtt = (*rtree)["splittingAtt"];

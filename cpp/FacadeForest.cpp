@@ -179,4 +179,8 @@ void FacadeForest::loadModel(std::string modelName,std::string forest_type="ifor
 
 }
 
+std::map<int,double> FacadeForest::explanation(std::vector<double> &inst){
+  return iff->importance(inst);
+}
+
 

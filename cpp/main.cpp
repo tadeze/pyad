@@ -263,8 +263,15 @@ pforest.trainForest(data,ntree, nsample,maxheight,rotate,stopLimit==0,
 
 }
 */
-
-
+namespace data {
+	util::dataset *makeDataset(std::vector<std::vector<double> > &data) {
+		util::dataset *dt = new util::dataset();
+		dt->data = data;
+		dt->ncol = (int) data[0].size();
+		dt->nrow = (int) data.size();
+		return dt;
+	}
+}
 
 
 
@@ -289,10 +296,51 @@ int main(int argc, char* argv[])
    std::cout<<"Size of training set"<<ff.getTraindf()->nrow<<endl;
    ff.testForest(data);
    std::vector<double> score  = ff.getScore();
-   for(auto sc : score){
-       	std::cout<<sc<<std::endl;
+  /** checking from forest **/
+    util::dataset *dataset;
+    dataset = data::makeDataset(data);
+    int i=2;
+    std::cout<<dataset->ncol<<" Column \n";
+    dataset->print(i);
+    auto explan = ff.explanation(dataset->data[i]);
+    std::cout<<"\n Explanations"<<std::endl;
+    for(const auto &mpr : explan)
+        std::cout<<mpr.first<<"\t"<<mpr.second<<std::endl;
+
+
+
+
+
+    /* checking contributions  from trees **/
+	//std::vector<std::vector<double> > data = util::readcsv((char*) &filename[0],',',true);
+
+//	Tree *tr = new Tree();
+//	std::vector<int> dataIndex;//(dataset->nrow);
+//	for(int i=0;i<dataset->nrow;i++)
+//		dataIndex.push_back(i);
+//	tr->iTree(dataIndex,dataset,0,0,false);
+//	std::cout<<tr->pathLength(dataset->data[4])<<" Depth\n";
+//	std::cout<<"Feature explanations\n";
+//
+//	auto feature = tr->featureContribution(dataset->data[2]);
+//	std::cout<<feature.contributions.size()<<std::endl;
+//	dataset->print(2);
+//    for(const auto & mpr : feature.featureContribution())
+//		std::cout<<mpr.first<<"\t"<<mpr.second<<std::endl;
+//
+//    std::cout<<" Second anomalies";
+//    feature = tr->featureContribution(dataset->data[4]);
+//    std::cout<<feature.contributions.size()<<std::endl;
+//    dataset->print(4);
+//    for(const auto & mpr : feature.featureContribution())
+//        std::cout<<mpr.first<<"\t"<<mpr.second<<std::endl;
+
+
+    /*for(auto sc : score){
+           std::cout<<sc<<std::endl;
 
        }
+    */
 	//displayVec(ff.getTraindf()->data);
 
    /* util::dataset *dt = makeDataset(data);

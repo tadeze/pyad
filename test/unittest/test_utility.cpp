@@ -17,6 +17,6 @@ TEST(UtilTest,readcsv)
     std::string filename = common::filename();
     std::vector<std::vector<double> > data = util::readcsv((char*) &filename[0],',',true);
     EXPECT_EQ(data.size(),105); //check number of rows 
-    EXPECT_EQ(data[0].size(),2); //check number of columns
+    EXPECT_EQ(data[0].size(),4); //check number of columns
 }
 

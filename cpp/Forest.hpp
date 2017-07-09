@@ -49,7 +49,7 @@ virtual ~Forest() {
 	std::vector<std::vector<double> > pathLength(util::dataset* data);
 	std::vector<double> meandepth();
 	std::vector<double> ADtest(const std::vector<std::vector<double> > &pathlength, bool weighttotail);
-	std::vector<double> importance(std::vector<double> &inst);
+	std::map<int, double> importance(std::vector<double> &inst);
 	virtual double getdepth(std::vector<double> inst, Tree *tree);
 	void getSample(std::vector<int> &sampleIndex,const int nsample,bool rSample,int nrow);
 	struct larger {
@@ -80,5 +80,7 @@ virtual ~Forest() {
 	}
 json to_json();
 void from_json(std::ifstream &input);
+
+virtual std::vector<std::map<int,double> > featureContrib(std::vector<double> &inst);
 };
 #endif /* FOREST_H_ */

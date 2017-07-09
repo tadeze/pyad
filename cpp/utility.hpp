@@ -36,6 +36,10 @@ namespace util{
 	int nrow;
 	std::vector<std::vector<double> > data;
 	//std::vector<std::vector<double> > data;
+		void print(int ix){
+		for(auto elem : data[ix])
+			std::cout<<elem<<"\t";
+	}
 };
 
 //util::dataset *makeDataset(std::vector<std::vector<double> > &data);

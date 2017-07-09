@@ -21,9 +21,9 @@ protected:
      {
 
     	 //Let read data from
-         //std::string filename("/home/tadeze/projects/pyiForestCmake/test/unittest/synth2d.dt");
+         std::string filename("/home/tadeze/projects/iForestCodes/pyiForestCmake/test/unittest/synth2d.dt");
         // std::string filename("test2d.csv");
-         std::string filename = common::filename();
+         //std::string filename = common::filename();
 
          std::vector<std::vector<double> > data = util::readcsv((char*) &filename[0],',',true);
     	 dataset = makeDataset(data);
@@ -55,9 +55,21 @@ ASSERT_GT(tr->maxTreeDepth(),6); //check ok for now.
 TEST_F(TreeTest,pathLength)
 {
  double depth = tr->pathLength(dataset->data[8]);
-
- EXPECT_GT(depth,10);
+ //double depth2 = tr->featureContribution(dataset->data[8]);
+ EXPECT_GT(depth,1);
  EXPECT_LT(depth,30);
+ //EXPECT_EQ(depth,depth2);
+
+}
+TEST_F(TreeTest,featurecontribution)
+{
+    //double depth = tr->pathLength(dataset->data[8]);
+    auto depth2 = tr->featureContribution(dataset->data[8]);
+    //for(const auto& mp : depth2.featureContribution())
+      EXPECT_EQ(depth2.featureContribution()[2],2);
+    //EXPECT_GT(depth,10);
+    //EXPECT_LT(depth,30);
+   // EXPECT_EQ(depth,depth2);
 
 }
 TEST_F(TreeTest,Treerange)
@@ -79,7 +91,7 @@ TEST_F(TreeTest,compareDepth)
  EXPECT_LT(alldepth[0],20);
  EXPECT_EQ(alldepth[1],3);
  EXPECT_GT(alldepth[50],5);
-
+//EXPECT_EQ(tr->pathLength(dataset->data[2]),tr->featureContribution(dataset->data[2]));
 }
 
 

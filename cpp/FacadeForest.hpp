@@ -103,7 +103,7 @@ private:
     std::vector<double> getScore();
     std::vector<std::vector<double> > pathLength();
     std::vector<double> averageDepth();
-
+    std::map<int,double> explanation(std::vector<double> &inst);
     void displayData();
     int isValidModel() const;
 };
