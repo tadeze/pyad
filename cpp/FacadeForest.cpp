@@ -166,7 +166,7 @@ void FacadeForest::loadModel(std::string modelName,std::string forest_type="ifor
 {
     
    std::ifstream in(modelName);
-   if(in!=NULL)
+   if(in)
    {    
        if(forest_type =="iforest")
        {
