@@ -11,11 +11,13 @@
 //#include "cincl.hpp"
 using json= nlohmann::json;
 
-
+/*
+compute contributon of features in tree
+*/
 struct Contrib{
     int feature;
     std::map<int,std::vector<double> > contributions;
-    void addcont(int index, double depth){
+    inline void addcont(int index, double depth){
         if(contributions.count(index)<1) {
             std::vector<double> contr;
             contr.push_back(depth);
@@ -25,7 +27,7 @@ struct Contrib{
             contributions[index].push_back(depth);
         }
     }
-    std::map<int,double> featureContribution(){
+    inline std::map<int,double> featureContribution(){
         std::map<int,double> explanation;
         for(const auto & contr : contributions){
             double expl=0.0;
@@ -40,6 +42,7 @@ struct Contrib{
 
 };
 typedef  struct Contrib contrib;
+
 class Tree {
 
     Tree *leftChild;
@@ -65,7 +68,7 @@ public:
     static bool rangeCheck;
     json tracePath(std::vector<double> &inst); 
     Tree(): leftChild(nullptr),rightChild(nullptr),parent(nullptr),
-            splittingAtt(-1), splittingPoint(-9999),depth(0),nodeSize(0),minAttVal(0),maxAttVal(0){};
+            splittingAtt(-1),splittingPoint(-9999),depth(0),nodeSize(0),minAttVal(0),maxAttVal(0){};
 
 	virtual ~Tree()
 	{
@@ -75,7 +78,8 @@ public:
 	};
 
 	void iTree(std::vector<int> const &dIndex, const util::dataset *dt, int height, int maxHeight, bool stopheight);
-	void iTree(std::vector<int> const &dIndex, std::vector<std::vector<double> > traindata, int height, int maxHeight, bool stopheight);
+	void iTree(std::vector<int> const &dIndex, std::vector<std::vector<double> > traindata, int height, 
+		int maxHeight, bool stopheight);
 	
     double pathLength(std::vector<double> &inst);
 	double pathLengthM(std::vector<double> &inst);

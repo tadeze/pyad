@@ -368,7 +368,7 @@ void Tree::assignTree(Tree* tr,json* rtree){
 void Tree::from_json(json &jsontree){
     Tree* root;
     std::queue<Tree*> qTree;
-    int iNode =0;
+    unsigned iNode =0;
     auto numNodes = jsontree.size();    //rootTree.size();
     while(iNode<numNodes){
         if(iNode==0){  //root node
