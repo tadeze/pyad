@@ -11,7 +11,8 @@
 //#include "cincl.hpp"
 using json= nlohmann::json;
 
-
+/* Defines feature contribution of a given point 
+ */
 struct Contrib{
     int feature;
     std::map<int,std::vector<double> > contributions;
@@ -29,8 +30,8 @@ struct Contrib{
         std::map<int,double> explanation;
         for(const auto & contr : contributions){
             double expl=0.0;
-            expl = 1.0/contr.second[0];
-            //for(auto depth : contr.second)
+            expl = 1.0/contr.second[0]; //This consider the top most cut.     
+            //for(auto depth : contr.second) // if we consider all cuts 
             //   expl += 1.0/depth;
             explanation.insert({contr.first,expl});
 
@@ -82,7 +83,7 @@ public:
 	int maxTreeDepth();
     void assignTree(Tree* tr,json* rtree);
 
-	//std::vector<std::vector<double>>
+    //Contribution
    contrib featureContribution(std::vector<double> &inst);
     std::map<int,double> explanation(std::vector<double> &inst){
         return featureContribution(inst).featureContribution();
