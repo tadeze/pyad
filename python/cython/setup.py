@@ -2,8 +2,10 @@ from setuptools import setup, Extension
 from Cython.Distutils import build_ext
 import numpy
 import os
-os.environ["CC"] = "g++"
-os.environ["CXX"] = "g++"
+import sys
+
+os.environ["CC"] = "/usr/local/common/gcc-4.9.0/bin/g++"
+#os.environ["CXX"] = "/usr/local/common/gcc-4.9.0/bin/g++"
 
 NAME = "Isolation Forest"
 VERSION = "0.1"

@@ -1270,7 +1270,7 @@ static const char __pyx_k_Build_Rotation_Forest_based_on[] = "\n    Build Rotati
 static const char __pyx_k_DataValidator_validate_dataset[] = "DataValidator.validate_dataset";
 static const char __pyx_k_No_test_data_given_to_the_model[] = "No test data given to the model (test function not called)";
 static const char __pyx_k_doesn_t_exist_make_sure_to_spec[] = "  doesn't exist make sure to specifiy correct path";
-static const char __pyx_k_home_tadeze_projects_iForestCod[] = "/home/tadeze/projects/iForestCodes/pyiForest/python/cython/_pyForest.pyx";
+static const char __pyx_k_nfs_guille_bugid_adams_ifTadess[] = "/nfs/guille/bugid/adams/ifTadesse/pyforest/pyiForest/python/cython/_pyForest.pyx";
 static const char __pyx_k_rho_value_should_be_less_than_1[] = "rho value should be less than 1";
 static const char __pyx_k_DataValidator_validate_file_exis[] = "DataValidator.validate_file_exists";
 static const char __pyx_k_Dataset_is_not_in_ndarray_format[] = "Dataset is not in ndarray format";
@@ -1353,7 +1353,6 @@ static PyObject *__pyx_n_s_file;
 static PyObject *__pyx_n_s_filename;
 static PyObject *__pyx_n_s_forest_type;
 static PyObject *__pyx_n_s_height;
-static PyObject *__pyx_kp_s_home_tadeze_projects_iForestCod;
 static PyObject *__pyx_n_s_iTree;
 static PyObject *__pyx_n_s_iforest;
 static PyObject *__pyx_n_s_import;
@@ -1377,6 +1376,7 @@ static PyObject *__pyx_n_s_module;
 static PyObject *__pyx_n_s_n;
 static PyObject *__pyx_n_s_ncol;
 static PyObject *__pyx_n_s_ndarray;
+static PyObject *__pyx_kp_s_nfs_guille_bugid_adams_ifTadess;
 static PyObject *__pyx_n_s_normal;
 static PyObject *__pyx_n_s_np;
 static PyObject *__pyx_n_s_nrow;
@@ -2990,23 +2990,17 @@ static PyObject *__pyx_pf_9pyiForest_15IsolationForest_16save(struct __pyx_obj_9
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   std::string __pyx_t_1;
-  PyObject *__pyx_t_2 = NULL;
   __Pyx_RefNannySetupContext("save", 0);
 
   /* "_pyForest.pyx":169
  * 
  *            """
- *            return self.thisptr.saveModel(model_name)             # <<<<<<<<<<<<<<
+ *            self.thisptr.saveModel(model_name)             # <<<<<<<<<<<<<<
  * 
  *     def load(self,model_name,forest_type="iforest"):
  */
-  __Pyx_XDECREF(__pyx_r);
   __pyx_t_1 = __pyx_convert_string_from_py_std__in_string(__pyx_v_model_name); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 169, __pyx_L1_error)
-  __pyx_t_2 = __Pyx_void_to_None(__pyx_v_self->thisptr->saveModel(__pyx_t_1)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 169, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __pyx_r = __pyx_t_2;
-  __pyx_t_2 = 0;
-  goto __pyx_L0;
+  __pyx_v_self->thisptr->saveModel(__pyx_t_1);
 
   /* "_pyForest.pyx":160
  *         self.validate_model(); #check
@@ -3017,8 +3011,9 @@ static PyObject *__pyx_pf_9pyiForest_15IsolationForest_16save(struct __pyx_obj_9
  */
 
   /* function exit code */
+  __pyx_r = Py_None; __Pyx_INCREF(Py_None);
+  goto __pyx_L0;
   __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_2);
   __Pyx_AddTraceback("pyiForest.IsolationForest.save", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
@@ -3028,7 +3023,7 @@ static PyObject *__pyx_pf_9pyiForest_15IsolationForest_16save(struct __pyx_obj_9
 }
 
 /* "_pyForest.pyx":171
- *            return self.thisptr.saveModel(model_name)
+ *            self.thisptr.saveModel(model_name)
  * 
  *     def load(self,model_name,forest_type="iforest"):             # <<<<<<<<<<<<<<
  *        """
@@ -3113,7 +3108,7 @@ static PyObject *__pyx_pf_9pyiForest_15IsolationForest_18load(struct __pyx_obj_9
  * 
  *        """
  *        if DataValidator.validate_file_exists(model_name):             # <<<<<<<<<<<<<<
- *            return self.thisptr.loadModel(model_name,forest_type)
+ *            self.thisptr.loadModel(model_name,forest_type)
  * 
  */
   __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_DataValidator); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 181, __pyx_L1_error)
@@ -3171,30 +3166,25 @@ static PyObject *__pyx_pf_9pyiForest_15IsolationForest_18load(struct __pyx_obj_9
     /* "_pyForest.pyx":182
  *        """
  *        if DataValidator.validate_file_exists(model_name):
- *            return self.thisptr.loadModel(model_name,forest_type)             # <<<<<<<<<<<<<<
+ *            self.thisptr.loadModel(model_name,forest_type)             # <<<<<<<<<<<<<<
  * 
  *     def get_ntree(self):
  */
-    __Pyx_XDECREF(__pyx_r);
     __pyx_t_6 = __pyx_convert_string_from_py_std__in_string(__pyx_v_model_name); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 182, __pyx_L1_error)
     __pyx_t_7 = __pyx_convert_string_from_py_std__in_string(__pyx_v_forest_type); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 182, __pyx_L1_error)
-    __pyx_t_1 = __Pyx_void_to_None(__pyx_v_self->thisptr->loadModel(__pyx_t_6, __pyx_t_7)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 182, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __pyx_r = __pyx_t_1;
-    __pyx_t_1 = 0;
-    goto __pyx_L0;
+    __pyx_v_self->thisptr->loadModel(__pyx_t_6, __pyx_t_7);
 
     /* "_pyForest.pyx":181
  * 
  *        """
  *        if DataValidator.validate_file_exists(model_name):             # <<<<<<<<<<<<<<
- *            return self.thisptr.loadModel(model_name,forest_type)
+ *            self.thisptr.loadModel(model_name,forest_type)
  * 
  */
   }
 
   /* "_pyForest.pyx":171
- *            return self.thisptr.saveModel(model_name)
+ *            self.thisptr.saveModel(model_name)
  * 
  *     def load(self,model_name,forest_type="iforest"):             # <<<<<<<<<<<<<<
  *        """
@@ -3218,7 +3208,7 @@ static PyObject *__pyx_pf_9pyiForest_15IsolationForest_18load(struct __pyx_obj_9
 }
 
 /* "_pyForest.pyx":184
- *            return self.thisptr.loadModel(model_name,forest_type)
+ *            self.thisptr.loadModel(model_name,forest_type)
  * 
  *     def get_ntree(self):             # <<<<<<<<<<<<<<
  *        """
@@ -3260,7 +3250,7 @@ static PyObject *__pyx_pf_9pyiForest_15IsolationForest_20get_ntree(struct __pyx_
   goto __pyx_L0;
 
   /* "_pyForest.pyx":184
- *            return self.thisptr.loadModel(model_name,forest_type)
+ *            self.thisptr.loadModel(model_name,forest_type)
  * 
  *     def get_ntree(self):             # <<<<<<<<<<<<<<
  *        """
@@ -3659,22 +3649,16 @@ static PyObject *__pyx_pw_9pyiForest_15IsolationForest_35display_data(PyObject *
 static PyObject *__pyx_pf_9pyiForest_15IsolationForest_34display_data(struct __pyx_obj_9pyiForest_IsolationForest *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
-  PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("display_data", 0);
 
   /* "_pyForest.pyx":237
  * 
  *         """
- *         return self.thisptr.displayData()             # <<<<<<<<<<<<<<
+ *         self.thisptr.displayData()             # <<<<<<<<<<<<<<
  *     def explanation(self,x):
  *         """
  */
-  __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_void_to_None(__pyx_v_self->thisptr->displayData()); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 237, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_r = __pyx_t_1;
-  __pyx_t_1 = 0;
-  goto __pyx_L0;
+  __pyx_v_self->thisptr->displayData();
 
   /* "_pyForest.pyx":231
  *        """
@@ -3685,11 +3669,7 @@ static PyObject *__pyx_pf_9pyiForest_15IsolationForest_34display_data(struct __p
  */
 
   /* function exit code */
-  __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("pyiForest.IsolationForest.display_data", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __pyx_r = NULL;
-  __pyx_L0:;
+  __pyx_r = Py_None; __Pyx_INCREF(Py_None);
   __Pyx_XGIVEREF(__pyx_r);
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
@@ -3697,7 +3677,7 @@ static PyObject *__pyx_pf_9pyiForest_15IsolationForest_34display_data(struct __p
 
 /* "_pyForest.pyx":238
  *         """
- *         return self.thisptr.displayData()
+ *         self.thisptr.displayData()
  *     def explanation(self,x):             # <<<<<<<<<<<<<<
  *         """
  *         Return: Explanations
@@ -3741,7 +3721,7 @@ static PyObject *__pyx_pf_9pyiForest_15IsolationForest_36explanation(struct __py
 
   /* "_pyForest.pyx":238
  *         """
- *         return self.thisptr.displayData()
+ *         self.thisptr.displayData()
  *     def explanation(self,x):             # <<<<<<<<<<<<<<
  *         """
  *         Return: Explanations
@@ -3983,27 +3963,21 @@ static PyObject *__pyx_pf_9pyiForest_13IsolationTree_4iTree(struct __pyx_obj_9py
   int __pyx_t_3;
   int __pyx_t_4;
   bool __pyx_t_5;
-  PyObject *__pyx_t_6 = NULL;
   __Pyx_RefNannySetupContext("iTree", 0);
 
   /* "_pyForest.pyx":277
  * 
  *         """
- *         return self.thisptr.iTree(train_index,train_data,height,maxheight,stopheight)             # <<<<<<<<<<<<<<
+ *         self.thisptr.iTree(train_index,train_data,height,maxheight,stopheight)             # <<<<<<<<<<<<<<
  * 
  *     def path_length(self,test_data):
  */
-  __Pyx_XDECREF(__pyx_r);
   __pyx_t_1 = __pyx_convert_vector_from_py_int(__pyx_v_train_index); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 277, __pyx_L1_error)
   __pyx_t_2 = __pyx_convert_vector_from_py_std_3a__3a_vector_3c_double_3e___(__pyx_v_train_data); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 277, __pyx_L1_error)
   __pyx_t_3 = __Pyx_PyInt_As_int(__pyx_v_height); if (unlikely((__pyx_t_3 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 277, __pyx_L1_error)
   __pyx_t_4 = __Pyx_PyInt_As_int(__pyx_v_maxheight); if (unlikely((__pyx_t_4 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 277, __pyx_L1_error)
   __pyx_t_5 = __Pyx_PyObject_IsTrue(__pyx_v_stopheight); if (unlikely((__pyx_t_5 == ((bool)-1)) && PyErr_Occurred())) __PYX_ERR(0, 277, __pyx_L1_error)
-  __pyx_t_6 = __Pyx_void_to_None(__pyx_v_self->thisptr->iTree(__pyx_t_1, __pyx_t_2, __pyx_t_3, __pyx_t_4, __pyx_t_5)); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 277, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_6);
-  __pyx_r = __pyx_t_6;
-  __pyx_t_6 = 0;
-  goto __pyx_L0;
+  __pyx_v_self->thisptr->iTree(__pyx_t_1, __pyx_t_2, __pyx_t_3, __pyx_t_4, __pyx_t_5);
 
   /* "_pyForest.pyx":271
  *     def __dealloc__(self):
@@ -4014,8 +3988,9 @@ static PyObject *__pyx_pf_9pyiForest_13IsolationTree_4iTree(struct __pyx_obj_9py
  */
 
   /* function exit code */
+  __pyx_r = Py_None; __Pyx_INCREF(Py_None);
+  goto __pyx_L0;
   __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_6);
   __Pyx_AddTraceback("pyiForest.IsolationTree.iTree", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
@@ -4025,7 +4000,7 @@ static PyObject *__pyx_pf_9pyiForest_13IsolationTree_4iTree(struct __pyx_obj_9py
 }
 
 /* "_pyForest.pyx":279
- *         return self.thisptr.iTree(train_index,train_data,height,maxheight,stopheight)
+ *         self.thisptr.iTree(train_index,train_data,height,maxheight,stopheight)
  * 
  *     def path_length(self,test_data):             # <<<<<<<<<<<<<<
  *         """
@@ -4069,7 +4044,7 @@ static PyObject *__pyx_pf_9pyiForest_13IsolationTree_6path_length(struct __pyx_o
   goto __pyx_L0;
 
   /* "_pyForest.pyx":279
- *         return self.thisptr.iTree(train_index,train_data,height,maxheight,stopheight)
+ *         self.thisptr.iTree(train_index,train_data,height,maxheight,stopheight)
  * 
  *     def path_length(self,test_data):             # <<<<<<<<<<<<<<
  *         """
@@ -12265,7 +12240,6 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_filename, __pyx_k_filename, sizeof(__pyx_k_filename), 0, 0, 1, 1},
   {&__pyx_n_s_forest_type, __pyx_k_forest_type, sizeof(__pyx_k_forest_type), 0, 0, 1, 1},
   {&__pyx_n_s_height, __pyx_k_height, sizeof(__pyx_k_height), 0, 0, 1, 1},
-  {&__pyx_kp_s_home_tadeze_projects_iForestCod, __pyx_k_home_tadeze_projects_iForestCod, sizeof(__pyx_k_home_tadeze_projects_iForestCod), 0, 0, 1, 0},
   {&__pyx_n_s_iTree, __pyx_k_iTree, sizeof(__pyx_k_iTree), 0, 0, 1, 1},
   {&__pyx_n_s_iforest, __pyx_k_iforest, sizeof(__pyx_k_iforest), 0, 0, 1, 1},
   {&__pyx_n_s_import, __pyx_k_import, sizeof(__pyx_k_import), 0, 0, 1, 1},
@@ -12289,6 +12263,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_n, __pyx_k_n, sizeof(__pyx_k_n), 0, 0, 1, 1},
   {&__pyx_n_s_ncol, __pyx_k_ncol, sizeof(__pyx_k_ncol), 0, 0, 1, 1},
   {&__pyx_n_s_ndarray, __pyx_k_ndarray, sizeof(__pyx_k_ndarray), 0, 0, 1, 1},
+  {&__pyx_kp_s_nfs_guille_bugid_adams_ifTadess, __pyx_k_nfs_guille_bugid_adams_ifTadess, sizeof(__pyx_k_nfs_guille_bugid_adams_ifTadess), 0, 0, 1, 0},
   {&__pyx_n_s_normal, __pyx_k_normal, sizeof(__pyx_k_normal), 0, 0, 1, 1},
   {&__pyx_n_s_np, __pyx_k_np, sizeof(__pyx_k_np), 0, 0, 1, 1},
   {&__pyx_n_s_nrow, __pyx_k_nrow, sizeof(__pyx_k_nrow), 0, 0, 1, 1},
@@ -12534,7 +12509,7 @@ static int __Pyx_InitCachedConstants(void) {
   __pyx_tuple__17 = PyTuple_Pack(8, __pyx_n_s_self, __pyx_n_s_train_df, __pyx_n_s_ntree, __pyx_n_s_nsample, __pyx_n_s_max_height, __pyx_n_s_adaptive, __pyx_n_s_rangecheck, __pyx_n_s_check_missing_value); if (unlikely(!__pyx_tuple__17)) __PYX_ERR(0, 313, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__17);
   __Pyx_GIVEREF(__pyx_tuple__17);
-  __pyx_codeobj__18 = (PyObject*)__Pyx_PyCode_New(8, 0, 8, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__17, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_home_tadeze_projects_iForestCod, __pyx_n_s_init, 313, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__18)) __PYX_ERR(0, 313, __pyx_L1_error)
+  __pyx_codeobj__18 = (PyObject*)__Pyx_PyCode_New(8, 0, 8, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__17, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_nfs_guille_bugid_adams_ifTadess, __pyx_n_s_init, 313, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__18)) __PYX_ERR(0, 313, __pyx_L1_error)
   __pyx_tuple__19 = PyTuple_Pack(7, ((PyObject *)Py_None), ((PyObject *)__pyx_int_100), ((PyObject *)__pyx_int_512), ((PyObject *)__pyx_int_0), ((PyObject *)Py_False), ((PyObject *)Py_True), ((PyObject *)Py_True)); if (unlikely(!__pyx_tuple__19)) __PYX_ERR(0, 313, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__19);
   __Pyx_GIVEREF(__pyx_tuple__19);
@@ -12549,7 +12524,7 @@ static int __Pyx_InitCachedConstants(void) {
   __pyx_tuple__20 = PyTuple_Pack(7, __pyx_n_s_self, __pyx_n_s_train_df, __pyx_n_s_nrow, __pyx_n_s_ncol, __pyx_n_s_tree, __pyx_n_s_sample_index, __pyx_n_s_itree); if (unlikely(!__pyx_tuple__20)) __PYX_ERR(0, 328, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__20);
   __Pyx_GIVEREF(__pyx_tuple__20);
-  __pyx_codeobj__21 = (PyObject*)__Pyx_PyCode_New(2, 0, 7, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__20, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_home_tadeze_projects_iForestCod, __pyx_n_s_train, 328, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__21)) __PYX_ERR(0, 328, __pyx_L1_error)
+  __pyx_codeobj__21 = (PyObject*)__Pyx_PyCode_New(2, 0, 7, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__20, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_nfs_guille_bugid_adams_ifTadess, __pyx_n_s_train, 328, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__21)) __PYX_ERR(0, 328, __pyx_L1_error)
 
   /* "_pyForest.pyx":345
  *             self.trees.append({"tree":itree})
@@ -12561,7 +12536,7 @@ static int __Pyx_InitCachedConstants(void) {
   __pyx_tuple__22 = PyTuple_Pack(6, __pyx_n_s_self, __pyx_n_s_test_df, __pyx_n_s_oob, __pyx_n_s_depth, __pyx_n_s_tree_inst, __pyx_n_s_tree); if (unlikely(!__pyx_tuple__22)) __PYX_ERR(0, 345, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__22);
   __Pyx_GIVEREF(__pyx_tuple__22);
-  __pyx_codeobj__23 = (PyObject*)__Pyx_PyCode_New(3, 0, 6, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__22, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_home_tadeze_projects_iForestCod, __pyx_n_s_depth, 345, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__23)) __PYX_ERR(0, 345, __pyx_L1_error)
+  __pyx_codeobj__23 = (PyObject*)__Pyx_PyCode_New(3, 0, 6, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__22, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_nfs_guille_bugid_adams_ifTadess, __pyx_n_s_depth, 345, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__23)) __PYX_ERR(0, 345, __pyx_L1_error)
   __pyx_tuple__24 = PyTuple_Pack(1, ((PyObject *)Py_False)); if (unlikely(!__pyx_tuple__24)) __PYX_ERR(0, 345, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__24);
   __Pyx_GIVEREF(__pyx_tuple__24);
@@ -12576,7 +12551,7 @@ static int __Pyx_InitCachedConstants(void) {
   __pyx_tuple__25 = PyTuple_Pack(4, __pyx_n_s_self, __pyx_n_s_test_df, __pyx_n_s_avg_depth, __pyx_n_s_row); if (unlikely(!__pyx_tuple__25)) __PYX_ERR(0, 355, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__25);
   __Pyx_GIVEREF(__pyx_tuple__25);
-  __pyx_codeobj__26 = (PyObject*)__Pyx_PyCode_New(2, 0, 4, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__25, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_home_tadeze_projects_iForestCod, __pyx_n_s_average_depth, 355, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__26)) __PYX_ERR(0, 355, __pyx_L1_error)
+  __pyx_codeobj__26 = (PyObject*)__Pyx_PyCode_New(2, 0, 4, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__25, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_nfs_guille_bugid_adams_ifTadess, __pyx_n_s_average_depth, 355, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__26)) __PYX_ERR(0, 355, __pyx_L1_error)
 
   /* "_pyForest.pyx":360
  *         return np.array(avg_depth)
@@ -12588,7 +12563,7 @@ static int __Pyx_InitCachedConstants(void) {
   __pyx_tuple__27 = PyTuple_Pack(5, __pyx_n_s_self, __pyx_n_s_test_df, __pyx_n_s_depth, __pyx_n_s_rottree, __pyx_n_s_tree); if (unlikely(!__pyx_tuple__27)) __PYX_ERR(0, 360, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__27);
   __Pyx_GIVEREF(__pyx_tuple__27);
-  __pyx_codeobj__28 = (PyObject*)__Pyx_PyCode_New(2, 0, 5, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__27, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_home_tadeze_projects_iForestCod, __pyx_n_s_oob_depth, 360, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__28)) __PYX_ERR(0, 360, __pyx_L1_error)
+  __pyx_codeobj__28 = (PyObject*)__Pyx_PyCode_New(2, 0, 5, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__27, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_nfs_guille_bugid_adams_ifTadess, __pyx_n_s_oob_depth, 360, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__28)) __PYX_ERR(0, 360, __pyx_L1_error)
 
   /* "_pyForest.pyx":370
  *         return (len(depth),np.mean(depth))
@@ -12600,7 +12575,7 @@ static int __Pyx_InitCachedConstants(void) {
   __pyx_tuple__29 = PyTuple_Pack(7, __pyx_n_s_self, __pyx_n_s_query_point, __pyx_n_s_features, __pyx_n_s_rottree, __pyx_n_s_tree, __pyx_n_s_index, __pyx_n_s_depth_inv); if (unlikely(!__pyx_tuple__29)) __PYX_ERR(0, 370, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__29);
   __Pyx_GIVEREF(__pyx_tuple__29);
-  __pyx_codeobj__30 = (PyObject*)__Pyx_PyCode_New(2, 0, 7, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__29, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_home_tadeze_projects_iForestCod, __pyx_n_s_explanation, 370, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__30)) __PYX_ERR(0, 370, __pyx_L1_error)
+  __pyx_codeobj__30 = (PyObject*)__Pyx_PyCode_New(2, 0, 7, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__29, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_nfs_guille_bugid_adams_ifTadess, __pyx_n_s_explanation, 370, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__30)) __PYX_ERR(0, 370, __pyx_L1_error)
 
   /* "_pyForest.pyx":380
  * 
@@ -12612,7 +12587,7 @@ static int __Pyx_InitCachedConstants(void) {
   __pyx_tuple__31 = PyTuple_Pack(5, __pyx_n_s_self, __pyx_n_s_test_df, __pyx_n_s_bst, __pyx_n_s_avg_depth, __pyx_n_s_scores); if (unlikely(!__pyx_tuple__31)) __PYX_ERR(0, 380, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__31);
   __Pyx_GIVEREF(__pyx_tuple__31);
-  __pyx_codeobj__32 = (PyObject*)__Pyx_PyCode_New(2, 0, 5, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__31, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_home_tadeze_projects_iForestCod, __pyx_n_s_score, 380, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__32)) __PYX_ERR(0, 380, __pyx_L1_error)
+  __pyx_codeobj__32 = (PyObject*)__Pyx_PyCode_New(2, 0, 5, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__31, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_nfs_guille_bugid_adams_ifTadess, __pyx_n_s_score, 380, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__32)) __PYX_ERR(0, 380, __pyx_L1_error)
 
   /* "_pyForest.pyx":387
  *         return scores
@@ -12624,7 +12599,7 @@ static int __Pyx_InitCachedConstants(void) {
   __pyx_tuple__33 = PyTuple_Pack(2, __pyx_n_s_self, __pyx_n_s_model_name); if (unlikely(!__pyx_tuple__33)) __PYX_ERR(0, 387, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__33);
   __Pyx_GIVEREF(__pyx_tuple__33);
-  __pyx_codeobj__34 = (PyObject*)__Pyx_PyCode_New(2, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__33, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_home_tadeze_projects_iForestCod, __pyx_n_s_save, 387, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__34)) __PYX_ERR(0, 387, __pyx_L1_error)
+  __pyx_codeobj__34 = (PyObject*)__Pyx_PyCode_New(2, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__33, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_nfs_guille_bugid_adams_ifTadess, __pyx_n_s_save, 387, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__34)) __PYX_ERR(0, 387, __pyx_L1_error)
 
   /* "_pyForest.pyx":392
  * 
@@ -12636,7 +12611,7 @@ static int __Pyx_InitCachedConstants(void) {
   __pyx_tuple__35 = PyTuple_Pack(2, __pyx_n_s_self, __pyx_n_s_model_name); if (unlikely(!__pyx_tuple__35)) __PYX_ERR(0, 392, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__35);
   __Pyx_GIVEREF(__pyx_tuple__35);
-  __pyx_codeobj__36 = (PyObject*)__Pyx_PyCode_New(2, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__35, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_home_tadeze_projects_iForestCod, __pyx_n_s_load, 392, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__36)) __PYX_ERR(0, 392, __pyx_L1_error)
+  __pyx_codeobj__36 = (PyObject*)__Pyx_PyCode_New(2, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__35, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_nfs_guille_bugid_adams_ifTadess, __pyx_n_s_load, 392, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__36)) __PYX_ERR(0, 392, __pyx_L1_error)
 
   /* "_pyForest.pyx":405
  * 
@@ -12648,7 +12623,7 @@ static int __Pyx_InitCachedConstants(void) {
   __pyx_tuple__37 = PyTuple_Pack(8, __pyx_n_s_self, __pyx_n_s_traindf, __pyx_n_s_ntree, __pyx_n_s_nsample, __pyx_n_s_maxheight, __pyx_n_s_adaptive, __pyx_n_s_rangecheck, __pyx_n_s_reduce_dim); if (unlikely(!__pyx_tuple__37)) __PYX_ERR(0, 405, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__37);
   __Pyx_GIVEREF(__pyx_tuple__37);
-  __pyx_codeobj__38 = (PyObject*)__Pyx_PyCode_New(8, 0, 8, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__37, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_home_tadeze_projects_iForestCod, __pyx_n_s_init, 405, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__38)) __PYX_ERR(0, 405, __pyx_L1_error)
+  __pyx_codeobj__38 = (PyObject*)__Pyx_PyCode_New(8, 0, 8, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__37, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_nfs_guille_bugid_adams_ifTadess, __pyx_n_s_init, 405, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__38)) __PYX_ERR(0, 405, __pyx_L1_error)
   __pyx_tuple__39 = PyTuple_Pack(7, ((PyObject *)Py_None), ((PyObject *)__pyx_int_100), ((PyObject *)__pyx_int_512), ((PyObject *)__pyx_int_0), ((PyObject *)Py_False), ((PyObject *)Py_True), ((PyObject *)Py_False)); if (unlikely(!__pyx_tuple__39)) __PYX_ERR(0, 405, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__39);
   __Pyx_GIVEREF(__pyx_tuple__39);
@@ -12663,7 +12638,7 @@ static int __Pyx_InitCachedConstants(void) {
   __pyx_tuple__40 = PyTuple_Pack(6, __pyx_n_s_n, __pyx_n_s_m, __pyx_n_s_A, __pyx_n_s_Q, __pyx_n_s_R, __pyx_n_s_M); if (unlikely(!__pyx_tuple__40)) __PYX_ERR(0, 416, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__40);
   __Pyx_GIVEREF(__pyx_tuple__40);
-  __pyx_codeobj__41 = (PyObject*)__Pyx_PyCode_New(2, 0, 6, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__40, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_home_tadeze_projects_iForestCod, __pyx_n_s_random_rotation_matrix, 416, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__41)) __PYX_ERR(0, 416, __pyx_L1_error)
+  __pyx_codeobj__41 = (PyObject*)__Pyx_PyCode_New(2, 0, 6, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__40, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_nfs_guille_bugid_adams_ifTadess, __pyx_n_s_random_rotation_matrix, 416, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__41)) __PYX_ERR(0, 416, __pyx_L1_error)
   __pyx_tuple__42 = PyTuple_Pack(1, ((PyObject *)Py_None)); if (unlikely(!__pyx_tuple__42)) __PYX_ERR(0, 416, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__42);
   __Pyx_GIVEREF(__pyx_tuple__42);
@@ -12678,7 +12653,7 @@ static int __Pyx_InitCachedConstants(void) {
   __pyx_tuple__43 = PyTuple_Pack(10, __pyx_n_s_self, __pyx_n_s_traindf, __pyx_n_s_nrow, __pyx_n_s_ncol, __pyx_n_s_r, __pyx_n_s_tree, __pyx_n_s_rotMat, __pyx_n_s_rotated_data, __pyx_n_s_sample_index, __pyx_n_s_itree); if (unlikely(!__pyx_tuple__43)) __PYX_ERR(0, 426, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__43);
   __Pyx_GIVEREF(__pyx_tuple__43);
-  __pyx_codeobj__44 = (PyObject*)__Pyx_PyCode_New(2, 0, 10, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__43, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_home_tadeze_projects_iForestCod, __pyx_n_s_train, 426, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__44)) __PYX_ERR(0, 426, __pyx_L1_error)
+  __pyx_codeobj__44 = (PyObject*)__Pyx_PyCode_New(2, 0, 10, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__43, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_nfs_guille_bugid_adams_ifTadess, __pyx_n_s_train, 426, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__44)) __PYX_ERR(0, 426, __pyx_L1_error)
 
   /* "_pyForest.pyx":447
  *         return self.ntree
@@ -12690,7 +12665,7 @@ static int __Pyx_InitCachedConstants(void) {
   __pyx_tuple__45 = PyTuple_Pack(7, __pyx_n_s_self, __pyx_n_s_testdf, __pyx_n_s_depth, __pyx_n_s_rottree, __pyx_n_s_rot_mat, __pyx_n_s_tree, __pyx_n_s_rotated_dt); if (unlikely(!__pyx_tuple__45)) __PYX_ERR(0, 447, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__45);
   __Pyx_GIVEREF(__pyx_tuple__45);
-  __pyx_codeobj__46 = (PyObject*)__Pyx_PyCode_New(2, 0, 7, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__45, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_home_tadeze_projects_iForestCod, __pyx_n_s_depth, 447, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__46)) __PYX_ERR(0, 447, __pyx_L1_error)
+  __pyx_codeobj__46 = (PyObject*)__Pyx_PyCode_New(2, 0, 7, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__45, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_nfs_guille_bugid_adams_ifTadess, __pyx_n_s_depth, 447, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__46)) __PYX_ERR(0, 447, __pyx_L1_error)
 
   /* "_pyForest.pyx":458
  *         return depth
@@ -12702,7 +12677,7 @@ static int __Pyx_InitCachedConstants(void) {
   __pyx_tuple__47 = PyTuple_Pack(4, __pyx_n_s_self, __pyx_n_s_testdf, __pyx_n_s_avg_depth, __pyx_n_s_row); if (unlikely(!__pyx_tuple__47)) __PYX_ERR(0, 458, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__47);
   __Pyx_GIVEREF(__pyx_tuple__47);
-  __pyx_codeobj__48 = (PyObject*)__Pyx_PyCode_New(2, 0, 4, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__47, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_home_tadeze_projects_iForestCod, __pyx_n_s_average_depth, 458, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__48)) __PYX_ERR(0, 458, __pyx_L1_error)
+  __pyx_codeobj__48 = (PyObject*)__Pyx_PyCode_New(2, 0, 4, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__47, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_nfs_guille_bugid_adams_ifTadess, __pyx_n_s_average_depth, 458, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__48)) __PYX_ERR(0, 458, __pyx_L1_error)
 
   /* "_pyForest.pyx":466
  * 
@@ -12714,7 +12689,7 @@ static int __Pyx_InitCachedConstants(void) {
   __pyx_tuple__49 = PyTuple_Pack(5, __pyx_n_s_self, __pyx_n_s_testdf, __pyx_n_s_bst, __pyx_n_s_avg_depth, __pyx_n_s_scores); if (unlikely(!__pyx_tuple__49)) __PYX_ERR(0, 466, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__49);
   __Pyx_GIVEREF(__pyx_tuple__49);
-  __pyx_codeobj__50 = (PyObject*)__Pyx_PyCode_New(2, 0, 5, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__49, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_home_tadeze_projects_iForestCod, __pyx_n_s_score, 466, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__50)) __PYX_ERR(0, 466, __pyx_L1_error)
+  __pyx_codeobj__50 = (PyObject*)__Pyx_PyCode_New(2, 0, 5, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__49, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_nfs_guille_bugid_adams_ifTadess, __pyx_n_s_score, 466, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__50)) __PYX_ERR(0, 466, __pyx_L1_error)
 
   /* "_pyForest.pyx":474
  * 
@@ -12726,7 +12701,7 @@ static int __Pyx_InitCachedConstants(void) {
   __pyx_tuple__51 = PyTuple_Pack(2, __pyx_n_s_self, __pyx_n_s_model_name); if (unlikely(!__pyx_tuple__51)) __PYX_ERR(0, 474, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__51);
   __Pyx_GIVEREF(__pyx_tuple__51);
-  __pyx_codeobj__52 = (PyObject*)__Pyx_PyCode_New(2, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__51, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_home_tadeze_projects_iForestCod, __pyx_n_s_save, 474, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__52)) __PYX_ERR(0, 474, __pyx_L1_error)
+  __pyx_codeobj__52 = (PyObject*)__Pyx_PyCode_New(2, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__51, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_nfs_guille_bugid_adams_ifTadess, __pyx_n_s_save, 474, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__52)) __PYX_ERR(0, 474, __pyx_L1_error)
 
   /* "_pyForest.pyx":479
  * 
@@ -12738,7 +12713,7 @@ static int __Pyx_InitCachedConstants(void) {
   __pyx_tuple__53 = PyTuple_Pack(2, __pyx_n_s_self, __pyx_n_s_model_name); if (unlikely(!__pyx_tuple__53)) __PYX_ERR(0, 479, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__53);
   __Pyx_GIVEREF(__pyx_tuple__53);
-  __pyx_codeobj__54 = (PyObject*)__Pyx_PyCode_New(2, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__53, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_home_tadeze_projects_iForestCod, __pyx_n_s_load, 479, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__54)) __PYX_ERR(0, 479, __pyx_L1_error)
+  __pyx_codeobj__54 = (PyObject*)__Pyx_PyCode_New(2, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__53, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_nfs_guille_bugid_adams_ifTadess, __pyx_n_s_load, 479, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__54)) __PYX_ERR(0, 479, __pyx_L1_error)
 
   /* "_pyForest.pyx":486
  * 
@@ -12750,7 +12725,7 @@ static int __Pyx_InitCachedConstants(void) {
   __pyx_tuple__55 = PyTuple_Pack(1, __pyx_n_s_self); if (unlikely(!__pyx_tuple__55)) __PYX_ERR(0, 486, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__55);
   __Pyx_GIVEREF(__pyx_tuple__55);
-  __pyx_codeobj__56 = (PyObject*)__Pyx_PyCode_New(1, 0, 1, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__55, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_home_tadeze_projects_iForestCod, __pyx_n_s_init, 486, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__56)) __PYX_ERR(0, 486, __pyx_L1_error)
+  __pyx_codeobj__56 = (PyObject*)__Pyx_PyCode_New(1, 0, 1, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__55, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_nfs_guille_bugid_adams_ifTadess, __pyx_n_s_init, 486, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__56)) __PYX_ERR(0, 486, __pyx_L1_error)
 
   /* "_pyForest.pyx":493
  * 
@@ -12762,7 +12737,7 @@ static int __Pyx_InitCachedConstants(void) {
   __pyx_tuple__57 = PyTuple_Pack(1, __pyx_n_s_dataset); if (unlikely(!__pyx_tuple__57)) __PYX_ERR(0, 493, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__57);
   __Pyx_GIVEREF(__pyx_tuple__57);
-  __pyx_codeobj__58 = (PyObject*)__Pyx_PyCode_New(1, 0, 1, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__57, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_home_tadeze_projects_iForestCod, __pyx_n_s_validate_dataset, 493, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__58)) __PYX_ERR(0, 493, __pyx_L1_error)
+  __pyx_codeobj__58 = (PyObject*)__Pyx_PyCode_New(1, 0, 1, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__57, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_nfs_guille_bugid_adams_ifTadess, __pyx_n_s_validate_dataset, 493, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__58)) __PYX_ERR(0, 493, __pyx_L1_error)
 
   /* "_pyForest.pyx":505
  *             raise NameError("Data is empty")
@@ -12774,7 +12749,7 @@ static int __Pyx_InitCachedConstants(void) {
   __pyx_tuple__59 = PyTuple_Pack(2, __pyx_n_s_filename, __pyx_n_s_os); if (unlikely(!__pyx_tuple__59)) __PYX_ERR(0, 505, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__59);
   __Pyx_GIVEREF(__pyx_tuple__59);
-  __pyx_codeobj__60 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__59, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_home_tadeze_projects_iForestCod, __pyx_n_s_validate_file_exists, 505, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__60)) __PYX_ERR(0, 505, __pyx_L1_error)
+  __pyx_codeobj__60 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__59, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_nfs_guille_bugid_adams_ifTadess, __pyx_n_s_validate_file_exists, 505, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__60)) __PYX_ERR(0, 505, __pyx_L1_error)
 
   /* "_pyForest.pyx":516
  *             return True
@@ -12786,7 +12761,7 @@ static int __Pyx_InitCachedConstants(void) {
   __pyx_tuple__61 = PyTuple_Pack(1, __pyx_n_s_error_flag); if (unlikely(!__pyx_tuple__61)) __PYX_ERR(0, 516, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__61);
   __Pyx_GIVEREF(__pyx_tuple__61);
-  __pyx_codeobj__62 = (PyObject*)__Pyx_PyCode_New(1, 0, 1, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__61, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_home_tadeze_projects_iForestCod, __pyx_n_s_validate_model, 516, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__62)) __PYX_ERR(0, 516, __pyx_L1_error)
+  __pyx_codeobj__62 = (PyObject*)__Pyx_PyCode_New(1, 0, 1, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__61, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_nfs_guille_bugid_adams_ifTadess, __pyx_n_s_validate_model, 516, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__62)) __PYX_ERR(0, 516, __pyx_L1_error)
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
