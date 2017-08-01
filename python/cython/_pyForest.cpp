@@ -1102,7 +1102,6 @@ static std::vector<double>  __pyx_convert_vector_from_py_double(PyObject *); /*p
 static std::vector<std::vector<double> >  __pyx_convert_vector_from_py_std_3a__3a_vector_3c_double_3e___(PyObject *); /*proto*/
 static PyObject *__pyx_convert_vector_to_py_double(const std::vector<double>  &); /*proto*/
 static PyObject *__pyx_convert_vector_to_py_std_3a__3a_vector_3c_double_3e___(const std::vector<std::vector<double> >  &); /*proto*/
-static std::string __pyx_convert_string_from_py_std__in_string(PyObject *); /*proto*/
 static PyObject *__pyx_convert_map_to_py_int____double(std::map<int,double>  const &); /*proto*/
 static std::vector<int>  __pyx_convert_vector_from_py_int(PyObject *); /*proto*/
 #define __Pyx_MODULE_NAME "pyiForest"
@@ -1453,8 +1452,8 @@ static PyObject *__pyx_pf_9pyiForest_15IsolationForest_8validate_model(struct __
 static PyObject *__pyx_pf_9pyiForest_15IsolationForest_10anomaly_score(struct __pyx_obj_9pyiForest_IsolationForest *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_9pyiForest_15IsolationForest_12path_length(struct __pyx_obj_9pyiForest_IsolationForest *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_9pyiForest_15IsolationForest_14average_depth(struct __pyx_obj_9pyiForest_IsolationForest *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_9pyiForest_15IsolationForest_16save(struct __pyx_obj_9pyiForest_IsolationForest *__pyx_v_self, PyObject *__pyx_v_model_name); /* proto */
-static PyObject *__pyx_pf_9pyiForest_15IsolationForest_18load(struct __pyx_obj_9pyiForest_IsolationForest *__pyx_v_self, PyObject *__pyx_v_model_name, PyObject *__pyx_v_forest_type); /* proto */
+static PyObject *__pyx_pf_9pyiForest_15IsolationForest_16save(CYTHON_UNUSED struct __pyx_obj_9pyiForest_IsolationForest *__pyx_v_self, CYTHON_UNUSED PyObject *__pyx_v_model_name); /* proto */
+static PyObject *__pyx_pf_9pyiForest_15IsolationForest_18load(CYTHON_UNUSED struct __pyx_obj_9pyiForest_IsolationForest *__pyx_v_self, PyObject *__pyx_v_model_name, CYTHON_UNUSED PyObject *__pyx_v_forest_type); /* proto */
 static PyObject *__pyx_pf_9pyiForest_15IsolationForest_20get_ntree(struct __pyx_obj_9pyiForest_IsolationForest *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_9pyiForest_15IsolationForest_22get_nsample(struct __pyx_obj_9pyiForest_IsolationForest *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_9pyiForest_15IsolationForest_24get_max_depth(struct __pyx_obj_9pyiForest_IsolationForest *__pyx_v_self); /* proto */
@@ -2986,26 +2985,21 @@ static PyObject *__pyx_pw_9pyiForest_15IsolationForest_17save(PyObject *__pyx_v_
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_9pyiForest_15IsolationForest_16save(struct __pyx_obj_9pyiForest_IsolationForest *__pyx_v_self, PyObject *__pyx_v_model_name) {
+static PyObject *__pyx_pf_9pyiForest_15IsolationForest_16save(CYTHON_UNUSED struct __pyx_obj_9pyiForest_IsolationForest *__pyx_v_self, CYTHON_UNUSED PyObject *__pyx_v_model_name) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
-  std::string __pyx_t_1;
-  PyObject *__pyx_t_2 = NULL;
   __Pyx_RefNannySetupContext("save", 0);
 
   /* "_pyForest.pyx":169
  * 
  *            """
- *            return self.thisptr.saveModel(model_name)             # <<<<<<<<<<<<<<
+ *            return None #self.thisptr.saveModel(model_name)             # <<<<<<<<<<<<<<
  * 
  *     def load(self,model_name,forest_type="iforest"):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_convert_string_from_py_std__in_string(__pyx_v_model_name); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 169, __pyx_L1_error)
-  __pyx_t_2 = __Pyx_void_to_None(__pyx_v_self->thisptr->saveModel(__pyx_t_1)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 169, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __pyx_r = __pyx_t_2;
-  __pyx_t_2 = 0;
+  __Pyx_INCREF(Py_None);
+  __pyx_r = Py_None;
   goto __pyx_L0;
 
   /* "_pyForest.pyx":160
@@ -3017,10 +3011,6 @@ static PyObject *__pyx_pf_9pyiForest_15IsolationForest_16save(struct __pyx_obj_9
  */
 
   /* function exit code */
-  __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_2);
-  __Pyx_AddTraceback("pyiForest.IsolationForest.save", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
   __Pyx_RefNannyFinishContext();
@@ -3028,7 +3018,7 @@ static PyObject *__pyx_pf_9pyiForest_15IsolationForest_16save(struct __pyx_obj_9
 }
 
 /* "_pyForest.pyx":171
- *            return self.thisptr.saveModel(model_name)
+ *            return None #self.thisptr.saveModel(model_name)
  * 
  *     def load(self,model_name,forest_type="iforest"):             # <<<<<<<<<<<<<<
  *        """
@@ -3040,7 +3030,7 @@ static PyObject *__pyx_pw_9pyiForest_15IsolationForest_19load(PyObject *__pyx_v_
 static char __pyx_doc_9pyiForest_15IsolationForest_18load[] = "\n       Load trained iForest model from JSON file\n       Args:\n           model_name: path to the JSON model name\n           forest_type: type of trained model. Default iforest\n\n       Returns: Loads a trainded iForest model from JSON file\n\n       ";
 static PyObject *__pyx_pw_9pyiForest_15IsolationForest_19load(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_model_name = 0;
-  PyObject *__pyx_v_forest_type = 0;
+  CYTHON_UNUSED PyObject *__pyx_v_forest_type = 0;
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("load (wrapper)", 0);
@@ -3097,7 +3087,7 @@ static PyObject *__pyx_pw_9pyiForest_15IsolationForest_19load(PyObject *__pyx_v_
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_9pyiForest_15IsolationForest_18load(struct __pyx_obj_9pyiForest_IsolationForest *__pyx_v_self, PyObject *__pyx_v_model_name, PyObject *__pyx_v_forest_type) {
+static PyObject *__pyx_pf_9pyiForest_15IsolationForest_18load(CYTHON_UNUSED struct __pyx_obj_9pyiForest_IsolationForest *__pyx_v_self, PyObject *__pyx_v_model_name, CYTHON_UNUSED PyObject *__pyx_v_forest_type) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -3105,15 +3095,13 @@ static PyObject *__pyx_pf_9pyiForest_15IsolationForest_18load(struct __pyx_obj_9
   PyObject *__pyx_t_3 = NULL;
   PyObject *__pyx_t_4 = NULL;
   int __pyx_t_5;
-  std::string __pyx_t_6;
-  std::string __pyx_t_7;
   __Pyx_RefNannySetupContext("load", 0);
 
   /* "_pyForest.pyx":181
  * 
  *        """
  *        if DataValidator.validate_file_exists(model_name):             # <<<<<<<<<<<<<<
- *            return self.thisptr.loadModel(model_name,forest_type)
+ *            return None #self.thisptr.loadModel(model_name,forest_type)
  * 
  */
   __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_DataValidator); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 181, __pyx_L1_error)
@@ -3171,30 +3159,26 @@ static PyObject *__pyx_pf_9pyiForest_15IsolationForest_18load(struct __pyx_obj_9
     /* "_pyForest.pyx":182
  *        """
  *        if DataValidator.validate_file_exists(model_name):
- *            return self.thisptr.loadModel(model_name,forest_type)             # <<<<<<<<<<<<<<
+ *            return None #self.thisptr.loadModel(model_name,forest_type)             # <<<<<<<<<<<<<<
  * 
  *     def get_ntree(self):
  */
     __Pyx_XDECREF(__pyx_r);
-    __pyx_t_6 = __pyx_convert_string_from_py_std__in_string(__pyx_v_model_name); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 182, __pyx_L1_error)
-    __pyx_t_7 = __pyx_convert_string_from_py_std__in_string(__pyx_v_forest_type); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 182, __pyx_L1_error)
-    __pyx_t_1 = __Pyx_void_to_None(__pyx_v_self->thisptr->loadModel(__pyx_t_6, __pyx_t_7)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 182, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __pyx_r = __pyx_t_1;
-    __pyx_t_1 = 0;
+    __Pyx_INCREF(Py_None);
+    __pyx_r = Py_None;
     goto __pyx_L0;
 
     /* "_pyForest.pyx":181
  * 
  *        """
  *        if DataValidator.validate_file_exists(model_name):             # <<<<<<<<<<<<<<
- *            return self.thisptr.loadModel(model_name,forest_type)
+ *            return None #self.thisptr.loadModel(model_name,forest_type)
  * 
  */
   }
 
   /* "_pyForest.pyx":171
- *            return self.thisptr.saveModel(model_name)
+ *            return None #self.thisptr.saveModel(model_name)
  * 
  *     def load(self,model_name,forest_type="iforest"):             # <<<<<<<<<<<<<<
  *        """
@@ -3218,7 +3202,7 @@ static PyObject *__pyx_pf_9pyiForest_15IsolationForest_18load(struct __pyx_obj_9
 }
 
 /* "_pyForest.pyx":184
- *            return self.thisptr.loadModel(model_name,forest_type)
+ *            return None #self.thisptr.loadModel(model_name,forest_type)
  * 
  *     def get_ntree(self):             # <<<<<<<<<<<<<<
  *        """
@@ -3260,7 +3244,7 @@ static PyObject *__pyx_pf_9pyiForest_15IsolationForest_20get_ntree(struct __pyx_
   goto __pyx_L0;
 
   /* "_pyForest.pyx":184
- *            return self.thisptr.loadModel(model_name,forest_type)
+ *            return None #self.thisptr.loadModel(model_name,forest_type)
  * 
  *     def get_ntree(self):             # <<<<<<<<<<<<<<
  *        """
@@ -11642,58 +11626,6 @@ static PyObject *__pyx_convert_vector_to_py_std_3a__3a_vector_3c_double_3e___(co
   __pyx_r = 0;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-/* "string.from_py":13
- * 
- * @cname("__pyx_convert_string_from_py_std__in_string")
- * cdef string __pyx_convert_string_from_py_std__in_string(object o) except *:             # <<<<<<<<<<<<<<
- *     cdef Py_ssize_t length
- *     cdef char* data = __Pyx_PyObject_AsStringAndSize(o, &length)
- */
-
-static std::string __pyx_convert_string_from_py_std__in_string(PyObject *__pyx_v_o) {
-  Py_ssize_t __pyx_v_length;
-  char *__pyx_v_data;
-  std::string __pyx_r;
-  __Pyx_RefNannyDeclarations
-  char *__pyx_t_1;
-  __Pyx_RefNannySetupContext("__pyx_convert_string_from_py_std__in_string", 0);
-
-  /* "string.from_py":15
- * cdef string __pyx_convert_string_from_py_std__in_string(object o) except *:
- *     cdef Py_ssize_t length
- *     cdef char* data = __Pyx_PyObject_AsStringAndSize(o, &length)             # <<<<<<<<<<<<<<
- *     return string(data, length)
- * 
- */
-  __pyx_t_1 = __Pyx_PyObject_AsStringAndSize(__pyx_v_o, (&__pyx_v_length)); if (unlikely(__pyx_t_1 == NULL)) __PYX_ERR(1, 15, __pyx_L1_error)
-  __pyx_v_data = __pyx_t_1;
-
-  /* "string.from_py":16
- *     cdef Py_ssize_t length
- *     cdef char* data = __Pyx_PyObject_AsStringAndSize(o, &length)
- *     return string(data, length)             # <<<<<<<<<<<<<<
- * 
- * 
- */
-  __pyx_r = std::string(__pyx_v_data, __pyx_v_length);
-  goto __pyx_L0;
-
-  /* "string.from_py":13
- * 
- * @cname("__pyx_convert_string_from_py_std__in_string")
- * cdef string __pyx_convert_string_from_py_std__in_string(object o) except *:             # <<<<<<<<<<<<<<
- *     cdef Py_ssize_t length
- *     cdef char* data = __Pyx_PyObject_AsStringAndSize(o, &length)
- */
-
-  /* function exit code */
-  __pyx_L1_error:;
-  __Pyx_AddTraceback("string.from_py.__pyx_convert_string_from_py_std__in_string", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __pyx_L0:;
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
