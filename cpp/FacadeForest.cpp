@@ -141,27 +141,27 @@ void FacadeForest::displayData() {
 	}
 
 }
-
-
-void FacadeForest::saveModel(std::string modelName) {
-  // Save the json representation 
- try{
-     json  jsonstr = iff->to_json();
-     std::ofstream  out(modelName);
-     out<<jsonstr;
-     out.close();
-  }
-  catch(std::exception e){
-      std::cout<<e.what();
-  }
+//
+//
+//void FacadeForest::saveModel(std::string modelName) {
+//  // Save the json representation
+// try{
+//     json  jsonstr = iff->to_json();
+//     std::ofstream  out(modelName);
+//     out<<jsonstr;
+//     out.close();
+//  }
+//  catch(std::exception e){
+//      std::cout<<e.what();
+//  }
  //std::cout<<jsonstr<<" Json representation "<<modelName;
  
 
- }
+// }
 
 
 
-void FacadeForest::loadModel(std::string modelName,std::string forest_type="iforest")
+/*void FacadeForest::loadModel(std::string modelName,std::string forest_type="iforest")
         //FOREST type=FOREST::IFOREST)
 {
     
@@ -178,7 +178,7 @@ void FacadeForest::loadModel(std::string modelName,std::string forest_type="ifor
    }
 
 }
-
+*/
 std::map<int,double> FacadeForest::explanation(std::vector<double> &inst){
   return iff->importance(inst);
 }

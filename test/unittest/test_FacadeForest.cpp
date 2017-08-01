@@ -67,7 +67,7 @@ TEST_F(FacadeForestTest, avgDepth){
 	 EXPECT_GT(scores[50],7);
 
 }
-
+/*
 TEST_F(FacadeForestTest, saveModel){
     ff.saveModel("qtrial.json");
     std::ifstream in("qtrial.json");
@@ -84,8 +84,9 @@ TEST_F(FacadeForestTest, LoadModel){
    /*facaf = new FacadeForest();
    facaf.load("empty.json",FacadeForest::FOREST::IFOREST);
    ASSERT_NULL(facaf.getIff());
-*/
+
 }
+*/
 TEST_F(FacadeForestTest,adaptiveTrain){
 	FacadeForest adaptForest;
 

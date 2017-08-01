@@ -9,7 +9,7 @@
 #define FOREST_H_
 //#include "utility.hpp"
 #include "Tree.hpp"
-using json = nlohmann::json;
+//using json = nlohmann::json;
 //#include "cincl.hpp"
 class Forest {
 public:
@@ -78,8 +78,8 @@ virtual ~Forest() {
 		std::set_intersection(v1.begin(),v1.end(),v2.begin(),v2.end(),back_inserter(v3));
 		return (double)v3.size()/(double)v1.size();
 	}
-json to_json();
-void from_json(std::ifstream &input);
+//json to_json();
+//void from_json(std::ifstream &input);
 
 virtual std::vector<std::map<int,double> > featureContrib(std::vector<double> &inst);
 };

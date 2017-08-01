@@ -61,7 +61,7 @@ TEST_F(ForestTest, createForest){
 	ASSERT_EQ(ff->maxheight,maxheight);
 
 }
-
+/*
 TEST_F(ForestTest,serialize)
 {
    // ASSERT_EQ(9,9);
@@ -89,6 +89,6 @@ TEST_F(ForestTest,deserialize){
    ASSERT_EQ(forest->nsample,nsample);
     //just take two random node and check they are equal
 
-}
+}*/
 //Test remaining module in child
 

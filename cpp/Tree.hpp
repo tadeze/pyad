@@ -9,7 +9,7 @@
 #define TREE_H_
 #include "utility.hpp"
 //#include "cincl.hpp"
-using json= nlohmann::json;
+//using json= nlohmann::json;
 
 /* Defines feature contribution of a given point 
  */
@@ -64,7 +64,7 @@ public:
     Tree* lChild() { return leftChild;}
     Tree* rChild() {return rightChild;}
     static bool rangeCheck;
-    json tracePath(std::vector<double> &inst); 
+//    json tracePath(std::vector<double> &inst);
     Tree(): leftChild(nullptr),rightChild(nullptr),parent(nullptr),
             splittingAtt(-1), splittingPoint(-9999),depth(0),nodeSize(0),minAttVal(0),maxAttVal(0){};
 
@@ -81,15 +81,15 @@ public:
     double pathLength(std::vector<double> &inst);
 	double pathLengthM(std::vector<double> &inst);
 	int maxTreeDepth();
-    void assignTree(Tree* tr,json* rtree);
+//    void assignTree(Tree* tr,json* rtree);
 
     //Contribution
    contrib featureContribution(std::vector<double> &inst);
     std::map<int,double> explanation(std::vector<double> &inst){
         return featureContribution(inst).featureContribution();
     };
-    json to_json();
-    void from_json(json &jsontree);
+   // json to_json();
+    //void from_json(json &jsontree);
 
 
 };

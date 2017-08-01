@@ -120,8 +120,9 @@ int Forest::confTree(double alpha,double rho, int init_tree){
 	return (int)alpha*rho*init_tree;
 }
 */
-// Serialization
 
+// Serialization
+/*
 json Forest::to_json() {
     json j;
     j["ntree"] = ntree;
@@ -159,6 +160,7 @@ void Forest::from_json(std::ifstream &input) {
         this->trees.push_back(rootTree);
     }
 }
+ */
 /*
  * Feature contribution
  */

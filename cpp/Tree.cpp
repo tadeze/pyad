@@ -111,7 +111,7 @@ void Tree::iTree(std::vector<int> const &dIndex,const util::dataset *dt, int hei
 
 }
 
-
+/*
 
 //Need to be fixed later.
 json Tree::tracePath(std::vector<double> &inst)
@@ -179,7 +179,7 @@ return jroot;
 
 }
 
-
+*/
 
 
 
@@ -322,6 +322,7 @@ int Tree::maxTreeDepth(){
 	  return maxDepth;
 
 }
+/*
 json Tree::to_json(){
 
 	json jroot;
@@ -401,4 +402,4 @@ void Tree::from_json(json &jsontree){
     }
 
 }
-
+*/

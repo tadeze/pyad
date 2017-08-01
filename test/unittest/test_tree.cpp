@@ -93,7 +93,7 @@ TEST_F(TreeTest,compareDepth)
  EXPECT_GT(alldepth[50],5);
 //EXPECT_EQ(tr->pathLength(dataset->data[2]),tr->featureContribution(dataset->data[2]));
 }
-
+/*
 
 TEST_F(TreeTest, to_json)
 {
@@ -128,3 +128,4 @@ TEST_F(TreeTest, from_json){
 
     delete tt;
 }
+*/
