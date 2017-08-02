@@ -16,7 +16,7 @@ REQUIRES = ['numpy', 'cython']
 AUTHOR = "Tadesse Zemicheal"
 EMAIL = "tadesse.habte@gmail.com"
 
-#LICENSE = "Apache 2.0"
+LICENSE = "Apache 2.0"
 
 SRC_DIR = "../../cpp/"
 CYTH_DIR="./"
@@ -42,7 +42,7 @@ if __name__ == "__main__":
           author=AUTHOR,
           author_email=EMAIL,
           url=URL,
-          #license=LICENSE,
+          license=LICENSE,
           cmdclass={"build_ext": build_ext},
           ext_modules=EXTENSIONS
           )
