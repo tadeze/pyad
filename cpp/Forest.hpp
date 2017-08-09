@@ -8,6 +8,7 @@
 #ifndef FOREST_H_
 #define FOREST_H_
 //#include "utility.hpp"
+#include <memory>
 #include "Tree.hpp"
 //using json = nlohmann::json;
 //#include "cincl.hpp"
@@ -15,13 +16,15 @@ class Forest {
 public:
     
 	std::vector<Tree*> trees;
-	int ntree;
+	//std::shared_ptr<Tree> trees;
+    int ntree;
 	bool rsample;
 	int nsample;
     bool stopheight;
     int maxheight;
    	bool rangecheck;
     util::dataset* dataframe;
+    //std::unique_ptr<util::dataset> dataframe;
     Forest() {
 		rsample = false;
 		ntree = 0;
