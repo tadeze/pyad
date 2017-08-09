@@ -264,8 +264,8 @@ pforest.trainForest(data,ntree, nsample,maxheight,rotate,stopLimit==0,
 }
 */
 namespace data {
-	util::dataset *makeDataset(std::vector<std::vector<double> > &data) {
-		util::dataset *dt = new util::dataset();
+	std::shared_ptr<util::dataset> makeDataset(std::vector<std::vector<double> > &data) {
+		std::shared_ptr<util::dataset> dt = std::make_shared<util::dataset>(); //new util::dataset();
 		dt->data = data;
 		dt->ncol = (int) data[0].size();
 		dt->nrow = (int) data.size();
@@ -296,8 +296,11 @@ int main(int argc, char* argv[])
    std::cout<<"Size of training set"<<ff.getTraindf()->nrow<<endl;
    ff.testForest(data);
    std::vector<double> score  = ff.getScore();
+	for(auto const & sce : score)
+		std::cout<<sce<<"\n";
+
   /** checking from forest **/
-    util::dataset *dataset;
+	std::shared_ptr<util::dataset> dataset;
     dataset = data::makeDataset(data);
     int i=2;
     std::cout<<dataset->ncol<<" Column \n";

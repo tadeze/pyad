@@ -19,9 +19,16 @@ private:
     bool rangeCheck;
     double rho;
     int stopLimit;
-    util::dataset *traindf;
-    util::dataset *testdf;
+
+    //util::dataset *traindf,*testdf;
+    /*
     Forest *iff;
+  */
+    //Use smart pointers
+  std::shared_ptr<util::dataset> traindf,testdf;
+    //std::shared_ptr<util::dataset> testdf;
+    std::shared_ptr<Forest> iff;
+
 
     const int FOREST_NOT_TRAINED=1;
     const int NO_TEST_DATA =2;
@@ -30,13 +37,15 @@ private:
   public:
     
    // enum FOREST{IFOREST,RFOREST,CFOREST};
-
+virtual ~FacadeForest(){};
+/*
     //constructor and Destructor
     virtual ~FacadeForest(){
     delete traindf;
     delete testdf;
     delete iff;
     };
+  */
     FacadeForest();
 
     
@@ -73,15 +82,15 @@ private:
     }
 
 
-	const Forest* getIff() const {
+	const std::shared_ptr<Forest> getIff() const {
 		return iff;
 	}
 
-	const util::dataset* getTestdf() const {
+	const std::shared_ptr<util::dataset> getTestdf() const {
 		return testdf;
 	}
 
-	const util::dataset* getTraindf() const {
+	const std::shared_ptr<util::dataset> getTraindf() const {
 		return traindf;
 	}
 

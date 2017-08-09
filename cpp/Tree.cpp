@@ -10,8 +10,8 @@ bool Tree::rangeCheck=true;
 double const MISSING_VALUE = -9999.0;
 int const NULL_TREE_CHILD_DEPTH = -999;
 
-util::dataset *Tree::makeDataset(std::vector<std::vector<double> > &data) {
-	util::dataset *dt = new util::dataset();
+std::shared_ptr<util::dataset> Tree::makeDataset(std::vector<std::vector<double> > &data) {
+    std::shared_ptr<util::dataset> dt = std::make_shared<util::dataset>();//new util::dataset();
 	dt->data = data;
 	dt->ncol = (int) data[0].size();
 	dt->nrow = (int) data.size();
@@ -22,13 +22,13 @@ util::dataset *Tree::makeDataset(std::vector<std::vector<double> > &data) {
 void Tree::iTree(std::vector<int> const &dIndex,
         std::vector<std::vector<double> > traindata, int height, int maxheight, bool stopheight)
 {
-   util::dataset *dt =makeDataset(traindata);
+    std::shared_ptr<util::dataset> dt = makeDataset(traindata);
    this->iTree(dIndex,dt,height,maxheight,stopheight);
-   delete dt;
+//   delete dt;
 }
 
 
-void Tree::iTree(std::vector<int> const &dIndex,const util::dataset *dt, int height, int maxheight, bool stopheight)
+void Tree::iTree(std::vector<int> const &dIndex,const std::shared_ptr<util::dataset> dt, int height, int maxheight, bool stopheight)
 {
 	this->depth = height; //Tree height
 	// Set size of the node
@@ -101,12 +101,12 @@ void Tree::iTree(std::vector<int> const &dIndex,const util::dataset *dt, int hei
 			lnodeData.push_back(dIndex.at(i));
 		}
 	}
-	leftChild = new Tree(); //&dataL,height+1,maxheight);
-	leftChild->parent = this;
+	leftChild = std::make_shared<Tree>(); //new Tree(); //&dataL,height+1,maxheight);
+	//leftChild->parent = this;
 	leftChild->iTree(lnodeData,dt, this->depth + 1, maxheight, stopheight);
 
-	rightChild = new Tree(); //&dataR,height+1,maxheight);
-	rightChild->parent = this;
+	rightChild =std::make_shared<Tree>();// new Tree(); //&dataR,height+1,maxheight);
+	//rightChild->parent = this;
 	rightChild->iTree(rnodeData,dt, this->depth + 1, maxheight, stopheight);
 
 }
@@ -194,10 +194,11 @@ double Tree::pathLengthM(std::vector<double> &inst){
 
 	double instAttVal = inst[this->splittingAtt];
 	double depth=0.0;
-	Tree *temp =this;
+
+	std::shared_ptr<Tree> temp = this->shared_from_this(); //std::enable_shared_from_this<Tree>;// = this;
 	while(temp!=NULL){
 
-		if(Tree::rangeCheck==true)
+		if(Tree::rangeCheck)
  		{
 
 			if(instAttVal < this->minAttVal && util::randomD(instAttVal,this->minAttVal)<this->minAttVal)
@@ -228,7 +229,7 @@ double Tree::pathLength(std::vector<double> &inst){
         }
 	//Range check added
     double instAttVal = inst[this->splittingAtt];
-	if(Tree::rangeCheck==true) {
+	if(Tree::rangeCheck) {
 
 		if(instAttVal < this->minAttVal && util::randomD(instAttVal,this->minAttVal)<this->minAttVal)
 			return 1.0;
@@ -271,7 +272,8 @@ leftNodeSize*(this->leftChild->pathLength(inst) + 1.0);
 //std::map<int,double>
 struct Contrib Tree::featureContribution(std::vector<double> &inst){
 
-    Tree *root = this;
+    //Tree *root = this;
+    auto root = this->shared_from_this();
     double instAttVal;
     double depth =0.0;
     Contrib contribution;
@@ -295,12 +297,12 @@ struct Contrib Tree::featureContribution(std::vector<double> &inst){
 }
 int Tree::maxTreeDepth(){
 	if (!this) return 0;
-	std::stack<Tree*> s;
-	s.push(this);
+	std::stack<std::shared_ptr<Tree> > s;
+	s.push(this->shared_from_this());
 	int maxDepth=0;
-	Tree *prev =NULL;
+	std::shared_ptr<Tree> prev =NULL;
 	 while (!s.empty()) {
-	    Tree *curr = s.top();
+	    auto curr = s.top();
 	    if (!prev || prev->leftChild == curr || prev->rightChild== curr) {
 	    if(curr->leftChild)
 	    	s.push(curr->leftChild);
@@ -321,6 +323,62 @@ int Tree::maxTreeDepth(){
 	  }
 	  return maxDepth;
 
+}
+
+const std::shared_ptr<Tree> &Tree::getLeftChild() const {
+    return leftChild;
+}
+
+const std::shared_ptr<Tree> &Tree::getRightChild() const {
+    return rightChild;
+}
+
+int Tree::getNodeSize() const {
+    return nodeSize;
+}
+
+void Tree::setNodeSize(int nodeSize) {
+    Tree::nodeSize = nodeSize;
+}
+
+int Tree::getSplittingAtt() const {
+    return splittingAtt;
+}
+
+void Tree::setSplittingAtt(int splittingAtt) {
+    Tree::splittingAtt = splittingAtt;
+}
+
+int Tree::getDepth() const {
+    return depth;
+}
+
+void Tree::setDepth(int depth) {
+    Tree::depth = depth;
+}
+
+double Tree::getSplittingPoint() const {
+    return splittingPoint;
+}
+
+void Tree::setSplittingPoint(double splittingPoint) {
+    Tree::splittingPoint = splittingPoint;
+}
+
+double Tree::getMinAttVal() const {
+    return minAttVal;
+}
+
+void Tree::setMinAttVal(double minAttVal) {
+    Tree::minAttVal = minAttVal;
+}
+
+double Tree::getMaxAttVal() const {
+    return maxAttVal;
+}
+
+void Tree::setMaxAttVal(double maxAttVal) {
+    Tree::maxAttVal = maxAttVal;
 }
 /*
 json Tree::to_json(){

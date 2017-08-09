@@ -12,7 +12,7 @@ class IsolationForest:public Forest{
     public:
 	IsolationForest(){};
 
-	IsolationForest(int _ntree, util::dataset* _df,
+	IsolationForest(int _ntree, std::shared_ptr<util::dataset> _df,
 			int _nsample,int _maxheight, bool _stopheight,bool _rsample);
 	//int adaptiveForest(double alpha,int stopLimit);
 	void buildForest();

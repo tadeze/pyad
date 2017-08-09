@@ -7,7 +7,7 @@
 
 #include "Forest.hpp"
 
-double Forest::getdepth(std::vector<double> inst, Tree *tree) {
+double Forest::getdepth(std::vector<double> inst, std::shared_ptr<Tree> tree) {
     return tree->pathLength(inst);
 }
 
@@ -26,7 +26,7 @@ double Forest::instanceScore(std::vector<double> &inst) {
 /*
  * Score for  a set of dataframe in dataset
  */
-std::vector<double> Forest::AnomalyScore(util::dataset *df) {
+std::vector<double> Forest::AnomalyScore(std::shared_ptr<util::dataset> df) {
     std::vector<double> scores;
     //iterate through all points
     for (int inst = 0; inst < df->nrow; inst++) {
@@ -49,20 +49,22 @@ std::vector<double> Forest::AnomalyScore(util::dataset *df) {
 
 std::vector<double> Forest::pathLength(std::vector<double> &inst) {
     std::vector<double> depth;
-    for (std::vector<Tree *>::iterator it = this->trees.begin(); it != trees.end();
-         ++it) {
+    /*for (std::vector<std::shared_ptr<Tree>>::iterator it = this->trees.begin(); it != trees.end();
+         ++it) {*/
+    for(auto const &tree : this->trees)
+        depth.push_back(tree->pathLength(inst));
 
-        depth.push_back((*it)->pathLength(inst));
+    /*depth.push_back((*it)->pathLength(inst));
 
 
-    }
+    }*/
     return depth;
 }
 
 
 /* PathLength for all points
 */
-std::vector<std::vector<double> > Forest::pathLength(util::dataset *data) {
+std::vector<std::vector<double> > Forest::pathLength(std::shared_ptr<util::dataset> data) {
     std::vector<std::vector<double> > depths;
     for (int r = 0; r < data->nrow; r++)
         depths.push_back(pathLength(data->data[r]));
@@ -168,7 +170,7 @@ void Forest::from_json(std::ifstream &input) {
         // Iterate through all trees and collect their contributions
 
         std::vector<std::map<int, double> > contributions;
-        for (auto tree : this->trees) {
+        for (auto &tree : this->trees) {
             auto treeexplanation = tree->featureContribution(inst).featureContribution();
             contributions.push_back(treeexplanation);
         }

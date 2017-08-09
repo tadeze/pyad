@@ -13,17 +13,18 @@
 //using json = nlohmann::json;
 //#include "cincl.hpp"
 class Forest {
+
 public:
     
-	std::vector<Tree*> trees;
-	//std::shared_ptr<Tree> trees;
+	//std::vector<Tree*> trees;
+	std::vector<std::shared_ptr<Tree> > trees;
     int ntree;
 	bool rsample;
 	int nsample;
     bool stopheight;
     int maxheight;
    	bool rangecheck;
-    util::dataset* dataframe;
+	std::shared_ptr<util::dataset> dataframe;
     //std::unique_ptr<util::dataset> dataframe;
     Forest() {
 		rsample = false;
@@ -31,7 +32,7 @@ public:
 		nsample = 256;
 		dataframe = NULL;
 	};
-Forest(int _ntree,util::dataset* _dataset,int _nsample,
+Forest(int _ntree,std::shared_ptr<util::dataset> _dataset,int _nsample,
        int _maxheight, bool _stopheight,bool _rsample){
 	ntree=_ntree;
     dataframe=_dataset;
@@ -40,20 +41,21 @@ Forest(int _ntree,util::dataset* _dataset,int _nsample,
 	maxheight=_maxheight;
  	rsample = _rsample;
    };
-virtual ~Forest() {
+virtual ~Forest(){};
+	/*{
 		for (std::vector<Tree*>::iterator it = trees.begin(); it != trees.end();
 				++it) {
 			delete (*it);
 		}
-    }
+    }*/
 	double instanceScore(std::vector<double> &inst);
-	std::vector<double> AnomalyScore(util::dataset* df);
+	std::vector<double> AnomalyScore(std::shared_ptr<util::dataset> df);
 	virtual std::vector<double> pathLength(std::vector<double> &inst);
-	std::vector<std::vector<double> > pathLength(util::dataset* data);
+	std::vector<std::vector<double> > pathLength(std::shared_ptr<util::dataset> data);
 	std::vector<double> meandepth();
 	std::vector<double> ADtest(const std::vector<std::vector<double> > &pathlength, bool weighttotail);
 	std::map<int, double> importance(std::vector<double> &inst);
-	virtual double getdepth(std::vector<double> inst, Tree *tree);
+	virtual double getdepth(std::vector<double> inst, std::shared_ptr<Tree> tree);
 	void getSample(std::vector<int> &sampleIndex,const int nsample,bool rSample,int nrow);
 	struct larger {
 		bool operator()(const std::pair<int,double> p1,const std::pair<int,double> p2)

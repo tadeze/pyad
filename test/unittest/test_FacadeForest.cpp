@@ -12,11 +12,10 @@
 class FacadeForestTest : public ::testing::Test
 {
 protected:
-	FacadeForest ff;
+	 FacadeForest ff;
 	 std::vector<std::vector<double> > data ;
 	//util::dataset *dataset;
-     virtual void SetUp()
-     {
+     virtual void SetUp() {
 
     	 //Let read data from
          std::string filename = common::filename();
@@ -31,6 +30,7 @@ protected:
      }
 };
 
+/*
 TEST_F(FacadeForestTest, creatFF){
 	ASSERT_EQ(ff.getNSample(),256);
 	ASSERT_EQ(ff.getNTree(),100);
@@ -57,7 +57,7 @@ TEST_F(FacadeForestTest, pathLength){
 	 EXPECT_GT(scores[104],0.74852);
 	 EXPECT_LT(scores[0],0.453423);
 	 EXPECT_GT(scores[50],0.450967);
-*/
+
 }
 TEST_F(FacadeForestTest, avgDepth){
 	std::vector<double> scores = ff.averageDepth(); //average depth
@@ -67,6 +67,7 @@ TEST_F(FacadeForestTest, avgDepth){
 	 EXPECT_GT(scores[50],7);
 
 }
+*/
 /*
 TEST_F(FacadeForestTest, saveModel){
     ff.saveModel("qtrial.json");

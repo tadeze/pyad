@@ -5,64 +5,49 @@
 class TreeTest : public ::testing::Test
 {
 protected:
-	Tree *tr;
-     util::dataset *dataset;
+	 std::shared_ptr<Tree> tr;
+    std::shared_ptr<util::dataset> dataset;
 
-     util::dataset *makeDataset(std::vector<std::vector<double> > &data)
-     {
-     	util::dataset *dt = new util::dataset();
-     	dt->data = data;
-     	dt->ncol = (int)data[0].size();
-     	dt->nrow = (int)data.size();
-     	return dt;
-     }
 
-     virtual void SetUp()
-     {
-
+     virtual void SetUp() {
     	 //Let read data from
          std::string filename("/home/tadeze/projects/iForestCodes/pyiForestCmake/test/unittest/synth2d.dt");
         // std::string filename("test2d.csv");
          //std::string filename = common::filename();
 
          std::vector<std::vector<double> > data = util::readcsv((char*) &filename[0],',',true);
-    	 dataset = makeDataset(data);
-    	 tr = new Tree();
+    	 dataset = common::makeDataset(data);
+    	 tr = std::make_shared<Tree>();
    		std::vector<int> dataIndex;//(dataset->nrow);
    		for(int i=0;i<dataset->nrow;i++)
             dataIndex.push_back(i);
    		tr->iTree(dataIndex,dataset,0,0,false);
      }
 
-     virtual void TearDown()
-     {
-        delete dataset;
-        delete tr;
+     virtual void TearDown() {
+       // delete dataset;
+        //delete tr;
      }
 };
 
-TEST_F(TreeTest,makeDataset)
-{  //Check dimension of the data
+TEST_F(TreeTest,makeDataset){  //Check dimension of the data
  ASSERT_EQ(dataset->ncol,2);
  ASSERT_EQ(dataset->nrow,105);
 }
 
-TEST_F(TreeTest, treeCreation)
-{
+TEST_F(TreeTest, treeCreation){
 ASSERT_GT(tr->maxTreeDepth(),6); //check ok for now.
 }
 
-TEST_F(TreeTest,pathLength)
-{
+TEST_F(TreeTest,pathLength){
  double depth = tr->pathLength(dataset->data[8]);
  //double depth2 = tr->featureContribution(dataset->data[8]);
  EXPECT_GT(depth,1);
  EXPECT_LT(depth,30);
  //EXPECT_EQ(depth,depth2);
-
 }
-TEST_F(TreeTest,featurecontribution)
-{
+
+TEST_F(TreeTest,featurecontribution){
     //double depth = tr->pathLength(dataset->data[8]);
     auto depth2 = tr->featureContribution(dataset->data[8]);
     //for(const auto& mp : depth2.featureContribution())
@@ -70,17 +55,14 @@ TEST_F(TreeTest,featurecontribution)
     //EXPECT_GT(depth,10);
     //EXPECT_LT(depth,30);
    // EXPECT_EQ(depth,depth2);
-
 }
-TEST_F(TreeTest,Treerange)
-{
+TEST_F(TreeTest,Treerange){
 	bool rangecheck = tr->rangeCheck;
 	ASSERT_TRUE(rangecheck);
 }
 
 //Check the anomaly has smaller depth
-TEST_F(TreeTest,compareDepth)
-{
+TEST_F(TreeTest,compareDepth){
  std::vector<double> alldepth;
  for(int i=0;i<dataset->nrow;i++)
  alldepth.push_back(tr->pathLength(dataset->data[i]));

@@ -19,8 +19,9 @@ FacadeForest::FacadeForest() {
 	iff = nullptr;
 
 }
-util::dataset *makeDataset(std::vector<std::vector<double> > &data) {
-	util::dataset *dt = new util::dataset();
+std::shared_ptr<util::dataset> makeDataset(std::vector<std::vector<double> > &data) {
+    std::shared_ptr<util::dataset> dt = std::make_shared<util::dataset>();
+    //auto dt = std::make_shared<util::dataset>();
 	dt->data = data;
 	dt->ncol = (int) data[0].size();
 	dt->nrow = (int) data.size();
@@ -62,16 +63,19 @@ int FacadeForest::trainForest(std::vector<std::vector<double> > &traindf,
 	this->traindf = makeDataset(traindf);
 
 	if (!rotate) {
-		IsolationForest *iforest = new IsolationForest(ntree, this->traindf,
+	//	IsolationForest *iforest
+                iff= std::make_shared<IsolationForest>(ntree, this->traindf,
 					nsample, maxHeight, stopheight, rsample); //build iForest
-			iff = iforest;
+	//		iff = iforest;
 		}
 	else{
-		IsolationForest *iforest = new IsolationForest(ntree, this->traindf,
+        iff= std::make_shared<IsolationForest>(ntree, this->traindf,
+                                              nsample, maxHeight, stopheight, rsample); //build iForest
+/*		IsolationForest *iforest = new IsolationForest(ntree, this->traindf,
 							nsample, maxHeight, stopheight, rsample); //build iForest
 		//std::cout<<"Output from rforest\n";
 		iff = iforest;
-
+*/
 	}
 
 	try {
