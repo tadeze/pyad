@@ -8,41 +8,15 @@
 #ifndef TREE_H_
 #define TREE_H_
 
+#include "cereal/cereal.hpp"
+#include "cereal/types/vector.hpp"
+#include "cereal/types/memory.hpp"
 #include <memory>
 #include "utility.hpp"
+#include "featureContribution.hpp"
 //#include "cincl.hpp"
 //using json= nlohmann::json;
 
-/* Defines feature contribution of a given point 
- */
-struct Contrib{
-    int feature;
-    std::map<int,std::vector<double> > contributions;
-    void addcont(int index, double depth){
-        if(contributions.count(index)<1) {
-            std::vector<double> contr;
-            contr.push_back(depth);
-            contributions.insert({index,contr});
-        }
-        else{
-            contributions[index].push_back(depth);
-        }
-    }
-    std::map<int,double> featureContribution(){
-        std::map<int,double> explanation;
-        for(const auto & contr : contributions){
-            double expl=0.0;
-            expl = 1.0/contr.second[0]; //This consider the top most cut.     
-            //for(auto depth : contr.second) // if we consider all cuts 
-            //   expl += 1.0/depth;
-            explanation.insert({contr.first,expl});
-
-        }
-        return explanation;
-    }
-
-};
-typedef  struct Contrib contrib;
 class Tree : public std::enable_shared_from_this<Tree> {
    /*
     Tree *leftChild;
@@ -60,9 +34,7 @@ private:
 public:
     const std::shared_ptr<Tree> &getLeftChild() const;
     const std::shared_ptr<Tree> &getRightChild() const;
-    std::shared_ptr<Tree> getptr(){
-        return shared_from_this();
-    }
+
     int getNodeSize() const;
 
     void setNodeSize(int nodeSize);
@@ -86,8 +58,8 @@ public:
     double getMaxAttVal() const;
 
     void setMaxAttVal(double maxAttVal);
-
     static bool rangeCheck;
+
 //    json tracePath(std::vector<double> &inst);
     Tree(): leftChild(nullptr),rightChild(nullptr),parent(nullptr),
             splittingAtt(-1), splittingPoint(-9999),depth(0),nodeSize(0),minAttVal(0),maxAttVal(0){};
@@ -101,10 +73,18 @@ public:
 	int maxTreeDepth();
 
     //Contribution
-   contrib featureContribution(std::vector<double> &inst);
-    std::map<int,double> explanation(std::vector<double> &inst){
-        return featureContribution(inst).featureContribution();
-    };
+   contrib featureContribution(std::vector<double> &inst) const;
+    std::map<int,double> explanation(std::vector<double> &inst) const;
+    // Serialization
+    template<class Archive>
+            void  serialize(Archive & archive){
+        archive(cereal::make_nvp("nodesize",nodeSize),cereal::make_nvp("depth",depth),
+                cereal::make_nvp("splittingAtt",splittingAtt),cereal::make_nvp("splittingPoint",splittingPoint),
+                cereal::make_nvp("minAttVal",minAttVal),cereal::make_nvp("maxAttVal",maxAttVal),
+                cereal::make_nvp("leftChild",leftChild),cereal::make_nvp("rightChild",rightChild)
+
+        );
+    }
 
 
 };

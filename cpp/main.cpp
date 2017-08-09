@@ -33,6 +33,10 @@ Default value is 100.
 
 #include "FacadeForest.hpp"
 
+#include "cereal/types/utility.hpp"
+#include "cereal/types/unordered_map.hpp"
+#include "cereal/archives/json.hpp"
+#include "cereal/archives/xml.hpp"
 
 using namespace std;
 
@@ -276,62 +280,94 @@ namespace data {
 
 
 
-int main(int argc, char* argv[]) 
-{
-   //parseInput(argc,argv);
-	//Tree::rangeCheck = true;
-   std::string filename = util::filename();
-   std::vector<std::vector<double> > data = util::readcsv((char*) &filename[0],',',true);
-    
-   // std::cout<<data.size()<<","<<data[0].size()<<" Row/column"<<std::endl;
+int main(int argc, char* argv[]) {
+    //parseInput(argc,argv);
+    //Tree::rangeCheck = true;
+    std::string filename = util::filename();
+    std::vector<std::vector<double> > data = util::readcsv((char *) &filename[0], ',', true);
 
- // From facadeForest
-   FacadeForest ff;
+    // std::cout<<data.size()<<","<<data[0].size()<<" Row/column"<<std::endl;
+
+    // From facadeForest
+    FacadeForest ff;
 
 //   std::vector<std::vector<double> > &traindf,int _ntree,
 //       		int _nsample,int _maxheight, bool _rotate, bool _adaptive,
 //       		    		bool _rangecheck,double _rho,int _stopLimit);
-   ff.trainForest(data,100,256,0,false,false,false,0.01,0);
-   std::cout<<ff.getNSample()<<" =="<<ff.getNTree()<<std::endl;
-   std::cout<<"Size of training set"<<ff.getTraindf()->nrow<<endl;
-   ff.testForest(data);
-   std::vector<double> score  = ff.getScore();
-	for(auto const & sce : score)
-		std::cout<<sce<<"\n";
+    ff.trainForest(data, 100, 256, 0, false, false, false, 0.01, 0);
+    std::cout << ff.getNSample() << " ==" << ff.getNTree() << std::endl;
+    std::cout << "Size of training set" << ff.getTraindf()->nrow << endl;
+    ff.testForest(data);
+    std::vector<double> score = ff.getScore();
+    std::cout<<"Checking scores\n";
+    for (auto const &sce : score)
+        std::cout << sce << "\t";
 
-  /** checking from forest **/
-	std::shared_ptr<util::dataset> dataset;
+    /** checking from forest **/
+    std::shared_ptr<util::dataset> dataset;
     dataset = data::makeDataset(data);
-    int i=2;
-    std::cout<<dataset->ncol<<" Column \n";
+    int i = 2;
+    std::cout << dataset->ncol << " Column \n";
     dataset->print(i);
     auto explan = ff.explanation(dataset->data[i]);
-    std::cout<<"\n Explanations"<<std::endl;
-    for(const auto &mpr : explan)
-        std::cout<<mpr.first<<"\t"<<mpr.second<<std::endl;
+    std::cout << "\n Explanations" << std::endl;
+    for (const auto &mpr : explan)
+        std::cout << mpr.first << "\t" << mpr.second << std::endl;
+    // Register the derivedtype class
+    // Serialize
 
+    std::string filenamex{"forest.json"};
+    {
+    std::ofstream file{filenamex};
+    if (!file.is_open()) {
+        throw std::runtime_error{filenamex + " could not be opened"};
+    }
+    cereal::JSONOutputArchive archive{file};
+    archive(ff);
+    }
 
+// Read forest
 
+        std::ifstream ifile{filenamex};
+        if (!ifile.is_open()) {
+            throw std::runtime_error{filenamex + " could not be opened"};
+        }
+        FacadeForest newff;
+        cereal::JSONInputArchive iarchive{ifile};
+        iarchive(newff);
+        newff.testForest(data);
+        auto  new_score = newff.getScore();
+       for(auto &sc : new_score)
+           std::cout<<sc<<"\t";
+
+    // TODO: explanation returns vad pointer need to be updated.
+   // auto tr = std::make_shared<Tree>();
+    //tree_sh->iTree(dataIndex,dataset,0,0,false)
 
 
     /* checking contributions  from trees **/
 	//std::vector<std::vector<double> > data = util::readcsv((char*) &filename[0],',',true);
 
 //	Tree *tr = new Tree();
-//	std::vector<int> dataIndex;//(dataset->nrow);
-//	for(int i=0;i<dataset->nrow;i++)
-//		dataIndex.push_back(i);
-//	tr->iTree(dataIndex,dataset,0,0,false);
-//	std::cout<<tr->pathLength(dataset->data[4])<<" Depth\n";
-//	std::cout<<"Feature explanations\n";
-//
-//	auto feature = tr->featureContribution(dataset->data[2]);
-//	std::cout<<feature.contributions.size()<<std::endl;
-//	dataset->print(2);
-//    for(const auto & mpr : feature.featureContribution())
-//		std::cout<<mpr.first<<"\t"<<mpr.second<<std::endl;
-//
-//    std::cout<<" Second anomalies";
+	/*
+    std::vector<int> dataIndex;//(dataset->nrow);
+	for(int i=0;i<dataset->nrow;i++)
+		dataIndex.push_back(i);
+	tr->iTree(dataIndex,dataset,0,0,false);
+	std::cout<<tr->pathLength(dataset->data[4])<<" Depth\n";
+	std::cout<<"Feature explanations\n";
+
+	auto feature = tr->explanation(dataset->data[5]);
+   */
+   // archive(cereal::make_nvp("tree",tr));
+    //file.close();
+
+/*	std::cout<<feature.size()<<std::endl;
+	//dataset->print(2
+  for(const auto & mpr : feature)
+		std::cout<<mpr.first<<"\t"<<mpr.second<<std::endl;
+*///
+  //  std::cout<<" Second anomalies";
 //    feature = tr->featureContribution(dataset->data[4]);
 //    std::cout<<feature.contributions.size()<<std::endl;
 //    dataset->print(4);

@@ -270,14 +270,14 @@ leftNodeSize*(this->leftChild->pathLength(inst) + 1.0);
 
 //std::vector<std::vector<double>>
 //std::map<int,double>
-struct Contrib Tree::featureContribution(std::vector<double> &inst){
+struct Contrib Tree::featureContribution(std::vector<double> &inst) const{
 
     //Tree *root = this;
     auto root = this->shared_from_this();
     double instAttVal;
     double depth =0.0;
     Contrib contribution;
-    while((root->rightChild != NULL) || (root->leftChild!=NULL)) {
+    while((root->rightChild != nullptr) || (root->leftChild!= nullptr)) {
         instAttVal = inst[root->splittingAtt];
 
         //contributions[root->splittingAtt] = depth + util::avgPL(root->nodeSize);
@@ -324,7 +324,11 @@ int Tree::maxTreeDepth(){
 	  return maxDepth;
 
 }
+std::map<int,double> Tree::explanation(std::vector<double> &inst) const {
 
+    return featureContribution(inst).featureContribution();
+
+}
 const std::shared_ptr<Tree> &Tree::getLeftChild() const {
     return leftChild;
 }
@@ -380,6 +384,7 @@ double Tree::getMaxAttVal() const {
 void Tree::setMaxAttVal(double maxAttVal) {
     Tree::maxAttVal = maxAttVal;
 }
+
 /*
 json Tree::to_json(){
 

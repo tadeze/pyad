@@ -5,6 +5,7 @@
 #ifndef FacadeFOREST_HPP
 #define FacadeFOREST_HPP
 #include "main.hpp"
+
 //#include "utility.hpp"
 //#include "json/json.hpp"
 //using json = nlohmann::json;
@@ -115,7 +116,19 @@ virtual ~FacadeForest(){};
     std::map<int,double> explanation(std::vector<double> &inst);
     void displayData();
     int isValidModel() const;
-};
 
+    template<class Archive>
+    void serialize(Archive & archive){
+
+        archive(cereal::make_nvp("ntree",ntree),cereal::make_nvp("nsample",nsample),
+                cereal::make_nvp("maxHeight",maxHeight),cereal::make_nvp("stopLimit",stopLimit),
+                cereal::make_nvp("rho",rho),cereal::make_nvp("rotate",rotate),
+                cereal::make_nvp("adaptive",adaptive),cereal::make_nvp("forest",iff));
+    };
+
+
+};
+CEREAL_REGISTER_TYPE(IsolationForest);
+CEREAL_REGISTER_POLYMORPHIC_RELATION(Forest,IsolationForest);
 
 #endif //IFOREST_ADDIN_FacadeForest_HPP

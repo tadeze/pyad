@@ -87,5 +87,13 @@ virtual ~Forest(){};
 //void from_json(std::ifstream &input);
 
 virtual std::vector<std::map<int,double> > featureContrib(std::vector<double> &inst);
+    // Serialization
+    template<class Archive>
+    void serialize(Archive & archive){
+        /*archive(cereal::make_nvp("ntree",ntree),cereal::make_nvp("nsample",nsample),
+                cereal::make_nvp("rsample",rsample),cereal::make_nvp("stopheight",stopheight),
+                cereal::make_nvp("trees",trees));
+*/
+    }
 };
 #endif /* FOREST_H_ */
