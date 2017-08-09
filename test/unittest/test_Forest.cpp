@@ -16,7 +16,7 @@ class ForestTest : public ::testing::Test
 protected:
 	Forest *ff;
 	std::vector<std::vector<double> > data ;
-	util::dataset *dataset;
+	osu::data::dataset *dataset;
 	 int ntree,nsample,maxheight;
 	 bool rsample,stopheight;
 	virtual void SetUp()
@@ -26,7 +26,7 @@ protected:
     	maxheight=0;
     	rsample=false;
     	stopheight=false;
-    	 //Forest(int _ntree,util::dataset* _dataset,int _nsample,int _maxheight, bool _stopheight,bool _rsample)
+    	 //Forest(int _ntree,osu::data::dataset* _dataset,int _nsample,int _maxheight, bool _stopheight,bool _rsample)
 
     	 //Let read data from
     	 //std::string filename("./synth2d.dt");
@@ -37,9 +37,9 @@ protected:
     	  ff = new IsolationForest(ntree,dataset,nsample,maxheight,stopheight,rsample);
 
      }
-     util::dataset *makeDataset(std::vector<std::vector<double> > &data)
+     osu::data::dataset *makeDataset(std::vector<std::vector<double> > &data)
        {
-       	util::dataset *dt = new util::dataset();
+       	osu::data::dataset *dt = new osu::data::dataset();
        	dt->data = data;
        	dt->ncol = (int)data[0].size();
        	dt->nrow = (int)data.size();

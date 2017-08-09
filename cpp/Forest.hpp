@@ -21,14 +21,15 @@ public:
     bool stopheight;
     int maxheight;
    	bool rangecheck;
-    util::dataset* dataframe;
+    osu::data::dataset* dataframe;
+
     Forest() {
 		rsample = false;
 		ntree = 0;
 		nsample = 256;
 		dataframe = NULL;
 	};
-Forest(int _ntree,util::dataset* _dataset,int _nsample,
+Forest(int _ntree,osu::data::dataset* _dataset,int _nsample,
        int _maxheight, bool _stopheight,bool _rsample){
 	ntree=_ntree;
     dataframe=_dataset;
@@ -44,9 +45,9 @@ virtual ~Forest() {
 		}
     }
 	double instanceScore(std::vector<double> &inst);
-	std::vector<double> AnomalyScore(util::dataset* df);
+	std::vector<double> AnomalyScore(osu::data::dataset* df);
 	virtual std::vector<double> pathLength(std::vector<double> &inst);
-	std::vector<std::vector<double> > pathLength(util::dataset* data);
+	std::vector<std::vector<double> > pathLength(osu::data::dataset* data);
 	std::vector<double> meandepth();
 	std::vector<double> ADtest(const std::vector<std::vector<double> > &pathlength, bool weighttotail);
 	std::map<int, double> importance(std::vector<double> &inst);

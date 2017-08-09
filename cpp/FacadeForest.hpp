@@ -19,8 +19,8 @@ private:
     bool rangeCheck;
     double rho;
     int stopLimit;
-    util::dataset *traindf;
-    util::dataset *testdf;
+    osu::data::dataset *traindf;
+    osu::data::dataset *testdf;
     Forest *iff;
 
     const int FOREST_NOT_TRAINED=1;
@@ -77,11 +77,11 @@ private:
 		return iff;
 	}
 
-	const util::dataset* getTestdf() const {
+	const osu::data::dataset* getTestdf() const {
 		return testdf;
 	}
 
-	const util::dataset* getTraindf() const {
+	const osu::data::dataset* getTraindf() const {
 		return traindf;
 	}
 

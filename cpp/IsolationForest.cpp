@@ -16,7 +16,7 @@ struct smaller
 };
 
 
-IsolationForest::IsolationForest(int _ntree,util::dataset* _df,
+IsolationForest::IsolationForest(int _ntree,osu::data::dataset* _df,
 		int _nsample,int _maxheight, bool _stopheight,bool _rsample)
 :Forest(_ntree,_df,_nsample,_maxheight,_stopheight,_rsample)
 {

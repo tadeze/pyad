@@ -19,8 +19,8 @@ FacadeForest::FacadeForest() {
 	iff = nullptr;
 
 }
-util::dataset *makeDataset(std::vector<std::vector<double> > &data) {
-	util::dataset *dt = new util::dataset();
+osu::data::dataset *makeDataset(std::vector<std::vector<double> > &data) {
+	osu::data::dataset *dt = new osu::data::dataset();
 	dt->data = data;
 	dt->ncol = (int) data[0].size();
 	dt->nrow = (int) data.size();

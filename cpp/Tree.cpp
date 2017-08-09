@@ -10,8 +10,8 @@ bool Tree::rangeCheck=true;
 double const MISSING_VALUE = -9999.0;
 int const NULL_TREE_CHILD_DEPTH = -999;
 
-util::dataset *Tree::makeDataset(std::vector<std::vector<double> > &data) {
-	util::dataset *dt = new util::dataset();
+osu::data::dataset *Tree::makeDataset(std::vector<std::vector<double> > &data) {
+	osu::data::dataset *dt = new osu::data::dataset();
 	dt->data = data;
 	dt->ncol = (int) data[0].size();
 	dt->nrow = (int) data.size();
@@ -22,13 +22,13 @@ util::dataset *Tree::makeDataset(std::vector<std::vector<double> > &data) {
 void Tree::iTree(std::vector<int> const &dIndex,
         std::vector<std::vector<double> > traindata, int height, int maxheight, bool stopheight)
 {
-   util::dataset *dt =makeDataset(traindata);
+   osu::data::dataset *dt =makeDataset(traindata);
    this->iTree(dIndex,dt,height,maxheight,stopheight);
    delete dt;
 }
 
 
-void Tree::iTree(std::vector<int> const &dIndex,const util::dataset *dt, int height, int maxheight, bool stopheight)
+void Tree::iTree(std::vector<int> const &dIndex,const osu::data::dataset *dt, int height, int maxheight, bool stopheight)
 {
 	this->depth = height; //Tree height
 	// Set size of the node
@@ -101,18 +101,18 @@ void Tree::iTree(std::vector<int> const &dIndex,const util::dataset *dt, int hei
 			lnodeData.push_back(dIndex.at(i));
 		}
 	}
-	leftChild = new Tree(); //&dataL,height+1,maxheight);
-	leftChild->parent = this;
+	leftChild = std::make_shared<Tree>(); //new Tree(); //&dataL,height+1,maxheight);
+//	leftChild->parent = this;
 	leftChild->iTree(lnodeData,dt, this->depth + 1, maxheight, stopheight);
 
-	rightChild = new Tree(); //&dataR,height+1,maxheight);
-	rightChild->parent = this;
+	rightChild = std::make_shared<Tree>(); // new Tree(); //&dataR,height+1,maxheight);
+//	rightChild->parent = this;
 	rightChild->iTree(rnodeData,dt, this->depth + 1, maxheight, stopheight);
 
 }
 
 
-
+/*
 //Need to be fixed later.
 json Tree::tracePath(std::vector<double> &inst)
 {
@@ -179,7 +179,7 @@ return jroot;
 
 }
 
-
+*/
 
 
 
@@ -194,7 +194,8 @@ double Tree::pathLengthM(std::vector<double> &inst){
 
 	double instAttVal = inst[this->splittingAtt];
 	double depth=0.0;
-	Tree *temp =this;
+	std::shared_ptr<Tree> temp;
+	temp.reset(this);
 	while(temp!=NULL){
 
 		if(Tree::rangeCheck==true)
@@ -206,8 +207,8 @@ double Tree::pathLengthM(std::vector<double> &inst){
 				return depth+1.0;
 		}
  		instAttVal = inst[temp->splittingAtt];
-		if ( instAttVal >= temp->splittingPoint)
-			temp= temp->rightChild;
+		if (instAttVal >= temp->splittingPoint)
+			temp = temp->rightChild;
 		else
 			temp = temp->leftChild;
 
@@ -228,7 +229,7 @@ double Tree::pathLength(std::vector<double> &inst){
         }
 	//Range check added
     double instAttVal = inst[this->splittingAtt];
-	if(Tree::rangeCheck==true) {
+	if(Tree::rangeCheck) {
 
 		if(instAttVal < this->minAttVal && util::randomD(instAttVal,this->minAttVal)<this->minAttVal)
 			return 1.0;
@@ -271,7 +272,8 @@ leftNodeSize*(this->leftChild->pathLength(inst) + 1.0);
 //std::map<int,double>
 struct Contrib Tree::featureContribution(std::vector<double> &inst){
 
-    Tree *root = this;
+    std::shared_ptr<Tree> root;
+	root.reset(this);
     double instAttVal;
     double depth =0.0;
     Contrib contribution;
@@ -293,7 +295,7 @@ struct Contrib Tree::featureContribution(std::vector<double> &inst){
     return contribution;//.featureContribution();
 
 }
-int Tree::maxTreeDepth(){
+/*int Tree::maxTreeDepth(){
 	if (!this) return 0;
 	std::stack<Tree*> s;
 	s.push(this);
@@ -321,18 +323,19 @@ int Tree::maxTreeDepth(){
 	  }
 	  return maxDepth;
 
-}
+}*/
+
 json Tree::to_json(){
 
 	json jroot;
 
 	// Define empty queute
-	std::queue<Tree*> qtree ;
+	std::queue<std::shared_ptr<Tree>> qtree ;
 	qtree.push(this);
 	int i=0;
 	while(!qtree.empty()) {
 		json j;
-		Tree* nextTree = qtree.front();
+		std::shared_ptr<Tree> nextTree = qtree.front();
 		qtree.pop();
 		if(nextTree==NULL){
 			j["depth"] =  NULL_TREE_CHILD_DEPTH;
@@ -356,7 +359,7 @@ json Tree::to_json(){
 	return jroot;
 
 }
-void Tree::assignTree(Tree* tr,json* rtree){
+void Tree::assignTree(std::shared_ptr<Tree> tr,std::shared_ptr<json> rtree){
 
     tr->depth = (*rtree)["depth"];
     tr->splittingAtt = (*rtree)["splittingAtt"];
@@ -366,8 +369,8 @@ void Tree::assignTree(Tree* tr,json* rtree){
     tr->maxAttVal = (*rtree)["maxAttVal"];
 }
 void Tree::from_json(json &jsontree){
-    Tree* root;
-    std::queue<Tree*> qTree;
+    std::shared_ptr<Tree> root;
+    std::queue<std::shared_ptr<Tree> > qTree;
     unsigned iNode =0;
     auto numNodes = jsontree.size();    //rootTree.size();
     while(iNode<numNodes){
@@ -378,10 +381,11 @@ void Tree::from_json(json &jsontree){
             iNode++;
         }
         else {
-            Tree* node = qTree.front();
+			std::shared_ptr<Tree> node = qTree.front();
             qTree.pop();
-            json* jleft = &jsontree[iNode];//ootTree[iNode];
-            json* jright=NULL;
+
+            std::shared_ptr<json> jleft = &jsontree[iNode];//ootTree[iNode];
+			std::shared_ptr<json> jright=NULL;
 
             if(iNode<(numNodes-1))
                 jright =&jsontree[iNode+1];

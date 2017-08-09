@@ -264,8 +264,8 @@ pforest.trainForest(data,ntree, nsample,maxheight,rotate,stopLimit==0,
 }
 */
 namespace data {
-	util::dataset *makeDataset(std::vector<std::vector<double> > &data) {
-		util::dataset *dt = new util::dataset();
+	osu::data::dataset *makeDataset(std::vector<std::vector<double> > &data) {
+		osu::data::dataset *dt = new osu::data::dataset();
 		dt->data = data;
 		dt->ncol = (int) data[0].size();
 		dt->nrow = (int) data.size();
@@ -297,11 +297,11 @@ int main(int argc, char* argv[])
    ff.testForest(data);
    std::vector<double> score  = ff.getScore();
   /** checking from forest **/
-    util::dataset *dataset;
+    osu::data::dataset *dataset;
     dataset = data::makeDataset(data);
     int i=2;
     std::cout<<dataset->ncol<<" Column \n";
-    dataset->print(i);
+    dataset->print(i,std::cout);
     auto explan = ff.explanation(dataset->data[i]);
     std::cout<<"\n Explanations"<<std::endl;
     for(const auto &mpr : explan)
@@ -343,7 +343,7 @@ int main(int argc, char* argv[])
     */
 	//displayVec(ff.getTraindf()->data);
 
-   /* util::dataset *dt = makeDataset(data);
+   /* osu::data::dataset *dt = makeDataset(data);
 
     std::cout<<dt->nrow<<","<<dt->ncol<<" Row/column"<<std::endl;
 
