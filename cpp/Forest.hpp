@@ -8,28 +8,31 @@
 #ifndef FOREST_H_
 #define FOREST_H_
 //#include "utility.hpp"
+#include <memory>
 #include "Tree.hpp"
-using json = nlohmann::json;
+//using json = nlohmann::json;
 //#include "cincl.hpp"
 class Forest {
+
 public:
     
-	std::vector<Tree*> trees;
-	int ntree;
+	//std::vector<Tree*> trees;
+	std::vector<std::shared_ptr<Tree> > trees;
+    int ntree;
 	bool rsample;
 	int nsample;
     bool stopheight;
     int maxheight;
    	bool rangecheck;
-    osu::data::dataset* dataframe;
-
+	std::shared_ptr<util::dataset> dataframe;
+    //std::unique_ptr<util::dataset> dataframe;
     Forest() {
 		rsample = false;
 		ntree = 0;
 		nsample = 256;
 		dataframe = NULL;
 	};
-Forest(int _ntree,osu::data::dataset* _dataset,int _nsample,
+Forest(int _ntree,std::shared_ptr<util::dataset> _dataset,int _nsample,
        int _maxheight, bool _stopheight,bool _rsample){
 	ntree=_ntree;
     dataframe=_dataset;
@@ -38,20 +41,21 @@ Forest(int _ntree,osu::data::dataset* _dataset,int _nsample,
 	maxheight=_maxheight;
  	rsample = _rsample;
    };
-virtual ~Forest() {
+virtual ~Forest(){};
+	/*{
 		for (std::vector<Tree*>::iterator it = trees.begin(); it != trees.end();
 				++it) {
 			delete (*it);
 		}
-    }
+    }*/
 	double instanceScore(std::vector<double> &inst);
-	std::vector<double> AnomalyScore(osu::data::dataset* df);
+	std::vector<double> AnomalyScore(std::shared_ptr<util::dataset> df);
 	virtual std::vector<double> pathLength(std::vector<double> &inst);
-	std::vector<std::vector<double> > pathLength(osu::data::dataset* data);
+	std::vector<std::vector<double> > pathLength(std::shared_ptr<util::dataset> data);
 	std::vector<double> meandepth();
 	std::vector<double> ADtest(const std::vector<std::vector<double> > &pathlength, bool weighttotail);
 	std::map<int, double> importance(std::vector<double> &inst);
-	virtual double getdepth(std::vector<double> inst, Tree *tree);
+	virtual double getdepth(std::vector<double> inst, std::shared_ptr<Tree> tree);
 	void getSample(std::vector<int> &sampleIndex,const int nsample,bool rSample,int nrow);
 	struct larger {
 		bool operator()(const std::pair<int,double> p1,const std::pair<int,double> p2)
@@ -79,9 +83,17 @@ virtual ~Forest() {
 		std::set_intersection(v1.begin(),v1.end(),v2.begin(),v2.end(),back_inserter(v3));
 		return (double)v3.size()/(double)v1.size();
 	}
-json to_json();
-void from_json(std::ifstream &input);
+//json to_json();
+//void from_json(std::ifstream &input);
 
 virtual std::vector<std::map<int,double> > featureContrib(std::vector<double> &inst);
+    // Serialization
+    template<class Archive>
+     void serialize(Archive & archive){
+        archive(cereal::make_nvp("ntree",ntree),cereal::make_nvp("nsample",nsample),
+                cereal::make_nvp("rsample",rsample),cereal::make_nvp("stopheight",stopheight),
+                cereal::make_nvp("trees",trees));
+
+    }
 };
 #endif /* FOREST_H_ */

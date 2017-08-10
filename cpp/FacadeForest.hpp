@@ -5,9 +5,10 @@
 #ifndef FacadeFOREST_HPP
 #define FacadeFOREST_HPP
 #include "main.hpp"
+
 //#include "utility.hpp"
-#include "json/json.hpp"
-using json = nlohmann::json;
+//#include "json/json.hpp"
+//using json = nlohmann::json;
 
 class FacadeForest {
 private:
@@ -19,24 +20,35 @@ private:
     bool rangeCheck;
     double rho;
     int stopLimit;
-    osu::data::dataset *traindf;
-    osu::data::dataset *testdf;
+
+    //util::dataset *traindf,*testdf;
+    /*
     Forest *iff;
+  */
+    //Use smart pointers
+  std::shared_ptr<util::dataset> traindf,testdf;
+    //std::shared_ptr<util::dataset> testdf;
+    std::shared_ptr<Forest> iff;
+
 
     const int FOREST_NOT_TRAINED=1;
     const int NO_TEST_DATA =2;
     const int OK =0;
-        
+
+    //const int JSON_FORMAT=1;
+    enum OUTPUT_FORMAT { JSON_FORMAT,BINARY_FORMAT};
   public:
     
    // enum FOREST{IFOREST,RFOREST,CFOREST};
-
+virtual ~FacadeForest(){};
+/*
     //constructor and Destructor
     virtual ~FacadeForest(){
     delete traindf;
     delete testdf;
     delete iff;
     };
+  */
     FacadeForest();
 
     
@@ -73,15 +85,15 @@ private:
     }
 
 
-	const Forest* getIff() const {
+	const std::shared_ptr<Forest> getIff() const {
 		return iff;
 	}
 
-	const osu::data::dataset* getTestdf() const {
+	const std::shared_ptr<util::dataset> getTestdf() const {
 		return testdf;
 	}
 
-	const osu::data::dataset* getTraindf() const {
+	const std::shared_ptr<util::dataset> getTraindf() const {
 		return traindf;
 	}
 
@@ -98,15 +110,30 @@ private:
 
 
     void testForest(std::vector<std::vector<double> > &testdf);
-    void saveModel(std::string modelName);
-    void loadModel(std::string modelName,std::string forest_type);
+   // void saveModel(std::string modelName);
+    void load(const std::string& filename); //OUTPUT_FORMAT output_format);
+    void save(const std::string& filenam); //, OUTPUT_FORMAT output_format);
+
+    //void loadModel(std::string modelName,std::string forest_type);
     std::vector<double> getScore();
     std::vector<std::vector<double> > pathLength();
     std::vector<double> averageDepth();
     std::map<int,double> explanation(std::vector<double> &inst);
     void displayData();
     int isValidModel() const;
-};
 
+    template<class Archive>
+    void serialize(Archive & archive){
+
+        archive(cereal::make_nvp("ntree",ntree),cereal::make_nvp("nsample",nsample),
+                cereal::make_nvp("maxHeight",maxHeight),cereal::make_nvp("stopLimit",stopLimit),
+                cereal::make_nvp("rho",rho),cereal::make_nvp("rotate",rotate),
+                cereal::make_nvp("adaptive",adaptive),cereal::make_nvp("forest",iff));
+    };
+
+
+};
+CEREAL_REGISTER_TYPE(IsolationForest);
+CEREAL_REGISTER_POLYMORPHIC_RELATION(Forest,IsolationForest);
 
 #endif //IFOREST_ADDIN_FacadeForest_HPP

@@ -12,11 +12,10 @@
 class FacadeForestTest : public ::testing::Test
 {
 protected:
-	FacadeForest ff;
+	 FacadeForest ff;
 	 std::vector<std::vector<double> > data ;
 	//util::dataset *dataset;
-     virtual void SetUp()
-     {
+     virtual void SetUp() {
 
     	 //Let read data from
          std::string filename = common::filename();
@@ -31,12 +30,14 @@ protected:
      }
 };
 
+
 TEST_F(FacadeForestTest, creatFF){
 	ASSERT_EQ(ff.getNSample(),256);
 	ASSERT_EQ(ff.getNTree(),100);
 	ASSERT_EQ(ff.getTraindf()->nrow,105);
 
 }
+
 
 TEST_F(FacadeForestTest, createScore){
 
@@ -52,12 +53,12 @@ TEST_F(FacadeForestTest, pathLength){
 	std::vector<std::vector<double> > depths = ff.pathLength();
 	EXPECT_EQ(depths.size(),105);  //Make sure dimension first
 	EXPECT_EQ(depths[0].size(),100);
-
-	 /*(std::sort(scores.begin(),scores.end());
+	 auto scores = ff.getScore();
+	 std::sort(scores.begin(),scores.end());
 	 EXPECT_GT(scores[104],0.74852);
 	 EXPECT_LT(scores[0],0.453423);
 	 EXPECT_GT(scores[50],0.450967);
-*/
+
 }
 TEST_F(FacadeForestTest, avgDepth){
 	std::vector<double> scores = ff.averageDepth(); //average depth
@@ -68,9 +69,10 @@ TEST_F(FacadeForestTest, avgDepth){
 
 }
 
+
 TEST_F(FacadeForestTest, saveModel){
-    ff.saveModel("qtrial.json");
-    std::ifstream in("qtrial.json");
+    ff.save("qtrial.cereal");
+    std::ifstream in("qtrial.cereal");
     //check if the file is not empty
     ASSERT_FALSE(in.peek()==std::ifstream::traits_type::eof());
 }
@@ -78,14 +80,16 @@ TEST_F(FacadeForestTest, saveModel){
 
 TEST_F(FacadeForestTest, LoadModel){
     FacadeForest facaf;
-    facaf.loadModel("qtrial.json","iforest"); // FacadeForest::FOREST::IFOREST);
-   ASSERT_EQ(facaf.getIff()->ntree,100);
+    facaf.load("qtrial.cereal");
+	ASSERT_EQ(facaf.getNTree(),100);
+   //ASSERT_EQ(facaf.getIff()->ntree,100);
    //Empty file 
    /*facaf = new FacadeForest();
    facaf.load("empty.json",FacadeForest::FOREST::IFOREST);
    ASSERT_NULL(facaf.getIff());
 */
 }
+
 TEST_F(FacadeForestTest,adaptiveTrain){
 	FacadeForest adaptForest;
 

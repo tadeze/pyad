@@ -7,94 +7,84 @@
 
 #ifndef TREE_H_
 #define TREE_H_
+
+#include "cereal/cereal.hpp"
+#include "cereal/types/vector.hpp"
+#include "cereal/types/memory.hpp"
+#include <memory>
 #include "utility.hpp"
+#include "featureContribution.hpp"
 //#include "cincl.hpp"
-using json= nlohmann::json;
+//using json= nlohmann::json;
 
-/* Defines feature contribution of a given point 
- */
-struct Contrib{
-    int feature;
-    std::map<int,std::vector<double> > contributions;
-    void addcont(int index, double depth){
-        if(contributions.count(index)<1) {
-            std::vector<double> contr;
-            contr.push_back(depth);
-            contributions.insert({index,contr});
-        }
-        else{
-            contributions[index].push_back(depth);
-        }
-    }
-    std::map<int,double> featureContribution(){
-        std::map<int,double> explanation;
-        for(const auto & contr : contributions){
-            double expl=0.0;
-            expl = 1.0/contr.second[0]; //This consider the top most cut.     
-            //for(auto depth : contr.second) // if we consider all cuts 
-            //   expl += 1.0/depth;
-            explanation.insert({contr.first,expl});
-
-        }
-        return explanation;
-    }
-
-};
-typedef  struct Contrib contrib;
-class Tree {
-protected:
-    std::shared_ptr<Tree> leftChild,rightChild,parent;
-    /*Tree *leftChild;
+class Tree : public std::enable_shared_from_this<Tree> {
+   /*
+    Tree *leftChild;
 	Tree *rightChild;
-	Tree *parent;*/
-	int nodeSize;
-	int splittingAtt;
-	double splittingPoint;
-	int depth;
-	double minAttVal,maxAttVal;
-	osu::data::dataset *makeDataset(std::vector<std::vector<double> > &data);
+	Tree *parent;
+	*/
+
+private:
+    std::shared_ptr<Tree> leftChild,rightChild,parent;
+    int nodeSize,splittingAtt,depth;
+	double splittingPoint,minAttVal,maxAttVal;
+    std::shared_ptr<util::dataset> makeDataset(std::vector<std::vector<double> > &data);
+
 
 public:
-    /** Later the property will be private this will be their access point */
-    int getNodeSize(){ return this->nodeSize;}
-    int getSplittingAtt() { return this->splittingAtt;}
-    double getSplittingPoint() { return this->splittingPoint;}
-    int getDepth() { return this->depth;}
-    double getMinAttVal() {return this->minAttVal;}
-    double getMaxAttVal() { return this->maxAttVal;}
-    std::shared_ptr<Tree> lChild() {return leftChild;}
-    std::shared_ptr<Tree> rChild() { return rightChild;}
-    /*
-    Tree* lChild() { return leftChild;}
-    Tree* rChild() {return rightChild;}
-   */
+    const std::shared_ptr<Tree> &getLeftChild() const;
+    const std::shared_ptr<Tree> &getRightChild() const;
+
+    int getNodeSize() const;
+
+    void setNodeSize(int nodeSize);
+
+    int getSplittingAtt() const;
+
+    void setSplittingAtt(int splittingAtt);
+
+    int getDepth() const;
+
+    void setDepth(int depth);
+
+    double getSplittingPoint() const;
+
+    void setSplittingPoint(double splittingPoint);
+
+    double getMinAttVal() const;
+
+    void setMinAttVal(double minAttVal);
+
+    double getMaxAttVal() const;
+
+    void setMaxAttVal(double maxAttVal);
     static bool rangeCheck;
-    json tracePath(std::vector<double> &inst); 
+
+//    json tracePath(std::vector<double> &inst);
     Tree(): leftChild(nullptr),rightChild(nullptr),parent(nullptr),
             splittingAtt(-1), splittingPoint(-9999),depth(0),nodeSize(0),minAttVal(0),maxAttVal(0){};
 
 	virtual ~Tree() {};
-    /*    delete leftChild; //check if deleting the child is need.
-        delete rightChild;
-
-	};
-*/
-	void iTree(std::vector<int> const &dIndex, const osu::data::dataset *dt, int height, int maxHeight, bool stopheight);
+	void iTree(std::vector<int> const &dIndex, const std::shared_ptr<util::dataset> dt, int height, int maxHeight, bool stopheight);
 	void iTree(std::vector<int> const &dIndex, std::vector<std::vector<double> > traindata, int height, int maxHeight, bool stopheight);
 	
     double pathLength(std::vector<double> &inst);
 	double pathLengthM(std::vector<double> &inst);
 	int maxTreeDepth();
-    void assignTree(std::shared_ptr<Tree> tr, std::shared_ptr<json> rtree);
 
     //Contribution
-   contrib featureContribution(std::vector<double> &inst);
-    std::map<int,double> explanation(std::vector<double> &inst){
-        return featureContribution(inst).featureContribution();
-    };
+   contrib featureContribution(std::vector<double> &inst) const;
+    std::map<int,double> explanation(std::vector<double> &inst) const;
+    // Serialization
+    template<class Archive>
+            void  serialize(Archive & archive){
+        archive(cereal::make_nvp("nodesize",nodeSize),cereal::make_nvp("depth",depth),
+                cereal::make_nvp("splittingAtt",splittingAtt),cereal::make_nvp("splittingPoint",splittingPoint),
+                cereal::make_nvp("minAttVal",minAttVal),cereal::make_nvp("maxAttVal",maxAttVal),
+                cereal::make_nvp("leftChild",leftChild),cereal::make_nvp("rightChild",rightChild)
 
-    json to_json();
-    void from_json(json &jsontree);
+        );
+    }
 
 
 };

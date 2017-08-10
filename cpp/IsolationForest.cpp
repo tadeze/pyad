@@ -16,7 +16,7 @@ struct smaller
 };
 
 
-IsolationForest::IsolationForest(int _ntree,osu::data::dataset* _df,
+IsolationForest::IsolationForest(int _ntree,std::shared_ptr<util::dataset> _df,
 		int _nsample,int _maxheight, bool _stopheight,bool _rsample)
 :Forest(_ntree,_df,_nsample,_maxheight,_stopheight,_rsample)
 {
@@ -41,7 +41,7 @@ void IsolationForest::buildForest()
 			getSample(sampleIndex,nsample,rsample,dataframe->nrow);
 
 			//build tree
-			Tree *tree = new Tree();
+			auto tree = std::make_shared<Tree>();
 		//	tree->rangeCheck = this->rangecheck;
 			tree->iTree(sampleIndex,dataframe, 0, maxheight, stopheight);
 			this->trees.push_back(tree); //add tree to forest
@@ -65,7 +65,7 @@ int IsolationForest::adaptiveForest(double alpha,int stopLimit){
     std::vector<double> totalDepth(dataframe->nrow,0);
     double prob=0.0;
     std::priority_queue<std::pair<int,double>,std::vector<std::pair<int,double> >, larger> pq;
-
+	std::shared_ptr<Tree> tree;
     while(!converged)
     {
     	pq= std::priority_queue<std::pair<int,double>,std::vector<std::pair<int,double> >,larger >();
@@ -74,7 +74,7 @@ int IsolationForest::adaptiveForest(double alpha,int stopLimit){
             getSample(sampleIndex,nsample,rsample,dataframe->nrow);
 
             //Fill the sampleIndex with indices of the sample rotated data
-            Tree *tree  = new Tree();
+			 tree = std::make_shared<Tree>();
 	//    tree->rangeCheck = this->rangecheck;
 	    tree->iTree(sampleIndex,dataframe,0,maxheight,stopheight);
             this->trees.push_back(tree);
@@ -140,7 +140,7 @@ int IsolationForest::confTree(double alpha, double rho, int init_tree) {
 			std::vector<std::pair<int, double> >, smaller> pq; //holds top shallowest depth
 
 	double current_depth,dbar; //estimated depth
-
+	std::shared_ptr<Tree> tree;
 	while (!converged) {
 		pq = std::priority_queue<std::pair<int, double>,
 				std::vector<std::pair<int, double> >, smaller>();
@@ -149,7 +149,7 @@ int IsolationForest::confTree(double alpha, double rho, int init_tree) {
 		getSample(sample_index, nsample, rsample, dataframe->nrow);
 
 		//Fill the sampleIndex with indices
-		Tree *tree = new Tree();
+		 tree = std::make_shared<Tree>();
 		tree->iTree(sample_index, dataframe, 0, maxheight, stopheight);
 		this->trees.push_back(tree);
 		ntree++;

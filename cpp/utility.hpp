@@ -23,12 +23,24 @@
 //#include "cincl.hpp"
 #include<random>
 #include<utility>
-#include "json/json.hpp"
-#include "stat/IOParser.hpp"
+//#include "json/json.hpp"
 
 
+
+
+////default_random_engine gen(time(NULL));
 namespace util{
-
+	struct dataset
+{
+	int ncol;
+	int nrow;
+	std::vector<std::vector<double> > data;
+	//std::vector<std::vector<double> > data;
+		void print(int ix){
+		for(auto elem : data[ix])
+			std::cout<<elem<<"\t";
+	}
+};
 
 //util::dataset *makeDataset(std::vector<std::vector<double> > &data);
 

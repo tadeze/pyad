@@ -11,47 +11,38 @@
 #include "gtest/gtest.h"
 #include "IsolationForest.hpp"
 #include "common_util.hpp"
-class ForestTest : public ::testing::Test
-{
+class ForestTest : public ::testing::Test {
 protected:
-	Forest *ff;
+	std::shared_ptr<Forest> ff;
 	std::vector<std::vector<double> > data ;
-	osu::data::dataset *dataset;
+	std::shared_ptr<util::dataset> dataset;
 	 int ntree,nsample,maxheight;
 	 bool rsample,stopheight;
-	virtual void SetUp()
-     {
+	virtual void SetUp() {
     	ntree=100;
     	nsample=50;
     	maxheight=0;
     	rsample=false;
     	stopheight=false;
-    	 //Forest(int _ntree,osu::data::dataset* _dataset,int _nsample,int _maxheight, bool _stopheight,bool _rsample)
+    	 //Forest(int _ntree,util::dataset* _dataset,int _nsample,int _maxheight, bool _stopheight,bool _rsample)
 
     	 //Let read data from
     	 //std::string filename("./synth2d.dt");
          std::string filename = common::filename();
     	 data= util::readcsv((char*) &filename[0],',',true);
     	 //ff = new FacadeForest();
-    	  dataset = makeDataset(data);
-    	  ff = new IsolationForest(ntree,dataset,nsample,maxheight,stopheight,rsample);
+    	  dataset = common::makeDataset(data);
+    	  ff = std::make_shared<IsolationForest>(ntree,dataset,nsample,maxheight,stopheight,rsample);
 
      }
-     osu::data::dataset *makeDataset(std::vector<std::vector<double> > &data)
-       {
-       	osu::data::dataset *dt = new osu::data::dataset();
-       	dt->data = data;
-       	dt->ncol = (int)data[0].size();
-       	dt->nrow = (int)data.size();
-       	return dt;
-       }
 
      virtual void TearDown()
      {
-    	delete dataset;
-    	delete ff;
+    	//delete dataset;
+    	//delete ff;
      }
 };
+
 
 TEST_F(ForestTest, createForest){
     ff->fixedTreeForest();
@@ -62,6 +53,7 @@ TEST_F(ForestTest, createForest){
 
 }
 
+/*
 TEST_F(ForestTest,serialize)
 {
    // ASSERT_EQ(9,9);
@@ -89,6 +81,6 @@ TEST_F(ForestTest,deserialize){
    ASSERT_EQ(forest->nsample,nsample);
     //just take two random node and check they are equal
 
-}
+}*/
 //Test remaining module in child
 
