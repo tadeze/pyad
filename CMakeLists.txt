@@ -11,7 +11,7 @@ include_directories("${CMAKE_CURRENT_SOURCE_DIR}/cpp/include")
 add_subdirectory(test)
 add_subdirectory(python)
 add_executable(pyiforest ${SOURCE_FILES})
-#target_link_libraries(pyiforest iforestlib ${ARMADILLO_LIBRARIES})
+target_link_libraries(pyiforest iforestlib ) #${ARMADILLO_LIBRARIES})
 
 #add_subdirectory(pybind11)
 #pybind11_add_module(pyiforest pybindwrapper.cpp)

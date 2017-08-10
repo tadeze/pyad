@@ -5,9 +5,8 @@
 #ifndef FacadeFOREST_HPP
 #define FacadeFOREST_HPP
 #include "main.hpp"
-#include "utility.hpp"
-#include "cereal/archives/binary.hpp"
 
+//#include "utility.hpp"
 //#include "json/json.hpp"
 //using json = nlohmann::json;
 
@@ -62,9 +61,14 @@ virtual ~FacadeForest(){};
         return iff->nsample;
     }
 
+  /*  void setNsample(int nsample) {
+        FacadeForest::nsample = nsample;
+    }*/
+
     int getMaxDepth() const {
         return iff->maxheight;
     }
+
 
     bool isAdaptive() const {
         return this->adaptive;
@@ -127,6 +131,7 @@ virtual ~FacadeForest(){};
 
 
 };
-
+//CEREAL_REGISTER_TYPE(IsolationForest);
+//CEREAL_REGISTER_POLYMORPHIC_RELATION(Forest,IsolationForest);
 
 #endif //IFOREST_ADDIN_FacadeForest_HPP
