@@ -50,8 +50,7 @@ int main(int argc, char* argv[]) {
     //parseInput(argc,argv);
     //Tree::rangeCheck = true;
     std::string filename = util::filename();
-    //std::string filename("/home/tadeze/projects/iForestCodes/pyiForest/test/unittest/synthetic5d34.csv");
-    std::vector<std::vector<double> > data =  data::syntheticData(5,100);//util::readcsv((char *) &filename[0], ',', true);
+    std::vector<std::vector<double> > data =  util::readcsv((char *) &filename[0], ',', true);
 
     // std::cout<<data.size()<<","<<data[0].size()<<" Row/column"<<std::endl;
 
