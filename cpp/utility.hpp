@@ -23,6 +23,7 @@
 //#include "cincl.hpp"
 #include<random>
 #include<utility>
+#include <memory>
 //#include "json/json.hpp"
 
 
@@ -77,9 +78,30 @@ extern std::ofstream logfile;
 extern std::string tmpVar;
 double score(double depth,int n);
 //extern Data *dt;
-	extern  std::string filename();
+extern  std::string filename();
+//std::string filename();
+}
+
+namespace data {
+	std::shared_ptr<util::dataset> makeDataset(std::vector<std::vector<double> > &data);
+
+	void displayVec(std::vector<double> &data);
+
+	void displayVec(std::vector<std::vector<double> > data);
+
+
+/*
+ Generate 2-D data
+ *
+ */
+
+	std::vector<std::vector<double> > syntheticData(int D, int N);
+
+
+
 
 }
+
 #endif
 /* UTITLITY_H_ */
 

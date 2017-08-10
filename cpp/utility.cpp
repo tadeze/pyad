@@ -263,7 +263,41 @@ std::string util::filename() {
 	return filename;
 }
 
+std::shared_ptr<util::dataset> data::makeDataset(std::vector<std::vector<double> > &data) {
+	std::shared_ptr<util::dataset> dt = std::make_shared<util::dataset>(); //new util::dataset();
+	dt->data = data;
+	dt->ncol = (int) data[0].size();
+	dt->nrow = (int) data.size();
+	return dt;
+}
+void data::displayVec(std::vector<double> &data)
+{
+	for(double row : data)
+	{
+		std::cout<<row<<"\t";
+	}
+};
+void data::displayVec(std::vector<std::vector<double> > data){
+	for(auto row : data)
+	{
+		displayVec(row);
+	}
+	std::cout<<"\n";
+}
 
+
+std::vector<std::vector<double> > data::syntheticData(int D, int N)
+{
+	std::vector<std::vector<double> > data;
+	for (int k=0;k<N;k++)
+	{
+		std::vector<double> row(D);
+		for(int j=0;j<D;j++)
+		row.push_back(util::randomD(0,2));
+		data.push_back(row);
+	}
+	return data;
+}
 
 /* UTITLITY_H_ */
 
