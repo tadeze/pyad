@@ -62,7 +62,7 @@ public:
 
 //    json tracePath(std::vector<double> &inst);
     Tree(): leftChild(nullptr),rightChild(nullptr),parent(nullptr),
-            splittingAtt(-1), splittingPoint(-9999),depth(0),nodeSize(0),minAttVal(0),maxAttVal(0){};
+            nodeSize(0),splittingAtt(-1), depth(0),splittingPoint(-9999),minAttVal(0),maxAttVal(0){};
 
 	virtual ~Tree() {};
 	void iTree(std::vector<int> const &dIndex, const std::shared_ptr<util::dataset> dt, int height, int maxHeight, bool stopheight);
