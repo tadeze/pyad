@@ -24,15 +24,8 @@ class IsolationForest:public Forest{
   int adaptiveForest(double alpha,int stopLimit); 
   void fixedTreeForest();
   int confTree(double alpha,double rho,int init_tree);
-    template<class Archive>
-    void serialize(Archive & archive){
-        archive(cereal::make_nvp("ntree",ntree),cereal::make_nvp("nsample",nsample),
-                cereal::make_nvp("rsample",rsample),cereal::make_nvp("stopheight",stopheight),
-                cereal::make_nvp("trees",trees));
 
-    }
 };
-
 
 
 #endif /* ISOLATIONFOREST_HPP_ */
