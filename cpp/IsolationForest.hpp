@@ -27,5 +27,6 @@ class IsolationForest:public Forest{
 
 };
 
-
+CEREAL_REGISTER_TYPE(IsolationForest);
+CEREAL_REGISTER_POLYMORPHIC_RELATION(Forest,IsolationForest);
 #endif /* ISOLATIONFOREST_HPP_ */

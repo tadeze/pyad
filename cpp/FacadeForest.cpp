@@ -190,7 +190,7 @@ void FacadeForest::save(const std::string& filename) {
 //      std::cout<<e.what();
 //  }
  //std::cout<<jsonstr<<" Json representation "<<modelName;
- 
+
 
 // }
 
@@ -199,10 +199,10 @@ void FacadeForest::save(const std::string& filename) {
 /*void FacadeForest::loadModel(std::string modelName,std::string forest_type="iforest")
         //FOREST type=FOREST::IFOREST)
 {
-    
+
    std::ifstream in(modelName);
    if(in)
-   {    
+   {
        if(forest_type =="iforest")
        {
            iff = new IsolationForest();

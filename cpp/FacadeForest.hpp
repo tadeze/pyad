@@ -84,7 +84,6 @@ virtual ~FacadeForest(){};
         FacadeForest::rangeCheck = rangecheck;
     }
 
-
 	const std::shared_ptr<Forest> getIff() const {
 		return iff;
 	}
@@ -96,7 +95,6 @@ virtual ~FacadeForest(){};
 	const std::shared_ptr<util::dataset> getTraindf() const {
 		return traindf;
 	}
-
 
     //Methods
     
@@ -133,7 +131,7 @@ virtual ~FacadeForest(){};
 
 
 };
-CEREAL_REGISTER_TYPE(IsolationForest);
-CEREAL_REGISTER_POLYMORPHIC_RELATION(Forest,IsolationForest);
+//CEREAL_REGISTER_TYPE(IsolationForest);
+//CEREAL_REGISTER_POLYMORPHIC_RELATION(Forest,IsolationForest);
 
 #endif //IFOREST_ADDIN_FacadeForest_HPP
