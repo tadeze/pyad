@@ -5,7 +5,7 @@
 #include "common_util.hpp"
 
  std::string common::filename() {
-     std::string filename("/home/tadeze/projects/pyiForestCmake/test/unittest/synth2d.dt");
+     std::string filename("synth2d.dt");
     return filename;
     }
 std::shared_ptr<util::dataset> common::makeDataset(std::vector<std::vector<double> > &data) {

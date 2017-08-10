@@ -37,7 +37,7 @@ Default value is 100.
 #include "cereal/types/unordered_map.hpp"
 #include "cereal/archives/json.hpp"
 #include "cereal/archives/xml.hpp"
-
+#include "cereal/archives/binary.hpp"
 using namespace std;
 
 //log file
@@ -316,13 +316,14 @@ int main(int argc, char* argv[]) {
     // Register the derivedtype class
     // Serialize
 
-    std::string filenamex{"forest.json"};
+    std::string filenamex{"forest.cereal"};
     {
     std::ofstream file{filenamex};
     if (!file.is_open()) {
         throw std::runtime_error{filenamex + " could not be opened"};
     }
-    cereal::JSONOutputArchive archive{file};
+    //cereal::JSONOutputArchive archive{file};
+    cereal::BinaryOutputArchive archive{file};
     archive(ff);
     }
 
@@ -333,7 +334,9 @@ int main(int argc, char* argv[]) {
             throw std::runtime_error{filenamex + " could not be opened"};
         }
         FacadeForest newff;
-        cereal::JSONInputArchive iarchive{ifile};
+       //cereal::JSONInputArchive iarchive{ifile};
+       cereal::BinaryInputArchive iarchive(ifile); // Create an input archive
+
         iarchive(newff);
         newff.testForest(data);
         auto  new_score = newff.getScore();

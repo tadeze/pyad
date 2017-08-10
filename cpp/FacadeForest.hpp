@@ -34,7 +34,9 @@ private:
     const int FOREST_NOT_TRAINED=1;
     const int NO_TEST_DATA =2;
     const int OK =0;
-        
+
+    //const int JSON_FORMAT=1;
+    enum OUTPUT_FORMAT { JSON_FORMAT,BINARY_FORMAT};
   public:
     
    // enum FOREST{IFOREST,RFOREST,CFOREST};
@@ -108,8 +110,11 @@ virtual ~FacadeForest(){};
 
 
     void testForest(std::vector<std::vector<double> > &testdf);
-    void saveModel(std::string modelName);
-    void loadModel(std::string modelName,std::string forest_type);
+   // void saveModel(std::string modelName);
+    void load(const std::string& filename); //OUTPUT_FORMAT output_format);
+    void save(const std::string& filenam); //, OUTPUT_FORMAT output_format);
+
+    //void loadModel(std::string modelName,std::string forest_type);
     std::vector<double> getScore();
     std::vector<std::vector<double> > pathLength();
     std::vector<double> averageDepth();

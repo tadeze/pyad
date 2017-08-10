@@ -26,7 +26,7 @@ SRC_DIR+"FacadeForest.cpp",SRC_DIR+"utility.cpp",
                  SRC_DIR+"Tree.cpp",SRC_DIR+"Forest.cpp",SRC_DIR+"IsolationForest.cpp"],
                  language="c++",
                  extra_compile_args=['-std=c++11'],
-                 include_dirs=[numpy.get_include()])
+                 include_dirs=[numpy.get_include(),SRC_DIR+"include"])
 
 EXTENSIONS = [ext_1]
 
