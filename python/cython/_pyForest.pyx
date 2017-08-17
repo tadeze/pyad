@@ -320,6 +320,7 @@ class IForest(object):
         self.check_missing_value = check_missing_value
         self.rot_trees=[]
         self.trees = []
+        #self.sparsity = sparsity
         if train_df is not None:
             self.train_df = train_df
             self.train(self.train_df)
@@ -403,13 +404,13 @@ class RotationForest(object):
 
 
     def __init__(self,traindf=None,ntree=100,nsample=512,
-                 maxheight=0,adaptive=False,rangecheck=True,reduce_dim=False):
+                 maxheight=0,adaptive=False,rangecheck=True,sparsity=False):
         self.nsample= nsample
         self.ntree= ntree
         self.rangecheck = rangecheck
         self.adaptive = adaptive
         self.maxheight = maxheight
-        self.reduce_dim = reduce_dim
+        self.sparsity = sparsity
         self.sample_rotation=[]
 
     @staticmethod
@@ -427,14 +428,16 @@ class RotationForest(object):
         """ Train forest"""
         assert isinstance(traindf,np.ndarray)
         nrow,ncol = traindf.shape
-        if self.reduce_dim and ncol>3:
-            r = np.ceil((2+np.sqrt(ncol)/2))
+        if self.sparsity and ncol>3:
+            r = int(np.ceil((2+np.sqrt(ncol)/2)))
             self.sample_rotation = np.random.choice(ncol,r,False)
 
-        for tree in range(self.ntree):
+        for tree in xrange(self.ntree):
             # generate rotation matrix
             rotMat = RotationForest.random_rotation_matrix(ncol)
             rotated_data = np.dot(traindf,rotMat)
+            if self.nsample>nrow:
+                self.nsample = nrow
             sample_index = np.random.choice(nrow,self.nsample,False)
             itree = IsolationTree()
             if len(self.sample_rotation) >0:

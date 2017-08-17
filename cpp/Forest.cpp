@@ -108,8 +108,6 @@ void Forest::getSample(std::vector<int> &sampleIndex, const int nsample, bool rs
     else
         util::sampleI(0, nrow - 1, nrow, sampleIndex); //shuffle all index of the data
 
-
-
 }
 /*
 int Forest::adaptiveForest(double alpha,int stopLimit)

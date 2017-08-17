@@ -78,10 +78,15 @@ public:
     // Serialization
     template<class Archive>
             void  serialize(Archive & archive){
-        archive(cereal::make_nvp("nodesize",nodeSize),cereal::make_nvp("depth",depth),
+        /*archive(cereal::make_nvp("nodesize",nodeSize),cereal::make_nvp("depth",depth),
                 cereal::make_nvp("splittingAtt",splittingAtt),cereal::make_nvp("splittingPoint",splittingPoint),
                 cereal::make_nvp("minAttVal",minAttVal),cereal::make_nvp("maxAttVal",maxAttVal),
                 cereal::make_nvp("leftChild",leftChild),cereal::make_nvp("rightChild",rightChild)
+
+        );*/
+        archive(nodeSize,depth,
+                splittingAtt,splittingPoint,
+            minAttVal,maxAttVal,leftChild,rightChild
 
         );
     }

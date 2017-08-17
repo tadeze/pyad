@@ -123,10 +123,14 @@ virtual ~FacadeForest(){};
     template<class Archive>
     void serialize(Archive & archive){
 
-        archive(cereal::make_nvp("ntree",ntree),cereal::make_nvp("nsample",nsample),
+        /*archive(cereal::make_nvp("ntree",ntree),cereal::make_nvp("nsample",nsample),
                 cereal::make_nvp("maxHeight",maxHeight),cereal::make_nvp("stopLimit",stopLimit),
                 cereal::make_nvp("rho",rho),cereal::make_nvp("rotate",rotate),
                 cereal::make_nvp("adaptive",adaptive),cereal::make_nvp("forest",iff));
+        */
+        archive(ntree,nsample
+                ,maxHeight,stopLimit,
+                rho,rotate,adaptive,iff);
     };
 
 

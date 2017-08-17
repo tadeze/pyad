@@ -9,7 +9,7 @@ include_directories("${CMAKE_CURRENT_SOURCE_DIR}/cpp/include")
 
 #include_directories(${ARMADILLO_INCLUDE_DIRS})
 add_subdirectory(test)
-add_subdirectory(python)
+#add_subdirectory(python)
 add_executable(pyiforest ${SOURCE_FILES})
 target_link_libraries(pyiforest iforestlib ) #${ARMADILLO_LIBRARIES})
 

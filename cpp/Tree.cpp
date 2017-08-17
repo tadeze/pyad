@@ -6,10 +6,12 @@
  */
 #include "Tree.hpp"
 #include<stack>
-bool Tree::rangeCheck=true;
+bool Tree::rangeCheck = false;
 double const MISSING_VALUE = -9999.0;
 int const NULL_TREE_CHILD_DEPTH = -999;
-
+/*
+ *@param data input data as double vector
+ */
 std::shared_ptr<util::dataset> Tree::makeDataset(std::vector<std::vector<double> > &data) {
     std::shared_ptr<util::dataset> dt = std::make_shared<util::dataset>();//new util::dataset();
 	dt->data = data;
@@ -20,22 +22,19 @@ std::shared_ptr<util::dataset> Tree::makeDataset(std::vector<std::vector<double>
 
 
 void Tree::iTree(std::vector<int> const &dIndex,
-        std::vector<std::vector<double> > traindata, int height, int maxheight, bool stopheight)
-{
+        std::vector<std::vector<double> > traindata, int height, int maxheight, bool stopheight){
     std::shared_ptr<util::dataset> dt = makeDataset(traindata);
    this->iTree(dIndex,dt,height,maxheight,stopheight);
 //   delete dt;
 }
 
 
-void Tree::iTree(std::vector<int> const &dIndex,const std::shared_ptr<util::dataset> dt, int height, int maxheight, bool stopheight)
-{
+void Tree::iTree(std::vector<int> const &dIndex,const std::shared_ptr<util::dataset> dt, int height, int maxheight, bool stopheight){
 	this->depth = height; //Tree height
 	// Set size of the node
 	nodeSize = dIndex.size();
 	//stop growing if condition
-	if (dIndex.size() <= 1 || (stopheight && this->depth > maxheight))
-	{
+	if (dIndex.size() <= 1 || (stopheight && this->depth > maxheight)){
 		return;
 	}
 	//*** Need modification
@@ -44,8 +43,7 @@ void Tree::iTree(std::vector<int> const &dIndex,const std::shared_ptr<util::data
 	std::vector<std::vector<double> > minmax;
 	std::vector<double> tmp;
 
-	for (int j = 0; j < dt->ncol; j++)
-	{
+	for (int j = 0; j < dt->ncol; j++){
 	//initialize max and min to random value
 		tmp.push_back(dt->data[dIndex[0]][j]);
 		tmp.push_back(dt->data[dIndex[0]][j]);
@@ -54,11 +52,9 @@ void Tree::iTree(std::vector<int> const &dIndex,const std::shared_ptr<util::data
 	}
 
     //Compute max and min of each attribute
-	for (unsigned i = 0; i <dIndex.size() ; i++)
-	{
+	for (unsigned i = 0; i <dIndex.size() ; i++){
 		//vector<double> inst = data->data[i];
-		for (int j = 0; j < dt->ncol; j++)
-		{
+		for (int j = 0; j < dt->ncol; j++){
 			if (dt->data[dIndex.at(i)][j] < minmax[j].at(0))
 				minmax[j].at(0) =dt->data[dIndex.at(i)][j];
 			if (dt->data[dIndex.at(i)][j] > minmax.at(j).at(1))
@@ -70,12 +66,10 @@ void Tree::iTree(std::vector<int> const &dIndex,const std::shared_ptr<util::data
 	//use only valid attributes
    	 std::vector<int> attributes;
 	for (int j = 0; j < dt->ncol; j++)
-	{
 		if (minmax[j][0] < minmax[j][1])
-		{
 			attributes.push_back(j);
-		}
-	}
+		
+	
 	//return if no valid attribute found
 	if (attributes.size() == 0)
 		return;
@@ -89,97 +83,20 @@ void Tree::iTree(std::vector<int> const &dIndex,const std::shared_ptr<util::data
 	std::vector <int> rnodeData;
 	//Split the node into two
 	for (unsigned i = 0; i < dIndex.size(); i++)
-	{
 		if ( dt->data[dIndex.at(i)][splittingAtt] >= splittingPoint &&
 				(dt->data[dIndex.at(i)][splittingAtt]!=minmax[this->splittingAtt][0]))
-
-		{
 			rnodeData.push_back(dIndex.at(i));
-		}
 		else
-		{
 			lnodeData.push_back(dIndex.at(i));
-		}
-	}
+		
+	
 	leftChild = std::make_shared<Tree>(); //new Tree(); //&dataL,height+1,maxheight);
 	//leftChild->parent = this;
 	leftChild->iTree(lnodeData,dt, this->depth + 1, maxheight, stopheight);
-
 	rightChild =std::make_shared<Tree>();// new Tree(); //&dataR,height+1,maxheight);
 	//rightChild->parent = this;
 	rightChild->iTree(rnodeData,dt, this->depth + 1, maxheight, stopheight);
-
 }
-
-/*
-
-//Need to be fixed later.
-json Tree::tracePath(std::vector<double> &inst)
-{
-	json jroot,j;
-	// Define empty queute
-	std::queue<Tree*> qtree ;
-	qtree.push(this);
-
-	double instAttVal = inst[this->splittingAtt];
-	double depth=0.0;
-
-while(!qtree.empty())
-    {
-
-        Tree* nextTree = qtree.front();
-        qtree.pop();
-        if(nextTree==NULL){
-            j = NULL;
-           break;
-        }
-        else
-        {
-		if(Tree::rangeCheck==true)
- 		{
-
-			if((instAttVal < this->minAttVal && util::randomD(instAttVal,this->minAttVal)<this->minAttVal) ||
-			(instAttVal >this->minAttVal && util::randomD(instAttVal,this->maxAttVal)>this->maxAttVal))
-				{
-				depth+=1.0;
-				 continue;
-				}
-		}
-
-
- 		instAttVal = inst[nextTree->splittingAtt];
-
-
-		if ( instAttVal >= nextTree->splittingPoint)
-		   qtree.push(nextTree->rightChild);
-	//	temp= temp->rightChild;
-		else
-		  	 qtree.push(nextTree->leftChild);
-
-	//temp = temp->leftChild;
-
-
-            j["depth"] = nextTree->depth;
-            j["splittingAtt"] = nextTree->splittingAtt;
-            j["splittingPoint"] = nextTree->splittingPoint;
-            j["depth"]= nextTree->depth;
-            j["nodesize"]=nextTree->nodeSize;
-            j["minAttVal"] = nextTree->minAttVal;
-            j["maxAttVal"] = nextTree->maxAttVal;
-
-
-	//if(nextTree->leftChild!=NULL){ //Assuming balanced tree
-           // qtree.push(nextTree->leftChild);
-           // qtree.push(nextTree->rightChild);
-          }
-     jroot.push_back(j);
-        }
-
-return jroot;
-
-}
-
-*/
 
 
 
@@ -198,8 +115,7 @@ double Tree::pathLengthM(std::vector<double> &inst){
 	std::shared_ptr<Tree> temp = this->shared_from_this(); //std::enable_shared_from_this<Tree>;// = this;
 	while(temp!=NULL){
 
-		if(Tree::rangeCheck)
- 		{
+		if(Tree::rangeCheck){
 
 			if(instAttVal < this->minAttVal && util::randomD(instAttVal,this->minAttVal)<this->minAttVal)
 				return depth+1.0;
@@ -241,10 +157,10 @@ double Tree::pathLength(std::vector<double> &inst){
 
 	if(instAttVal==MISSING_VALUE) {
 
-	double leftNodeSize = (double)this->leftChild->nodeSize/(double)this->nodeSize;
+	    double leftNodeSize = (double)this->leftChild->nodeSize/(double)this->nodeSize;
 
-	return 	 (1.0-leftNodeSize)*(this->rightChild->pathLength(inst) + 1.0)+
-leftNodeSize*(this->leftChild->pathLength(inst) + 1.0);
+	    return 	 (1.0-leftNodeSize)*(this->rightChild->pathLength(inst) + 1.0)+
+                  leftNodeSize*(this->leftChild->pathLength(inst) + 1.0);
 
  	}
 
@@ -252,18 +168,10 @@ leftNodeSize*(this->leftChild->pathLength(inst) + 1.0);
  	//Logging the isolation process
  	//	logfile<<tmpVar<<","<<this->splittingAtt<<","<<this->splittingPoint<<"\n";
 
-	if (instAttVal >= this->splittingPoint) {
-
-
+	if (instAttVal >= this->splittingPoint) 
 		return this->rightChild->pathLength(inst) + 1.0;
-
-	}
-	else {
+	else 
 		return this->leftChild->pathLength(inst) + 1.0;
-	}
-
-
-
 }
 
 
@@ -289,11 +197,9 @@ struct Contrib Tree::featureContribution(std::vector<double> &inst) const{
         depth = depth +1.0;
         if (root->splittingAtt!=-1)
         contribution.addcont(root->splittingAtt,depth+util::avgPL(root->nodeSize));
-
     }
     depth = util::avgPL(root->nodeSize) + depth;
     return contribution;//.featureContribution();
-
 }
 int Tree::maxTreeDepth(){
 	if (!this) return 0;
@@ -466,3 +372,74 @@ void Tree::from_json(json &jsontree){
 
 }
 */
+/*
+
+//Need to be fixed later.
+json Tree::tracePath(std::vector<double> &inst)
+{
+	json jroot,j;
+	// Define empty queute
+	std::queue<Tree*> qtree ;
+	qtree.push(this);
+
+	double instAttVal = inst[this->splittingAtt];
+	double depth=0.0;
+
+while(!qtree.empty())
+    {
+
+        Tree* nextTree = qtree.front();
+        qtree.pop();
+        if(nextTree==NULL){
+            j = NULL;
+           break;
+        }
+        else
+        {
+		if(Tree::rangeCheck==true)
+ 		{
+
+			if((instAttVal < this->minAttVal && util::randomD(instAttVal,this->minAttVal)<this->minAttVal) ||
+			(instAttVal >this->minAttVal && util::randomD(instAttVal,this->maxAttVal)>this->maxAttVal))
+				{
+				depth+=1.0;
+				 continue;
+				}
+		}
+
+
+ 		instAttVal = inst[nextTree->splittingAtt];
+
+
+		if ( instAttVal >= nextTree->splittingPoint)
+		   qtree.push(nextTree->rightChild);
+	//	temp= temp->rightChild;
+		else
+		  	 qtree.push(nextTree->leftChild);
+
+	//temp = temp->leftChild;
+
+
+            j["depth"] = nextTree->depth;
+            j["splittingAtt"] = nextTree->splittingAtt;
+            j["splittingPoint"] = nextTree->splittingPoint;
+            j["depth"]= nextTree->depth;
+            j["nodesize"]=nextTree->nodeSize;
+            j["minAttVal"] = nextTree->minAttVal;
+            j["maxAttVal"] = nextTree->maxAttVal;
+
+
+	//if(nextTree->leftChild!=NULL){ //Assuming balanced tree
+           // qtree.push(nextTree->leftChild);
+           // qtree.push(nextTree->rightChild);
+          }
+     jroot.push_back(j);
+        }
+
+return jroot;
+
+}
+
+*/
+
+

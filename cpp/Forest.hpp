@@ -90,9 +90,11 @@ virtual std::vector<std::map<int,double> > featureContrib(std::vector<double> &i
     // Serialization
     template<class Archive>
      void serialize(Archive & archive){
-        archive(cereal::make_nvp("ntree",ntree),cereal::make_nvp("nsample",nsample),
+        /*archive(cereal::make_nvp("ntree",ntree),cereal::make_nvp("nsample",nsample),
                 cereal::make_nvp("rsample",rsample),cereal::make_nvp("stopheight",stopheight),
-                cereal::make_nvp("trees",trees));
+                cereal::make_nvp("trees",trees));*/
+        archive(ntree,nsample,rsample,
+                stopheight,trees);
 
     }
 };
