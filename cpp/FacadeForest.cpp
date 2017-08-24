@@ -5,6 +5,10 @@
 #include "FacadeForest.hpp"
 #include<exception>
 #include<fstream>
+#include <cereal/archives/json.hpp>
+#include "cereal/archives/binary.hpp"
+#include <memory>
+#include "cereal/types/memory.hpp"
 FacadeForest::FacadeForest() {
 	ntree = 0;
 	nsample = 0;
@@ -19,8 +23,9 @@ FacadeForest::FacadeForest() {
 	iff = nullptr;
 
 }
-util::dataset *makeDataset(std::vector<std::vector<double> > &data) {
-	util::dataset *dt = new util::dataset();
+std::shared_ptr<util::dataset> makeDataset(std::vector<std::vector<double> > &data) {
+    std::shared_ptr<util::dataset> dt = std::make_shared<util::dataset>();
+    //auto dt = std::make_shared<util::dataset>();
 	dt->data = data;
 	dt->ncol = (int) data[0].size();
 	dt->nrow = (int) data.size();
@@ -62,16 +67,19 @@ int FacadeForest::trainForest(std::vector<std::vector<double> > &traindf,
 	this->traindf = makeDataset(traindf);
 
 	if (!rotate) {
-		IsolationForest *iforest = new IsolationForest(ntree, this->traindf,
+	//	IsolationForest *iforest
+                iff= std::make_shared<IsolationForest>(ntree, this->traindf,
 					nsample, maxHeight, stopheight, rsample); //build iForest
-			iff = iforest;
+	//		iff = iforest;
 		}
 	else{
-		IsolationForest *iforest = new IsolationForest(ntree, this->traindf,
+        iff= std::make_shared<IsolationForest>(ntree, this->traindf,
+                                              nsample, maxHeight, stopheight, rsample); //build iForest
+/*		IsolationForest *iforest = new IsolationForest(ntree, this->traindf,
 							nsample, maxHeight, stopheight, rsample); //build iForest
 		//std::cout<<"Output from rforest\n";
 		iff = iforest;
-
+*/
 	}
 
 	try {
@@ -141,33 +149,60 @@ void FacadeForest::displayData() {
 	}
 
 }
+//
+//
 
+void FacadeForest::load(const std::string& filename) {
+    std::ifstream file{filename};
+    if(!file.is_open()) {
+        throw std::runtime_error{filename + " could not be opened"};
+    }
+    cereal::BinaryInputArchive archive{file};
+    // TODO:support for JSON format
+    archive(cereal::make_nvp("ntree",ntree),cereal::make_nvp("nsample",nsample),
+            cereal::make_nvp("maxHeight",maxHeight),cereal::make_nvp("stopLimit",stopLimit),
+            cereal::make_nvp("rho",rho),cereal::make_nvp("rotate",rotate),
+            cereal::make_nvp("adaptive",adaptive),cereal::make_nvp("forest",iff));
 
-void FacadeForest::saveModel(std::string modelName) {
-  // Save the json representation 
- try{
-     json  jsonstr = iff->to_json();
-     std::ofstream  out(modelName);
-     out<<jsonstr;
-     out.close();
-  }
-  catch(std::exception e){
-      std::cout<<e.what();
-  }
+}
+void FacadeForest::save(const std::string& filename) {
+    std::ofstream file{filename};
+    if(!file.is_open()) {
+        throw std::runtime_error{filename + " could not be opened"};
+    }
+    cereal::BinaryOutputArchive archive {file};
+    archive(cereal::make_nvp("ntree",ntree),cereal::make_nvp("nsample",nsample),
+            cereal::make_nvp("maxHeight",maxHeight),cereal::make_nvp("stopLimit",stopLimit),
+            cereal::make_nvp("rho",rho),cereal::make_nvp("rotate",rotate),
+            cereal::make_nvp("adaptive",adaptive),cereal::make_nvp("forest",iff));
+
+}
+
+//void FacadeForest::saveModel(std::string modelName) {
+//  // Save the json representation
+// try{
+//     json  jsonstr = iff->to_json();
+//     std::ofstream  out(modelName);
+//     out<<jsonstr;
+//     out.close();
+//  }
+//  catch(std::exception e){
+//      std::cout<<e.what();
+//  }
  //std::cout<<jsonstr<<" Json representation "<<modelName;
- 
-
- }
 
 
+// }
 
-void FacadeForest::loadModel(std::string modelName,std::string forest_type="iforest")
+
+
+/*void FacadeForest::loadModel(std::string modelName,std::string forest_type="iforest")
         //FOREST type=FOREST::IFOREST)
 {
-    
+
    std::ifstream in(modelName);
    if(in)
-   {    
+   {
        if(forest_type =="iforest")
        {
            iff = new IsolationForest();
@@ -178,7 +213,7 @@ void FacadeForest::loadModel(std::string modelName,std::string forest_type="ifor
    }
 
 }
-
+*/
 std::map<int,double> FacadeForest::explanation(std::vector<double> &inst){
   return iff->importance(inst);
 }

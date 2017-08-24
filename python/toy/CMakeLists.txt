@@ -1,5 +1,0 @@
-project(pyTree)
-set(HEADER_FILES math.hpp)
-set(SOURCE_FILES math.cpp)
-#add_subdirectory(Eigen)
-add_library(toylib STATIC ${SOURCE_FILES} ${HEADER_FILES})

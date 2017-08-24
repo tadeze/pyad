@@ -21,4 +21,6 @@ void saveScoreToFile(std::vector<double> &scores,
 		std::vector<std::vector<double> > &pathLength,
 		const ntstringframe* metadata, std::string fName,bool savePathLength);
 */
+
+#define ENABLE_JSON
 #endif /* MAIN_HPP_ */

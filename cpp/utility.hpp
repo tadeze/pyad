@@ -6,6 +6,7 @@
  */
 #ifndef UTILITY_HPP_
 #define UTILITY_HPP_
+
 #include<iostream>
 #include<fstream>
 #include<sstream>
@@ -23,63 +24,90 @@
 //#include "cincl.hpp"
 #include<random>
 #include<utility>
-#include "json/json.hpp"
+#include <memory>
+//#include "json/json.hpp"
 
 
 
 
 ////default_random_engine gen(time(NULL));
-namespace util{
-	struct dataset
-{
-	int ncol;
-	int nrow;
-	std::vector<std::vector<double> > data;
-	//std::vector<std::vector<double> > data;
-		void print(int ix){
-		for(auto elem : data[ix])
-			std::cout<<elem<<"\t";
-	}
-};
+namespace util {
+    struct dataset {
+        int ncol;
+        int nrow;
+        std::vector<std::vector<double> > data;
+
+        //std::vector<std::vector<double> > data;
+        void print(int ix) {
+            for (auto elem : data[ix])
+                std::cout << elem << "\t";
+        }
+    };
 
 //util::dataset *makeDataset(std::vector<std::vector<double> > &data);
 
-int randomI(int min, int max);
-int randomEx(int min,int max,std::set<int>& exlude);
-void sampleI(int min, int max, int nsample, std::vector<int> &sampleIndx);
-double avgPL(int n);
+    int randomI(int min, int max);
+
+    int randomEx(int min, int max, std::set<int> &exlude);
+
+    void sampleI(int min, int max, int nsample, std::vector<int> &sampleIndx);
+
+    double avgPL(int n);
+
 //inline
-double randomD(double min, double max);
-template <typename T>
-T randomT(T min, T max);
-	template <typename T>
-void swapInt(T a, T b, T* x);
-//template<typename T>
-double variance(std::vector<double> &x);
+    double randomD(double min, double max);
+
+    template<typename T>
+    T randomT(T min, T max);
+
+    template<typename T>
+    void swapInt(T a, T b, T *x);
 
 //template<typename T>
-double mean(std::vector<double> points);
+    double variance(std::vector<double> &x);
 
-double tconf(std::vector<double> &points, double sigma);
+//template<typename T>
+    double mean(std::vector<double> points);
 
-std::vector<std::vector<double> > readcsv(const char* filename, char delim,
-		bool header);
+    double tconf(std::vector<double> &points, double sigma);
+
+    std::vector<std::vector<double> > readcsv(const char *filename, char delim,
+                                              bool header);
+
 //extern std::ofstream ffile; //("log.txt");
-std::map<double,double> ecdf(std::vector<double> points);
-std::vector<double> ADdistance(const std::vector<std::vector<double> > &depths, bool weightToTail);
+    std::map<double, double> ecdf(std::vector<double> points);
 
-//void convertVtoDf(std::vector<std::vector<double> > &sourceVec,doubleframe* df);
+    std::vector<double> ADdistance(const std::vector<std::vector<double> > &depths, bool weightToTail);
 
-
-//extern doubleframe* dt;
 //log file
-extern std::ofstream logfile;
-extern std::string tmpVar;
-double score(double depth,int n);
+    extern std::ofstream logfile;
+    extern std::string tmpVar;
+
+    double score(double depth, int n);
+
 //extern Data *dt;
-	extern  std::string filename();
+    extern std::string filename();
 
 }
+
+namespace data {
+    std::shared_ptr<util::dataset> makeDataset(std::vector<std::vector<double> > &data);
+
+    void displayVec(std::vector<double> &data);
+
+    void displayVec(std::vector<std::vector<double> > data);
+
+
+/*
+ Generate 2-D data
+ *
+ */
+
+    std::vector<std::vector<double> > syntheticData(int D, int N);
+
+
+}
+
 #endif
 /* UTITLITY_H_ */
 
