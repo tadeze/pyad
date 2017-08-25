@@ -7,8 +7,8 @@
 
 #include "Forest.hpp"
 
-double Forest::getdepth(std::vector<double> inst, std::shared_ptr<Tree> tree) {
-    return tree->pathLength(inst);
+double Forest::getdepth(std::vector<double> &inst, const std::shared_ptr<Tree> &tree) {
+    return tree->pathLength(inst,this->cmv);
 }
 
 
@@ -52,7 +52,7 @@ std::vector<double> Forest::pathLength(std::vector<double> &inst) {
     /*for (std::vector<std::shared_ptr<Tree>>::iterator it = this->trees.begin(); it != trees.end();
          ++it) {*/
     for(auto const &tree : this->trees)
-        depth.push_back(tree->pathLength(inst));
+        depth.push_back(getdepth(inst,tree)); //#tree->pathLength(inst,cmv));
 
     /*depth.push_back((*it)->pathLength(inst));
 

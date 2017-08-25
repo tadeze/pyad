@@ -9,6 +9,7 @@
 bool Tree::rangeCheck = false;
 double const MISSING_VALUE = -9999.0;
 int const NULL_TREE_CHILD_DEPTH = -999;
+//std::ofstream util::logfile("logfile.log");
 /*
  *@param data input data as double vector
  */
@@ -137,7 +138,7 @@ double Tree::pathLengthM(std::vector<double> &inst){
 /*
  * takes instance as vector of double
  */
-double Tree::pathLength(std::vector<double> &inst){
+double Tree::pathLength(std::vector<double> &inst,bool cmv ){
 
 
  	if (this->leftChild==NULL||this->rightChild==NULL) { ///referenced as null for some input data .
@@ -154,16 +155,17 @@ double Tree::pathLength(std::vector<double> &inst){
 
 	}
 	//Checking missing data for the attribute.
+	if(cmv){
+		if(instAttVal==MISSING_VALUE) {
+			util::logfile<<instAttVal<<","<<depth<<"\n";
 
-	if(instAttVal==MISSING_VALUE) {
+		    double leftNodeSize = (double)this->leftChild->nodeSize/(double)this->nodeSize;
 
-	    double leftNodeSize = (double)this->leftChild->nodeSize/(double)this->nodeSize;
+		    return 	 (1.0-leftNodeSize)*(this->rightChild->pathLength(inst) + 1.0)+
+	                  leftNodeSize*(this->leftChild->pathLength(inst) + 1.0);
 
-	    return 	 (1.0-leftNodeSize)*(this->rightChild->pathLength(inst) + 1.0)+
-                  leftNodeSize*(this->leftChild->pathLength(inst) + 1.0);
-
- 	}
-
+	 	}
+	}
 
  	//Logging the isolation process
  	//	logfile<<tmpVar<<","<<this->splittingAtt<<","<<this->splittingPoint<<"\n";

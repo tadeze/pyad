@@ -9,6 +9,7 @@
 #include "cereal/archives/binary.hpp"
 #include <memory>
 #include "cereal/types/memory.hpp"
+std::ofstream util::logfile("logfile.log");
 FacadeForest::FacadeForest() {
 	ntree = 0;
 	nsample = 0;
@@ -94,12 +95,12 @@ int FacadeForest::trainForest(std::vector<std::vector<double> > &traindf,
 	return ntree;  //Return number of trees used. Useful incase of adaptive tree growing
 }
 
-void FacadeForest::testForest(std::vector<std::vector<double> > &_testdf) {
+void FacadeForest::testForest(std::vector<std::vector<double> > &_testdf, bool cmv) {
 
 	//morph _testdf vector to doublerame format.
 
 	this->testdf = makeDataset(_testdf);
-
+	iff->cmv = cmv;
 }
 
 /*

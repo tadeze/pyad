@@ -9,9 +9,10 @@
 
 using namespace std;
 namespace util {
-//default_random_engine gen(400);  //Debugging
 
-    default_random_engine gen(time(NULL));  //Production
+   default_random_engine gen(400);  //Debugging
+
+   //default_random_engine gen(time(NULL));  //Production
 
     template<typename T>
     T randomT(T min, T max) {
@@ -282,6 +283,9 @@ std::vector<std::vector<double> > data::syntheticData(int D, int N) {
     }
     return data;
 }
+
+/*void write_log(std::ostream out){
+}*/
 
 /* UTITLITY_H_ */
 

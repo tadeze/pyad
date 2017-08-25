@@ -68,7 +68,7 @@ public:
 	void iTree(std::vector<int> const &dIndex, const std::shared_ptr<util::dataset> dt, int height, int maxHeight, bool stopheight);
 	void iTree(std::vector<int> const &dIndex, std::vector<std::vector<double> > traindata, int height, int maxHeight, bool stopheight);
 	
-    double pathLength(std::vector<double> &inst);
+    double pathLength(std::vector<double> &inst, bool cmv = false );
 	double pathLengthM(std::vector<double> &inst);
 	int maxTreeDepth();
 

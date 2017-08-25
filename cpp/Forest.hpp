@@ -24,6 +24,7 @@ public:
     bool stopheight;
     int maxheight;
    	bool rangecheck;
+   	bool cmv;
 	std::shared_ptr<util::dataset> dataframe;
     //std::unique_ptr<util::dataset> dataframe;
     Forest() {
@@ -31,6 +32,7 @@ public:
 		ntree = 0;
 		nsample = 256;
 		dataframe = NULL;
+		cmv = false;
 	};
 Forest(int _ntree,std::shared_ptr<util::dataset> _dataset,int _nsample,
        int _maxheight, bool _stopheight,bool _rsample){
@@ -55,7 +57,7 @@ virtual ~Forest(){};
 	std::vector<double> meandepth();
 	std::vector<double> ADtest(const std::vector<std::vector<double> > &pathlength, bool weighttotail);
 	std::map<int, double> importance(std::vector<double> &inst);
-	virtual double getdepth(std::vector<double> inst, std::shared_ptr<Tree> tree);
+	virtual double getdepth(std::vector<double> &inst, const std::shared_ptr<Tree> &tree);
 	void getSample(std::vector<int> &sampleIndex,const int nsample,bool rSample,int nrow);
 	struct larger {
 		bool operator()(const std::pair<int,double> p1,const std::pair<int,double> p2)

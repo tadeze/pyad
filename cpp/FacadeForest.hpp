@@ -20,7 +20,7 @@ private:
     bool rangeCheck;
     double rho;
     int stopLimit;
-
+    bool cmv;
     //util::dataset *traindf,*testdf;
     /*
     Forest *iff;
@@ -107,7 +107,7 @@ virtual ~FacadeForest(){};
     };
 
 
-    void testForest(std::vector<std::vector<double> > &testdf);
+    void testForest(std::vector<std::vector<double> > &testdf, bool cmv);
    // void saveModel(std::string modelName);
     void load(const std::string& filename); //OUTPUT_FORMAT output_format);
     void save(const std::string& filenam); //, OUTPUT_FORMAT output_format);

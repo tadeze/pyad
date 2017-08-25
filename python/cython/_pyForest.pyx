@@ -3,27 +3,23 @@
 
 """
 
-# distutils: language = c++
-# distutils: sources = Rectangle.cpp
-
-# Cython interface file for wrapping the object
-#
-#
 
 from libcpp.vector cimport vector
 from libcpp.map cimport map
 from libcpp cimport bool
 from libcpp.string cimport string
+
+# c++ interface to cython
 import numpy as np
 import cPickle
-# c++ interface to cython
+from collections import defaultdict
 
 cdef extern from "../../cpp/FacadeForest.hpp":
   cdef cppclass FacadeForest:
         FacadeForest()
         void displayData() 
         int trainForest(vector[vector[double]] &, int ,int,int,bool,bool,bool,double,int)
-        void testForest(vector[vector[double]] &)
+        void testForest(vector[vector[double]] &, bool)
         long factorial(int)
         vector[double]  getScore()
         vector[vector[double]] pathLength()
@@ -38,6 +34,23 @@ cdef extern from "../../cpp/FacadeForest.hpp":
         void save(string model_name)
         void load(string model_name)
         map[int,double] explanation(vector[double] &)
+cdef extern from "../../cpp/Tree.hpp":
+  cdef cppclass Tree:
+        Tree()
+        void iTree(vector[int] & ,vector[vector[double]],int,int,bool)
+        double pathLength(vector[double] &)
+        int maxTreeDepth()
+        int getNodeSize()
+        int getSplittingAtt()
+        double getSplittingPoint()
+        int getDepth()
+        double getMinAttVal()
+        double getMaxAttVal()
+        map[int,double] explanation(vector[double] &)
+        #Tree lChild()
+        #Tree rChild()
+        #void saveModel(string model_name)
+        #void loadModel(string model_name,string forest_type)
 
 cdef class IsolationForest:
     cdef FacadeForest *thisptr
@@ -108,10 +121,10 @@ cdef class IsolationForest:
 
         return self.thisptr.trainForest(traindf,ntree,nsample,maxheight,rotate,adaptive,rangecheck,rho,stoplimit)
 
-    def score(self,test_data):
+    def score(self,test_data,cmv=False):
         """
         Scored test data using trained anomaly detector.
-
+        @param cmv : check missing value, default False 
         Args:
             test_data: Testdata to score in ndarray format(numpy 2d-matrix), it should be the same dimension as training dataset.
         Returns: anomaly score value b/n 0 and 1.
@@ -124,7 +137,7 @@ cdef class IsolationForest:
         if self.thisptr.isValidModel()==1:
             raise NameError("The iForest model is not yet trained.")
         DataValidator.validate_dataset(test_data)
-        self.thisptr.testForest(test_data)
+        self.thisptr.testForest(test_data,cmv)
         return self.thisptr.getScore()
 
     def validate_model(self):
@@ -241,23 +254,7 @@ cdef class IsolationForest:
         """
         return self.thisptr.explanation(x)
 
-cdef extern from "../../cpp/Tree.hpp":
-  cdef cppclass Tree:
-        Tree()
-        void iTree(vector[int] & ,vector[vector[double]],int,int,bool)
-        double pathLength(vector[double] &)
-        int maxTreeDepth()
-        int getNodeSize()
-        int getSplittingAtt()
-        double getSplittingPoint()
-        int getDepth()
-        double getMinAttVal()
-        double getMaxAttVal()
-        map[int,double] explanation(vector[double] &)
-        #Tree lChild()
-        #Tree rChild()
-        #void saveModel(string model_name)
-        #void loadModel(string model_name,string forest_type)
+
 
 cdef class IsolationTree:
     cdef Tree *thisptr
@@ -306,8 +303,6 @@ cdef class IsolationTree:
     #def get_leftChild(self):
     #    return self.thisptr.lChild()
 
-
-from collections import defaultdict
 class IForest(object):
 
     def __init__(self, train_df=None, ntree=100, nsample=512,
