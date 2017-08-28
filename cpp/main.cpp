@@ -38,9 +38,9 @@ Default value is 100.
 #include "cereal/archives/xml.hpp"
 #include "cereal/archives/binary.hpp"
 #include "utility.hpp"
-//log file
-std::ofstream util::logfile("treepath.csv");
 
+//log file
+//std::ofstream util::logfile("logfile.csv");
 /*
  * Display vector data
  */
@@ -49,39 +49,65 @@ std::ofstream util::logfile("treepath.csv");
 int main(int argc, char* argv[]) {
     //parseInput(argc,argv);
     //Tree::rangeCheck = true;
+    //util::logfile.open("logfile.txt",std::ios_base::out);
+    //std::string log_filename ("outputlog.txt");
+    //util::init_log(log_filename);
     std::string filename = util::filename();
-    std::vector<std::vector<double> > data =  util::readcsv((char *) &filename[0], ',', true);
+    std::vector<std::vector<double> > dataxx = data::syntheticData(4,1000);   //util::readcsv((char *) &filename[0], ',', true);
 
-    // std::cout<<data.size()<<","<<data[0].size()<<" Row/column"<<std::endl;
+    //util::write_log(filename);
+    //util::close_log();
+    bool check_missing_value = true;//false;//true;
 
     // From facadeForest
     FacadeForest ff;
 
-//   std::vector<std::vector<double> > &traindf,int _ntree,
-//       		int _nsample,int _maxheight, bool _rotate, bool _adaptive,
-//       		    		bool _rangecheck,double _rho,int _stopLimit);
-    ff.trainForest(data, 100, 256, 0, false, false, false, 0.01, 0);
+    ff.trainForest(dataxx, 100, 256, 0, false, false, false, 0.01, 0);
     std::cout << ff.getNSample() << " ==" << ff.getNTree() << std::endl;
-    std::cout << "Size of training set" << ff.getTraindf()->nrow << std::endl;
-    ff.testForest(data);
+    std::cout <<"Size of training set"
+              <<dataxx.size()
+              <<","<<dataxx[0].size()<<std::endl;
+    // Insert missing values.
+
+    dataxx[1][0] = -9999.0;
+    dataxx[2][1] = -9999.0;
+    dataxx[3][1] = -9999.0;
+    dataxx[4][1] = -9999.0;
+    dataxx[4][2] = -9999.0;
+
+
+    ff.testForest(dataxx,check_missing_value);
     std::vector<double> score = ff.getScore();
     std::cout<<"Checking scores\n";
     for (auto const &sce : score)
         std::cout << sce << "\t";
+    //std::string forest_name = "facadeforest.bin";
+    std::ofstream tracedpath("tracedpath2.csv");
+    ff.explanation(dataxx[2]);
+    ff.tracepath(dataxx[2],tracedpath);
+    tracedpath.close();
+
+    //ff.save(forest_name,true);
+
 
     /** checking from forest **/
-    std::shared_ptr<util::dataset> dataset;
-    dataset = data::makeDataset(data);
-    int i = 2;
-    std::cout << dataset->ncol << " Column \n";
-    dataset->print(i);
-    auto explan = ff.explanation(dataset->data[i]);
-    std::cout << "\n Explanations" << std::endl;
-    for (const auto &mpr : explan)
-        std::cout << mpr.first << "\t" << mpr.second << std::endl;
+
+//    std::shared_ptr<util::dataset> dataset;
+//    dataset = data::makeDataset(data);
+//
+//    std::cout<<dataset->data[5][0]<<"\n";
+//    int i = 2;
+//    std::cout << dataset->ncol << " Column \n";
+//    dataset->print(i);
+//    auto explan = ff.explanation(dataset->data[i]);
+//    std::cout << "\n Explanations" << std::endl;
+//    for (const auto &mpr : explan)
+//        std::cout << mpr.first << "\t" << mpr.second << std::endl;
+
+
     // Register the derivedtype class
     // Serialize
-
+/*
     std::string filenamex{"forest.cereal"};
     {
     std::ofstream file{filenamex};
@@ -92,23 +118,23 @@ int main(int argc, char* argv[]) {
     cereal::BinaryOutputArchive archive{file};
     archive(ff);
     }
+*/
+    // Read forest
 
-// Read forest
-
-        std::ifstream ifile{filenamex};
+  /*      std::ifstream ifile{filenamex};
         if (!ifile.is_open()) {
             throw std::runtime_error{filenamex + " could not be opened"};
         }
         FacadeForest newff;
        //cereal::JSONInputArchive iarchive{ifile};
        cereal::BinaryInputArchive iarchive(ifile); // Create an input archive
-
         iarchive(newff);
-        newff.testForest(data);
+
+        newff.testForest(data,check_missing_value);
         auto  new_score = newff.getScore();
        for(auto &sc : new_score)
            std::cout<<sc<<"\t";
-
+*/
     // TODO: explanation returns vad pointer need to be updated.
    // auto tr = std::make_shared<Tree>();
     //tree_sh->iTree(dataIndex,dataset,0,0,false)

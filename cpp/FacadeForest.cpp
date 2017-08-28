@@ -9,7 +9,7 @@
 #include "cereal/archives/binary.hpp"
 #include <memory>
 #include "cereal/types/memory.hpp"
-std::ofstream util::logfile("logfile.log");
+std::ofstream util::logfile("logfile2.csv");
 FacadeForest::FacadeForest() {
 	ntree = 0;
 	nsample = 0;
@@ -153,29 +153,46 @@ void FacadeForest::displayData() {
 //
 //
 
-void FacadeForest::load(const std::string& filename) {
+void FacadeForest::load(const std::string& filename, bool binaryFormat) {
     std::ifstream file{filename};
     if(!file.is_open()) {
         throw std::runtime_error{filename + " could not be opened"};
     }
-    cereal::BinaryInputArchive archive{file};
-    // TODO:support for JSON format
-    archive(cereal::make_nvp("ntree",ntree),cereal::make_nvp("nsample",nsample),
-            cereal::make_nvp("maxHeight",maxHeight),cereal::make_nvp("stopLimit",stopLimit),
-            cereal::make_nvp("rho",rho),cereal::make_nvp("rotate",rotate),
-            cereal::make_nvp("adaptive",adaptive),cereal::make_nvp("forest",iff));
+    if(binaryFormat) {
+        cereal::BinaryInputArchive archive{file};
+        // TODO:support for JSON format
+        archive(cereal::make_nvp("ntree", ntree), cereal::make_nvp("nsample", nsample),
+                cereal::make_nvp("maxHeight", maxHeight), cereal::make_nvp("stopLimit", stopLimit),
+                cereal::make_nvp("rho", rho), cereal::make_nvp("rotate", rotate),
+                cereal::make_nvp("adaptive", adaptive), cereal::make_nvp("forest", iff));
+    }else{
+        cereal::JSONInputArchive archive{file};
+        // TODO:support for JSON format
+        archive(cereal::make_nvp("ntree", ntree), cereal::make_nvp("nsample", nsample),
+                cereal::make_nvp("maxHeight", maxHeight), cereal::make_nvp("stopLimit", stopLimit),
+                cereal::make_nvp("rho", rho), cereal::make_nvp("rotate", rotate),
+                cereal::make_nvp("adaptive", adaptive), cereal::make_nvp("forest", iff));
 
+    }
 }
-void FacadeForest::save(const std::string& filename) {
+void FacadeForest::save(const std::string& filename, bool binaryFormat) {
     std::ofstream file{filename};
     if(!file.is_open()) {
         throw std::runtime_error{filename + " could not be opened"};
     }
-    cereal::BinaryOutputArchive archive {file};
-    archive(cereal::make_nvp("ntree",ntree),cereal::make_nvp("nsample",nsample),
-            cereal::make_nvp("maxHeight",maxHeight),cereal::make_nvp("stopLimit",stopLimit),
-            cereal::make_nvp("rho",rho),cereal::make_nvp("rotate",rotate),
-            cereal::make_nvp("adaptive",adaptive),cereal::make_nvp("forest",iff));
+    if(binaryFormat) {
+        cereal::BinaryOutputArchive archive{file};
+        archive(cereal::make_nvp("ntree", ntree), cereal::make_nvp("nsample", nsample),
+                cereal::make_nvp("maxHeight", maxHeight), cereal::make_nvp("stopLimit", stopLimit),
+                cereal::make_nvp("rho", rho), cereal::make_nvp("rotate", rotate),
+                cereal::make_nvp("adaptive", adaptive), cereal::make_nvp("forest", iff));
+    }else{
+        cereal::JSONOutputArchive archive{file};
+        archive(cereal::make_nvp("ntree", ntree), cereal::make_nvp("nsample", nsample),
+                cereal::make_nvp("maxHeight", maxHeight), cereal::make_nvp("stopLimit", stopLimit),
+                cereal::make_nvp("rho", rho), cereal::make_nvp("rotate", rotate),
+                cereal::make_nvp("adaptive", adaptive), cereal::make_nvp("forest", iff));
+    }
 
 }
 

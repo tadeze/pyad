@@ -87,7 +87,7 @@ virtual ~Forest(){};
 	}
 //json to_json();
 //void from_json(std::ifstream &input);
-
+void tracePath(std::vector<double> &inst,std::ostream &out);
 virtual std::vector<std::map<int,double> > featureContrib(std::vector<double> &inst);
     // Serialization
     template<class Archive>

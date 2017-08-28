@@ -21,14 +21,10 @@
 #include<algorithm>
 #include<map>
 #include<set>
-//#include "cincl.hpp"
 #include<random>
 #include<utility>
 #include <memory>
 //#include "json/json.hpp"
-
-
-
 
 ////default_random_engine gen(time(NULL));
 namespace util {
@@ -42,7 +38,7 @@ namespace util {
             for (auto elem : data[ix])
                 std::cout << elem << "\t";
         }
-    };
+};
 
 //util::dataset *makeDataset(std::vector<std::vector<double> > &data);
 
@@ -80,13 +76,17 @@ namespace util {
     std::vector<double> ADdistance(const std::vector<std::vector<double> > &depths, bool weightToTail);
 
 //log file
-    extern std::ofstream logfile;
     extern std::string tmpVar;
 
     double score(double depth, int n);
 
 //extern Data *dt;
     extern std::string filename();
+
+    extern std::ofstream logfile;
+    void init_log(std::string filename);
+    void write_log(std::string &msg);
+    void close_log();
 
 }
 

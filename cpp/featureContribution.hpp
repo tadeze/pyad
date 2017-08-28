@@ -13,6 +13,11 @@
 struct Contrib{
     int feature;
     std::map<int,std::vector<double> > contributions;
+    /**
+     *  Adds feature index and depth along the tree.
+     * @param index : Index of the features, starts with 0
+     * @param depth : Depth of node where the feature is used as splitting attriibute.
+     */
     void addcont(int index, double depth){
         if(contributions.count(index)<1) {
             std::vector<double> contr;
@@ -23,6 +28,13 @@ struct Contrib{
             contributions[index].push_back(depth);
         }
     }
+
+
+
+    /*!
+     *
+     * @return feature explanation computed by inverse of depth
+     */
     std::map<int,double> featureContribution(){
         std::map<int,double> explanation;
         for(const auto & contr : contributions){

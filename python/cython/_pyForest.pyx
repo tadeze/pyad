@@ -165,16 +165,16 @@ cdef class IsolationForest:
     def average_depth(self):
         """
 
-        Returns: Returns average depth(path length) across the trees used.
-
+        Returns: Average depth(path length) across all trees of the forest.
+        >> ff.average_depth() # returns average depth of all point passed in score method.
         """
         self.validate_model(); #check 
         return self.thisptr.averageDepth()
     def save(self,model_name):
            """
-           Save trained iForest model as json file
+           Save trained Isolation Forest model as binary or json.
            Args:
-               model_name: model to save with .json extension e.g. trainedmodel.json
+               model_name: model to save e.g. forest.bin or forest.json
 
            Returns:
 
@@ -188,7 +188,7 @@ cdef class IsolationForest:
            model_name: path to the JSON model name
            forest_type: type of trained model. Default iforest
 
-       Returns: Loads a trainded iForest model from JSON file
+       Returns: Loads a trainded iForest model from saved file.
 
        """
        if DataValidator.validate_file_exists(model_name):

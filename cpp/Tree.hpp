@@ -29,7 +29,11 @@ private:
     int nodeSize,splittingAtt,depth;
 	double splittingPoint,minAttVal,maxAttVal;
     std::shared_ptr<util::dataset> makeDataset(std::vector<std::vector<double> > &data);
+    int parent_id;
+public:
+    int getParent_id() const;
 
+    void setParent_id(int parent_id);
 
 public:
     const std::shared_ptr<Tree> &getLeftChild() const;

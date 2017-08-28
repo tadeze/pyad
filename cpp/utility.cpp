@@ -217,6 +217,22 @@ namespace util {
         return scores;
 
     }
+    /* Logging functions
+     * /
+     */
+
+    void init_log(std::string filename){
+        logfile.open(filename);
+
+    }
+    void write_log(std::string &msg){
+        logfile<<msg;
+    }
+    void close_log(){
+        logfile.close();
+    }
+
+
 }
 
 
@@ -275,8 +291,9 @@ void data::displayVec(std::vector<std::vector<double> > data) {
 
 std::vector<std::vector<double> > data::syntheticData(int D, int N) {
     std::vector<std::vector<double> > data;
+
     for (int k = 0; k < N; k++) {
-        std::vector<double> row(D);
+        std::vector<double> row;
         for (int j = 0; j < D; j++)
             row.push_back(util::randomD(0, 2));
         data.push_back(row);

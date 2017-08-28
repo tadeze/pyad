@@ -51,7 +51,9 @@ virtual ~FacadeForest(){};
   */
     FacadeForest();
 
-    
+    void tracepath(std::vector<double> &inst,std::ostream &out){
+        iff->tracePath(inst,out);
+    }
     int getNTree() const {
         return iff->ntree;
         
@@ -61,9 +63,12 @@ virtual ~FacadeForest(){};
         return iff->nsample;
     }
 
-  /*  void setNsample(int nsample) {
+  /*
+   *
+   void setNsample(int nsample) {
         FacadeForest::nsample = nsample;
-    }*/
+    }
+    */
 
     int getMaxDepth() const {
         return iff->maxheight;
@@ -107,10 +112,10 @@ virtual ~FacadeForest(){};
     };
 
 
-    void testForest(std::vector<std::vector<double> > &testdf, bool cmv);
+    void testForest(std::vector<std::vector<double> > &testdf, bool cmv = false);
    // void saveModel(std::string modelName);
-    void load(const std::string& filename); //OUTPUT_FORMAT output_format);
-    void save(const std::string& filenam); //, OUTPUT_FORMAT output_format);
+    void load(const std::string& filename, bool binaryFormat = true); //OUTPUT_FORMAT output_format);
+    void save(const std::string& filenam, bool binaryFormat = true); //, OUTPUT_FORMAT output_format);
 
     //void loadModel(std::string modelName,std::string forest_type);
     std::vector<double> getScore();

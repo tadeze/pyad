@@ -21,7 +21,7 @@ protected:
          std::string filename = common::filename();
     	 data= util::readcsv((char*) &filename[0],',',true);
     	 int tree_used = ff.trainForest(data,100,256,0,false,false,false,0.01,0);  //Just train a forest
-	   	 ff.testForest(data);
+	   	 ff.testForest(data,false);
      }
 
      virtual void TearDown()

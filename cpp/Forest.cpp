@@ -89,14 +89,6 @@ std::map<int, double> Forest::importance(std::vector<double> &inst) {
         }
     }
 
-    /*std::vector<double> depth;
-    for (std::vector<Tree*>::iterator it = this->trees.begin(); it != trees.end();
-            ++it)
-    {
-
-        depth.push_back(ceil((*it)->pathLength(inst)));
-
-    }*/
     return totalexplan;
 }
 
@@ -109,58 +101,8 @@ void Forest::getSample(std::vector<int> &sampleIndex, const int nsample, bool rs
         util::sampleI(0, nrow - 1, nrow, sampleIndex); //shuffle all index of the data
 
 }
-/*
-int Forest::adaptiveForest(double alpha,int stopLimit)
-{
-//For now remove warning compiler
- return (int)alpha*stopLimit;
-}
-int Forest::confTree(double alpha,double rho, int init_tree){
-	//For now remove warning
-	return (int)alpha*rho*init_tree;
-}
-*/
 
-// Serialization
-/*
-json Forest::to_json() {
-    json j;
-    j["ntree"] = ntree;
-    j["rsample"] = rsample;
-    j["maxheight"] = maxheight;
-    j["stopheight"] = stopheight;
-    j["rangecheck"] = rangecheck;
-    j["nsample"] = nsample;
 
-    for (int i = 0; i < ntree; i++) {
-        //j["trees"][i]=serialize_bfs(trees[i]);
-        j["trees"][i] = trees[i]->to_json();
-
-    }
-
-    return j;
-
-}
-
-void Forest::from_json(std::ifstream &input) {
-    json jff;
-    input >> jff;
-
-    this->nsample = jff["nsample"];
-    this->rsample = jff["rsample"];
-    this->maxheight = jff["maxheight"];
-    this->stopheight = jff["stopheight"];
-    this->rangecheck = jff["rangecheck"];
-    this->ntree = jff["ntree"];
-
-    for (int i = 0; i < this->ntree; i++) {
-        // json* rootTree = &jff["trees"][i];
-        Tree *rootTree = new Tree();
-        rootTree->from_json(jff["trees"][i]);
-        this->trees.push_back(rootTree);
-    }
-}
- */
 /*
  * Feature contribution
  */
@@ -176,4 +118,19 @@ void Forest::from_json(std::ifstream &input) {
         return contributions;
     }
 
+void Forest::tracePath(std::vector<double> &inst, std::ostream &out){
+
+    auto featureCont = Forest::featureContrib(inst);
+    for (const auto tree : this->trees) {
+        auto treePath = tree->featureContribution(inst).contributions;
+        for(auto feat : treePath) {
+            out <<tree->getParent_id()<<","<<feat.first << "," << inst[feat.first]<<",[";
+            for(auto depth_path: feat.second)
+                out<<depth_path<<",";
+            out<<"]";
+            out<<"\n";
+        }
+    }
+
+}
 

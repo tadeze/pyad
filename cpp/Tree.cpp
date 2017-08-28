@@ -93,9 +93,12 @@ void Tree::iTree(std::vector<int> const &dIndex,const std::shared_ptr<util::data
 	
 	leftChild = std::make_shared<Tree>(); //new Tree(); //&dataL,height+1,maxheight);
 	//leftChild->parent = this;
+    leftChild->setParent_id(this->getParent_id());  // uniqualy identify each trees.
 	leftChild->iTree(lnodeData,dt, this->depth + 1, maxheight, stopheight);
 	rightChild =std::make_shared<Tree>();// new Tree(); //&dataR,height+1,maxheight);
-	//rightChild->parent = this;
+    rightChild->setParent_id(this->getParent_id());
+
+    //rightChild->parent = this;
 	rightChild->iTree(rnodeData,dt, this->depth + 1, maxheight, stopheight);
 }
 
@@ -157,7 +160,8 @@ double Tree::pathLength(std::vector<double> &inst,bool cmv ){
 	//Checking missing data for the attribute.
 	if(cmv){
 		if(instAttVal==MISSING_VALUE) {
-			util::logfile<<instAttVal<<","<<depth<<"\n";
+			util::logfile<<this->getParent_id()<<","<<nodeSize<<","<<splittingAtt<<","<<instAttVal<<","<<depth<<leftChild->nodeSize<<","
+                    <<rightChild->nodeSize<<"\n";
 
 		    double leftNodeSize = (double)this->leftChild->nodeSize/(double)this->nodeSize;
 
@@ -200,7 +204,7 @@ struct Contrib Tree::featureContribution(std::vector<double> &inst) const{
         if (root->splittingAtt!=-1)
         contribution.addcont(root->splittingAtt,depth+util::avgPL(root->nodeSize));
     }
-    depth = util::avgPL(root->nodeSize) + depth;
+   // depth = util::avgPL(root->nodeSize) + depth;
     return contribution;//.featureContribution();
 }
 int Tree::maxTreeDepth(){
@@ -232,6 +236,7 @@ int Tree::maxTreeDepth(){
 	  return maxDepth;
 
 }
+
 std::map<int,double> Tree::explanation(std::vector<double> &inst) const {
 
     return featureContribution(inst).featureContribution();
@@ -291,6 +296,14 @@ double Tree::getMaxAttVal() const {
 
 void Tree::setMaxAttVal(double maxAttVal) {
     Tree::maxAttVal = maxAttVal;
+}
+
+int Tree::getParent_id() const {
+    return parent_id;
+}
+
+void Tree::setParent_id(int parent_id) {
+    Tree::parent_id = parent_id;
 }
 
 /*

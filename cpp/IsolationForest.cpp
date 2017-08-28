@@ -42,6 +42,7 @@ void IsolationForest::buildForest()
 
 			//build tree
 			auto tree = std::make_shared<Tree>();
+			tree->setParent_id(n);
 		//	tree->rangeCheck = this->rangecheck;
 			tree->iTree(sampleIndex,dataframe, 0, maxheight, stopheight);
 			this->trees.push_back(tree); //add tree to forest
