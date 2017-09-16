@@ -38,7 +38,7 @@ Default value is 100.
 #include "cereal/archives/xml.hpp"
 #include "cereal/archives/binary.hpp"
 #include "utility.hpp"
-
+#include "commandparser.hpp"
 //log file
 //std::ofstream util::logfile("logfile.csv");
 /*
@@ -52,7 +52,16 @@ int main(int argc, char* argv[]) {
     //util::logfile.open("logfile.txt",std::ios_base::out);
     //std::string log_filename ("outputlog.txt");
     //util::init_log(log_filename);
-    std::string filename = util::filename();
+    Parser args;
+    args.parse_argument(argc, argv);
+    
+    std::string filename = args.input_name;//util::filename();
+    int ntree = args.ntrees;
+    int nsample = args.nsample;
+    
+    // TODO: Incorporate the command parser into main file
+    
+    
     std::vector<std::vector<double> > dataxx = data::syntheticData(4,1000);   //util::readcsv((char *) &filename[0], ',', true);
 
     //util::write_log(filename);
