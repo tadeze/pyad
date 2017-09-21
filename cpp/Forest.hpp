@@ -12,7 +12,7 @@
 #include "Tree.hpp"
 //using json = nlohmann::json;
 //#include "cincl.hpp"
-class Forest {
+class Forest{
 
 public:
     

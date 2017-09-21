@@ -18,7 +18,6 @@ AUTHOR = "Tadesse Zemicheal"
 EMAIL = "tadesse.habte@gmail.com"
 
 LICENSE = "Apache 2.0"
-
 SRC_DIR = "../../cpp/"
 CYTH_DIR = "./"
 PACKAGES = [CYTH_DIR]

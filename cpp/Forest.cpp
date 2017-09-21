@@ -56,7 +56,6 @@ std::vector<double> Forest::pathLength(std::vector<double> &inst) {
 
     /*depth.push_back((*it)->pathLength(inst));
 
-
     }*/
     return depth;
 }

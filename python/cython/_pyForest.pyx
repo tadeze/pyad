@@ -2,8 +2,6 @@
 @Author: Tadesse Zemicheal
 
 """
-
-
 import numpy as np
 from collections import defaultdict
 import numpy as np
@@ -400,8 +398,8 @@ class RotationForest(object):
     rot_trees=[]
 
 
-    def __init__(self,traindf=None,ntree=100,nsample=512,
-                 maxheight=0,adaptive=False,rangecheck=True,sparsity=False):
+    def __init__(self, traindf=None, ntree=100, nsample=512,
+                 maxheight=0, adaptive=False, rangecheck=True, sparsity=False):
         self.nsample= nsample
         self.ntree= ntree
         self.rangecheck = rangecheck
@@ -424,7 +422,7 @@ class RotationForest(object):
     def train(self,traindf):
         """ Train forest"""
         assert isinstance(traindf,np.ndarray)
-        nrow,ncol = traindf.shape
+        nrow, ncol = traindf.shape
         if self.sparsity and ncol>3:
             r = int(np.ceil((2+np.sqrt(ncol)/2)))
             self.sample_rotation = np.random.choice(ncol,r,False)
@@ -479,7 +477,7 @@ class RotationForest(object):
     def load(self,model_name):
         return cPickle.load(open(model_name,"r"))
 
-#Errror flags
+# Error flags
 class DataValidator(object):
 
 

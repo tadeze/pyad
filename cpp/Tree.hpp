@@ -18,12 +18,6 @@
 //using json= nlohmann::json;
 
 class Tree : public std::enable_shared_from_this<Tree> {
-   /*
-    Tree *leftChild;
-	Tree *rightChild;
-	Tree *parent;
-	*/
-
 private:
     std::shared_ptr<Tree> leftChild,rightChild,parent;
     int nodeSize,splittingAtt,depth;
@@ -32,7 +26,6 @@ private:
     int parent_id;
 public:
     int getParent_id() const;
-
     void setParent_id(int parent_id);
 
 public:
@@ -78,7 +71,7 @@ public:
 
     //Contribution
    contrib featureContribution(std::vector<double> &inst) const;
-    std::map<int,double> explanation(std::vector<double> &inst) const;
+   std::map<int,double> explanation(std::vector<double> &inst) const;
     // Serialization
     template<class Archive>
             void  serialize(Archive & archive){
