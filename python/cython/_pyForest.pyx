@@ -22,7 +22,8 @@ cdef extern from "../../cpp/FacadeForest.hpp":
   cdef cppclass FacadeForest:
         FacadeForest()
         void displayData()
-        int trainForest(vector[vector[double]] &, int ,int,int,bool,bool,bool,double,int)
+        int trainForest(vector[vector[double]] &, int, int, int,
+            bool, bool, bool, double, int)
         void testForest(vector[vector[double]] &, bool)
         long factorial(int)
         vector[double]  getScore()
@@ -37,12 +38,12 @@ cdef extern from "../../cpp/FacadeForest.hpp":
         int isValidModel()
         void save(string model_name)
         void load(string model_name)
-        map[int,double] explanation(vector[double] &)
+        map[int, double] explanation(vector[double] &)
 
 cdef extern from "../../cpp/Tree.hpp":
   cdef cppclass Tree:
         Tree()
-        void iTree(vector[int] & ,vector[vector[double]],int,int,bool)
+        void iTree(vector[int] & ,vector[vector[double]], int, int, bool)
         double pathLength(vector[double] &)
         int maxTreeDepth()
         int getNodeSize()
@@ -51,45 +52,46 @@ cdef extern from "../../cpp/Tree.hpp":
         int getDepth()
         double getMinAttVal()
         double getMaxAttVal()
-        map[int,double] explanation(vector[double] &)
-        #Tree lChild()
-        #Tree rChild()
-        #void saveModel(string model_name)
-        #void loadModel(string model_name,string forest_type)
+        map[int, double] explanation(vector[double] &)
+       
 cdef class IsolationForest:
     cdef FacadeForest *thisptr
-    is_trained = False
+    
 
-    def __cinit__(self,traindf=None,ntree=100,nsample=512,maxheight=0,
-                  rotate=False,adaptive=False,rangecheck=True,rho=0.01,stoplimit=5):
+    def __cinit__(self, traindf=None, ntree=100, nsample=512, maxheight=0,
+        rotate=False, adaptive=False, rangecheck=True, rho=0.01, stoplimit=5):
         """
-        Create IsolationForest object. If parameters are given, the forest is trained as train_forest() method, otherwise empty
+        Create IsolationForest object. If parameters are given, the forest is trained using train() method, otherwise empty
         object is created to be trained later.
+
         Args:
-      _      traindf: Training dataset of ndarray(numpy matrix) format. Required field
+            traindf: Training dataset of ndarray(numpy matrix) format. Required field
             ntree: Number of trees used. Default 100
-            nsample: Number of subsample size for training. Defualt 512
+            nsample: Number of subsample size for training. Defualt 512. If nsample = 0 all training data is used. 
             maxheight: Maximum depth of the binary trees. Default 0 means grow tree until full isolation.
             rotate: Toggle for rotating forest or not. Default false.
             adaptive: Toggle for using adaptive method of growing trees. Default false.
             rangecheck: Toggle for rangecheck during scoring points. Default true.
-            rho: Specify rho precision confidence interval for stopping criteria Value (0.01 to 0.08) works. Default value 0.01.Used only if adaptive is True.
+            rho: Specify rho precision confidence interval for stopping criteria Value (0.01 to 0.08) works. 
+                 Default value 0.01. Used only if adaptive is True.
             stoplimit:Number of common successive top K for adaptive process. Default 5.Used only if adaptiv is True
-        >>ff = IsolationForest(traindf=train_data,ntree=100,nsample=100)
+        E.g.
+        >>ff = IsolationForest(traindf=train_data, ntree=100, nsample=100)
 
-        Returns:
-
+        Returns: IsolationForest object. 
         """
+
         self.thisptr = new FacadeForest()
+        self.is_trained = False 
         if traindf is not None:
-            self.train(traindf,ntree,nsample,maxheight,rotate,adaptive,rangecheck,rho,stoplimit)
+            self.train(traindf, ntree, nsample, maxheight, rotate, adaptive, rangecheck,
+                rho, stoplimit)
 
     def __dealloc__(self):
         del self.thisptr
 
-
-    def train(self,traindf,ntree=100,nsample=512,maxheight=0,rotate=False,
-                     adaptive=False,rangecheck=True,rho=0.01,stoplimit=5):
+    def train(self, traindf, ntree=100, nsample=512, maxheight=0, rotate=False,
+                    adaptive=False, rangecheck=True, rho=0.01, stoplimit=5):
         """
         Train Isolation Forest model.
         ff.train_forest(_traindf,_ntree=100,_nsample=512,_maxheight=0,_rotate=False,_adaptive=False,_rangecheck=True,_rho=0.01,_stoplimit=5):
@@ -105,66 +107,63 @@ cdef class IsolationForest:
             rho: Specify rho precision confidence interval for stopping criteria Value (0.01 to 0.08) works. Default value 0.01.Used only if adaptive is True.
             stoplimit:Number of common successive top K for adaptive process. Default 5.Used only if adaptiv is True
 
-        Returns:
-
+        Returns: Trained IsolationForest object 
         """
+
         DataValidator.validate_dataset(traindf)
-        if ntree<0:
+        if ntree < 0:
             raise NameError("Number of trees cann't be less than 0")
-        if ntree==0:
-            print("You set 0 number of trees, then it is adaptive way of growing")
-            adaptive=True
-        if nsample >len(traindf):
-            nsample=len(traindf)
+        if ntree == 0:
+            print ("You set 0 number of trees, then it is adaptive way of growing")
+            adaptive = True
+        if nsample > len(traindf) or nsample == 0:
+            nsample = len(traindf)
             print("Number of samples cann't be greater than sample size,then data will be used")
-        if maxheight<0:
+        if maxheight < 0:
             raise NameError("Max depth cann't be negative")
-        if rho >1:
+        if rho > 1:
             raise NameError("rho value should be less than 1")
-        is_trained = True
+        self.is_trained = True
 
-        return self.thisptr.trainForest(traindf,ntree,nsample,maxheight,rotate,adaptive,rangecheck,rho,stoplimit)
+        return self.thisptr.trainForest(traindf, ntree, nsample, maxheight,
+                            rotate, adaptive, rangecheck, rho, stoplimit)
 
-    def score(self,test_data,cmv=False):
+    def score(self, test_data, cmv = False):
+        
         """
-        Scored test data using trained anomaly detector.
+        Generate anomaly score from trained Forest.
         @param cmv : check missing value, default False
         Args:
             test_data: Testdata to score in ndarray format(numpy 2d-matrix), it should be the same dimension as training dataset.
+            cmv: Check missing value in the test data. Default false.
         Returns: anomaly score value b/n 0 and 1.
-
+        >> score = ff.score(test_data,cmv=True)
         """
-        #if not is_trained:
-        #    raise NameError("Model not yet trained")
-        #self.validate_model()
 
-        if self.thisptr.isValidModel()==1:
+        if self.thisptr.isValidModel() == 1:
             raise NameError("The iForest model is not yet trained.")
         DataValidator.validate_dataset(test_data)
-        self.thisptr.testForest(test_data,cmv)
+        self.thisptr.testForest(test_data, cmv)
         return self.thisptr.getScore()
 
     def validate_model(self):
-        if self.thisptr.isValidModel()==1:
+        if self.thisptr.isValidModel() == 1:
             raise NameError("The iForest model is not yet trained.")
-        if self.thisptr.isValidModel()==2:
+        if self.thisptr.isValidModel() == 2:
             raise NameError("Test data not given")
 
     def anomaly_score(self):
         """
-
         Returns: Returns anomaly score from the trained model
-
         """
-        self.validate_model() #check
+        self.validate_model() 
         return self.thisptr.getScore()
     def path_length(self):
         """
-
         Returns: Returns path length of observations in all trees used.
 
         """
-        self.validate_model(); #check
+        self.validate_model(); 
         return self.thisptr.pathLength()
     def average_depth(self):
         """
@@ -174,6 +173,7 @@ cdef class IsolationForest:
         """
         self.validate_model(); #check
         return self.thisptr.averageDepth()
+
     def save(self,model_name):
            """
            Save trained Isolation Forest model as binary or json.
@@ -185,16 +185,18 @@ cdef class IsolationForest:
            """
            return self.thisptr.save(model_name)
 
+    
     def load(self,model_name,forest_type="iforest"):
        """
-       Load trained iForest model from JSON file
+       Load trained iForest model from JSON/binary file
        Args:
-           model_name: path to the JSON model name
+           model_name: path to the JSON/binary saved model.
            forest_type: type of trained model. Default iforest
 
        Returns: Loads a trainded iForest model from saved file.
 
        """
+
        if DataValidator.validate_file_exists(model_name):
            return self.thisptr.load(model_name)
 
@@ -252,9 +254,12 @@ cdef class IsolationForest:
 
         """
         return self.thisptr.displayData()
-    def explanation(self,x):
+    def explanation(self, x):
         """
-        Return: Explanations
+        Args:
+            x instance for explanation. 
+        Return: Explanations 
+
         """
         return self.thisptr.explanation(x)
 
