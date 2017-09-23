@@ -6,7 +6,7 @@
  */
 
 
-#include "FacadeForest.hpp"
+#include "facade_forest.hpp"
 #include "gtest/gtest.h"
 #include "common_util.hpp"
 class FacadeForestTest : public ::testing::Test

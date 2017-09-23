@@ -7,9 +7,9 @@
 
 
 
-#include "Forest.hpp"
+#include "forest.hpp"
 #include "gtest/gtest.h"
-#include "IsolationForest.hpp"
+#include "isolation_forest.hpp"
 #include "common_util.hpp"
 class ForestTest : public ::testing::Test {
 protected:

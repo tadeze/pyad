@@ -35,7 +35,7 @@ extensions = ['breathe']
 
 breathe_projects = {'pybind11': '.build/doxygenxml/'}
 breathe_default_project = 'pybind11'
-breathe_domain_by_extension = {'h': 'cpp'}
+breathe_domain_by_extension = {'h': 'src'}
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['.templates']
@@ -309,8 +309,8 @@ texinfo_documents = [
 # If true, do not generate a @detailmenu in the "Top" node's menu.
 #texinfo_no_detailmenu = False
 
-primary_domain = 'cpp'
-highlight_language = 'cpp'
+primary_domain = 'src'
+highlight_language = 'src'
 
 
 def generate_doxygen_xml(app):

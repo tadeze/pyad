@@ -24,7 +24,7 @@ function calls to constructors:
         ...
     }
 
-You can find various examples of these in several of the existing testing .cpp files.  (Of course
+You can find various examples of these in several of the existing testing .src files.  (Of course
 you don't need to add any of the above constructors/operators that you don't actually have, except
 for the destructor).
 

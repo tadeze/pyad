@@ -59,7 +59,7 @@ set(PYBIND11_TEST_FILES
 )
 
 # Invoking cmake with something like:
-#     cmake -DPYBIND11_TEST_OVERRIDE="test_issues.cpp;test_picking.cpp" ..
+#     cmake -DPYBIND11_TEST_OVERRIDE="test_issues.src;test_picking.src" ..
 # lets you override the tests that get compiled and run.  You can restore to all tests with:
 #     cmake -DPYBIND11_TEST_OVERRIDE= ..
 if (PYBIND11_TEST_OVERRIDE)

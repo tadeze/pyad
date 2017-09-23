@@ -8,9 +8,9 @@ print sc[2]
 
 print ff.explanation(dt[2,:])
 print dt[2,:]
-print ("Check model save");
-ff.save("iforest.if");
+print ("Check model save")
+ff.save("iforest.if")
 xf = pft.IsolationForest()
-xf.load("iforest.if");
+xf.load("iforest.if")
 print xf.score(dt)[2],sc[2]
 
