@@ -150,7 +150,7 @@ def test_override_ref():
     from pybind11_tests.issues import OverrideTest
     o = OverrideTest("asdf")
 
-    # Not allowed (see associated .cpp comment)
+    # Not allowed (see associated .src comment)
     # i = o.str_ref()
     # assert o.str_ref() == "asdf"
     assert o.str_value() == "asdf"

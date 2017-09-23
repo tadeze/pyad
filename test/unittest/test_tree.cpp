@@ -1,4 +1,4 @@
-#include "Tree.hpp"
+#include "tree.hpp"
 #include "gtest/gtest.h"
 #include "common_util.hpp"
 
