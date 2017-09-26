@@ -6,6 +6,7 @@
  */
 
 #include "isolation_forest.hpp"
+using namespace osu::ad;
 struct smaller
 {
 	bool operator()(const std::pair<int,double> p1,const std::pair<int,double> p2)

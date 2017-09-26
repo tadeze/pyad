@@ -44,7 +44,7 @@ Default value is 100.
 /*
  * Display vector data
  */
-
+using namespace osu::ad;
 
 int main(int argc, char* argv[]) {
     //parseInput(argc,argv);
@@ -62,7 +62,7 @@ int main(int argc, char* argv[]) {
     // TODO: Incorporate the command parser into main file
     
     
-    std::vector<std::vector<double> > dataxx = data::syntheticData(4,1000);   //util::readcsv((char *) &filename[0], ',', true);
+    std::vector<std::vector<double> > dataxx = util::syntheticData(4,1000);   //util::readcsv((char *) &filename[0], ',', true);
 
     //util::write_log(filename);
     //util::close_log();

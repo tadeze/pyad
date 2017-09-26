@@ -8,42 +8,36 @@
 #include "utility.hpp"
 
 using namespace std;
-namespace util {
-
+using namespace osu::ad;
     //default_random_engine gen(400);  //Debugging
 
     default_random_engine gen(time(NULL));  //Production
-
     template<typename T>
-    T randomT(T min, T max) {
+    T util::randomT(T min, T max) {
         uniform_real_distribution<T> dist(min, max);
         return dist(gen);
 
     }
 
-
-    double randomD(double min, double max) {
+    double util::randomD(double min, double max) {
         uniform_real_distribution<double> dist(min, max);
         return dist(gen);
     }
 
-
-    int randomI(int min, int max) {
+    int util::randomI(int min, int max) {
 
         uniform_int_distribution<unsigned> dist(min, max);
         return dist(gen);
-
-
     }
 
-    int randomEx(int min, int max, set<int> &exlude) {
+    int util::randomEx(int min, int max, set<int> &exlude) {
         int num;
         num = randomI(min, max);            //(int) (min + (rand() % (max - min+1)));
         return exlude.find(num) != exlude.end() ? randomEx(min, max, exlude) : num;
 
     }
 
-    void sampleI(int min, int max, int nsample, vector<int> &samples) {
+    void util::sampleI(int min, int max, int nsample, vector<int> &samples) {
         int cnt = 0;
         int rndI;
         set<int> duplicate;
@@ -57,12 +51,19 @@ namespace util {
 
     }
 
-    double score(double depth, int n) {
+    double util::avgPL(int n) {
+
+        return (((n - 1) <= 0) ?
+                0.0 :
+                ((2.0 * (log((double) (n - 1)) + 0.5772156649))
+                 - (2.0 * (double) (n - 1)) / (1.0 + (double) (n - 1))));
+
+    }
+    double util::score(double depth, int n) {
         return pow(2, -depth / avgPL(n));
     }
-
     template<typename T>
-    void swapInt(int a, int b, T *x) {
+    void util::swapInt(int a, int b, T *x) {
         int hold;
         hold = x[a];
         x[a] = x[b];
@@ -73,7 +74,7 @@ namespace util {
 /*
  * Sample mean of points
  */
-    double mean(vector<double> points) {
+    double util::mean(vector<double> points) {
         double sum = 0;
         for (int f = 0; f < (int) points.size(); f++)
             sum += points[f];
@@ -83,7 +84,7 @@ namespace util {
 /*
  * Calculate sample variance from vector of doublen numbers
  */
-    double variance(vector<double> &x) {
+    double util::variance(vector<double> &x) {
         double sum = 0.0;
         double mn = mean(x);
         for (double elem : x) {
@@ -95,7 +96,7 @@ namespace util {
 /* T-confidence interval
  *
  */
-    double tconf(vector<double> &points, double sigma = 0.95) {
+    double util::tconf(vector<double> &points, double sigma = 0.95) {
         double sd = sqrt(variance(points));
         double tvalue = 1.64 * sd / (double) sqrt(points.size());
         return tvalue;
@@ -107,7 +108,7 @@ namespace util {
  * used for testing
  */
 
-    vector<vector<double> > readcsv(const char *filename, char delim = ',',
+    vector<vector<double> > util::readcsv(const char *filename, char delim = ',',
                                     bool header = true) {
         vector<vector<double> > values;
         vector<double> valueline;
@@ -130,7 +131,7 @@ namespace util {
 /*
  * Calculate the cumulative distribution function
  */
-    map<double, double> ecdf(vector<double> points) {
+    map<double, double> util::ecdf(vector<double> points) {
         map<double, double> cdfm;
 
         sort(points.begin(), points.end());
@@ -161,14 +162,6 @@ namespace util {
         return result;
     }
 
-    double avgPL(int n) {
-
-        return (((n - 1) <= 0) ?
-                0.0 :
-                ((2.0 * (log((double) (n - 1)) + 0.5772156649))
-                 - (2.0 * (double) (n - 1)) / (1.0 + (double) (n - 1))));
-
-    }
 
 
 /*
@@ -181,7 +174,7 @@ namespace util {
     false) {
         //flatten 2-d to 1-d and compute alldepth ECDF of using all points depths
         vector<double> alldepth = flatten(depths);
-        map<double, double> Fxm = ecdf(alldepth); //all depth cdf
+        map<double, double> Fxm = util::ecdf(alldepth); //all depth cdf
 
         vector<double> scores;
         /*
@@ -191,7 +184,7 @@ namespace util {
         for (vector<double> x : depths) {
             sort(x.begin(), x.end());
             map<double, double>::iterator iter = Fxm.begin();
-            map<double, double> fxn = ecdf(x);  //empirical cdf of the point
+            map<double, double> fxn = util::ecdf(x);  //empirical cdf of the point
             double sum = 0;
             for (double elem : x) {
                 double val;
@@ -252,45 +245,50 @@ void convertVtoDf(std::vector<std::vector<double> > &sourceVec,doubleframe* df)
 
 }
 */
-}
-std::string util::filename() {
-    std::string filename("/home/tadeze/projects/iForestCodes/pyiForest/test/unittest/synthetic5d34.csv");
-    return filename;
-}
 
-std::shared_ptr<util::dataset> data::makeDataset(std::vector<std::vector<double> > &data) {
-    std::shared_ptr<util::dataset> dt = std::make_shared<util::dataset>(); //new util::dataset();
-    dt->data = data;
-    dt->ncol = (int) data[0].size();
-    dt->nrow = (int) data.size();
-    return dt;
-}
 
-void data::displayVec(std::vector<double> &data) {
-    for (double row : data) {
-        std::cout << row << "\t";
+    std::string util::filename() {
+        std::string filename("/home/tadeze/projects/iForestCodes/pyiForest/test/unittest/synthetic5d34.csv");
+        return filename;
     }
-};
 
-void data::displayVec(std::vector<std::vector<double> > data) {
-    for (auto row : data) {
-        displayVec(row);
+    std::shared_ptr<util::dataset> util::makeDataset(std::vector<std::vector<double> > &data) {
+        std::shared_ptr<util::dataset> dt = std::make_shared<util::dataset>(); //new util::dataset();
+        dt->data = data;
+        dt->ncol = (int) data[0].size();
+        dt->nrow = (int) data.size();
+        return dt;
     }
-    std::cout << "\n";
-}
 
+    void util::displayVec(std::vector<double> &data) {
+        for (double row : data) {
+            std::cout << row << "\t";
+        }
+    };
 
-std::vector<std::vector<double> > data::syntheticData(int D, int N) {
-    std::vector<std::vector<double> > data;
-
-    for (int k = 0; k < N; k++) {
-        std::vector<double> row;
-        for (int j = 0; j < D; j++)
-            row.push_back(util::randomD(0, 2));
-        data.push_back(row);
+    void util::displayVec(std::vector<std::vector<double> > data) {
+        for (auto row : data) {
+            displayVec(row);
+        }
+        std::cout << "\n";
     }
-    return data;
-}
+
+
+    std::vector<std::vector<double> > util::syntheticData(int D, int N) {
+        std::vector<std::vector<double> > data;
+
+        for (int k = 0; k < N; k++) {
+            std::vector<double> row;
+            for (int j = 0; j < D; j++)
+                row.push_back(util::randomD(0, 2));
+            data.push_back(row);
+        }
+        return data;
+    }
+
+
+
+
 
 
 

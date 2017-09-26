@@ -9,7 +9,7 @@
 #include <memory>
 
 #include "utility.hpp"
-
+using namespace osu::ad;
 namespace common {
 extern  std::string filename();
     std::shared_ptr<util::dataset> makeDataset(std::vector<std::vector<double> > &data);

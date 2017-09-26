@@ -14,81 +14,95 @@
 #include <memory>
 #include "utility.hpp"
 #include "feature_contribution.hpp"
-//#include "cincl.hpp"
-//using json= nlohmann::json;
+namespace  osu {
+    namespace ad {
+        class Tree : public std::enable_shared_from_this<Tree> {
+        private:
+            std::shared_ptr<Tree> leftChild, rightChild, parent;
+            int nodeSize, splittingAtt, depth;
+            double splittingPoint, minAttVal, maxAttVal;
 
-class Tree : public std::enable_shared_from_this<Tree> {
-private:
-    std::shared_ptr<Tree> leftChild,rightChild,parent;
-    int nodeSize,splittingAtt,depth;
-	double splittingPoint,minAttVal,maxAttVal;
-    std::shared_ptr<util::dataset> makeDataset(std::vector<std::vector<double> > &data);
-    int parent_id;
-public:
-    int getParent_id() const;
-    void setParent_id(int parent_id);
+            std::shared_ptr<util::dataset> makeDataset(std::vector<std::vector<double> > &data);
 
-public:
-    const std::shared_ptr<Tree> &getLeftChild() const;
-    const std::shared_ptr<Tree> &getRightChild() const;
+            int parent_id;
+        public:
+            int getParent_id() const;
 
-    int getNodeSize() const;
+            void setParent_id(int parent_id);
 
-    void setNodeSize(int nodeSize);
+        public:
+            const std::shared_ptr<Tree> &getLeftChild() const;
 
-    int getSplittingAtt() const;
+            const std::shared_ptr<Tree> &getRightChild() const;
 
-    void setSplittingAtt(int splittingAtt);
+            int getNodeSize() const;
 
-    int getDepth() const;
+            void setNodeSize(int nodeSize);
 
-    void setDepth(int depth);
+            int getSplittingAtt() const;
 
-    double getSplittingPoint() const;
+            void setSplittingAtt(int splittingAtt);
 
-    void setSplittingPoint(double splittingPoint);
+            int getDepth() const;
 
-    double getMinAttVal() const;
+            void setDepth(int depth);
 
-    void setMinAttVal(double minAttVal);
+            double getSplittingPoint() const;
 
-    double getMaxAttVal() const;
+            void setSplittingPoint(double splittingPoint);
 
-    void setMaxAttVal(double maxAttVal);
-    static bool rangeCheck;
+            double getMinAttVal() const;
+
+            void setMinAttVal(double minAttVal);
+
+            double getMaxAttVal() const;
+
+            void setMaxAttVal(double maxAttVal);
+
+            static bool rangeCheck;
 
 //    json tracePath(std::vector<double> &inst);
-    Tree(): leftChild(nullptr),rightChild(nullptr),parent(nullptr),
-            nodeSize(0),splittingAtt(-1), depth(0),splittingPoint(-9999),minAttVal(0),maxAttVal(0){};
+            Tree() : leftChild(nullptr), rightChild(nullptr), parent(nullptr),
+                     nodeSize(0), splittingAtt(-1), depth(0), splittingPoint(-9999), minAttVal(0), maxAttVal(0) {};
 
-	virtual ~Tree() {};
-	void iTree(std::vector<int> const &dIndex, const std::shared_ptr<util::dataset> dt, int height, int maxHeight, bool stopheight);
-	void iTree(std::vector<int> const &dIndex, std::vector<std::vector<double> > traindata, int height, int maxHeight, bool stopheight);
-	
-    double pathLength(std::vector<double> &inst, bool cmv = false );
-	double pathLengthM(std::vector<double> &inst);
-	int maxTreeDepth();
+            virtual ~Tree() {};
 
-    //Contribution
-   contrib featureContribution(std::vector<double> &inst) const;
-   std::map<int,double> explanation(std::vector<double> &inst) const;
-    // Serialization
-    template<class Archive>
-            void  serialize(Archive & archive){
-        /*archive(cereal::make_nvp("nodesize",nodeSize),cereal::make_nvp("depth",depth),
-                cereal::make_nvp("splittingAtt",splittingAtt),cereal::make_nvp("splittingPoint",splittingPoint),
-                cereal::make_nvp("minAttVal",minAttVal),cereal::make_nvp("maxAttVal",maxAttVal),
-                cereal::make_nvp("leftChild",leftChild),cereal::make_nvp("rightChild",rightChild)
+            void
+            iTree(std::vector<int> const &dIndex, const std::shared_ptr<util::dataset> dt, int height, int maxHeight,
+                  bool stopheight);
 
-        );*/
-        archive(nodeSize,depth,
-                splittingAtt,splittingPoint,
-            minAttVal,maxAttVal,leftChild,rightChild
+            void iTree(std::vector<int> const &dIndex, std::vector<std::vector<double> > traindata, int height,
+                       int maxHeight, bool stopheight);
 
-        );
+            double pathLength(std::vector<double> &inst, bool cmv = false);
+
+            double pathLengthM(std::vector<double> &inst);
+
+            int maxTreeDepth();
+
+            //Contribution
+            contrib featureContribution(std::vector<double> &inst) const;
+
+            std::map<int, double> explanation(std::vector<double> &inst) const;
+
+            // Serialization
+            template<class Archive>
+            void serialize(Archive &archive) {
+                /*archive(cereal::make_nvp("nodesize",nodeSize),cereal::make_nvp("depth",depth),
+                        cereal::make_nvp("splittingAtt",splittingAtt),cereal::make_nvp("splittingPoint",splittingPoint),
+                        cereal::make_nvp("minAttVal",minAttVal),cereal::make_nvp("maxAttVal",maxAttVal),
+                        cereal::make_nvp("leftChild",leftChild),cereal::make_nvp("rightChild",rightChild)
+
+                );*/
+                archive(nodeSize, depth,
+                        splittingAtt, splittingPoint,
+                        minAttVal, maxAttVal, leftChild, rightChild
+
+                );
+            }
+
+
+        };
     }
-
-
-};
-
+}
 #endif /* TREE_H_ */

@@ -1,7 +1,7 @@
-import pyiForest as pft
+import pyad as pft
 import numpy as np
 
-dt = np.loadtxt('../../test/unittest/synthetic5d34.csv',skiprows=1,delimiter=',')
+dt = np.loadtxt('synthetic5d34.csv',skiprows=1,delimiter=',')
 ff = pft.IsolationForest(dt,ntree=10000,nsample=100)
 sc = ff.score(dt)
 print sc[2]

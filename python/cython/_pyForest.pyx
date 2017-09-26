@@ -17,8 +17,8 @@ from libcpp.string cimport string
 #import cPickle
 #from collections import defaultdict
 
-cdef extern from "../../cpp/FacadeForest.hpp":
-    cdef cppclass FacadeForest:
+cdef extern from "../../src/facade_forest.hpp" namespace "osu::ad":
+    cdef cppclass FacadeForest "osu::ad::FacadeForest":
         FacadeForest()
         void displayData()
         int trainForest(vector[vector[double]] &, int, int, int,
@@ -39,8 +39,8 @@ cdef extern from "../../cpp/FacadeForest.hpp":
         void load(string model_name)
         map[int, double] explanation(vector[double] &)
 
-cdef extern from "../../cpp/Tree.hpp":
-    cdef cppclass Tree:
+cdef extern from "../../src/tree.hpp" namespace "osu::ad":
+    cdef cppclass Tree "osu::ad::Tree":
         Tree()
         void iTree(vector[int] &, vector[vector[double]], int, int, bool)
         double pathLength(vector[double] &)

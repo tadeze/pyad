@@ -6,8 +6,8 @@
  */
 
 #include "conv_forest.hpp"
-using namespace std;
 
+using namespace osu::ad;
 struct topscore
 {
 	bool operator() (const pair<int,double> p1,const pair<int,double> p2)
@@ -26,7 +26,7 @@ struct larger
 
 void inserTopK(vector<pair<int,int> > &sl,int b)
 {
-	for(vector<pair<int,int> >::iterator it=sl.begin();it!=sl.end();++it)
+	for(std::vector<std::pair<int,int> >::iterator it=sl.begin();it!=sl.end();++it)
 	{
 
 	if(it->first==b)
@@ -42,12 +42,12 @@ void inserTopK(vector<pair<int,int> > &sl,int b)
  * @input two vector v1 and v2 a
  * @return proporation of intersection ,[0,1]
  */
-double topcommonK(vector<int> &v1,vector<int> &v2)
+double topcommonK(std::vector<int> &v1,std::vector<int> &v2)
 {
-	vector<int> v3;
-	sort(v1.begin(),v1.end());
-	sort(v2.begin(),v2.end());
-	set_intersection(v1.begin(),v1.end(),v2.begin(),v2.end(),back_inserter(v3));
+	std::vector<int> v3;
+	std::sort(v1.begin(),v1.end());
+	std::sort(v2.begin(),v2.end());
+	std::set_intersection(v1.begin(),v1.end(),v2.begin(),v2.end(),back_inserter(v3));
 	return (double)v3.size()/(double)v1.size();
 }
 
@@ -57,24 +57,24 @@ void convForest::convergeIF(double tau,double alpha)
 {
 //	this->nsample = nsample;
 	double tk = ceil(alpha*4*dataset->nrow);
-	vector<int> sampleIndex;
+	std::vector<int> sampleIndex;
 //	this->rSample = rSample;
-	
-	vector<double> totalDepth(dataset->nrow,0);
+
+	std::vector<double> totalDepth(dataset->nrow,0);
     int conv_cnt =0;  //convergence counter
 
-	vector<double> squaredDepth(dataset->nrow,0);
- 	priority_queue<pair<int,double>,vector<pair<int,double> >, larger> pq;
+	std::vector<double> squaredDepth(dataset->nrow,0);
+	std::priority_queue<std::pair<int,double>,std::vector<std::pair<int,double> >, larger> pq;
 	double  ntree=0.0;
 	bool converged=false;
 
-	vector<pair<int ,int> > topk;
+	std::vector<pair<int ,int> > topk;
     util::logfile<<"ntree,index,currentscore,probinter \n";
-	vector<int> topIndex(tk);
-	vector<int> prevIndex;
+	std::vector<int> topIndex(tk);
+	std::vector<int> prevIndex;
 	double prob =0;
 	while (!converged) {
-     pq= priority_queue<pair<int,double>,vector<pair<int,double> >,larger >();
+     pq= std::priority_queue<std::pair<int,double>, std::vector<std::pair<int,double> >,larger >();
 
 
 		//Sample data for training
@@ -177,29 +177,28 @@ void convForest::convergeIF(double tau,double alpha)
 /*
  * Stopping confidence interval width on \theta (k)
  */
-void convForest::confstop(double alpha)
-{
+void convForest::confstop(double alpha) {
 //	this->nsample = nsample;
 	double tk = ceil(alpha*2*dataset->nrow);  //top k ranked scores 
-	vector<int> sampleIndex;  //index for sample row 
+	std::vector<int> sampleIndex;  //index for sample row
 //	this->rSample = rSample;
-	vector<double> totalDepth(dataset->nrow,0);
+	std::vector<double> totalDepth(dataset->nrow,0);
 	double tua =0.008; // 1/(double)dt->nrow;   //need to be changed 
-	vector<double> squaredDepth(dataset->nrow,0);
+	std::vector<double> squaredDepth(dataset->nrow,0);
     //priority_queue<pair<int,double>,vector<pair<int,double> >,topscore > pq;
 	double hm=0.0 ; //inflation factor will be used later 	
 	double  ntree=0.0;
 	bool converged=false;
 	//double theta_es;
-	vector<double> theta_k; //top k score
-	vector<pair<int,double> > topk_ac; 
-	vector<pair<int ,double> > topk;	
+	std::vector<double> theta_k; //top k score
+	std::vector<std::pair<int,double> > topk_ac;
+	std::vector<std::pair<int ,double> > topk;
     util::logfile<<"point,ntree,depth\n";
     //logfile<<"tree,thetain,thetaacc\n";
 
-    priority_queue<pair<int,double>,vector<pair<int,double> >, larger> pq;
+	std::priority_queue<pair<int,double>,std::vector<std::pair<int,double> >, larger> pq;
 	while (!converged) {
-	    pq= priority_queue<pair<int,double>,vector<pair<int,double> >,larger >();
+	    pq= std::priority_queue<std::pair<int,double>,std::vector<std::pair<int,double> >,larger >();
 
 		//Sample data for training
 		topk.clear();
@@ -228,7 +227,7 @@ void convForest::confstop(double alpha)
 		}
 		
 	    //Sort shallowest at the top 
-		sort(topk.begin(),topk.end(),topscore());
+		std::sort(topk.begin(),topk.end(),topscore());
 	    //sort(topk_ac.begin(),topk_ac.end(),topscore());
         
         //depth threshold

@@ -9,7 +9,7 @@
 #include "cereal/archives/binary.hpp"
 #include <memory>
 #include "cereal/types/memory.hpp"
-
+using namespace osu::ad;
 //std::ofstream util::logfile("logfile2.csv");
 
 FacadeForest::FacadeForest() {

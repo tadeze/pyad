@@ -9,24 +9,33 @@
 #define ISOLATIONFOREST_HPP_
 #include "forest.hpp"
 #include "cereal/types/polymorphic.hpp"
-class IsolationForest:public Forest{
-    public:
-	IsolationForest(){};
+namespace osu {
+	namespace ad {
 
-	IsolationForest(int _ntree, std::shared_ptr<util::dataset> _df,
-			int _nsample,int _maxheight, bool _stopheight,bool _rsample);
-	//int adaptiveForest(double alpha,int stopLimit);
-	void buildForest();
-	virtual ~IsolationForest()
-	{
+		class IsolationForest : public Forest {
+		public:
+			IsolationForest() {};
+
+			IsolationForest(int _ntree, std::shared_ptr<util::dataset> _df,
+							int _nsample, int _maxheight, bool _stopheight, bool _rsample);
+
+			//int adaptiveForest(double alpha,int stopLimit);
+			void buildForest();
+
+			virtual ~IsolationForest() {
+			}
+
+			//convergent iForest
+			int adaptiveForest(double alpha, int stopLimit);
+
+			void fixedTreeForest();
+
+			int confTree(double alpha, double rho, int init_tree);
+
+		};
+
 	}
-	//convergent iForest
-  int adaptiveForest(double alpha,int stopLimit); 
-  void fixedTreeForest();
-  int confTree(double alpha,double rho,int init_tree);
-
-};
-
-CEREAL_REGISTER_TYPE(IsolationForest);
-CEREAL_REGISTER_POLYMORPHIC_RELATION(Forest,IsolationForest);
+}
+CEREAL_REGISTER_TYPE(osu::ad::IsolationForest);
+CEREAL_REGISTER_POLYMORPHIC_RELATION(osu::ad::Forest, osu::ad::IsolationForest);
 #endif /* ISOLATIONFOREST_HPP_ */

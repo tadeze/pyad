@@ -6,7 +6,7 @@
  */
 
 #include "forest.hpp"
-
+using namespace osu::ad;
 double Forest::getdepth(std::vector<double> &inst, const std::shared_ptr<Tree> &tree) {
     return tree->pathLength(inst,this->cmv);
 }
