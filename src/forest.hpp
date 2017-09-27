@@ -7,8 +7,8 @@
 
 #ifndef FOREST_H_
 #define FOREST_H_
-#include <memory>
 #include "tree.hpp"
+#include <memory>
 namespace osu {
 	namespace ad {
 
@@ -98,13 +98,9 @@ namespace osu {
 				std::set_intersection(v1.begin(), v1.end(), v2.begin(), v2.end(), back_inserter(v3));
 				return (double) v3.size() / (double) v1.size();
 			}
-
-//json to_json();
-//void from_json(std::ifstream &input);
 			void tracePath(std::vector<double> &inst, std::ostream &out);
-
 			virtual std::vector<std::map<int, double> > featureContrib(std::vector<double> &inst);
-
+#ifdef SERIALIZATION
 			// Serialization
 			template<class Archive>
 			void serialize(Archive &archive) {
@@ -115,6 +111,7 @@ namespace osu {
 						stopheight, trees);
 
 			}
+#endif
 		};
 	}
 }

@@ -3,9 +3,6 @@
 //
 
 #include "facade_forest.hpp"
-#include<exception>
-#include<fstream>
-#include <memory>
 #ifdef SERIALIZATION
 #include <cereal/archives/json.hpp>
 #include "cereal/archives/binary.hpp"

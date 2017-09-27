@@ -7,10 +7,13 @@
 
 #ifndef MAIN_HPP_
 #define MAIN_HPP_
-#define SERIALIZATION
+//#ifdef __linux
+//#else
+//#endif
 //#include "RForest.hpp"
-#include "isolation_forest.hpp"
 #include "utility.hpp"
+#include "isolation_forest.hpp"
+
 //#include "cincl.hpp"
 //#include "convForest.hpp"
 /*

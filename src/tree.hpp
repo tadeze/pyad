@@ -7,13 +7,13 @@
 
 #ifndef TREE_H_
 #define TREE_H_
+#include "utility.hpp"
 #ifdef SERIALIZE
 #include "cereal/cereal.hpp"
 #include "cereal/types/vector.hpp"
 #include "cereal/types/memory.hpp"
 #endif
 #include <memory>
-#include "utility.hpp"
 #include "feature_contribution.hpp"
 namespace  osu {
     namespace ad {
