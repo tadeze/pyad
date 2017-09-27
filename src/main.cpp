@@ -30,16 +30,8 @@ Default value is 100.
  -h, --help
  Print this help message and exit.
  */
-
-#include "facade_forest.hpp"
-#ifdef SERIALIZATION
-#include "cereal/types/utility.hpp"
-#include "cereal/types/unordered_map.hpp"
-#include "cereal/archives/json.hpp"
-#include "cereal/archives/xml.hpp"
-#include "cereal/archives/binary.hpp"
-#endif
 #include "utility.hpp"
+#include "facade_forest.hpp"
 #include "command_parser.hpp"
 
 //log file
@@ -47,9 +39,10 @@ Default value is 100.
 /*
  * Display vector data
  */
-using namespace osu::ad;
+
 
 int main(int argc, char* argv[]) {
+    using namespace osu::ad;
     //parseInput(argc,argv);
     //Tree::rangeCheck = true;
     //util::logfile.open("logfile.txt",std::ios_base::out);

@@ -6,7 +6,6 @@
 #ifdef SERIALIZATION
 #include <cereal/archives/json.hpp>
 #include "cereal/archives/binary.hpp"
-#include "cereal/types/memory.hpp"
 #endif
 
 using namespace osu::ad;
@@ -195,42 +194,5 @@ std::map<int, double> FacadeForest::explanation(std::vector<double> &inst) {
     return iff->importance(inst);
 }
 
-
-//void FacadeForest::saveModel(std::string modelName) {
-//  // Save the json representation
-// try{
-//     json  jsonstr = iff->to_json();
-//     std::ofstream  out(modelName);
-//     out<<jsonstr;
-//     out.close();
-//  }
-//  catch(std::exception e){
-//      std::cout<<e.what();
-//  }
-//std::cout<<jsonstr<<" Json representation "<<modelName;
-
-
-// }
-
-
-
-/*void FacadeForest::loadModel(std::string modelName,std::string forest_type="iforest")
-        //FOREST type=FOREST::IFOREST)
-{
-
-   std::ifstream in(modelName);
-   if(in)
-   {
-       if(forest_type =="iforest")
-       {
-           iff = new IsolationForest();
-           iff->from_json(in);
-
-
-       }
-   }
-
-}
-*/
 
 
