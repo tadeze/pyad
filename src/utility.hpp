@@ -6,6 +6,7 @@
  */
 #ifndef UTILITY_HPP_
 #define UTILITY_HPP_
+
 #include<iostream>
 #include<fstream>
 #include<sstream>
@@ -23,10 +24,9 @@
 #include<random>
 #include<utility>
 #include <memory>
-
-#include "globals.hpp"
+#ifdef __linux__
 #define SERIALIZATION
-
+#endif
 namespace osu {
     namespace ad {
         namespace util {

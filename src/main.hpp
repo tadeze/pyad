@@ -7,13 +7,9 @@
 
 #ifndef MAIN_HPP_
 #define MAIN_HPP_
-//#ifdef __linux
-//#else
-//#endif
 //#include "RForest.hpp"
-//#include "utility.hpp"
 #include "isolation_forest.hpp"
-
+#include "utility.hpp"
 //#include "cincl.hpp"
 //#include "convForest.hpp"
 /*
@@ -25,4 +21,6 @@ void saveScoreToFile(std::vector<double> &scores,
 		std::vector<std::vector<double> > &pathLength,
 		const ntstringframe* metadata, std::string fName,bool savePathLength);
 */
+
+#define ENABLE_JSON
 #endif /* MAIN_HPP_ */

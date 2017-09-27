@@ -18,7 +18,11 @@ namespace osu {
             double rho;
             int stopLimit;
             bool cmv;
-             //Use smart pointers
+            //util::dataset *traindf,*testdf;
+            /*
+            Forest *iff;
+          */
+            //Use smart pointers
             std::shared_ptr<util::dataset> traindf, testdf;
             //std::shared_ptr<util::dataset> testdf;
             std::shared_ptr<Forest> iff;
@@ -29,7 +33,9 @@ namespace osu {
             const int OK = 0;
 
             //const int JSON_FORMAT=1;
-
+            enum OUTPUT_FORMAT {
+                JSON_FORMAT, BINARY_FORMAT
+            };
         public:
 
             // enum FOREST{IFOREST,RFOREST,CFOREST};
@@ -112,6 +118,8 @@ namespace osu {
 
             void testForest(std::vector<std::vector<double> > &testdf, bool cmv = false);
 
+            // void saveModel(std::string modelName);
+
             //void loadModel(std::string modelName,std::string forest_type);
             std::vector<double> getScore();
 
@@ -125,8 +133,6 @@ namespace osu {
 
             int isValidModel() const;
 #ifdef SERIALIZATION
-
-            // void saveModel(std::string modelName);
             void load(const std::string &filename, bool binaryFormat = true); //OUTPUT_FORMAT output_format);
             void save(const std::string &filenam, bool binaryFormat = true); //, OUTPUT_FORMAT output_format);
 
@@ -141,7 +147,6 @@ namespace osu {
                 archive(ntree, nsample, maxHeight, stopLimit,
                         rho, rotate, adaptive, iff);
             };
-
 #endif
 
         };

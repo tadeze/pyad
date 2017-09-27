@@ -1,7 +1,7 @@
 #include "tree.hpp"
 #include "gtest/gtest.h"
 #include "common_util.hpp"
-using namespace osu::ad;
+
 class TreeTest : public ::testing::Test
 {
 protected:
@@ -58,8 +58,7 @@ TEST_F(TreeTest,featurecontribution){
 }
 TEST_F(TreeTest,Treerange){
 	bool rangecheck = tr->rangeCheck;
-	ASSERT_TRUE(!rangecheck);
-
+	ASSERT_TRUE(rangecheck);
 }
 
 //Check the anomaly has smaller depth

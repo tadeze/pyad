@@ -30,19 +30,17 @@ Default value is 100.
  -h, --help
  Print this help message and exit.
  */
-#include "utility.hpp"
+
 #include "facade_forest.hpp"
 #include "command_parser.hpp"
-
 //log file
 //std::ofstream util::logfile("logfile.csv");
 /*
  * Display vector data
  */
-
+using namespace osu::ad;
 
 int main(int argc, char* argv[]) {
-    using namespace osu::ad;
     //parseInput(argc,argv);
     //Tree::rangeCheck = true;
     //util::logfile.open("logfile.txt",std::ios_base::out);

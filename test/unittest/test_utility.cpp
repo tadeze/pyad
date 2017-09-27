@@ -5,7 +5,7 @@
  * Test utility class
  */
 
-using namespace osu::ad;
+
 TEST(UtilTest, testmean)
 {
     std::vector<double> x = {1,2,3,4,5};
