@@ -5,10 +5,13 @@
 #include "facade_forest.hpp"
 #include<exception>
 #include<fstream>
+#include <memory>
+#ifdef SERIALIZATION
 #include <cereal/archives/json.hpp>
 #include "cereal/archives/binary.hpp"
-#include <memory>
 #include "cereal/types/memory.hpp"
+#endif
+
 using namespace osu::ad;
 //std::ofstream util::logfile("logfile2.csv");
 
@@ -145,7 +148,7 @@ void FacadeForest::displayData() {
     }
 
 }
-
+#ifdef SERIALIZATION
 void FacadeForest::load(const std::string &filename, bool binaryFormat) {
     std::ifstream file{filename};
     if (!file.is_open()) {
@@ -190,6 +193,7 @@ void FacadeForest::save(const std::string &filename, bool binaryFormat) {
     }
 
 }
+#endif
 std::map<int, double> FacadeForest::explanation(std::vector<double> &inst) {
     return iff->importance(inst);
 }

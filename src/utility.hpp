@@ -24,6 +24,7 @@
 #include<random>
 #include<utility>
 #include <memory>
+#include "globals.hpp"
 namespace osu {
     namespace ad {
         namespace util {

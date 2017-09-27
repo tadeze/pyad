@@ -5,10 +5,6 @@
 #ifndef FacadeFOREST_HPP
 #define FacadeFOREST_HPP
 #include "main.hpp"
-
-//#include "utility.hpp"
-//#include "json/json.hpp"
-//using json = nlohmann::json;
 namespace osu {
     namespace ad {
         class FacadeForest {
@@ -22,11 +18,7 @@ namespace osu {
             double rho;
             int stopLimit;
             bool cmv;
-            //util::dataset *traindf,*testdf;
-            /*
-            Forest *iff;
-          */
-            //Use smart pointers
+             //Use smart pointers
             std::shared_ptr<util::dataset> traindf, testdf;
             //std::shared_ptr<util::dataset> testdf;
             std::shared_ptr<Forest> iff;
@@ -37,9 +29,7 @@ namespace osu {
             const int OK = 0;
 
             //const int JSON_FORMAT=1;
-            enum OUTPUT_FORMAT {
-                JSON_FORMAT, BINARY_FORMAT
-            };
+
         public:
 
             // enum FOREST{IFOREST,RFOREST,CFOREST};

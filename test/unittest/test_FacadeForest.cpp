@@ -9,6 +9,8 @@
 #include "facade_forest.hpp"
 #include "gtest/gtest.h"
 #include "common_util.hpp"
+using namespace osu::ad;
+
 class FacadeForestTest : public ::testing::Test
 {
 protected:

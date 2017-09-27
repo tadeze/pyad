@@ -11,6 +11,7 @@
 #include "gtest/gtest.h"
 #include "isolation_forest.hpp"
 #include "common_util.hpp"
+using namespace osu::ad;
 class ForestTest : public ::testing::Test {
 protected:
 	std::shared_ptr<Forest> ff;

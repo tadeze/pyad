@@ -8,8 +8,6 @@
 #include<stack>
 using namespace osu::ad;
 bool Tree::rangeCheck = false;
-double const MISSING_VALUE = -9999.0;
-int const NULL_TREE_CHILD_DEPTH = -999;
 
 //std::ofstream util::logfile("logfile.log");
 /*
