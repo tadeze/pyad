@@ -5,10 +5,6 @@
 #ifndef FacadeFOREST_HPP
 #define FacadeFOREST_HPP
 #include "main.hpp"
-
-//#include "utility.hpp"
-//#include "json/json.hpp"
-//using json = nlohmann::json;
 namespace osu {
     namespace ad {
         class FacadeForest {
@@ -123,8 +119,6 @@ namespace osu {
             void testForest(std::vector<std::vector<double> > &testdf, bool cmv = false);
 
             // void saveModel(std::string modelName);
-            void load(const std::string &filename, bool binaryFormat = true); //OUTPUT_FORMAT output_format);
-            void save(const std::string &filenam, bool binaryFormat = true); //, OUTPUT_FORMAT output_format);
 
             //void loadModel(std::string modelName,std::string forest_type);
             std::vector<double> getScore();
@@ -138,6 +132,9 @@ namespace osu {
             void displayData();
 
             int isValidModel() const;
+#ifdef SERIALIZATION
+            void load(const std::string &filename, bool binaryFormat = true); //OUTPUT_FORMAT output_format);
+            void save(const std::string &filenam, bool binaryFormat = true); //, OUTPUT_FORMAT output_format);
 
             template<class Archive>
             void serialize(Archive &archive) {
@@ -150,7 +147,7 @@ namespace osu {
                 archive(ntree, nsample, maxHeight, stopLimit,
                         rho, rotate, adaptive, iff);
             };
-
+#endif
 
         };
     }

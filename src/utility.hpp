@@ -24,6 +24,8 @@
 #include<random>
 #include<utility>
 #include <memory>
+
+#define SERIALIZATION
 namespace osu {
     namespace ad {
         namespace util {

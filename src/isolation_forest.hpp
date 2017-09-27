@@ -8,7 +8,7 @@
 #ifndef ISOLATIONFOREST_HPP_
 #define ISOLATIONFOREST_HPP_
 #include "forest.hpp"
-#include "cereal/types/polymorphic.hpp"
+
 namespace osu {
 	namespace ad {
 
@@ -36,6 +36,9 @@ namespace osu {
 
 	}
 }
+#ifdef SERIALIZATION
+#include "cereal/types/polymorphic.hpp"
 CEREAL_REGISTER_TYPE(osu::ad::IsolationForest);
 CEREAL_REGISTER_POLYMORPHIC_RELATION(osu::ad::Forest, osu::ad::IsolationForest);
+#endif
 #endif /* ISOLATIONFOREST_HPP_ */

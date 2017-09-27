@@ -104,7 +104,7 @@ namespace osu {
 			void tracePath(std::vector<double> &inst, std::ostream &out);
 
 			virtual std::vector<std::map<int, double> > featureContrib(std::vector<double> &inst);
-
+#ifdef SERIALIZATION
 			// Serialization
 			template<class Archive>
 			void serialize(Archive &archive) {
@@ -115,6 +115,8 @@ namespace osu {
 						stopheight, trees);
 
 			}
+
+#endif
 		};
 	}
 }
