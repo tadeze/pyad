@@ -3,7 +3,7 @@ default: build
 FILES=pyadlib _pyad.cpp setup.py MANIFEST.in
 pyadlib: ../src
 	cp -R ../src .
-_pyad.cpp: _pyad.pyx cpyad.pxd
+_pyad.cpp: _pyad.pyx
 	cython --cplus _pyad.pyx -o _pyad.cpp
 ####
 all: ${FILES}
@@ -38,8 +38,7 @@ clean-cpp:
 clean:
 	rm *.so *.pyc -rf 
 	rm dist build pyad.egg-info src -rf 
-clean-all:
-	clean clean-cpp
+clean-all:clean clean-cpp
 
 
 
