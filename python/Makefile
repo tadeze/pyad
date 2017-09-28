@@ -1,8 +1,8 @@
 default: build 
 ### FILES ### 
 FILES=pyadlib _pyad.cpp setup.py MANIFEST.in
-pyadlib: ../../src
-	cp -R ../../src .
+pyadlib: ../src
+	cp -R ../src .
 _pyad.cpp: _pyad.pyx cpyad.pxd
 	cython --cplus _pyad.pyx -o _pyad.cpp
 ####
