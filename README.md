@@ -1,4 +1,4 @@
-## Python Wrapper for anomaly detection using iForest. 
+## Python Wrapper for anomaly detection algorithms. 
 
 **Requirement**
 
