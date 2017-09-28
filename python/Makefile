@@ -3,6 +3,7 @@ default: build
 FILES=pyadlib setup.py MANIFEST.in
 pyadlib: ../src
 	cp -R ../src .
+	cp -R ../README.md .
 all: ${FILES}
 	python setup.py build_ext --inplace
 install: ${FILES}

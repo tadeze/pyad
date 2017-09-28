@@ -5,9 +5,9 @@
 from collections import defaultdict
 import numpy as np
 import cPickle
-import loda ## TODO: Modify the loda and optimze it. 
+ ## TODO: Modify the loda and optimze it. 
 from cpyad cimport *
-
+include "loda.py"
 cdef class IsolationForest:
     cdef FacadeForest *thisptr
     #is_trained = False
