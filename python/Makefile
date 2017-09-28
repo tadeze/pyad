@@ -38,8 +38,7 @@ clean-cpp:
 clean:
 	rm *.so -rf 
 	rm dist build pyad.egg-info src -rf 
-clean-all:
-	clean clean-cpp
+clean-all:clean clean-cpp
 
 
 

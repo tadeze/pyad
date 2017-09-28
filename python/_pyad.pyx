@@ -6,7 +6,6 @@ from collections import defaultdict
 import numpy as np
 import cPickle
 
-
 from cpyad cimport *
 
 cdef class IsolationForest:
