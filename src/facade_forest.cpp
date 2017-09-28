@@ -192,10 +192,10 @@ void FacadeForest::save(const std::string &filename, bool binaryFormat) {
 }
 #else
 void FacadeForest::save(const std::string &filename, bool binaryFormat){
-    std::cerr<<"Save method is not defined";
+    std::cerr<<"Save method is not defined in windows OS";
 }
 void FacadeForest::load(const std::string &filename, bool binaryFormat){
-    std::cerr<<"Load method is not defined";
+    std::cerr<<"Load method is not defined windows OS";
 }
 #endif
 
