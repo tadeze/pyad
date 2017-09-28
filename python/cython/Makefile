@@ -14,7 +14,11 @@ clean-all:
 .PHONY: build 
 build: clean
 	python setup.py build_ext --inplace 
-
+.PHONY: build-win
+build-win: clean  # Build for windows 
+	export DISTUTILS_USE_SDK=1
+	export MSSdk=1
+	python.exe setup.py build_ext --inplace --compiler=msvc
 .PHONY: cython-build
 cython-build: clean clean-cpp
 	python setup.py build_ext --inplace --use-cython 
