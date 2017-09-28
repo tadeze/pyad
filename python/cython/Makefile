@@ -1,21 +1,23 @@
-all:
+default: build 
+### FILES ### 
+FILES=pyadlib _pyad.cpp setup.py MANIFEST.in
+pyadlib: ../../src
+	cp -R ../../src .
+_pyad.cpp: _pyad.pyx cpyad.pxd
+	cython --cplus _pyad.pyx -o _pyad.cpp
+####
+all: ${FILES}
 	python setup.py build_ext --inplace
-install:
+install: ${FILES}
 	python setup.py install
-clean-cpp:
-	rm *.cpp -rf 
-clean:
-	rm *.so -rf 
-	rm build/ -rf 
-	rm dist -rf 
-	
-clean-all:
-	clean clean-cpp
 .PHONY: build 
-build: clean
+build: ${FILES}
 	python setup.py build_ext --inplace 
+.PHONY: sdist
+sdist: ${FILES}
+	python setup.py sdist 
 .PHONY: build-win
-build-win: clean  # Build for windows 
+build-win: ${FILES} #clean  # Build for windows 
 	export DISTUTILS_USE_SDK=1
 	export MSSdk=1
 	python.exe setup.py build_ext --inplace --compiler=msvc
@@ -23,8 +25,16 @@ build-win: clean  # Build for windows
 cython-build: clean clean-cpp
 	python setup.py build_ext --inplace --use-cython 
 .PHONY: tests
-tests:
+tests:ls
 	hash nosetests 2>/dev/null || { echo -e >&2 "############ Required nosetest package"; exit 1;}
 	nosetests --logging-level=INFO tests/ 
+clean-cpp:
+	rm *.cpp -rf 
+clean:
+	rm *.so -rf 
+	rm dist build pyad.egg-info src -rf 
+clean-all:
+	clean clean-cpp
+
 
 
