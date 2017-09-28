@@ -16,6 +16,11 @@ build: ${FILES}
 .PHONY: sdist
 sdist: ${FILES}
 	python setup.py sdist 
+	
+.PHONY: wheel
+wheel: ${FILES}
+	python setup.py bdist_wheel
+
 .PHONY: build-win
 build-win: ${FILES} #clean  # Build for windows 
 	export DISTUTILS_USE_SDK=1
