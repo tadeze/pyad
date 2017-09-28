@@ -6,7 +6,6 @@
  */
 
 #include "utility.hpp"
-
 using namespace std;
 using namespace osu::ad;
     //default_random_engine gen(400);  //Debugging
@@ -63,8 +62,8 @@ using namespace osu::ad;
         return pow(2, -depth / avgPL(n));
     }
     template<typename T>
-    void util::swapInt(int a, int b, T *x) {
-        int hold;
+    void util::swapInt(T a, T b, T *x) {
+        T hold;
         hold = x[a];
         x[a] = x[b];
         x[b] = hold;
