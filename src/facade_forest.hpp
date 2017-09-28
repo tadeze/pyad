@@ -4,6 +4,9 @@
 
 #ifndef FacadeFOREST_HPP
 #define FacadeFOREST_HPP
+#ifdef __linux__
+#define SERIALIZATION
+#endif
 #include "main.hpp"
 namespace osu {
     namespace ad {
@@ -132,9 +135,10 @@ namespace osu {
             void displayData();
 
             int isValidModel() const;
-#ifdef SERIALIZATION
             void load(const std::string &filename, bool binaryFormat = true); //OUTPUT_FORMAT output_format);
             void save(const std::string &filenam, bool binaryFormat = true); //, OUTPUT_FORMAT output_format);
+
+#ifdef SERIALIZATION
 
             template<class Archive>
             void serialize(Archive &archive) {

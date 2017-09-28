@@ -55,7 +55,7 @@ cdef extern from "../../src/tree.hpp" namespace "osu::ad":
 
 cdef class IsolationForest:
     cdef FacadeForest *thisptr
-
+    #is_trained = False
     def __cinit__(self, traindf=None, ntree=100, nsample=512, maxheight=0,
                   rotate=False, adaptive=False, rangecheck=True, rho=0.01, stoplimit=5):
         """
@@ -78,9 +78,9 @@ cdef class IsolationForest:
 
         Returns: IsolationForest object. 
         """
-
+        #self.is_trained = False
         self.thisptr = new FacadeForest()
-        self.is_trained = False
+
         if traindf is not None:
             self.train(traindf, ntree, nsample, maxheight, rotate, adaptive, rangecheck,
                        rho, stoplimit)
@@ -121,7 +121,7 @@ cdef class IsolationForest:
             raise NameError("Max depth cann't be negative")
         if rho > 1:
             raise NameError("rho value should be less than 1")
-        self.is_trained = True
+        #self.is_trained = True
 
         return self.thisptr.trainForest(traindf, ntree, nsample, maxheight,
                                         rotate, adaptive, rangecheck, rho, stoplimit)

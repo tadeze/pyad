@@ -68,7 +68,7 @@ TEST_F(FacadeForestTest, avgDepth){
 	 EXPECT_GT(scores[50],7);
 
 }
-
+#ifdef SERIALIZATION
 
 TEST_F(FacadeForestTest, saveModel){
     ff.save("qtrial.cereal");
@@ -89,6 +89,7 @@ TEST_F(FacadeForestTest, LoadModel){
    ASSERT_NULL(facaf.getIff());
 */
 }
+#endif
 
 TEST_F(FacadeForestTest,adaptiveTrain){
 	FacadeForest adaptForest;

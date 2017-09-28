@@ -190,8 +190,16 @@ void FacadeForest::save(const std::string &filename, bool binaryFormat) {
     }
 
 }
-
+#else
+void FacadeForest::save(const std::string &filename, bool binaryFormat){
+    std::cerr<<"Save method is not defined";
+}
+void FacadeForest::load(const std::string &filename, bool binaryFormat){
+    std::cerr<<"Load method is not defined";
+}
 #endif
+
+
 std::map<int, double> FacadeForest::explanation(std::vector<double> &inst) {
     return iff->importance(inst);
 }

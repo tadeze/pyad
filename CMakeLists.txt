@@ -1,6 +1,12 @@
 cmake_minimum_required(VERSION 3.2)
 project(pyiforest)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+
+#if (UNIX)
+#add_definitions(-DSERIALIZATION=true)
+#endif (UNIX)
+#if (WIN32)
+#endif(WIN32)
 add_subdirectory(src)
 include_directories(src)
 set(SOURCE_FILES src/main.cpp)
