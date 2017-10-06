@@ -676,11 +676,12 @@ struct __pyx_obj_4pyad_IsolationForest {
  * 
  * cdef class IsolationTree:             # <<<<<<<<<<<<<<
  *     cdef Tree *thisptr
- *     #cdef train_points
+ *     cdef list train_points
  */
 struct __pyx_obj_4pyad_IsolationTree {
   PyObject_HEAD
   osu::ad::Tree *thisptr;
+  PyObject *train_points;
 };
 
 
@@ -1886,7 +1887,7 @@ static PyObject *__pyx_pf_4pyad_15IsolationForest_30is_rotate(struct __pyx_obj_4
 static PyObject *__pyx_pf_4pyad_15IsolationForest_32is_valid_model(struct __pyx_obj_4pyad_IsolationForest *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_4pyad_15IsolationForest_34display_data(struct __pyx_obj_4pyad_IsolationForest *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_4pyad_15IsolationForest_36explanation(struct __pyx_obj_4pyad_IsolationForest *__pyx_v_self, PyObject *__pyx_v_x); /* proto */
-static int __pyx_pf_4pyad_13IsolationTree___init__(struct __pyx_obj_4pyad_IsolationTree *__pyx_v_self); /* proto */
+static int __pyx_pf_4pyad_13IsolationTree___cinit__(struct __pyx_obj_4pyad_IsolationTree *__pyx_v_self); /* proto */
 static void __pyx_pf_4pyad_13IsolationTree_2__dealloc__(struct __pyx_obj_4pyad_IsolationTree *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_4pyad_13IsolationTree_4iTree(struct __pyx_obj_4pyad_IsolationTree *__pyx_v_self, PyObject *__pyx_v_train_index, PyObject *__pyx_v_train_data, PyObject *__pyx_v_height, PyObject *__pyx_v_maxheight, PyObject *__pyx_v_stopheight); /* proto */
 static PyObject *__pyx_pf_4pyad_13IsolationTree_6path_length(struct __pyx_obj_4pyad_IsolationTree *__pyx_v_self, PyObject *__pyx_v_test_data); /* proto */
@@ -17673,38 +17674,38 @@ static PyObject *__pyx_pf_4pyad_15IsolationForest_36explanation(struct __pyx_obj
 }
 
 /* "pyad.pyx":222
- *     #cdef train_points
+ *     cdef list train_points
  * 
- *     def __init__(self):             # <<<<<<<<<<<<<<
+ *     def __cinit__(self):             # <<<<<<<<<<<<<<
  *         self.thisptr = new Tree()
  *         self.train_points = []
  */
 
 /* Python wrapper */
-static int __pyx_pw_4pyad_13IsolationTree_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static int __pyx_pw_4pyad_13IsolationTree_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static int __pyx_pw_4pyad_13IsolationTree_1__cinit__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static int __pyx_pw_4pyad_13IsolationTree_1__cinit__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   int __pyx_r;
   __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("__init__ (wrapper)", 0);
+  __Pyx_RefNannySetupContext("__cinit__ (wrapper)", 0);
   if (unlikely(PyTuple_GET_SIZE(__pyx_args) > 0)) {
-    __Pyx_RaiseArgtupleInvalid("__init__", 1, 0, 0, PyTuple_GET_SIZE(__pyx_args)); return -1;}
-  if (unlikely(__pyx_kwds) && unlikely(PyDict_Size(__pyx_kwds) > 0) && unlikely(!__Pyx_CheckKeywordStrings(__pyx_kwds, "__init__", 0))) return -1;
-  __pyx_r = __pyx_pf_4pyad_13IsolationTree___init__(((struct __pyx_obj_4pyad_IsolationTree *)__pyx_v_self));
+    __Pyx_RaiseArgtupleInvalid("__cinit__", 1, 0, 0, PyTuple_GET_SIZE(__pyx_args)); return -1;}
+  if (unlikely(__pyx_kwds) && unlikely(PyDict_Size(__pyx_kwds) > 0) && unlikely(!__Pyx_CheckKeywordStrings(__pyx_kwds, "__cinit__", 0))) return -1;
+  __pyx_r = __pyx_pf_4pyad_13IsolationTree___cinit__(((struct __pyx_obj_4pyad_IsolationTree *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static int __pyx_pf_4pyad_13IsolationTree___init__(struct __pyx_obj_4pyad_IsolationTree *__pyx_v_self) {
+static int __pyx_pf_4pyad_13IsolationTree___cinit__(struct __pyx_obj_4pyad_IsolationTree *__pyx_v_self) {
   int __pyx_r;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
-  __Pyx_RefNannySetupContext("__init__", 0);
+  __Pyx_RefNannySetupContext("__cinit__", 0);
 
   /* "pyad.pyx":223
  * 
- *     def __init__(self):
+ *     def __cinit__(self):
  *         self.thisptr = new Tree()             # <<<<<<<<<<<<<<
  *         self.train_points = []
  *     def __dealloc__(self):
@@ -17712,7 +17713,7 @@ static int __pyx_pf_4pyad_13IsolationTree___init__(struct __pyx_obj_4pyad_Isolat
   __pyx_v_self->thisptr = new osu::ad::Tree();
 
   /* "pyad.pyx":224
- *     def __init__(self):
+ *     def __cinit__(self):
  *         self.thisptr = new Tree()
  *         self.train_points = []             # <<<<<<<<<<<<<<
  *     def __dealloc__(self):
@@ -17720,13 +17721,16 @@ static int __pyx_pf_4pyad_13IsolationTree___init__(struct __pyx_obj_4pyad_Isolat
  */
   __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 224, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (__Pyx_PyObject_SetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_train_points, __pyx_t_1) < 0) __PYX_ERR(1, 224, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __Pyx_GIVEREF(__pyx_t_1);
+  __Pyx_GOTREF(__pyx_v_self->train_points);
+  __Pyx_DECREF(__pyx_v_self->train_points);
+  __pyx_v_self->train_points = ((PyObject*)__pyx_t_1);
+  __pyx_t_1 = 0;
 
   /* "pyad.pyx":222
- *     #cdef train_points
+ *     cdef list train_points
  * 
- *     def __init__(self):             # <<<<<<<<<<<<<<
+ *     def __cinit__(self):             # <<<<<<<<<<<<<<
  *         self.thisptr = new Tree()
  *         self.train_points = []
  */
@@ -17736,7 +17740,7 @@ static int __pyx_pf_4pyad_13IsolationTree___init__(struct __pyx_obj_4pyad_Isolat
   goto __pyx_L0;
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("pyad.IsolationTree.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("pyad.IsolationTree.__cinit__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = -1;
   __pyx_L0:;
   __Pyx_RefNannyFinishContext();
@@ -19191,7 +19195,14 @@ static PyObject *__pyx_pf_4pyad_7IForest_2train(CYTHON_UNUSED PyObject *__pyx_se
  *             itree.iTree(sample_index, train_df, 0, self.maxheight)
  *             self.trees.append({"tree": itree})
  */
-    if (__Pyx_PyObject_SetAttrStr(((PyObject *)__pyx_v_itree), __pyx_n_s_train_points, __pyx_v_sample_index) < 0) __PYX_ERR(1, 309, __pyx_L1_error)
+    if (!(likely(PyList_CheckExact(__pyx_v_sample_index))||((__pyx_v_sample_index) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "list", Py_TYPE(__pyx_v_sample_index)->tp_name), 0))) __PYX_ERR(1, 309, __pyx_L1_error)
+    __pyx_t_4 = __pyx_v_sample_index;
+    __Pyx_INCREF(__pyx_t_4);
+    __Pyx_GIVEREF(__pyx_t_4);
+    __Pyx_GOTREF(__pyx_v_itree->train_points);
+    __Pyx_DECREF(__pyx_v_itree->train_points);
+    __pyx_v_itree->train_points = ((PyObject*)__pyx_t_4);
+    __pyx_t_4 = 0;
 
     /* "pyad.pyx":310
  *             itree = IsolationTree()
@@ -26005,6 +26016,7 @@ static PyTypeObject __pyx_type_4pyad_IsolationForest = {
 };
 
 static PyObject *__pyx_tp_new_4pyad_IsolationTree(PyTypeObject *t, CYTHON_UNUSED PyObject *a, CYTHON_UNUSED PyObject *k) {
+  struct __pyx_obj_4pyad_IsolationTree *p;
   PyObject *o;
   if (likely((t->tp_flags & Py_TPFLAGS_IS_ABSTRACT) == 0)) {
     o = (*t->tp_alloc)(t, 0);
@@ -26012,15 +26024,23 @@ static PyObject *__pyx_tp_new_4pyad_IsolationTree(PyTypeObject *t, CYTHON_UNUSED
     o = (PyObject *) PyBaseObject_Type.tp_new(t, __pyx_empty_tuple, 0);
   }
   if (unlikely(!o)) return 0;
+  p = ((struct __pyx_obj_4pyad_IsolationTree *)o);
+  p->train_points = ((PyObject*)Py_None); Py_INCREF(Py_None);
+  if (unlikely(__pyx_pw_4pyad_13IsolationTree_1__cinit__(o, __pyx_empty_tuple, NULL) < 0)) goto bad;
   return o;
+  bad:
+  Py_DECREF(o); o = 0;
+  return NULL;
 }
 
 static void __pyx_tp_dealloc_4pyad_IsolationTree(PyObject *o) {
+  struct __pyx_obj_4pyad_IsolationTree *p = (struct __pyx_obj_4pyad_IsolationTree *)o;
   #if PY_VERSION_HEX >= 0x030400a1
-  if (unlikely(Py_TYPE(o)->tp_finalize) && (!PyType_IS_GC(Py_TYPE(o)) || !_PyGC_FINALIZED(o))) {
+  if (unlikely(Py_TYPE(o)->tp_finalize) && !_PyGC_FINALIZED(o)) {
     if (PyObject_CallFinalizerFromDealloc(o)) return;
   }
   #endif
+  PyObject_GC_UnTrack(o);
   {
     PyObject *etype, *eval, *etb;
     PyErr_Fetch(&etype, &eval, &etb);
@@ -26029,7 +26049,26 @@ static void __pyx_tp_dealloc_4pyad_IsolationTree(PyObject *o) {
     --Py_REFCNT(o);
     PyErr_Restore(etype, eval, etb);
   }
+  Py_CLEAR(p->train_points);
   (*Py_TYPE(o)->tp_free)(o);
+}
+
+static int __pyx_tp_traverse_4pyad_IsolationTree(PyObject *o, visitproc v, void *a) {
+  int e;
+  struct __pyx_obj_4pyad_IsolationTree *p = (struct __pyx_obj_4pyad_IsolationTree *)o;
+  if (p->train_points) {
+    e = (*v)(p->train_points, a); if (e) return e;
+  }
+  return 0;
+}
+
+static int __pyx_tp_clear_4pyad_IsolationTree(PyObject *o) {
+  PyObject* tmp;
+  struct __pyx_obj_4pyad_IsolationTree *p = (struct __pyx_obj_4pyad_IsolationTree *)o;
+  tmp = ((PyObject*)p->train_points);
+  p->train_points = ((PyObject*)Py_None); Py_INCREF(Py_None);
+  Py_XDECREF(tmp);
+  return 0;
 }
 
 static PyMethodDef __pyx_methods_4pyad_IsolationTree[] = {
@@ -26071,10 +26110,10 @@ static PyTypeObject __pyx_type_4pyad_IsolationTree = {
   0, /*tp_getattro*/
   0, /*tp_setattro*/
   0, /*tp_as_buffer*/
-  Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VERSION_TAG|Py_TPFLAGS_CHECKTYPES|Py_TPFLAGS_HAVE_NEWBUFFER|Py_TPFLAGS_BASETYPE, /*tp_flags*/
+  Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VERSION_TAG|Py_TPFLAGS_CHECKTYPES|Py_TPFLAGS_HAVE_NEWBUFFER|Py_TPFLAGS_BASETYPE|Py_TPFLAGS_HAVE_GC, /*tp_flags*/
   0, /*tp_doc*/
-  0, /*tp_traverse*/
-  0, /*tp_clear*/
+  __pyx_tp_traverse_4pyad_IsolationTree, /*tp_traverse*/
+  __pyx_tp_clear_4pyad_IsolationTree, /*tp_clear*/
   0, /*tp_richcompare*/
   0, /*tp_weaklistoffset*/
   0, /*tp_iter*/
@@ -26087,7 +26126,7 @@ static PyTypeObject __pyx_type_4pyad_IsolationTree = {
   0, /*tp_descr_get*/
   0, /*tp_descr_set*/
   0, /*tp_dictoffset*/
-  __pyx_pw_4pyad_13IsolationTree_1__init__, /*tp_init*/
+  0, /*tp_init*/
   0, /*tp_alloc*/
   __pyx_tp_new_4pyad_IsolationTree, /*tp_new*/
   0, /*tp_free*/

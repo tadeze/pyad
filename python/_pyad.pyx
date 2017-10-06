@@ -10,7 +10,7 @@ from cpyad cimport *
 include "loda.py"
 cdef class IsolationForest:
     cdef FacadeForest *thisptr
-    #is_trained = False
+    #cdef bool is_trained = False
     def __cinit__(self, traindf=None, ntree=100, nsample=512, maxheight=0,
                   rotate=False, adaptive=False, rangecheck=True, rho=0.01, stoplimit=5):
         """
@@ -217,9 +217,9 @@ cdef class IsolationForest:
 
 cdef class IsolationTree:
     cdef Tree *thisptr
-    #cdef train_points
+    cdef list train_points
 
-    def __init__(self):
+    def __cinit__(self):
         self.thisptr = new Tree()
         self.train_points = []
     def __dealloc__(self):
