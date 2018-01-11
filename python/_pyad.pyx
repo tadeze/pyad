@@ -3,7 +3,8 @@
 
 """
 from collections import defaultdict
-import numpy as np
+cimport numpy as np
+#import numpy as np
 import cPickle
  ## TODO: Modify the loda and optimze it. 
 from cpyad cimport *
@@ -274,18 +275,22 @@ cdef class IsolationTree:
         return self.thisptr.getMaxAttVal()
 
 
-class IForest(object):
+cdef class IForest(object):
     """
     IForest version using most python code. This is used for experimenting version.
     """
-    def __init__(self, train_df=None, ntree=100, nsample=512,
-                 max_height=0, adaptive=False, rangecheck=True, check_missing_value=True):
+    cdef int nsample, ntree, maxheight
+    cdef bool rangecheck, check_miss, adaptive
+    cdef list rot_trees, trees
+    #cdef np.ndarray[np.float64_t, ndim=2] train_df
+    def __cinit__(self, train_df=None, ntree=100, nsample=512,
+                 max_height=0, adaptive=False, rangecheck=True, check_miss=True):
         self.nsample = nsample
         self.ntree = ntree
         self.rangecheck = rangecheck
         self.adaptive = adaptive
         self.maxheight = max_height
-        self.check_missing_value = check_missing_value
+        self.check_miss = check_miss
         self.rot_trees = []
         self.trees = []
         #self.sparsity = sparsity
@@ -306,11 +311,24 @@ class IForest(object):
             # generate rotation matrix
             sample_index = np.random.choice(nrow, self.nsample, False)
             itree = IsolationTree()
-            itree.train_points = sample_index
+            itree.train_points = sample_index.tolist()
             itree.iTree(sample_index, train_df, 0, self.maxheight)
             self.trees.append({"tree": itree})
+    @property
+    def ntree(self):
+        return self.ntree
+    @ntree.setter
+    def ntree(self, value):
+        self.ntree = value 
 
+    @property
+    def nsample(self):
+        return self.nsample
+    @nsample.setter
+    def nsample(self, value):
+        self.nsample = value   
     def depth(self, test_df, oob=False):
+    	# 
 
         depth = []
 
@@ -322,6 +340,8 @@ class IForest(object):
 
     def average_depth(self, test_df):
         assert isinstance(test_df, np.ndarray)
+        if test_df.ndim<2:
+            return np.mean(self.depth(test_df))
         avg_depth = [np.mean(self.depth(row)) for row in test_df]
         return np.array(avg_depth)
 
@@ -358,6 +378,83 @@ class IForest(object):
 
     def load(self, model_name):
         return cPickle.load(open(model_name, "r"))
+
+
+
+cdef class BaggedIForest(IForest):
+    cdef list num_tree_used
+    cdef np.ndarray trees_proj
+
+    def __cinit__(self, ntree=100, nsample=512,
+                 max_height=0, adaptive=False, rangecheck=True):
+        super(BaggedIForest,self).__init__(train_df=None, ntree=ntree, nsample=nsample,
+                                  max_height=max_height, adaptive=adaptive,rangecheck=rangecheck, check_miss=False)
+        self.trees_proj = None
+        self.num_tree_used = []
+        
+    def train(self, train_df):
+        assert isinstance(train_df, np.ndarray)
+        nrow, ncol = train_df.shape
+        self.trees_proj = np.zeros([self.ntree, ncol])
+        if self.nsample > nrow:
+            self.nsample = nrow
+        n_bagged = int(np.ceil(ncol/np.sqrt(ncol)))
+        for tree in range(self.ntree):
+            # generate rotation matrix
+            sample_index = np.random.choice(nrow, self.nsample, False)
+            itree = IsolationTree()
+            #itree.train_points = sample_index
+            cols = np.random.choice(ncol, n_bagged, False)
+            #print cols
+            itree.iTree(sample_index, train_df[:,cols], 0, self.maxheight)
+            self.trees.append({"tree": itree, "cols":cols})
+            self.trees_proj[tree,cols] = 1
+
+            #logger.info("tree %d, %s"%(tree,cols))
+    def score(self, test_df, check_miss=True):
+        self.num_tree_used = []# np.zeros([test_df.shape[0],1])
+        self.check_miss = check_miss
+        return super(BaggedIForest, self).score(test_df)
+
+    def get_trees(self, miss_features):
+        # Get trees without missing features.
+        miss_trees = self.trees_proj[:,miss_features]
+        used_trees = np.where(self.trees_proj.any(axis=1) != NA)
+        return used_trees
+
+    def get_miss_features(self, row):
+        """
+        :param row: np.ndarray of 1Xd vector.
+        :return:
+        """
+        if np.isnan(NA):
+            miss_column = np.where(np.isnan(row))[0]
+        else:
+            miss_column = np.where(row == NA)[0]
+        return miss_column
+
+    def depth(self, test_df, oob=False):
+        """
+        :param test_df: ndarray 1xD vector of datapoint
+        :param oob:
+        :return:list list of depth from trees.
+        """
+        all_depth = []
+        if self.check_miss:
+            miss_column = self.get_miss_features(test_df)
+        else:
+            miss_column = []
+        for tree_inst in self.trees:
+            tree = tree_inst["tree"]
+            used_cols = tree_inst["cols"]
+            if tree_inst["cols"].any():
+                if np.intersect1d(miss_column, used_cols).any():
+                    continue
+                all_depth.append(tree.path_length(test_df[tree_inst["cols"]]))
+            else:
+                all_depth.append(tree.path_length(test_df))
+        self.num_tree_used.append(len(all_depth))
+        return all_depth
 
 
 class RotationForest(object):
