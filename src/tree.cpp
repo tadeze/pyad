@@ -22,22 +22,25 @@ std::shared_ptr<util::dataset> Tree::makeDataset(std::vector<std::vector<double>
 	dt->nrow = (int) data.size();
 	return dt;
 }
+std::vector<double> data_variance(const std::shared_ptr<util::dataset> dt, std::vector<int> const &dIndex){
 
+}
 
 void Tree::iTree(std::vector<int> const &dIndex,
-        std::vector<std::vector<double> > traindata, int height, int maxheight, bool stopheight){
+        std::vector<std::vector<double> > traindata, int height, int maxheight, bool stopheight,std::vector<int> const &columnIndex ){
     std::shared_ptr<util::dataset> dt = makeDataset(traindata);
-   this->iTree(dIndex,dt,height,maxheight,stopheight);
+   this->iTree(dIndex,dt,height,maxheight,stopheight,columnIndex);
 //   delete dt;
 }
 
 
-void Tree::iTree(std::vector<int> const &dIndex,const std::shared_ptr<util::dataset> dt, int height, int maxheight, bool stopheight){
+void Tree::iTree(std::vector<int> const &dIndex,const std::shared_ptr<util::dataset> dt, int height, int maxheight,
+                 bool stopheight, std::vector<int> const &columnIndex){
 	this->depth = height; //Tree height
 	// Set size of the node
 	nodeSize = dIndex.size();
 	//stop growing if condition
-	if (dIndex.size() <= 1 || (stopheight && this->depth > maxheight)){
+	if (dIndex.size() <= 1 || (stopheight && this->depth > maxheight) || columnIndex.empty()){
 		return;
 	}
 	//*** Need modification
@@ -46,8 +49,9 @@ void Tree::iTree(std::vector<int> const &dIndex,const std::shared_ptr<util::data
 	std::vector<std::vector<double> > minmax;
 	std::vector<double> tmp;
 
-	for (int j = 0; j < dt->ncol; j++){
-	//initialize max and min to random value
+	//for (int j = 0; j < dt->ncol; j++){
+    for(int j : columnIndex){
+        //initialize max and min to random value
 		tmp.push_back(dt->data[dIndex[0]][j]);
 		tmp.push_back(dt->data[dIndex[0]][j]);
 		minmax.push_back(tmp);
@@ -57,8 +61,8 @@ void Tree::iTree(std::vector<int> const &dIndex,const std::shared_ptr<util::data
     //Compute max and min of each attribute
 	for (unsigned i = 0; i <dIndex.size() ; i++){
 		//vector<double> inst = data->data[i];
-		for (int j = 0; j < dt->ncol; j++){
-			if (dt->data[dIndex.at(i)][j] < minmax[j].at(0))
+        for(int j : columnIndex){
+            if (dt->data[dIndex.at(i)][j] < minmax[j].at(0))
 				minmax[j].at(0) =dt->data[dIndex.at(i)][j];
 			if (dt->data[dIndex.at(i)][j] > minmax.at(j).at(1))
 				minmax[j].at(1) = dt->data[dIndex.at(i)][j];
@@ -68,15 +72,18 @@ void Tree::iTree(std::vector<int> const &dIndex,const std::shared_ptr<util::data
 
 	//use only valid attributes
    	 std::vector<int> attributes;
-	for (int j = 0; j < dt->ncol; j++)
-		if (minmax[j][0] < minmax[j][1])
+    for(int j : columnIndex)
+        if (minmax[j][0] < minmax[j][1])
 			attributes.push_back(j);
-		
-	
 	//return if no valid attribute found
 	if (attributes.size() == 0)
 		return;
-	//Randomly pick an attribute and a split point
+	 if (important_att > 0){
+		 auto att_variance = data_variance(dt, dIndex);
+	 }
+
+
+	// /Randomly pick an attribute and a split point
 
 	this->splittingAtt = attributes[util::randomI(0,attributes.size()-1)]; //randx];
 	this->splittingPoint =util::randomD(minmax[this->splittingAtt][0],minmax[this->splittingAtt][1]);

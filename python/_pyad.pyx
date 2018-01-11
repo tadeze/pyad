@@ -7,7 +7,8 @@ import numpy as np
 import cPickle
  ## TODO: Modify the loda and optimze it. 
 from cpyad cimport *
-include "loda.py"
+#include "loda.py"
+#import loda 
 cdef class IsolationForest:
     cdef FacadeForest *thisptr
     #cdef bool is_trained = False
@@ -44,7 +45,7 @@ cdef class IsolationForest:
         del self.thisptr
 
     def train(self, traindf, ntree=100, nsample=512, maxheight=0, rotate=False,
-              adaptive=False, rangecheck=True, rho=0.01, stoplimit=5):
+              adaptive=False, rangecheck=True, rho=0.01, stoplimit=5, column_subsample=[]):
         """
         Train Isolation Forest model.
         ff.train_forest(_traindf,_ntree=100,_nsample=512,_maxheight=0,_rotate=False,_adaptive=False,_rangecheck=True,_rho=0.01,_stoplimit=5):
@@ -79,7 +80,7 @@ cdef class IsolationForest:
         #self.is_trained = True
 
         return self.thisptr.trainForest(traindf, ntree, nsample, maxheight,
-                                        rotate, adaptive, rangecheck, rho, stoplimit)
+                                        rotate, adaptive, rangecheck, rho, stoplimit, column_subsample)
 
     def score(self, test_data, cmv = False):
 
@@ -224,7 +225,7 @@ cdef class IsolationTree:
         self.train_points = []
     def __dealloc__(self):
         del self.thisptr
-    def iTree(self, train_index, train_data, height=0, maxheight=0, stopheight=False):
+    def iTree(self, train_index, train_data, height=0, maxheight=0, stopheight=False,column_subsample=[]):
         """
 
         :param train_index: list of index of samples used for training tree
@@ -234,8 +235,11 @@ cdef class IsolationTree:
         :param stopheight: Stop growing forest after a given maxheight. Default false.
         :return: Trained tree.
         """
+        if len(column_subsample)<1:
+            for i in range(train_data.shape[0]):
+                column_subsample.append(i)
 
-        return self.thisptr.iTree(train_index, train_data, height, maxheight, stopheight)
+        return self.thisptr.iTree(train_index, train_data, height, maxheight, stopheight, column_subsample)
 
     def path_length(self, test_data):
         """
@@ -274,7 +278,7 @@ cdef class IsolationTree:
         return self.thisptr.getMaxAttVal()
 
 
-class IForest(object):
+cdef class IForest(object):
     """
     IForest version using most python code. This is used for experimenting version.
     """
@@ -293,7 +297,7 @@ class IForest(object):
             self.train_df = train_df
             self.train(self.train_df)
 
-    def train(self, train_df):
+    def train(self, train_df, column_subsample=[]):
         """ Train forest
         :type train_df: numpy.ndarray training dataset
         """
@@ -307,7 +311,7 @@ class IForest(object):
             sample_index = np.random.choice(nrow, self.nsample, False)
             itree = IsolationTree()
             itree.train_points = sample_index
-            itree.iTree(sample_index, train_df, 0, self.maxheight)
+            itree.iTree(sample_index, train_df, 0, self.maxheight, column_subsample)
             self.trees.append({"tree": itree})
 
     def depth(self, test_df, oob=False):

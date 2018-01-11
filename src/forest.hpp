@@ -25,6 +25,7 @@ namespace osu {
 			int maxheight;
 			bool rangecheck;
 			bool cmv;
+			std::vector<int> columnIndex;
 			std::shared_ptr<util::dataset> dataframe;
 
 			//std::unique_ptr<util::dataset> dataframe;
@@ -37,13 +38,19 @@ namespace osu {
 			};
 
 			Forest(int _ntree, std::shared_ptr<util::dataset> _dataset, int _nsample,
-				   int _maxheight, bool _stopheight, bool _rsample) {
+				   int _maxheight, bool _stopheight, bool _rsample,
+				   std::vector<int> const &_columnIndex= std::vector<int>()) {
 				ntree = _ntree;
 				dataframe = _dataset;
 				nsample = _nsample;
 				stopheight = _stopheight;
 				maxheight = _maxheight;
 				rsample = _rsample;
+				if(_columnIndex.empty())
+					for(int i=0;i<_dataset->ncol;i++)
+						columnIndex.push_back(i);
+				else
+					columnIndex = _columnIndex;
 			};
 
 			virtual ~Forest() {};

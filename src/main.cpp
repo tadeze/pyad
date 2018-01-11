@@ -46,13 +46,13 @@ int main(int argc, char* argv[]) {
     //util::logfile.open("logfile.txt",std::ios_base::out);
     //std::string log_filename ("outputlog.txt");
     //util::init_log(log_filename);
-    Parser args;
-    args.parse_argument(argc, argv);
+    //Parser args;
+    //args.parse_argument(argc, argv);
     
-    std::string filename = args.input_name;//util::filename();
+    /*std::string filename = args.input_name;//util::filename();
     int ntree = args.ntrees;
     int nsample = args.nsample;
-    
+    */
     // TODO: Incorporate the command parser into main file
     
     
@@ -64,20 +64,20 @@ int main(int argc, char* argv[]) {
 
     // From facadeForest
     FacadeForest ff;
-
-    ff.trainForest(dataxx, 100, 256, 0, false, false, false, 0.01, 0);
+    std::vector<int> columnindx = {}; //0,1,2};
+    ff.trainForest(dataxx, 100, 256, 0, false, false, false, 0.01, 0, columnindx);
     std::cout << ff.getNSample() << " ==" << ff.getNTree() << std::endl;
     std::cout <<"Size of training set"
               <<dataxx.size()
               <<","<<dataxx[0].size()<<std::endl;
     // Insert missing values.
 
-    dataxx[1][0] = -9999.0;
+  /*  dataxx[1][0] = -9999.0;
     dataxx[2][1] = -9999.0;
     dataxx[3][1] = -9999.0;
     dataxx[4][1] = -9999.0;
     dataxx[4][2] = -9999.0;
-
+*/
 
     ff.testForest(dataxx,check_missing_value);
     std::vector<double> score = ff.getScore();

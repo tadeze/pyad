@@ -30,6 +30,7 @@ protected:
      }
 };
 
+
 TEST_F(TreeTest,makeDataset){  //Check dimension of the data
  ASSERT_EQ(dataset->ncol,2);
  ASSERT_EQ(dataset->nrow,105);

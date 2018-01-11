@@ -17,7 +17,8 @@ namespace osu {
 			IsolationForest() {};
 
 			IsolationForest(int _ntree, std::shared_ptr<util::dataset> _df,
-							int _nsample, int _maxheight, bool _stopheight, bool _rsample);
+							int _nsample, int _maxheight, bool _stopheight, bool _rsample,
+							std::vector<int> const &columnIndex=std::vector<int>());
 
 			//int adaptiveForest(double alpha,int stopLimit);
 			void buildForest();

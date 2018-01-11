@@ -111,7 +111,8 @@ namespace osu {
 
             int trainForest(std::vector<std::vector<double> > &traindf, int _ntree,
                             int _nsample, int _maxheight, bool _rotate, bool _adaptive,
-                            bool _rangecheck, double _rho, int _stopLimit);
+                            bool _rangecheck, double _rho, int _stopLimit,
+                            std::vector<int> const &columnIndex= std::vector<int>());
 
             int trainForest(std::vector<std::vector<double> > &traindf, int _ntree,
                             int _nsample, int _maxheight, bool _rotate) {
