@@ -260,6 +260,8 @@ cdef class IsolationTree:
         :param stopheight: Stop growing forest after a given maxheight. Default false.
         :return: Trained tree.
         """
+        return self.thisptr.iTree(train_index, train_data, height, maxheight, stopheight)
+
 
     def path_length(self, test_data, check_miss=False):
         """
@@ -267,7 +269,13 @@ cdef class IsolationTree:
         :param test_data: ndarray testing data.
         :return: Returns 1-D depth of all testing data.
         """
-        return self.thisptr.pathLength(test_data, check_miss)
+        assert isinstance(test_data, np.ndarray)
+
+        if test_data.ndim<2:
+            return self.thisptr.pathLength(test_data, check_miss)
+        else:
+            return [ self.thisptr.pathLength(row, check_miss) for row in test_data]
+        #return self.thisptr.pathLength(test_data, check_miss)
 
     def explanation(self, test_data):
         """

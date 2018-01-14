@@ -91,7 +91,10 @@ int main(int argc, char* argv[]) {
     auto indexx = fillVector(0,256,1);
     auto tree = std::make_shared<Tree>(); //Tree();
     tree->iTree(indexx,dataset,0, 0, false);
-
+    std::cout<<tree->pathLength(dataset->data[0],true)<<"\t";
+    std::cout<<dataset->data[0][0];
+    dataset->data[0][0] = NAN;
+    std::cout<<dataset->data[0][0];
     dataxx[0][0] = NAN;// -9999.0;
     dataxx[0][1] = NAN;
     dataxx[3][1] = NAN;
@@ -103,8 +106,8 @@ int main(int argc, char* argv[]) {
     std::vector<double> score = ff.getScore();
 
     std::cout<<"Checking scores\n";
-    for (auto const &sce : score)
-        std::cout << sce << "\t";
+//    for (auto const &sce : score)
+//        std::cout << sce << "\t";
     std::cout<<"\n checking path"<<std::endl;
 
     std::cout<<tree->pathLength(dataset->data[0],true)<<"\t";
