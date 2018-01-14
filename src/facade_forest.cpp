@@ -8,7 +8,7 @@
 #include "cereal/archives/binary.hpp"
 #endif
 
-
+#include<cmath>
 using namespace osu::ad;
 //std::ofstream util::logfile("logfile2.csv");
 
@@ -135,12 +135,15 @@ std::vector<double> FacadeForest::averageDepth() {
 }
 
 
-void FacadeForest::displayData() {
-    std::cout << " Dimension of training data (" << this->traindf->nrow << ","
-              << this->traindf->ncol << ")\n";
-    for (auto row : this->traindf->data) {
-        for (auto cell : row)
-            std::cout << cell << "\t";
+void FacadeForest::displayData(std::vector<std::vector<double> >   &_df) {
+    auto df = makeDataset(_df);
+    std::cout << " Dimension of training data (" << df->nrow << ","
+              << df->ncol << ")\n";
+    for (auto row : df->data) {
+        for (auto cell : row){
+     	 	double ff = isnan(cell)?-9999.0:cell;
+		std::cout <<ff<<"\t";
+	}
         std::cout << "\n";
     }
 

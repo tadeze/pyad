@@ -8,6 +8,7 @@
 #ifndef TREE_H_
 #define TREE_H_
 #include "utility.hpp"
+#include "globals.hpp"
 #ifdef SERIALIZATION
 #include "cereal/cereal.hpp"
 #include "cereal/types/vector.hpp"

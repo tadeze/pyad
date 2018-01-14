@@ -33,21 +33,37 @@ Default value is 100.
 
 #include "facade_forest.hpp"
 #include "command_parser.hpp"
+
 //log file
-//std::ofstream util::logfile("logfile.csv");
+#include <cmath>
 /*
  * Display vector data
  */
 using namespace osu::ad;
 
+std::ofstream util::logfile; //("logfile.csv");
+
+inline std::vector<int> fillVector(int start, int end, int step=1){
+    std::vector<int> data;
+    for(int i=start; i<end;i+=step) data.push_back(i);
+    return data;
+}
+inline std::shared_ptr<util::dataset> makeDataset(std::vector<std::vector<double> > &data) {
+    std::shared_ptr<util::dataset> dt = std::make_shared<util::dataset>();
+    //auto dt = std::make_shared<util::dataset>();
+    dt->data = data;
+    dt->ncol = (int) data[0].size();
+    dt->nrow = (int) data.size();
+    return dt;
+}
 int main(int argc, char* argv[]) {
     //parseInput(argc,argv);
     //Tree::rangeCheck = true;
-    //util::logfile.open("logfile.txt",std::ios_base::out);
+    util::logfile.open("logfile.txt",std::ios_base::out);
     //std::string log_filename ("outputlog.txt");
     //util::init_log(log_filename);
     Parser args;
-    args.parse_argument(argc, argv);
+    //args.parse_argument(argc, argv);
     
     std::string filename = args.input_name;//util::filename();
     int ntree = args.ntrees;
@@ -71,24 +87,35 @@ int main(int argc, char* argv[]) {
               <<dataxx.size()
               <<","<<dataxx[0].size()<<std::endl;
     // Insert missing values.
+    auto dataset = makeDataset(dataxx);
+    auto indexx = fillVector(0,256,1);
+    auto tree = std::make_shared<Tree>(); //Tree();
+    tree->iTree(indexx,dataset,0, 0, false);
 
-    dataxx[1][0] = -9999.0;
-    dataxx[2][1] = -9999.0;
-    dataxx[3][1] = -9999.0;
-    dataxx[4][1] = -9999.0;
-    dataxx[4][2] = -9999.0;
+    dataxx[0][0] = NAN;// -9999.0;
+    dataxx[0][1] = NAN;
+    dataxx[3][1] = NAN;
+    dataxx[4][1] = NAN;
+    dataxx[4][2] = NAN;
 
 
     ff.testForest(dataxx,check_missing_value);
     std::vector<double> score = ff.getScore();
+
     std::cout<<"Checking scores\n";
     for (auto const &sce : score)
         std::cout << sce << "\t";
+    std::cout<<"\n checking path"<<std::endl;
+
+    std::cout<<tree->pathLength(dataset->data[0],true)<<"\t";
+    std::cout<<tree->pathLength(dataset->data[0],false);
+
+
     //std::string forest_name = "facadeforest.bin";
-    std::ofstream tracedpath("tracedpath2.csv");
-    ff.explanation(dataxx[2]);
-    ff.tracepath(dataxx[2],tracedpath);
-    tracedpath.close();
+//    std::ofstream tracedpath("tracedpath2.csv");
+//    ff.explanation(dataxx[2]);
+//    ff.tracepath(dataxx[2],tracedpath);
+//    tracedpath.close();
 
     //ff.save(forest_name,true);
 
@@ -193,7 +220,7 @@ int main(int argc, char* argv[]) {
     }
     delete dt;
 */
-   //util::logfile.close();
+   util::logfile.close();
    	return 0;
 }
 
