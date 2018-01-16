@@ -91,6 +91,7 @@ namespace osu {
             void displayVec(std::vector<std::vector<double> > data);
 
             std::vector<std::vector<double> > syntheticData(int D, int N);
+
         }
 
     }

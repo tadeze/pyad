@@ -5,11 +5,12 @@
  *      Author: Tadeze
  */
 #include "tree.hpp"
+#include "globals.hpp"
 #include<stack>
 using namespace osu::ad;
 bool Tree::rangeCheck = false;
-double const MISSING_VALUE = -9999.0;
-int const NULL_TREE_CHILD_DEPTH = -999;
+//double const MISSING_VALUE = -9999.0;
+//int const NULL_TREE_CHILD_DEPTH = -999;
 
 //std::ofstream util::logfile("logfile.log");
 /*
@@ -216,6 +217,8 @@ struct Contrib Tree::featureContribution(std::vector<double> &inst) const{
    // depth = util::avgPL(root->nodeSize) + depth;
     return contribution;//.featureContribution();
 }
+
+
 int Tree::maxTreeDepth(){
 	if (!this) return 0;
 	std::stack<std::shared_ptr<Tree> > s;

@@ -86,6 +86,7 @@ namespace  osu {
             contrib featureContribution(std::vector<double> &inst) const;
 
             std::map<int, double> explanation(std::vector<double> &inst) const;
+           // std::vector<int> allUsedAttributes(); TODO: Return all used attributes in a tree.
 #ifdef SERIALIZATION
             // Serialization
             template<class Archive>
