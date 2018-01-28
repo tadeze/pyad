@@ -15,8 +15,36 @@ namespace osu {
                          int _nsample, int _maxheight, bool _stopheight, bool _rsample);
             void buidForest();
             virtual ~BaggedForest(){};
+
+            inline std::vector<int> findNAFeature(std::vector<double> &inst){
+                std::vector<int> naIndex;
+                for(int i=0;i<inst.size(); i++)
+                    if(isnan(inst[i]))
+                        naIndex.push_back(i);
+                return naIndex;
+
+            }
+            int numberOfTreeUsed(std::vector<int> &inst);
+            inline std::vector<int> getNoneNATrees(std::vector<double> &inst){
+                auto isNA = findNAFeature(inst);
+                std::vector<int> trees;
+                auto intersected = [](std::vector<int> x, std::vector<int> y){
+                    std::vector<int> temp;
+                    for(auto ix : x)
+                        for(auto iy: y)
+                            if(ix==iy)return true;
+                    return false;
+                };
+                for(int i=0;i<this->ntree;i++)
+                    if(!intersected(this->featureUsed[i], isNA))
+                        trees.push_back(i);
+                return trees;
+
+            }
+           std::vector<double> pathLength(std::vector<double> &inst) override ;
         private:
             std::vector<std::vector<int> > featureUsed;
+            int _numTreesUsed;
 
         };
     }

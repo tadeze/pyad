@@ -33,6 +33,7 @@ Default value is 100.
 
 #include "facade_forest.hpp"
 #include "command_parser.hpp"
+#include "bagged_forest.h"
 
 //log file
 #include <cmath>
@@ -56,23 +57,45 @@ inline std::shared_ptr<util::dataset> makeDataset(std::vector<std::vector<double
     dt->nrow = (int) data.size();
     return dt;
 }
+
+void testBaggedForest(){
+    std::cout<<" Checking Bagged forest \n";
+    std::vector<std::vector<double> > dataxx = util::syntheticData(4,1000);   //util::readcsv((char *) &filename[0], ',', true);
+
+    //util::write_log(filename);
+    //util::close_log();
+    bool check_missing_value = true;//false;//true;
+
+    auto dataset = makeDataset(dataxx);
+    // From facadeForest
+    BaggedForest bf(100, dataset, 256, 0 , false, true);
+    bf.cmv = true;
+    bf.buidForest();
+    std::cout<<bf.instanceScore(dataxx[0]);
+    std::cout<<"\n End of bagged forest \n";
+}
 int main(int argc, char* argv[]) {
     //parseInput(argc,argv);
     //Tree::rangeCheck = true;
     util::logfile.open("logfile.txt",std::ios_base::out);
     //std::string log_filename ("outputlog.txt");
     //util::init_log(log_filename);
-    Parser args;
+
+    //Parser args;
+
     //args.parse_argument(argc, argv);
     
-    std::string filename = args.input_name;//util::filename();
+    /*std::string filename = args.input_name;//util::filename();
     int ntree = args.ntrees;
     int nsample = args.nsample;
-    
+    */
     // TODO: Incorporate the command parser into main file
     
     
     std::vector<std::vector<double> > dataxx = util::syntheticData(4,1000);   //util::readcsv((char *) &filename[0], ',', true);
+    testBaggedForest();
+
+
 
     //util::write_log(filename);
     //util::close_log();
@@ -80,13 +103,14 @@ int main(int argc, char* argv[]) {
 
     // From facadeForest
     FacadeForest ff;
-
-    ff.trainForest(dataxx, 100, 256, 0, false, false, false, 0.01, 0);
+    std::vector<int> columnindx = {}; //0,1,2};
+    ff.trainForest(dataxx, 100, 256, 0, false, false, false, 0.01, 0, columnindx);
     std::cout << ff.getNSample() << " ==" << ff.getNTree() << std::endl;
     std::cout <<"Size of training set"
               <<dataxx.size()
               <<","<<dataxx[0].size()<<std::endl;
     // Insert missing values.
+
     auto dataset = makeDataset(dataxx);
     auto indexx = fillVector(0,256,1);
     auto tree = std::make_shared<Tree>(); //Tree();
@@ -101,7 +125,6 @@ int main(int argc, char* argv[]) {
     dataxx[4][1] = NAN;
     dataxx[4][2] = NAN;
 
-
     ff.testForest(dataxx,check_missing_value);
     std::vector<double> score = ff.getScore();
 
@@ -112,6 +135,9 @@ int main(int argc, char* argv[]) {
 
     std::cout<<tree->pathLength(dataset->data[0],true)<<"\t";
     std::cout<<tree->pathLength(dataset->data[0],false);
+
+
+
 
 
     //std::string forest_name = "facadeforest.bin";

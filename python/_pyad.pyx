@@ -8,7 +8,8 @@ cimport numpy as np
 import cPickle
 # TODO: Modify the loda and optimze it.
 from cpyad cimport *
-include "loda.py"
+#include "loda.py"
+#import loda 
 cdef class IsolationForest:
     cdef FacadeForest * thisptr
     cdef int ntree, nsample, maxheight, stoplimit
@@ -55,7 +56,12 @@ cdef class IsolationForest:
     def __dealloc__(self):
         del self.thisptr
 
+<<<<<<< HEAD
     def train(self, traindf, **kwargs):
+=======
+    def train(self, traindf, ntree=100, nsample=512, maxheight=0, rotate=False,
+              adaptive=False, rangecheck=True, rho=0.01, stoplimit=5, column_subsample=[]):
+>>>>>>> csubsample
         """
         Train Isolation Forest model.
         ff.train_forest(_traindf,_ntree=100,_nsample=512,_maxheight=0,_rotate=False,_adaptive=False,_rangecheck=True,_rho=0.01,_stoplimit=5):
@@ -88,8 +94,15 @@ cdef class IsolationForest:
             raise NameError("Max depth cann't be negative")
         if self.rho > 1:
             raise NameError("rho value should be less than 1")
+<<<<<<< HEAD
         for key, value in kwargs.items():
             setattr(self, key, value)
+=======
+        #self.is_trained = True
+
+        return self.thisptr.trainForest(traindf, ntree, nsample, maxheight,
+                                        rotate, adaptive, rangecheck, rho, stoplimit, column_subsample)
+>>>>>>> csubsample
 
         return self.thisptr.trainForest(traindf, self.ntree, self.nsample, self.maxheight,
                                         self.rotate, self.adaptive, self.rangecheck, self.rho, self.stoplimit)
@@ -249,8 +262,12 @@ cdef class IsolationTree:
 
     def __dealloc__(self):
         del self.thisptr
+<<<<<<< HEAD
 
     def iTree(self, train_index, train_data, height=0, maxheight=0, stopheight=False):
+=======
+    def iTree(self, train_index, train_data, height=0, maxheight=0, stopheight=False,column_subsample=[]):
+>>>>>>> csubsample
         """
 
         :param train_index: list of index of samples used for training tree
@@ -260,7 +277,15 @@ cdef class IsolationTree:
         :param stopheight: Stop growing forest after a given maxheight. Default false.
         :return: Trained tree.
         """
+<<<<<<< HEAD
         return self.thisptr.iTree(train_index, train_data, height, maxheight, stopheight)
+=======
+        if len(column_subsample)<1:
+            for i in range(train_data.shape[0]):
+                column_subsample.append(i)
+
+        return self.thisptr.iTree(train_index, train_data, height, maxheight, stopheight, column_subsample)
+>>>>>>> csubsample
 
 
     def path_length(self, test_data, check_miss=False):
@@ -337,7 +362,7 @@ cdef class IForest(object):
             self.train_df = train_df
             self.train(self.train_df)
 
-    def train(self, train_df):
+    def train(self, train_df, column_subsample=[]):
         """ Train forest
         :type train_df: numpy.ndarray training dataset
         """
@@ -350,8 +375,13 @@ cdef class IForest(object):
             # generate rotation matrix
             sample_index = np.random.choice(nrow, self.nsample, False)
             itree = IsolationTree()
+<<<<<<< HEAD
             itree.train_points = sample_index.tolist()
             itree.iTree(sample_index, train_df, 0, self.maxheight)
+=======
+            itree.train_points = sample_index
+            itree.iTree(sample_index, train_df, 0, self.maxheight, column_subsample)
+>>>>>>> csubsample
             self.trees.append({"tree": itree})
 
     @property

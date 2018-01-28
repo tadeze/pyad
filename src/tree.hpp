@@ -23,7 +23,7 @@ namespace  osu {
             std::shared_ptr<Tree> leftChild, rightChild, parent;
             int nodeSize, splittingAtt, depth;
             double splittingPoint, minAttVal, maxAttVal;
-
+            int important_att;
             std::shared_ptr<util::dataset> makeDataset(std::vector<std::vector<double> > &data);
 
             int parent_id;
@@ -32,7 +32,7 @@ namespace  osu {
 
             void setParent_id(int parent_id);
 
-        public:
+
             const std::shared_ptr<Tree> &getLeftChild() const;
 
             const std::shared_ptr<Tree> &getRightChild() const;
@@ -65,16 +65,17 @@ namespace  osu {
 
 //    json tracePath(std::vector<double> &inst);
             Tree() : leftChild(nullptr), rightChild(nullptr), parent(nullptr),
-                     nodeSize(0), splittingAtt(-1), depth(0), splittingPoint(-9999), minAttVal(0), maxAttVal(0) {};
+                     nodeSize(0), splittingAtt(-1), depth(0), splittingPoint(-9999), minAttVal(0), maxAttVal(0),
+                     important_att(0){};
 
             virtual ~Tree() {};
 
             void
             iTree(std::vector<int> const &dIndex, const std::shared_ptr<util::dataset> dt, int height, int maxHeight,
-                  bool stopheight);
+                  bool stopheight, std::vector<int> const &columnIndex=std::vector<int>());
 
             void iTree(std::vector<int> const &dIndex, std::vector<std::vector<double> > traindata, int height,
-                       int maxHeight, bool stopheight);
+                       int maxHeight, bool stopheight,std::vector<int> const &columnIndex=std::vector<int>());
 
             double pathLength(std::vector<double> &inst, bool cmv = false);
 

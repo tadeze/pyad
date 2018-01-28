@@ -56,7 +56,7 @@ int FacadeForest::isValidModel() const {
 
 int FacadeForest::trainForest(std::vector<std::vector<double> > &traindf,
                               int _ntree, int _nsample, int _maxheight, bool _rotate, bool _adaptive,
-                              bool _rangecheck, double _rho, int _stopLimit) {
+                              bool _rangecheck, double _rho, int _stopLimit, std::vector<int> const &columnIndex) {
 
     ntree = _ntree;
     nsample = _nsample;
@@ -74,11 +74,11 @@ int FacadeForest::trainForest(std::vector<std::vector<double> > &traindf,
     if (!rotate) {
         //	IsolationForest *iforest
         iff = std::make_shared<IsolationForest>(ntree, this->traindf,
-                                                nsample, maxHeight, stopheight, rsample); //build iForest
+                                                nsample, maxHeight, stopheight, rsample,columnIndex); //build iForest
         //		iff = iforest;
     } else { // For now just use IsolationForest until changed.
         iff = std::make_shared<IsolationForest>(ntree, this->traindf,
-                                                nsample, maxHeight, stopheight, rsample); //build iForest
+                                                nsample, maxHeight, stopheight, rsample, columnIndex); //build iForest
     }
 
     try {

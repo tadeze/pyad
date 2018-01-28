@@ -18,8 +18,9 @@ struct smaller
 
 
 IsolationForest::IsolationForest(int _ntree,std::shared_ptr<util::dataset> _df,
-		int _nsample,int _maxheight, bool _stopheight,bool _rsample)
-:Forest(_ntree,_df,_nsample,_maxheight,_stopheight,_rsample)
+		int _nsample,int _maxheight, bool _stopheight,bool _rsample,
+								 std::vector<int> const &columnIndex)
+:Forest(_ntree,_df,_nsample,_maxheight,_stopheight,_rsample,columnIndex)
 {
 
 }
@@ -45,7 +46,7 @@ void IsolationForest::buildForest()
 			auto tree = std::make_shared<Tree>();
 			tree->setParent_id(n);
 		//	tree->rangeCheck = this->rangecheck;
-			tree->iTree(sampleIndex,dataframe, 0, maxheight, stopheight);
+			tree->iTree(sampleIndex,dataframe, 0, maxheight, stopheight,this->columnIndex);
 			this->trees.push_back(tree); //add tree to forest
 		//	Tree::treeIndx++;
 		 }
@@ -78,7 +79,7 @@ int IsolationForest::adaptiveForest(double alpha,int stopLimit){
             //Fill the sampleIndex with indices of the sample rotated data
 			 tree = std::make_shared<Tree>();
 	//    tree->rangeCheck = this->rangecheck;
-	    tree->iTree(sampleIndex,dataframe,0,maxheight,stopheight);
+	    tree->iTree(sampleIndex,dataframe,0,maxheight,stopheight,this->columnIndex);
             this->trees.push_back(tree);
             ntree++;
             double d,dbar;

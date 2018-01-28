@@ -13,7 +13,7 @@ cdef extern from "src/facade_forest.hpp" namespace "osu::ad":
         FacadeForest()
         void displayData(vector[vector[double]]&)
         int trainForest(vector[vector[double]] &, int, int, int,
-                        bool, bool, bool, double, int)
+                        bool, bool, bool, double, int,vector[int]&)
         void testForest(vector[vector[double]] &, bool)
         long factorial(int)
         vector[double]  getScore()
@@ -33,8 +33,13 @@ cdef extern from "src/facade_forest.hpp" namespace "osu::ad":
 cdef extern from "src/tree.hpp" namespace "osu::ad":
     cdef cppclass Tree "osu::ad::Tree":
         Tree()
+<<<<<<< HEAD
         void iTree(vector[int] &, vector[vector[double]], int, int, bool)
         double pathLength(vector[double] &, bool)
+=======
+        void iTree(vector[int] &, vector[vector[double]], int, int, bool,vector[int]&)
+        double pathLength(vector[double] &)
+>>>>>>> csubsample
         int maxTreeDepth()
         int getNodeSize()
         int getSplittingAtt()
