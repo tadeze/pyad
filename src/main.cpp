@@ -120,11 +120,11 @@ int main(int argc, char* argv[]) {
     std::cout<<dataset->data[0][0];
     dataset->data[0][0] = NAN;
     std::cout<<dataset->data[0][0];
-    dataxx[0][0] = NAN;// -9999.0;
-    dataxx[0][1] = NAN;
-    dataxx[3][1] = NAN;
-    dataxx[4][1] = NAN;
-    dataxx[4][2] = NAN;
+//    dataxx[0][0] = NAN;// -9999.0;
+//    dataxx[0][1] = NAN;
+//    dataxx[3][1] = NAN;
+//    dataxx[4][1] = NAN;
+//    dataxx[4][2] = NAN;
 
     ff.testForest(dataxx,check_missing_value);
     std::vector<double> score = ff.getScore();
