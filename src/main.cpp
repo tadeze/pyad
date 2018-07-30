@@ -42,11 +42,7 @@ Default value is 100.
  */
 using namespace osu::ad;
 
-<<<<<<< HEAD
 
-void test_trials(){
-
-=======
 std::ofstream util::logfile; //("logfile.csv");
 
 inline std::vector<int> fillVector(int start, int end, int step=1){
@@ -97,7 +93,6 @@ int main(int argc, char* argv[]) {
     // TODO: Incorporate the command parser into main file
     
     
->>>>>>> 3411ae24acbf67d282636ca1389018c90e0ba37b
     std::vector<std::vector<double> > dataxx = util::syntheticData(4,1000);   //util::readcsv((char *) &filename[0], ',', true);
     testBaggedForest();
 
@@ -117,14 +112,6 @@ int main(int argc, char* argv[]) {
               <<","<<dataxx[0].size()<<std::endl;
     // Insert missing values.
 
-<<<<<<< HEAD
-    /*  dataxx[1][0] = -9999.0;
-      dataxx[2][1] = -9999.0;
-      dataxx[3][1] = -9999.0;
-      dataxx[4][1] = -9999.0;
-      dataxx[4][2] = -9999.0;
-  */
-=======
     auto dataset = makeDataset(dataxx);
     auto indexx = fillVector(0,256,1);
     auto tree = std::make_shared<Tree>(); //Tree();
@@ -138,7 +125,6 @@ int main(int argc, char* argv[]) {
     dataxx[3][1] = NAN;
     dataxx[4][1] = NAN;
     dataxx[4][2] = NAN;
->>>>>>> 3411ae24acbf67d282636ca1389018c90e0ba37b
 
     ff.testForest(dataxx,check_missing_value);
     std::vector<double> score = ff.getScore();
@@ -265,42 +251,6 @@ int main(int argc, char* argv[]) {
      delete dt;
  */
     //util::logfile.close();
-}
-
-int main(int argc, char* argv[]) {
-
-     //parseInput(argc,argv);
-    //Tree::rangeCheck = true;
-    //util::logfile.open("logfile.txt",std::ios_base::out);
-    //std::string log_filename ("outputlog.txt");
-    //util::init_log(log_filename);
-     Parser args;
-     args.parse_argument(argc, argv);
-     auto dataxx = util::readcsv(args.input_name.c_str(),',', true);
-
-      // From facadeForest
-    FacadeForest ff;
-    std::vector<int> columnindx = {}; //0,1,2};
-    ff.trainForest(dataxx, args.ntrees, args.nsample, args.maxdepth, false, false,
-                   args.range_check, 0.01, 0, columnindx);
-    ff.testForest(dataxx, args.miss_check);
-    std::vector<double> score = ff.getScore();
-    std::cout<<"Checking scores\n";
-    for (auto const &sce : score)
-        std::cout << sce << "\t";
-    if(args.pathlength)
-        std::cout<<"path length is true";
-
-
-
-<<<<<<< HEAD
-=======
-    }
-    delete dt;
-*/
-   util::logfile.close();
->>>>>>> 3411ae24acbf67d282636ca1389018c90e0ba37b
-   	return 0;
 }
 
 

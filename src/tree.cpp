@@ -12,10 +12,7 @@ using namespace osu::ad;
 bool Tree::rangeCheck = false;
 //double const MISSING_VALUE = -9999.0;
 //int const NULL_TREE_CHILD_DEPTH = -999;
-<<<<<<< HEAD
 
-=======
->>>>>>> 3411ae24acbf67d282636ca1389018c90e0ba37b
 //std::ofstream util::logfile("logfile.log");
 /*
  *@param data input data as double vector

@@ -91,16 +91,8 @@ namespace osu {
             void displayVec(std::vector<std::vector<double> > data);
 
             std::vector<std::vector<double> > syntheticData(int D, int N);
-<<<<<<< HEAD
 
         }
-=======
-           double const MISSING_VALUE = -9999.0;
-	       int const NULL_TREE_CHILD_DEPTH = -999;
-
-
-	}
->>>>>>> 3411ae24acbf67d282636ca1389018c90e0ba37b
 
     }
 }
