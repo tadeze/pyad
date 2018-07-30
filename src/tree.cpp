@@ -7,11 +7,15 @@
 #include "tree.hpp"
 #include "globals.hpp"
 #include<stack>
+#include<cmath>
 using namespace osu::ad;
 bool Tree::rangeCheck = false;
 //double const MISSING_VALUE = -9999.0;
 //int const NULL_TREE_CHILD_DEPTH = -999;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 3411ae24acbf67d282636ca1389018c90e0ba37b
 //std::ofstream util::logfile("logfile.log");
 /*
  *@param data input data as double vector
@@ -79,9 +83,10 @@ void Tree::iTree(std::vector<int> const &dIndex,const std::shared_ptr<util::data
 	//return if no valid attribute found
 	if (attributes.size() == 0)
 		return;
-	 if (important_att > 0){
-		 auto att_variance = data_variance(dt, dIndex);
-	 }
+//
+//	 if (important_att > 0){
+//		 auto att_variance = data_variance(dt, dIndex);
+//	 }
 
 
 	// /Randomly pick an attribute and a split point
@@ -123,35 +128,59 @@ void Tree::iTree(std::vector<int> const &dIndex,const std::shared_ptr<util::data
 double Tree::pathLengthM(std::vector<double> &inst){
 
 
-	double instAttVal = inst[this->splittingAtt];
+	double instAttVal;
 	double depth=0.0;
 
-	std::shared_ptr<Tree> temp = this->shared_from_this(); //std::enable_shared_from_this<Tree>;// = this;
-	while(temp!=NULL){
+	std::shared_ptr<Tree> root = this->shared_from_this(); //std::enable_shared_from_this<Tree>;// = this;
+	while(root!= nullptr){
+		instAttVal = inst[this->splittingAtt];
+
+
 
 		if(Tree::rangeCheck){
 
 			if(instAttVal < this->minAttVal && util::randomD(instAttVal,this->minAttVal)<this->minAttVal)
-				return depth+1.0;
+				return root->depth+1.0;
 			if(instAttVal >this->minAttVal && util::randomD(instAttVal,this->maxAttVal)>this->maxAttVal)
-				return depth+1.0;
+				return root->depth+1.0;
 		}
- 		instAttVal = inst[temp->splittingAtt];
-		if ( instAttVal >= temp->splittingPoint)
-			temp= temp->rightChild;
-		else
-			temp = temp->leftChild;
 
-		depth +=1.0;
+		if ( instAttVal >= root->splittingPoint)
+			root= root->rightChild;
+		else
+			root = root->leftChild;
+
 	}
 
-	return depth+util::avgPL(temp->nodeSize);
+	return root->depth+util::avgPL(root->nodeSize);
 }
+
+
+//double Tree::path_length(std::vector<double> &inst, bool cmv ) {
+//	Tree root = this->shared_from_this();
+//	double min, max, instAttVal, temp;
+//
+//	while((root->rightChild != nullptr) || (root->leftChild!= nullptr)) {
+//		if(root->nodeSize<=1) break;
+//		instAttVal = inst[root->splittingAtt];
+//
+//		if (instAttVal >= root->splittingPoint)
+//			root = root->rightChild;
+//		else
+//			root = root->leftChild ;
+//		depth = depth +1.0;
+//		if (root->splittingAtt!=-1)
+//			contribution.addcont(root->splittingAtt,depth+util::avgPL(root->nodeSize));
+//	}
+//
+//}
+
 
 /*
  * takes instance as vector of double
  */
-double Tree::pathLength(std::vector<double> &inst,bool cmv ){
+
+double Tree::pathLength(std::vector<double> &inst, bool cmv ){
 
 
  	if (this->leftChild==NULL||this->rightChild==NULL) { ///referenced as null for some input data .
@@ -159,6 +188,7 @@ double Tree::pathLength(std::vector<double> &inst,bool cmv ){
         }
 	//Range check added
     double instAttVal = inst[this->splittingAtt];
+
 	if(Tree::rangeCheck) {
 
 		if(instAttVal < this->minAttVal && util::randomD(instAttVal,this->minAttVal)<this->minAttVal)
@@ -167,28 +197,37 @@ double Tree::pathLength(std::vector<double> &inst,bool cmv ){
 			return 1.0;
 
 	}
+
+   //util::logfile<<
+//				std::cout<<this->getParent_id()<<","<<nodeSize<<","
+//			 <<splittingAtt<<","<<splittingPoint<<","
+//			 <<instAttVal<<","<<depth<<","<<leftChild->nodeSize<<","
+//             <<rightChild->nodeSize<<"\n";
+
+
 	//Checking missing data for the attribute.
+
 	if(cmv){
-		if(instAttVal==MISSING_VALUE) {
-			//util::logfile<<this->getParent_id()<<","<<nodeSize<<","<<splittingAtt<<","<<instAttVal<<","<<depth<<leftChild->nodeSize<<","
-              //      <<rightChild->nodeSize<<"\n";
+		if(isnan(instAttVal)) {
+			//util::logfile
 
 		    double leftNodeSize = (double)this->leftChild->nodeSize/(double)this->nodeSize;
-
-		    return 	 (1.0-leftNodeSize)*(this->rightChild->pathLength(inst) + 1.0)+
-	                  leftNodeSize*(this->leftChild->pathLength(inst) + 1.0);
-
+			double right_depth = (1.0-leftNodeSize)*(this->rightChild->pathLength(inst,cmv) + 1.0);
+			double left_depth =  leftNodeSize*(this->leftChild->pathLength(inst, cmv) + 1.0);
+			return right_depth + left_depth;
 	 	}
 	}
 
  	//Logging the isolation process
- 	//	logfile<<tmpVar<<","<<this->splittingAtt<<","<<this->splittingPoint<<"\n";
+// 	logfile<<this->splittingAtt<<","<<this->splittingPoint<<"\n";
 
 	if (instAttVal >= this->splittingPoint) 
-		return this->rightChild->pathLength(inst) + 1.0;
+		return this->rightChild->pathLength(inst, cmv) + 1.0;
 	else 
-		return this->leftChild->pathLength(inst) + 1.0;
+		return this->leftChild->pathLength(inst, cmv) + 1.0;
 }
+
+
 
 
 

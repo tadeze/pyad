@@ -71,7 +71,7 @@ namespace osu {
             std::vector<std::vector<double> > readcsv(const char *filename, char delim,
                                                       bool header);
 
-//extern std::ofstream ffile; //("log.txt");
+            extern std::ofstream logfile; //("log.txt");
             std::map<double, double> ecdf(std::vector<double> points);
 
             std::vector<double> ADdistance(const std::vector<std::vector<double> > &depths, bool weightToTail);
@@ -91,8 +91,16 @@ namespace osu {
             void displayVec(std::vector<std::vector<double> > data);
 
             std::vector<std::vector<double> > syntheticData(int D, int N);
+<<<<<<< HEAD
 
         }
+=======
+           double const MISSING_VALUE = -9999.0;
+	       int const NULL_TREE_CHILD_DEPTH = -999;
+
+
+	}
+>>>>>>> 3411ae24acbf67d282636ca1389018c90e0ba37b
 
     }
 }

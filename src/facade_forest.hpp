@@ -7,6 +7,7 @@
 #ifdef __linux__
 #define SERIALIZATION
 #endif
+
 #include "main.hpp"
 namespace osu {
     namespace ad {
@@ -133,7 +134,7 @@ namespace osu {
 
             std::map<int, double> explanation(std::vector<double> &inst);
 
-            void displayData();
+            void displayData(std::vector<std::vector<double> > &_df);
 
             int isValidModel() const;
             void load(const std::string &filename, bool binaryFormat = true); //OUTPUT_FORMAT output_format);

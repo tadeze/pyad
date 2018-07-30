@@ -33,17 +33,75 @@ Default value is 100.
 
 #include "facade_forest.hpp"
 #include "command_parser.hpp"
+#include "bagged_forest.h"
+
 //log file
-//std::ofstream util::logfile("logfile.csv");
+#include <cmath>
 /*
  * Display vector data
  */
 using namespace osu::ad;
 
+<<<<<<< HEAD
 
 void test_trials(){
 
+=======
+std::ofstream util::logfile; //("logfile.csv");
+
+inline std::vector<int> fillVector(int start, int end, int step=1){
+    std::vector<int> data;
+    for(int i=start; i<end;i+=step) data.push_back(i);
+    return data;
+}
+inline std::shared_ptr<util::dataset> makeDataset(std::vector<std::vector<double> > &data) {
+    std::shared_ptr<util::dataset> dt = std::make_shared<util::dataset>();
+    //auto dt = std::make_shared<util::dataset>();
+    dt->data = data;
+    dt->ncol = (int) data[0].size();
+    dt->nrow = (int) data.size();
+    return dt;
+}
+
+void testBaggedForest(){
+    std::cout<<" Checking Bagged forest \n";
     std::vector<std::vector<double> > dataxx = util::syntheticData(4,1000);   //util::readcsv((char *) &filename[0], ',', true);
+
+    //util::write_log(filename);
+    //util::close_log();
+    bool check_missing_value = true;//false;//true;
+
+    auto dataset = makeDataset(dataxx);
+    // From facadeForest
+    BaggedForest bf(100, dataset, 256, 0 , false, true);
+    bf.cmv = true;
+    bf.buidForest();
+    std::cout<<bf.instanceScore(dataxx[0]);
+    std::cout<<"\n End of bagged forest \n";
+}
+int main(int argc, char* argv[]) {
+    //parseInput(argc,argv);
+    //Tree::rangeCheck = true;
+    util::logfile.open("logfile.txt",std::ios_base::out);
+    //std::string log_filename ("outputlog.txt");
+    //util::init_log(log_filename);
+
+    //Parser args;
+
+    //args.parse_argument(argc, argv);
+    
+    /*std::string filename = args.input_name;//util::filename();
+    int ntree = args.ntrees;
+    int nsample = args.nsample;
+    */
+    // TODO: Incorporate the command parser into main file
+    
+    
+>>>>>>> 3411ae24acbf67d282636ca1389018c90e0ba37b
+    std::vector<std::vector<double> > dataxx = util::syntheticData(4,1000);   //util::readcsv((char *) &filename[0], ',', true);
+    testBaggedForest();
+
+
 
     //util::write_log(filename);
     //util::close_log();
@@ -59,23 +117,49 @@ void test_trials(){
               <<","<<dataxx[0].size()<<std::endl;
     // Insert missing values.
 
+<<<<<<< HEAD
     /*  dataxx[1][0] = -9999.0;
       dataxx[2][1] = -9999.0;
       dataxx[3][1] = -9999.0;
       dataxx[4][1] = -9999.0;
       dataxx[4][2] = -9999.0;
   */
+=======
+    auto dataset = makeDataset(dataxx);
+    auto indexx = fillVector(0,256,1);
+    auto tree = std::make_shared<Tree>(); //Tree();
+    tree->iTree(indexx,dataset,0, 0, false);
+    std::cout<<tree->pathLength(dataset->data[0],true)<<"\t";
+    std::cout<<dataset->data[0][0];
+    dataset->data[0][0] = NAN;
+    std::cout<<dataset->data[0][0];
+    dataxx[0][0] = NAN;// -9999.0;
+    dataxx[0][1] = NAN;
+    dataxx[3][1] = NAN;
+    dataxx[4][1] = NAN;
+    dataxx[4][2] = NAN;
+>>>>>>> 3411ae24acbf67d282636ca1389018c90e0ba37b
 
     ff.testForest(dataxx,check_missing_value);
     std::vector<double> score = ff.getScore();
+
     std::cout<<"Checking scores\n";
-    for (auto const &sce : score)
-        std::cout << sce << "\t";
+//    for (auto const &sce : score)
+//        std::cout << sce << "\t";
+    std::cout<<"\n checking path"<<std::endl;
+
+    std::cout<<tree->pathLength(dataset->data[0],true)<<"\t";
+    std::cout<<tree->pathLength(dataset->data[0],false);
+
+
+
+
+
     //std::string forest_name = "facadeforest.bin";
-    std::ofstream tracedpath("tracedpath2.csv");
-    ff.explanation(dataxx[2]);
-    ff.tracepath(dataxx[2],tracedpath);
-    tracedpath.close();
+//    std::ofstream tracedpath("tracedpath2.csv");
+//    ff.explanation(dataxx[2]);
+//    ff.tracepath(dataxx[2],tracedpath);
+//    tracedpath.close();
 
     //ff.save(forest_name,true);
 
@@ -209,6 +293,13 @@ int main(int argc, char* argv[]) {
 
 
 
+<<<<<<< HEAD
+=======
+    }
+    delete dt;
+*/
+   util::logfile.close();
+>>>>>>> 3411ae24acbf67d282636ca1389018c90e0ba37b
    	return 0;
 }
 

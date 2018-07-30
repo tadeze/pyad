@@ -6,14 +6,18 @@ from collections import defaultdict
 cimport numpy as np
 import numpy as np
 import cPickle
- ## TODO: Modify the loda and optimze it. 
+# TODO: Modify the loda and optimze it.
 from cpyad cimport *
 #include "loda.py"
 #import loda 
 NA = -9999.0
 cdef class IsolationForest:
-    cdef FacadeForest *thisptr
-    #cdef bool is_trained = False
+    cdef FacadeForest * thisptr
+    cdef int ntree, nsample, maxheight, stoplimit
+    cdef float rho
+    cdef bool rotate, adaptive, rangecheck
+    # cdef bool is_trained = False
+
     def __cinit__(self, traindf=None, ntree=100, nsample=512, maxheight=0,
                   rotate=False, adaptive=False, rangecheck=True, rho=0.01, stoplimit=5):
         """
@@ -38,7 +42,14 @@ cdef class IsolationForest:
         """
         #self.is_trained = False
         self.thisptr = new FacadeForest()
-
+        self.ntree = ntree
+        self.nsample = nsample
+        self.maxheight = maxheight
+        self.rotate = rotate
+        self.adaptive = adaptive
+        self.rangecheck = rangecheck
+        self.rho = rho
+        self.stoplimit = stoplimit
         if traindf is not None:
             self.train(traindf, ntree, nsample, maxheight, rotate, adaptive, rangecheck,
                        rho, stoplimit)
@@ -46,8 +57,12 @@ cdef class IsolationForest:
     def __dealloc__(self):
         del self.thisptr
 
+<<<<<<< HEAD
+    def train(self, traindf, **kwargs):
+=======
     def train(self, traindf, ntree=100, nsample=512, maxheight=0, rotate=False,
               adaptive=False, rangecheck=True, rho=0.01, stoplimit=5, column_subsample=[]):
+>>>>>>> csubsample
         """
         Train Isolation Forest model.
         ff.train_forest(_traindf,_ntree=100,_nsample=512,_maxheight=0,_rotate=False,_adaptive=False,_rangecheck=True,_rho=0.01,_stoplimit=5,
@@ -68,25 +83,33 @@ cdef class IsolationForest:
         """
 
         DataValidator.validate_dataset(traindf)
-        if ntree < 0:
+        if self.ntree < 0:
             raise NameError("Number of trees cann't be less than 0")
-        if ntree == 0:
+        if self.ntree == 0:
             print ("You set 0 number of trees, then it is adaptive way of growing")
             adaptive = True
-        if nsample > len(traindf) or nsample == 0:
+        if self.nsample > len(traindf) or self.nsample == 0:
             nsample = len(traindf)
-            print("Number of samples cann't be greater than sample size,then data will be used")
-        if maxheight < 0:
+            print(
+                "Number of samples cann't be greater than sample size,then data will be used")
+        if self.maxheight < 0:
             raise NameError("Max depth cann't be negative")
-        if rho > 1:
+        if self.rho > 1:
             raise NameError("rho value should be less than 1")
+<<<<<<< HEAD
+        for key, value in kwargs.items():
+            setattr(self, key, value)
+=======
         #self.is_trained = True
 
         return self.thisptr.trainForest(traindf, ntree, nsample, maxheight,
                                         rotate, adaptive, rangecheck, rho, stoplimit, column_subsample)
+>>>>>>> csubsample
 
-    def score(self, test_data, cmv = False):
+        return self.thisptr.trainForest(traindf, self.ntree, self.nsample, self.maxheight,
+                                        self.rotate, self.adaptive, self.rangecheck, self.rho, self.stoplimit)
 
+    def score(self, test_data, cmv=False):
         """
         Generate anomaly score from trained Forest.
         @param cmv : check missing value, default False
@@ -100,6 +123,8 @@ cdef class IsolationForest:
         if self.thisptr.isValidModel() == 1:
             raise NameError("The iForest model is not yet trained.")
         DataValidator.validate_dataset(test_data)
+        if test_data.ndim < 2:
+            test_data = test_data.reshape([1, test_data.size])
         self.thisptr.testForest(test_data, cmv)
         return self.thisptr.getScore()
 
@@ -115,6 +140,7 @@ cdef class IsolationForest:
         """
         self.validate_model()
         return self.thisptr.getScore()
+
     def path_length(self):
         """
         Returns: Returns path length of observations in all trees used.
@@ -122,13 +148,14 @@ cdef class IsolationForest:
         """
         self.validate_model()
         return self.thisptr.pathLength()
+
     def average_depth(self):
         """
 
         Returns: Average depth(path length) across all trees of the forest.
         >> ff.average_depth() # returns average depth of all point passed in score method.
         """
-        self.validate_model()  #check
+        self.validate_model()  # check
         return self.thisptr.averageDepth()
 
     def save(self, model_name):
@@ -163,6 +190,7 @@ cdef class IsolationForest:
 
         """
         return self.thisptr.getNTree()
+
     def get_nsample(self):
         """
 
@@ -170,6 +198,7 @@ cdef class IsolationForest:
 
         """
         return self.thisptr.getNSample()
+
     def get_max_depth(self):
         """
         Returns: Maximum depth of the trees
@@ -182,6 +211,7 @@ cdef class IsolationForest:
         Return: True if the Forest is built with adaptive way
         """
         self.thisptr.isAdaptive()
+
     def is_range_check(self):
         """
 
@@ -189,6 +219,7 @@ cdef class IsolationForest:
 
         """
         return self.thisptr.isRangeCheck()
+
     def is_rotate(self):
         """
 
@@ -196,6 +227,7 @@ cdef class IsolationForest:
 
         """
         return self.thisptr.isRotate()
+
     def is_valid_model(self):
         """
 
@@ -203,13 +235,16 @@ cdef class IsolationForest:
 
         """
         return self.thisptr.isValidModel()
-    def display_data(self):
+
+    def display_data(self, df):
         """
 
         Returns: displays the training data used.
 
         """
-        return self.thisptr.displayData()
+        #assert isinstance(df, np.ndarray)
+        return self.thisptr.displayData(df)
+
     def explanation(self, x):
         """
         Args:
@@ -220,15 +255,21 @@ cdef class IsolationForest:
         return self.thisptr.explanation(x)
 
 cdef class IsolationTree:
-    cdef Tree *thisptr
+    cdef Tree * thisptr
     cdef list train_points
 
     def __cinit__(self):
         self.thisptr = new Tree()
         self.train_points = []
+
     def __dealloc__(self):
         del self.thisptr
+<<<<<<< HEAD
+
+    def iTree(self, train_index, train_data, height=0, maxheight=0, stopheight=False):
+=======
     def iTree(self, train_index, train_data, height=0, maxheight=0, stopheight=False,column_subsample=[]):
+>>>>>>> csubsample
         """
 
         :param train_index: list of index of samples used for training tree
@@ -238,17 +279,34 @@ cdef class IsolationTree:
         :param stopheight: Stop growing forest after a given maxheight. Default false.
         :return: Trained tree.
         """
+<<<<<<< HEAD
 
+=======
+<<<<<<< HEAD
+        return self.thisptr.iTree(train_index, train_data, height, maxheight, stopheight)
+=======
+        if len(column_subsample)<1:
+            for i in range(train_data.shape[0]):
+                column_subsample.append(i)
+>>>>>>> 3411ae24acbf67d282636ca1389018c90e0ba37b
 
         return self.thisptr.iTree(train_index, train_data, height, maxheight, stopheight, column_subsample)
+>>>>>>> csubsample
 
-    def path_length(self, test_data):
+
+    def path_length(self, test_data, check_miss=False):
         """
 
         :param test_data: ndarray testing data.
         :return: Returns 1-D depth of all testing data.
         """
-        return self.thisptr.pathLength(test_data)
+        assert isinstance(test_data, np.ndarray)
+
+        if test_data.ndim<2:
+            return self.thisptr.pathLength(test_data, check_miss)
+        else:
+            return [ self.thisptr.pathLength(row, check_miss) for row in test_data]
+        #return self.thisptr.pathLength(test_data, check_miss)
 
     def explanation(self, test_data):
         """
@@ -256,25 +314,32 @@ cdef class IsolationTree:
         :return: Feature explanation of test_data.
         """
         return self.thisptr.explanation(test_data)
+
     def max_depth(self):
         """
         :return: Returns maximum depth.
         """
         return self.thisptr.maxTreeDepth()
+
     def get_nodesize(self):
         """
 
         :return: Number of instance in the node.
         """
         return self.thisptr.getNodeSize()
+
     def get_splittingAtt(self):
         return self.thisptr.getSplittingAtt()
+
     def get_splittingPoint(self):
         return self.thisptr.getSplittingPoint()
+
     def get_depth(self):
         return self.thisptr.getDepth()
+
     def get_minAttVal(self):
         return self.thisptr.getMinAttVal()
+
     def get_maxAttVal(self):
         return self.thisptr.getMaxAttVal()
 
@@ -286,9 +351,10 @@ cdef class IForest(object):
     cdef int nsample, ntree, maxheight
     cdef bool rangecheck, check_miss, adaptive
     cdef list rot_trees, trees
-    #cdef np.ndarray[np.float64_t, ndim=2] train_df
+    # cdef np.ndarray[np.float64_t, ndim=2] train_df
+
     def __cinit__(self, train_df=None, ntree=100, nsample=512,
-                 max_height=0, adaptive=False, rangecheck=True, check_miss=True):
+                  max_height=0, adaptive=False, rangecheck=True, check_miss=True):
         self.nsample = nsample
         self.ntree = ntree
         self.rangecheck = rangecheck
@@ -318,25 +384,39 @@ cdef class IForest(object):
             # generate rotation matrix
             sample_index = np.random.choice(nrow, self.nsample, False)
             itree = IsolationTree()
+<<<<<<< HEAD
             itree.train_points = sample_index.tolist()
             itree.iTree(sample_index, train_df, height=0, maxheight=self.maxheight, stopheight=False,
             column_subsample=column_subsample)
+=======
+<<<<<<< HEAD
+            itree.train_points = sample_index.tolist()
+            itree.iTree(sample_index, train_df, 0, self.maxheight)
+=======
+            itree.train_points = sample_index
+            itree.iTree(sample_index, train_df, 0, self.maxheight, column_subsample)
+>>>>>>> csubsample
+>>>>>>> 3411ae24acbf67d282636ca1389018c90e0ba37b
             self.trees.append({"tree": itree})
+
     @property
     def ntree(self):
         return self.ntree
+
     @ntree.setter
     def ntree(self, value):
-        self.ntree = value 
+        self.ntree = value
 
     @property
     def nsample(self):
         return self.nsample
+
     @nsample.setter
     def nsample(self, value):
-        self.nsample = value   
+        self.nsample = value
+
     def depth(self, test_df, oob=False):
-    	# 
+        #
 
         depth = []
 
@@ -348,8 +428,9 @@ cdef class IForest(object):
 
     def average_depth(self, test_df):
         assert isinstance(test_df, np.ndarray)
-        if test_df.ndim<2:
-            return np.mean(self.depth(test_df))
+        if test_df.ndim < 2:
+            # return np.mean(self.depth(test_df))
+            test_df = test_df.reshape([1, test_df.size])
         avg_depth = [np.mean(self.depth(row)) for row in test_df]
         return np.array(avg_depth)
 
@@ -364,7 +445,7 @@ cdef class IForest(object):
         return (len(depth), np.mean(depth))
 
     def explanation(self, query_point):
-        #explanation=[]
+        # explanation=[]
         features = defaultdict(float)
         for rottree in self.trees:
             tree = rottree["tree"]
@@ -373,8 +454,9 @@ cdef class IForest(object):
         return features
 
     def score(self, test_df):
-        #score of allpoints
-        bst = lambda n: 0.0 if (n - 1) <= 0 else (2.0 * np.log(n - 1) + 0.5772156649) - 2.0 * (n - 1) / n
+        # score of allpoints
+        def bst(n): return 0.0 if (n - 1) <= 0 else (2.0 *
+                                                     np.log(n - 1) + 0.5772156649) - 2.0 * (n - 1) / n
         avg_depth = self.average_depth(test_df)
         scores = np.power(2, (-1 * avg_depth / bst(self.nsample)))
         return scores
@@ -388,9 +470,12 @@ cdef class IForest(object):
         return cPickle.load(open(model_name, "r"))
 
 
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> 3411ae24acbf67d282636ca1389018c90e0ba37b
 class RotationForest(object):
     """
     Build Rotation Forest based on Isolation Trees
@@ -409,7 +494,8 @@ class RotationForest(object):
 
     @staticmethod
     def random_rotation_matrix(n, m=None):
-        if m is None: m = n
+        if m is None:
+            m = n
         A = np.random.normal(size=[n, m])
         Q, R = np.linalg.qr(A)
         M = Q.dot(np.diag(np.sign(np.diag(R))))
@@ -446,7 +532,7 @@ class RotationForest(object):
         for rottree in self.rot_trees:
             rot_mat = rottree["rotmat"]
             tree = rottree["tree"]
-            #rotate data
+            # rotate data
             rotated_dt = np.dot(testdf, rot_mat)
             depth.append(tree.path_length(rotated_dt))
         return depth
@@ -459,8 +545,9 @@ class RotationForest(object):
         return np.array(avg_depth)
 
     def score(self, testdf):
-        #score of allpoints
-        bst = lambda n: 0.0 if (n - 1) <= 0 else (2.0 * np.log(n - 1) + 0.5772156649) - 2.0 * (n - 1) / n
+        # score of allpoints
+        def bst(n): return 0.0 if (n - 1) <= 0 else (2.0 *
+                                                     np.log(n - 1) + 0.5772156649) - 2.0 * (n - 1) / n
         avg_depth = self.average_depth(testdf)
         scores = np.power(2, (-1 * avg_depth / bst(self.nsample)))
         return scores
@@ -490,25 +577,27 @@ class DataValidator(object):
         """
         if type(dataset) is not np.ndarray:
             raise NameError("Dataset is not in ndarray format")
-        #check for size of dataset return for 0 size
+        # check for size of dataset return for 0 size
         if len(dataset) < 1:
             raise NameError("Data is empty")
+
     @staticmethod
     def validate_file_exists(filename):
-
         """
         Check if file exists or raise error
         """
         import os.path
         if os.path.isfile(filename) == False:
-            raise NameError(filename, "  doesn't exist make sure to specifiy correct path");
+            raise NameError(
+                filename, "  doesn't exist make sure to specifiy correct path")
         else:
             return True
 
     def validate_model(error_flag):
-        if error_flag == 0:  #self.OK:
+        if error_flag == 0:  # self.OK:
             return True
-        if error_flag == 1:  #self.NO_TEST_DATA:
-            raise NameError("No test data given to the model (test function not called)")
-        if error_flag == 2:  #self.FOREST_NOT_TRAINED:
+        if error_flag == 1:  # self.NO_TEST_DATA:
+            raise NameError(
+                "No test data given to the model (test function not called)")
+        if error_flag == 2:  # self.FOREST_NOT_TRAINED:
             raise NameError("train function net yet called")
