@@ -8,8 +8,8 @@ class Parser{
 public:
     std::string input_name;
     std::string output_name;
-    //std::string test_name;
-    int metacols;
+    std::string test_name;
+    std::string metacols;
     int ntrees;
     int nsample;
     int maxdepth;
@@ -17,7 +17,8 @@ public:
     bool adaptive;
     bool rotate;
     bool pathlength;
-    bool rangecheck;
+    bool range_check;
+    bool miss_check;
     double precision;
     double alpha;
     int epoch;
@@ -31,10 +32,12 @@ public:
     Parser(){
         input_name = std::string();
         output_name = std::string();
-        metacols = 0;
+        metacols = std::string();
         ntrees = 0;
         nsample = 0;
+        pathlength = false;
 
     }
+    void display_argument();
 };
 #endif //PYIFOREST_COMMANDPARSER_HPP

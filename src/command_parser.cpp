@@ -71,36 +71,61 @@
  *
  */
 
+void Parser::display_argument() {
 
+}
 void Parser::parse_argument(int argc, char **argv) {
 
 
     optionparser::parser p("IsolationForest commandline options ");
 
-    p.add_option("--ntree", "-t").help("Number of trees.")
+    p.add_option("--ntree", "-t")
+            .help("Number of trees.")
             .mode(optionparser::store_value)
             .default_value(100);
     p.add_option("--nsample","-s").help("Sample size. Default 512.")
             .mode(optionparser::store_value)
             .required(false)
             .default_value(512);
-    p.add_option("--input","-i").help("Input csv file required.")
+    p.add_option("--input","-i")
+            .help("Input csv file required.")
             .mode(optionparser::store_value);
-    p.add_option("--output","-o").help("Number of synthetic cluster to use. Defualt 3")
+    p.add_option("--output","-o")
+            .help("Output csv file required")
+            .required(true)
             .mode(optionparser::store_value);
 
-    p.add_option("--metacols","-m").help("Metacolumn to skip. ")
+    p.add_option("--metacols","-m")
+            .help("Metacolumn to skip. ")
             .mode(optionparser::store_mult_values);
-
-    p.add_option("--maxheight", "-d").help("Input data. 3D data with X, Y,Z value separated by comma")
+    p.add_option("--maxheight", "-d")
+             .help("Max depth for the tree to grow. Defualt 0 (grow until separation)")
+             .default_value(0)
             .mode(optionparser::store_value);
-    p.add_option("--pathlenght","-p")
+    p.add_option("--pathlength","-p")
             .help("Toggle whether to display depth of all trees or not. Default false")
+            .mode(optionparser::store_true).default_value(false);
+    p.add_option("--testfile", "-x")
+            .help("Specify path to test file. (optional)")
+            .mode(optionparser::store_value);
+    p.add_option("--explain","-l")
+            .help("Toggle whether to output feature explanation")
+            .default_value(false).mode(optionparser::store_true);
+    p.add_option("--save","-b")
+            .help("Specify  file name to save the trianed model")
+            .mode(optionparser::store_value);
+    p.add_option("--load","-f")
+            .help("Specify  file name to load the trianed model")
+            .mode(optionparser::store_value);
+    p.add_option("--missvalue","-j")
+            .help("Specify missing vlaue. Defualt false.")
+            .default_value(false)
             .mode(optionparser::store_true);
 
     p.eat_arguments(argc, argv);
 
 
+// Assign and validate values.
     if (p.get_value("input")) {
         input_name = p.get_value<std::string>("input");
         //input_name = names;
@@ -111,18 +136,33 @@ void Parser::parse_argument(int argc, char **argv) {
     }
 
     if(p.get_value("ntree")) {
-        ntrees =p.get_value<int>("tree");
+        ntrees =p.get_value<int>("ntree");
     }
 
     if(p.get_value("output")) {
         output_name = p.get_value<std::string>("output");
     }
-/*
+    if(p.get_value("maxheight"))
+        maxdepth = p.get_value<int>("maxheight");
+    if(p.get_value("pathlength"))
+        pathlength = p.get_value<bool>("pathlength");
+    if(p.get_value("testfile"))
+        test_name = p.get_value<std::string>("testfile");
+    if(p.get_value("explain"))
+        explain = p.get_value<bool>("explain");
+    if(p.get_value("save"))
+        savepath = p.get_value<bool>("save");
+    if(p.get_value("load"))
+        loadpath = p.get_value<bool>("load");
+
+
     if (p.get_value("metacols")) {
-        auto names = p.get_value<int>("metacols");
-        gComponent = names;
+        metacols = p.get_value<std::string>("metacols");
+        //gComponent = names;
     }
-*/
+    if(p.get_value("missvalue"))
+        range_check = p.get_value<bool>("missvalue");
+
 
 //    if (p.get_value("knn")){
 //        auto names = p.get_value<int>("knn");

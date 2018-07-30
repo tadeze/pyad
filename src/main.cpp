@@ -40,22 +40,9 @@ Default value is 100.
  */
 using namespace osu::ad;
 
-int main(int argc, char* argv[]) {
-    //parseInput(argc,argv);
-    //Tree::rangeCheck = true;
-    //util::logfile.open("logfile.txt",std::ios_base::out);
-    //std::string log_filename ("outputlog.txt");
-    //util::init_log(log_filename);
-    //Parser args;
-    //args.parse_argument(argc, argv);
-    
-    /*std::string filename = args.input_name;//util::filename();
-    int ntree = args.ntrees;
-    int nsample = args.nsample;
-    */
-    // TODO: Incorporate the command parser into main file
-    
-    
+
+void test_trials(){
+
     std::vector<std::vector<double> > dataxx = util::syntheticData(4,1000);   //util::readcsv((char *) &filename[0], ',', true);
 
     //util::write_log(filename);
@@ -72,12 +59,12 @@ int main(int argc, char* argv[]) {
               <<","<<dataxx[0].size()<<std::endl;
     // Insert missing values.
 
-  /*  dataxx[1][0] = -9999.0;
-    dataxx[2][1] = -9999.0;
-    dataxx[3][1] = -9999.0;
-    dataxx[4][1] = -9999.0;
-    dataxx[4][2] = -9999.0;
-*/
+    /*  dataxx[1][0] = -9999.0;
+      dataxx[2][1] = -9999.0;
+      dataxx[3][1] = -9999.0;
+      dataxx[4][1] = -9999.0;
+      dataxx[4][2] = -9999.0;
+  */
 
     ff.testForest(dataxx,check_missing_value);
     std::vector<double> score = ff.getScore();
@@ -124,40 +111,40 @@ int main(int argc, char* argv[]) {
 */
     // Read forest
 
-  /*      std::ifstream ifile{filenamex};
-        if (!ifile.is_open()) {
-            throw std::runtime_error{filenamex + " could not be opened"};
-        }
-        FacadeForest newff;
-       //cereal::JSONInputArchive iarchive{ifile};
-       cereal::BinaryInputArchive iarchive(ifile); // Create an input archive
-        iarchive(newff);
+    /*      std::ifstream ifile{filenamex};
+          if (!ifile.is_open()) {
+              throw std::runtime_error{filenamex + " could not be opened"};
+          }
+          FacadeForest newff;
+         //cereal::JSONInputArchive iarchive{ifile};
+         cereal::BinaryInputArchive iarchive(ifile); // Create an input archive
+          iarchive(newff);
 
-        newff.testForest(data,check_missing_value);
-        auto  new_score = newff.getScore();
-       for(auto &sc : new_score)
-           std::cout<<sc<<"\t";
-*/
+          newff.testForest(data,check_missing_value);
+          auto  new_score = newff.getScore();
+         for(auto &sc : new_score)
+             std::cout<<sc<<"\t";
+  */
     // TODO: explanation returns vad pointer need to be updated.
-   // auto tr = std::make_shared<Tree>();
+    // auto tr = std::make_shared<Tree>();
     //tree_sh->iTree(dataIndex,dataset,0,0,false)
 
 
     /* checking contributions  from trees **/
-	//std::vector<std::vector<double> > data = util::readcsv((char*) &filename[0],',',true);
+    //std::vector<std::vector<double> > data = util::readcsv((char*) &filename[0],',',true);
 
 //	Tree *tr = new Tree();
-	/*
+    /*
     std::vector<int> dataIndex;//(dataset->nrow);
-	for(int i=0;i<dataset->nrow;i++)
-		dataIndex.push_back(i);
-	tr->iTree(dataIndex,dataset,0,0,false);
-	std::cout<<tr->pathLength(dataset->data[4])<<" Depth\n";
-	std::cout<<"Feature explanations\n";
+    for(int i=0;i<dataset->nrow;i++)
+        dataIndex.push_back(i);
+    tr->iTree(dataIndex,dataset,0,0,false);
+    std::cout<<tr->pathLength(dataset->data[4])<<" Depth\n";
+    std::cout<<"Feature explanations\n";
 
-	auto feature = tr->explanation(dataset->data[5]);
+    auto feature = tr->explanation(dataset->data[5]);
    */
-   // archive(cereal::make_nvp("tree",tr));
+    // archive(cereal::make_nvp("tree",tr));
     //file.close();
 
 /*	std::cout<<feature.size()<<std::endl;
@@ -165,7 +152,7 @@ int main(int argc, char* argv[]) {
   for(const auto & mpr : feature)
 		std::cout<<mpr.first<<"\t"<<mpr.second<<std::endl;
 *///
-  //  std::cout<<" Second anomalies";
+    //  std::cout<<" Second anomalies";
 //    feature = tr->featureContribution(dataset->data[4]);
 //    std::cout<<feature.contributions.size()<<std::endl;
 //    dataset->print(4);
@@ -178,22 +165,50 @@ int main(int argc, char* argv[]) {
 
        }
     */
-	//displayVec(ff.getTraindf()->data);
+    //displayVec(ff.getTraindf()->data);
 
-   /* util::dataset *dt = makeDataset(data);
+    /* util::dataset *dt = makeDataset(data);
 
-    std::cout<<dt->nrow<<","<<dt->ncol<<" Row/column"<<std::endl;
+     std::cout<<dt->nrow<<","<<dt->ncol<<" Row/column"<<std::endl;
 
-    IsolationForest iff(100,dt,256,0,false,false);
-    iff.fixedTreeForest();
-    std::vector<double> score = iff.AnomalyScore(dt);
-    for(auto sc : score){
-    	std::cout<<sc<<std::endl;
+     IsolationForest iff(100,dt,256,0,false,false);
+     iff.fixedTreeForest();
+     std::vector<double> score = iff.AnomalyScore(dt);
+     for(auto sc : score){
+         std::cout<<sc<<std::endl;
 
-    }
-    delete dt;
-*/
-   //util::logfile.close();
+     }
+     delete dt;
+ */
+    //util::logfile.close();
+}
+
+int main(int argc, char* argv[]) {
+
+     //parseInput(argc,argv);
+    //Tree::rangeCheck = true;
+    //util::logfile.open("logfile.txt",std::ios_base::out);
+    //std::string log_filename ("outputlog.txt");
+    //util::init_log(log_filename);
+     Parser args;
+     args.parse_argument(argc, argv);
+     auto dataxx = util::readcsv(args.input_name.c_str(),',', true);
+
+      // From facadeForest
+    FacadeForest ff;
+    std::vector<int> columnindx = {}; //0,1,2};
+    ff.trainForest(dataxx, args.ntrees, args.nsample, args.maxdepth, false, false,
+                   args.range_check, 0.01, 0, columnindx);
+    ff.testForest(dataxx, args.miss_check);
+    std::vector<double> score = ff.getScore();
+    std::cout<<"Checking scores\n";
+    for (auto const &sce : score)
+        std::cout << sce << "\t";
+    if(args.pathlength)
+        std::cout<<"path length is true";
+
+
+
    	return 0;
 }
 
