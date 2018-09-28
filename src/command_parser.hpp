@@ -4,6 +4,8 @@
 
 #ifndef PYIFOREST_COMMANDPARSER_HPP
 #define PYIFOREST_COMMANDPARSER_HPP
+#include "utility.hpp"
+using namespace osu::ad;
 class Parser{
 public:
     std::string input_name;
@@ -36,8 +38,13 @@ public:
         ntrees = 0;
         nsample = 0;
         pathlength = false;
-
+        maxdepth = 0;
+        header= true;
+        miss_check=adaptive=rotate=range_check= false;
+        savepath=loadpath=std::string();
     }
     void display_argument();
+    util::DoubleMatrix readData(std::string input_file, bool header=true, std::string delimiter =",");
+
 };
 #endif //PYIFOREST_COMMANDPARSER_HPP

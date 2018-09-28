@@ -9,6 +9,7 @@
 #endif
 
 #include "main.hpp"
+
 namespace osu {
     namespace ad {
         class FacadeForest {
@@ -22,11 +23,7 @@ namespace osu {
             double rho;
             int stopLimit;
             bool cmv;
-            //util::dataset *traindf,*testdf;
-            /*
-            Forest *iff;
-          */
-            //Use smart pointers
+
             std::shared_ptr<util::dataset> traindf, testdf;
             //std::shared_ptr<util::dataset> testdf;
             std::shared_ptr<Forest> iff;
@@ -45,14 +42,7 @@ namespace osu {
             // enum FOREST{IFOREST,RFOREST,CFOREST};
             virtual ~FacadeForest() {};
 
-/*
-    //constructor and Destructor
-    virtual ~FacadeForest(){
-    delete traindf;
-    delete testdf;
-    delete iff;
-    };
-  */
+
             FacadeForest();
 
             void tracepath(std::vector<double> &inst, std::ostream &out) {
@@ -113,7 +103,7 @@ namespace osu {
             int trainForest(std::vector<std::vector<double> > &traindf, int _ntree,
                             int _nsample, int _maxheight, bool _rotate, bool _adaptive,
                             bool _rangecheck, double _rho, int _stopLimit,
-                            std::vector<int> const &columnIndex= std::vector<int>());
+                            std::vector<int> const &columnIndex = std::vector<int>());
 
             int trainForest(std::vector<std::vector<double> > &traindf, int _ntree,
                             int _nsample, int _maxheight, bool _rotate) {
@@ -137,6 +127,7 @@ namespace osu {
             void displayData(std::vector<std::vector<double> > &_df);
 
             int isValidModel() const;
+
             void load(const std::string &filename, bool binaryFormat = true); //OUTPUT_FORMAT output_format);
             void save(const std::string &filenam, bool binaryFormat = true); //, OUTPUT_FORMAT output_format);
 

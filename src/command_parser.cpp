@@ -3,6 +3,8 @@
 //
 #include "include/parser/parser.hh"
 #include "command_parser.hpp"
+#include<fstream>
+
 /*
  * /*Options:
 	-i FILE, --infile=FILE
@@ -70,9 +72,14 @@
  *
  *
  */
-
+bool checkExist(std::string fileName){
+    std::ifstream infile(fileName.c_str());
+    if(!infile.good())
+        throw std::runtime_error{fileName+" could not be opened"};
+    return true;
+}
 void Parser::display_argument() {
-
+std::cout<<"Num trees: "<<ntrees;
 }
 void Parser::parse_argument(int argc, char **argv) {
 
@@ -81,6 +88,7 @@ void Parser::parse_argument(int argc, char **argv) {
 
     p.add_option("--ntree", "-t")
             .help("Number of trees.")
+            .required(true)
             .mode(optionparser::store_value)
             .default_value(100);
     p.add_option("--nsample","-s").help("Sample size. Default 512.")
@@ -89,6 +97,7 @@ void Parser::parse_argument(int argc, char **argv) {
             .default_value(512);
     p.add_option("--input","-i")
             .help("Input csv file required.")
+            .required(true)
             .mode(optionparser::store_value);
     p.add_option("--output","-o")
             .help("Output csv file required")
@@ -129,14 +138,16 @@ void Parser::parse_argument(int argc, char **argv) {
     if (p.get_value("input")) {
         input_name = p.get_value<std::string>("input");
         //input_name = names;
-
+        checkExist(input_name);
     }
     if(p.get_value("nsample")) {
         nsample = p.get_value<int>("nsample");
     }
 
     if(p.get_value("ntree")) {
-        ntrees =p.get_value<int>("ntree");
+        ntrees = p.get_value<int>("ntree");
+        if (ntrees==0)
+            adaptive=true;
     }
 
     if(p.get_value("output")) {
@@ -146,15 +157,19 @@ void Parser::parse_argument(int argc, char **argv) {
         maxdepth = p.get_value<int>("maxheight");
     if(p.get_value("pathlength"))
         pathlength = p.get_value<bool>("pathlength");
-    if(p.get_value("testfile"))
+    if(p.get_value("testfile")) {
         test_name = p.get_value<std::string>("testfile");
+        checkExist(test_name);
+    }
     if(p.get_value("explain"))
         explain = p.get_value<bool>("explain");
     if(p.get_value("save"))
         savepath = p.get_value<bool>("save");
-    if(p.get_value("load"))
-        loadpath = p.get_value<bool>("load");
+    if(p.get_value("load")) {
 
+        loadpath = p.get_value<bool>("load");
+        checkExist(loadpath);
+    }
 
     if (p.get_value("metacols")) {
         metacols = p.get_value<std::string>("metacols");
