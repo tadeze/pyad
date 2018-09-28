@@ -33,7 +33,7 @@ Default value is 100.
 
 #include "facade_forest.hpp"
 #include "command_parser.hpp"
-#include "bagged_forest.h"
+#include "bagged_forest.hpp"
 
 //log file
 #include <cmath>
@@ -75,7 +75,43 @@ void testBaggedForest(){
     std::cout<<bf.instanceScore(dataxx[0]);
     std::cout<<"\n End of bagged forest \n";
 }
-int main(int argc, char* argv[]) {
+
+int main(int argc, char** argv) {
+ Parser args;
+    args.parse_argument(argc, argv);
+    args.display_argument();
+
+   // util::debug = seed;
+    //util::initialize();
+    std::string input_name = args.input_name;
+    std::string output_name = args.output_name;
+    std::string test_name = args.test_name;
+    std::string load_forest = args.loadpath;
+    std::string save_forest = args.savepath;
+    std::string meta_cols = args.metacols;
+    int ntree = args.ntrees;
+    int nsample = args.nsample;
+    int maxheight = args.maxdepth;
+    bool header = args.header;
+
+    bool rsample = nsample != 0;
+    bool stopheight = maxheight != 0;
+    int stopLimit = pargs->adaptive;
+    bool rangecheck = pargs->rangecheck;
+    bool rotate = pargs->rotate;
+    bool pathlength = pargs->pathlength;
+    float rho = pargs->precision;
+    float alpha = pargs->alpha;
+    int epoch = pargs->epoch;
+    bool oob = pargs->oobag;
+
+    //Input file to dataframe
+    bool explanation = pargs->explanation;
+
+
+}
+
+void experimentalCodes(){
     //parseInput(argc,argv);
     //Tree::rangeCheck = true;
     util::logfile.open("logfile.txt",std::ios_base::out);
@@ -85,14 +121,14 @@ int main(int argc, char* argv[]) {
     //Parser args;
 
     //args.parse_argument(argc, argv);
-    
+
     /*std::string filename = args.input_name;//util::filename();
     int ntree = args.ntrees;
     int nsample = args.nsample;
     */
     // TODO: Incorporate the command parser into main file
-    
-    
+
+
     std::vector<std::vector<double> > dataxx = util::syntheticData(4,1000);   //util::readcsv((char *) &filename[0], ',', true);
     testBaggedForest();
 
@@ -254,8 +290,7 @@ int main(int argc, char* argv[]) {
 }
 
 
-
-
+//TODO: Change teh data datastructure to using Eigen or custom Matrix.
 
 
 

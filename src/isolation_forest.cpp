@@ -123,10 +123,6 @@ int IsolationForest::adaptiveForest(double alpha,int stopLimit){
 
     }
 
-
-
-
-
 return ntree;
 }
 

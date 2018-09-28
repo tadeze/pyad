@@ -32,11 +32,12 @@
 namespace osu {
     namespace ad {
         namespace util {
+            using  DoubleMatrix = std::vector<std::vector<double> >;
 ////default_random_engine gen(time(NULL));
             struct dataset {
                 int ncol;
                 int nrow;
-                std::vector<std::vector<double> > data;
+                DoubleMatrix data;
                 //std::vector<std::vector<double> > data;
                 void print(int ix) {
                     for (auto elem : data[ix])
@@ -84,7 +85,7 @@ namespace osu {
 //extern Data *dt;
             extern std::string filename();
 
-            std::shared_ptr<util::dataset> makeDataset(std::vector<std::vector<double> > &data);
+            std::shared_ptr<util::dataset> makeDataset(DoubleMatrix &data);
 
             void displayVec(std::vector<double> &data);
 

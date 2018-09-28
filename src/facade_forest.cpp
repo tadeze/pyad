@@ -27,7 +27,12 @@ FacadeForest::FacadeForest() {
 
 }
 
-std::shared_ptr<util::dataset> makeDataset(std::vector<std::vector<double> > &data) {
+std::shared_ptr<util::dataset> makeDataset(util::DoubleMatrix &data) {
+    /*
+     * @param data: DoubleMatrix input data
+     *
+     */
+
     std::shared_ptr<util::dataset> dt = std::make_shared<util::dataset>();
     //auto dt = std::make_shared<util::dataset>();
     dt->data = data;
@@ -54,7 +59,7 @@ int FacadeForest::isValidModel() const {
     //return true;
 }
 
-int FacadeForest::trainForest(std::vector<std::vector<double> > &traindf,
+int FacadeForest::trainForest(util::DoubleMatrix &traindf,
                               int _ntree, int _nsample, int _maxheight, bool _rotate, bool _adaptive,
                               bool _rangecheck, double _rho, int _stopLimit, std::vector<int> const &columnIndex) {
 
@@ -206,43 +211,5 @@ void FacadeForest::load(const std::string &filename, bool binaryFormat){
 std::map<int, double> FacadeForest::explanation(std::vector<double> &inst) {
     return iff->importance(inst);
 }
-
-
-//void FacadeForest::saveModel(std::string modelName) {
-//  // Save the json representation
-// try{
-//     json  jsonstr = iff->to_json();
-//     std::ofstream  out(modelName);
-//     out<<jsonstr;
-//     out.close();
-//  }
-//  catch(std::exception e){
-//      std::cout<<e.what();
-//  }
-//std::cout<<jsonstr<<" Json representation "<<modelName;
-
-
-// }
-
-
-
-/*void FacadeForest::loadModel(std::string modelName,std::string forest_type="iforest")
-        //FOREST type=FOREST::IFOREST)
-{
-
-   std::ifstream in(modelName);
-   if(in)
-   {
-       if(forest_type =="iforest")
-       {
-           iff = new IsolationForest();
-           iff->from_json(in);
-
-
-       }
-   }
-
-}
-*/
 
 
