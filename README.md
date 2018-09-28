@@ -20,5 +20,5 @@ To install library to the python library directory.
 `python setup.py install`
 
 ### Status
-[![Build Status](https://travis-ci.org/simkimsia/UtilityBehaviors.png)](https://travis-ci.org/simkimsia/UtilityBehaviors)
+[![Build Status](https://travis-ci.com/tadeze/pyad.png)](https://travis-ci.com/tadeze/pyad)
   
