@@ -18,6 +18,8 @@ protected:
 	std::shared_ptr<util::dataset> dataset;
 	 int ntree,nsample,maxheight;
 	 bool rsample,stopheight;
+	int DIM = 4;
+	int NROW = 1000;
 	virtual void SetUp() {
     	ntree=100;
     	nsample=50;
@@ -28,9 +30,10 @@ protected:
 
     	 //Let read data from
     	 //std::string filename("./synth2d.dt");
-         std::string filename = common::filename();
-    	 data= util::readcsv((char*) &filename[0],',',true);
+        // std::string filename = common::filename();
+    	// data= util::readcsv((char*) &filename[0],',',true);
     	 //ff = new FacadeForest();
+		std::vector<std::vector<double> > data = util::syntheticData(DIM, NROW);
     	  dataset = common::makeDataset(data);
     	  ff = std::make_shared<IsolationForest>(ntree,dataset,nsample,maxheight,stopheight,rsample);
 
