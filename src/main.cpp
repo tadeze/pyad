@@ -94,7 +94,7 @@ int main(int argc, char** argv) {
     int maxheight = args.maxdepth;
     bool header = args.header;
 
-    bool rsample = nsample != 0;
+  /*  bool rsample = nsample != 0;
     bool stopheight = maxheight != 0;
     int stopLimit = pargs->adaptive;
     bool rangecheck = pargs->rangecheck;
@@ -108,7 +108,7 @@ int main(int argc, char** argv) {
     //Input file to dataframe
     bool explanation = pargs->explanation;
 
-
+*/
 }
 
 void experimentalCodes(){
