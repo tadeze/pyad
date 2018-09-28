@@ -18,4 +18,7 @@ Inside the python directory build using
 To install library to the python library directory.
 
 `python setup.py install`
+
+### Status
+[![Build Status](https://travis-ci.org/simkimsia/UtilityBehaviors.png)](https://travis-ci.org/simkimsia/UtilityBehaviors)
   
