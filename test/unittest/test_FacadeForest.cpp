@@ -25,6 +25,7 @@ protected:
          //std::string filename = common::filename();
     	 //data= util::readcsv((char*) &filename[0],',',true);
 		std::vector<std::vector<double> > dataxx = util::syntheticData(DIM, NROW);
+
     	 int tree_used = ff.trainForest(dataxx, NTREE,nsample,0,false,false,false,0.01,0);  //Just train a forest
 	   	 ff.testForest(data,false);
      }
@@ -35,14 +36,15 @@ protected:
      }
 };
 
+//
+//TEST_F(FacadeForestTest, creatFF){
+//
+////	ASSERT_EQ(ff.getNSample(),nsample);
+////	ASSERT_EQ(ff.getNTree(),NTREE);
+////	ASSERT_EQ(ff.getTraindf()->nrow,NROW);
+//ASSERT_FALSE(false);
 
-TEST_F(FacadeForestTest, creatFF){
-
-//	ASSERT_EQ(ff.getNSample(),nsample);
-//	ASSERT_EQ(ff.getNTree(),NTREE);
-//	ASSERT_EQ(ff.getTraindf()->nrow,NROW);
-ASSERT_FALSE(false);
-}
+//}
 
 
 TEST_F(FacadeForestTest, createScore){

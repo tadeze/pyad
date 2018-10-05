@@ -33,7 +33,7 @@ protected:
         // std::string filename = common::filename();
     	// data= util::readcsv((char*) &filename[0],',',true);
     	 //ff = new FacadeForest();
-		std::vector<std::vector<double> > data = util::syntheticData(DIM, NROW);
+		  std::vector<std::vector<double> > data = util::syntheticData(DIM, NROW);
     	  dataset = common::makeDataset(data);
     	  ff = std::make_shared<IsolationForest>(ntree,dataset,nsample,maxheight,stopheight,rsample);
 
