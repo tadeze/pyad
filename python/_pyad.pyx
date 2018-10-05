@@ -12,6 +12,7 @@ from cpyad cimport *
 #import loda 
 NA = -9999.0
 cdef class IsolationForest:
+    
     cdef FacadeForest * thisptr
     cdef int ntree, nsample, maxheight, stoplimit
     cdef float rho
@@ -265,7 +266,7 @@ cdef class IsolationTree:
         """
         if len(column_subsample)<1:
             for i in range(train_data.shape[0]):
-                column_subsample.append(i
+                column_subsample.append(i)
 
         return self.thisptr.iTree(train_index, train_data, height, maxheight, stopheight, column_subsample)
 
