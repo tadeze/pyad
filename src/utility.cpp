@@ -8,9 +8,9 @@
 #include "utility.hpp"
 using namespace std;
 using namespace osu::ad;
-    //default_random_engine gen(400);  //Debugging
+    default_random_engine gen(400);  //Debugging
 
-    default_random_engine gen(time(NULL));  //Production
+    //default_random_engine gen(time(NULL));  //Production
     template<typename T>
     T util::randomT(T min, T max) {
         uniform_real_distribution<T> dist(min, max);
