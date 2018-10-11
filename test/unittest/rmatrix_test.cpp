@@ -6,6 +6,7 @@
 //#lib "../Addition.hpp"
 #include "r_matrix.hpp"
 #include "utility.hpp"
+//#include "tree.hpp"
 class RMatrix : public ::testing::Test {
 protected:
     virtual void SetUp() {

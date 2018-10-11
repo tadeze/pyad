@@ -52,7 +52,7 @@ MatrixXd RForest::convertToMatrix(std::vector<std::vector<double> > &data)
 {
 	MatrixXd mat(data.size(), data[0].size());
 	for (int i = 0; i <(int)data.size(); i++)
-	      mat.row(i) =VectorXd::Map(&data[i][0],(int)data[i].size());
+	      mat.row(i) = VectorXd::Map(&data[i][0],(int)data[i].size());
 	return mat;
 }
 

@@ -35,7 +35,7 @@ include_directories("${EIGEN3_INCLUDE_DIR}")
 
 
 add_executable(iforest ${SOURCE_FILES})
-target_link_libraries(iforest iforestlib ${Eigen_INCLUDE_DIR}) #${ARMADILLO_LIBRARIES})
+target_link_libraries(iforest iforestlib ) #${ARMADILLO_LIBRARIES})
 
 #add_subdirectory(pybind11)
 #pybind11_add_module(pyiforest pybindwrapper.src)
