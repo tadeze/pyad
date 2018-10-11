@@ -37,6 +37,12 @@ TEST (RMatrix, cbind){
     ASSERT_LE(std::abs((ans-a).sum()), 0.01);
 }
 
+TEST (RMatrix, RotateMatrix){
+    Eigen::MatrixXd M;
+    M = random_rotation(4);
+    PRINT(M);
+    ASSERT_EQ(M.rows(), 4);
+}
 
 //
 //Eigen::MatrixXf x(6,1);
