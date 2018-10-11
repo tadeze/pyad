@@ -50,13 +50,13 @@ TEST_F(TreeTest, treeCreation){
 ASSERT_FALSE(false);    //check ok for now.
 }
 //
-TEST_F(TreeTest,pathLength){
- double depth = tr->pathLength(dataset->data.row(8));
- //double depth2 = tr->featureContribution(dataset->data[8]);
- EXPECT_GT(depth,1);
- EXPECT_LT(depth,30);
- //EXPECT_EQ(depth,depth2);
-}
+//TEST_F(TreeTest,pathLength){
+// double depth = tr->pathLength(dataset->data.row(8));
+// //double depth2 = tr->featureContribution(dataset->data[8]);
+// EXPECT_GT(depth,1);
+// EXPECT_LT(depth,30);
+// //EXPECT_EQ(depth,depth2);
+//}
 
 //TEST_F(TreeTest,featurecontribution){
 //    double depth = tr->pathLength(*dataset[8]);

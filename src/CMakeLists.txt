@@ -6,7 +6,8 @@ set(HEADER_FILES tree.hpp forest.hpp isolation_forest.hpp utility.hpp main.hpp f
 set(SOURCE_FILES tree.cpp forest.cpp isolation_forest.cpp utility.cpp facade_forest.cpp metric.cpp main.cpp
         stat/io_parser.cpp  log_writer.cpp
          command_parser.cpp bagged_forest.cpp e_tree.cpp)
-add_subdirectory(lib/eigen)
+include_directories(lib/cereal)
+#add_subdirectory(lib/cereal)
 include_directories(lib/eigen)
-include_directories(lib)
+
 add_library(iforestlib STATIC ${SOURCE_FILES} ${HEADER_FILES} ${Eigen_INCLUDE_DIR})

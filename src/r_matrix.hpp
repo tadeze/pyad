@@ -5,14 +5,16 @@
 #ifndef OSU_IFOREST_R_MATRIX_HPP
 #define OSU_IFOREST_R_MATRIX_HPP
 
-#include "Eigen/Dense"
-#include "Eigen/Core"
+#include "eigen/Eigen/Dense"
+#include "eigen/Eigen/Core"
+
 #include <set>
 #include <iostream>
 #include <fstream>
 #include<vector>
 #include <random>
 #include <memory>
+
 
 #define PRINT(X) std::cout << #X << ":\n" << X << std::endl << std::endl
 

@@ -31,11 +31,11 @@ if (NOT Eigen_FOUND)
     set(Eigen_INCLUDE_DIR ${EIGEN3_INCLUDE_DIR})
 endif()
 include_directories("${EIGEN3_INCLUDE_DIR}")
-#include_directories(${PROJECT_SOURCE_DIR}/lib)
+
 
 
 add_executable(iforest ${SOURCE_FILES})
-target_link_libraries(iforest iforestlib ) #${ARMADILLO_LIBRARIES})
+target_link_libraries(iforest iforestlib) #${ARMADILLO_LIBRARIES})
 
 #add_subdirectory(pybind11)
 #pybind11_add_module(pyiforest pybindwrapper.src)
