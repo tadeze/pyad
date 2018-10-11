@@ -7,7 +7,7 @@
 
 #ifndef MAIN_HPP_
 #define MAIN_HPP_
-//#include "RForest.hpp"
+//#lib "RForest.hpp"
 #include "isolation_forest.hpp"
 #include "utility.hpp"
 

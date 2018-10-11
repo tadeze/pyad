@@ -24,6 +24,7 @@
 #include<random>
 #include<utility>
 #include <memory>
+//#include "r_matrix.hpp"
 /*
 #ifdef __linux__
 #define SERIALIZATION
@@ -37,12 +38,14 @@ namespace osu {
             struct dataset {
                 int ncol;
                 int nrow;
-                DoubleMatrix data;
-                //std::vector<std::vector<double> > data;
-                void print(int ix) {
-                    for (auto elem : data[ix])
-                        std::cout << elem << "\t";
-                }
+                //DoubleMatrix data;
+                std::vector<std::vector<double> > data;
+//                void print(int ix) {
+//                    std::cout<<data;
+//                    //for (auto elem : data[ix])
+//                      //  std::cout << elem << "\t";
+//                }
+
             };
 
             int randomI(int min, int max);

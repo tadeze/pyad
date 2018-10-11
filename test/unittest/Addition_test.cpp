@@ -5,7 +5,7 @@
  *      Author: tadeze
  */
 #include "gtest/gtest.h"
-//#include "../Addition.hpp"
+//#lib "../Addition.hpp"
 
 
 class AdditionTest : public ::testing::Test {

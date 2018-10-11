@@ -71,26 +71,26 @@
 
 #elif GTEST_OS_SYMBIAN
 # define GTEST_HAS_GETTIMEOFDAY_ 1
-# include <sys/time.h>  // NOLINT
+# lib <sys/time.h>  // NOLINT
 
 #elif GTEST_OS_ZOS
 # define GTEST_HAS_GETTIMEOFDAY_ 1
-# include <sys/time.h>  // NOLINT
+# lib <sys/time.h>  // NOLINT
 
 // On z/OS we additionally need strings.h for strcasecmp.
-# include <strings.h>  // NOLINT
+# lib <strings.h>  // NOLINT
 
 #elif GTEST_OS_WINDOWS_MOBILE  // We are on Windows CE.
 
-# include <windows.h>  // NOLINT
+# lib <windows.h>  // NOLINT
 # undef min
 
 #elif GTEST_OS_WINDOWS  // We are on Windows proper.
 
-# include <io.h>  // NOLINT
-# include <sys/timeb.h>  // NOLINT
-# include <sys/types.h>  // NOLINT
-# include <sys/stat.h>  // NOLINT
+# lib <io.h>  // NOLINT
+# lib <sys/timeb.h>  // NOLINT
+# lib <sys/types.h>  // NOLINT
+# lib <sys/stat.h>  // NOLINT
 
 # if GTEST_OS_WINDOWS_MINGW
 // MinGW has gettimeofday() but not _ftime64().
@@ -100,12 +100,12 @@
 //   Windows, like GetTickCount() or GetSystemTimeAsFileTime().  MinGW
 //   supports these.  consider using them instead.
 #  define GTEST_HAS_GETTIMEOFDAY_ 1
-#  include <sys/time.h>  // NOLINT
+#  lib <sys/time.h>  // NOLINT
 # endif  // GTEST_OS_WINDOWS_MINGW
 
 // cpplint thinks that the header is already included, so we want to
 // silence it.
-# include <windows.h>  // NOLINT
+# lib <windows.h>  // NOLINT
 # undef min
 
 #else
@@ -117,8 +117,8 @@
 
 // cpplint thinks that the header is already included, so we want to
 // silence it.
-# include <sys/time.h>  // NOLINT
-# include <unistd.h>  // NOLINT
+# lib <sys/time.h>  // NOLINT
+# lib <unistd.h>  // NOLINT
 
 #endif  // GTEST_OS_LINUX
 
@@ -267,7 +267,7 @@ GTEST_DEFINE_int32_(
 
 GTEST_DEFINE_bool_(
     show_internal_stack_frames, false,
-    "True iff " GTEST_NAME_ " should include internal stack frames when "
+    "True iff " GTEST_NAME_ " should lib internal stack frames when "
     "printing test failure stack traces.");
 
 GTEST_DEFINE_bool_(
@@ -1215,7 +1215,7 @@ std::string CreateUnifiedDiff(const std::vector<std::string>& left,
       ++edit_i;
     }
 
-    // Find the first line to include in the hunk.
+    // Find the first line to lib in the hunk.
     const size_t prefix_context = std::min(l_i, context);
     Hunk hunk(l_i - prefix_context + 1, r_i - prefix_context + 1);
     for (size_t i = prefix_context; i > 0; --i) {

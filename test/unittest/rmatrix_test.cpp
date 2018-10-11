@@ -3,9 +3,9 @@
 //
 
 #include "gtest/gtest.h"
-//#include "../Addition.hpp"
+//#lib "../Addition.hpp"
 #include "r_matrix.hpp"
-
+#include "utility.hpp"
 class RMatrix : public ::testing::Test {
 protected:
     virtual void SetUp() {

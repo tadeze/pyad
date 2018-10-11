@@ -30,7 +30,7 @@
 // The Google C++ Testing Framework (Google Test)
 //
 // This header file defines the GTEST_OS_* macro.
-// It is separate from gtest-port.h so that custom/gtest-port.h can include it.
+// It is separate from gtest-port.h so that custom/gtest-port.h can lib it.
 
 #ifndef GTEST_INCLUDE_GTEST_INTERNAL_GTEST_PORT_ARCH_H_
 #define GTEST_INCLUDE_GTEST_INTERNAL_GTEST_PORT_ARCH_H_
@@ -47,7 +47,7 @@
 # elif defined(__MINGW__) || defined(__MINGW32__)
 #  define GTEST_OS_WINDOWS_MINGW 1
 # elif defined(WINAPI_FAMILY)
-#  include <winapifamily.h>
+#  lib <winapifamily.h>
 #  if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
 #   define GTEST_OS_WINDOWS_DESKTOP 1
 #  elif WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_PHONE_APP)

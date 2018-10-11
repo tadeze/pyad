@@ -37,7 +37,7 @@
 #include <iostream>
 #include <vector>
 
-// We must define this macro in order to #include
+// We must define this macro in order to #lib
 // gtest-internal-inl.h.  This is how Google Test prevents a user from
 // accidentally depending on its internal implementation.
 #define GTEST_IMPLEMENTATION_ 1

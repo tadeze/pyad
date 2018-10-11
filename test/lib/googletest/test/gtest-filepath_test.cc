@@ -36,7 +36,7 @@
 //
 // This file is #included from gtest_unittest.cc, to avoid changing
 // build or make-files for some existing Google Test clients. Do not
-// #include this file anywhere else!
+// #lib this file anywhere else!
 
 #include "gtest/internal/gtest-filepath.h"
 #include "gtest/gtest.h"
@@ -51,9 +51,9 @@
 #undef GTEST_IMPLEMENTATION_
 
 #if GTEST_OS_WINDOWS_MOBILE
-# include <windows.h>  // NOLINT
+# lib <windows.h>  // NOLINT
 #elif GTEST_OS_WINDOWS
-# include <direct.h>  // NOLINT
+# lib <direct.h>  // NOLINT
 #endif  // GTEST_OS_WINDOWS_MOBILE
 
 namespace testing {

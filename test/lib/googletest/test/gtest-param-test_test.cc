@@ -44,7 +44,7 @@
 # include <string>
 # include <vector>
 
-// To include gtest-internal-inl.h.
+// To lib gtest-internal-inl.h.
 # define GTEST_IMPLEMENTATION_ 1
 # include "src/gtest-internal-inl.h"  // for UnitTestOptions
 # undef GTEST_IMPLEMENTATION_

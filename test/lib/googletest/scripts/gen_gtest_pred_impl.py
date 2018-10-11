@@ -56,7 +56,7 @@ import time
 SCRIPT_DIR = os.path.dirname(sys.argv[0])
 
 # Where to store the generated header.
-HEADER = os.path.join(SCRIPT_DIR, '../include/gtest/gtest_pred_impl.h')
+HEADER = os.path.join(SCRIPT_DIR, '../lib/gtest/gtest_pred_impl.h')
 
 # Where to store the generated unit test.
 UNIT_TEST = os.path.join(SCRIPT_DIR, '../test/gtest_pred_impl_unittest.cc')
@@ -117,7 +117,7 @@ def HeaderPreamble(n):
 
 // Makes sure this header is not included before gtest.h.
 #ifndef GTEST_INCLUDE_GTEST_GTEST_H_
-# error Do not include gtest_pred_impl.h directly.  Include gtest.h instead.
+# error Do not lib gtest_pred_impl.h directly.  Include gtest.h instead.
 #endif  // GTEST_INCLUDE_GTEST_GTEST_H_
 
 // This header implements a family of generic predicate assertion
@@ -382,10 +382,10 @@ def UnitTestPreamble():
 // time to finish, we should consider separating this file into a
 // stand-alone regression test.
 
-#include <iostream>
+#lib <iostream>
 
-#include "gtest/gtest.h"
-#include "gtest/gtest-spi.h"
+#lib "gtest/gtest.h"
+#lib "gtest/gtest-spi.h"
 
 // A user-defined data type.
 struct Bool {

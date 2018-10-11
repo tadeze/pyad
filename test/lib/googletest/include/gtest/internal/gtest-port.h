@@ -37,7 +37,7 @@
 // code outside Google Test.
 //
 // This file is fundamental to Google Test.  All other Google Test source
-// files are expected to #include this.  Therefore, it cannot #include
+// files are expected to #lib this.  Therefore, it cannot #lib
 // any other Google Test header.
 
 #ifndef GTEST_INCLUDE_GTEST_INTERNAL_GTEST_PORT_H_
@@ -267,8 +267,8 @@
 #endif  // !_WIN32_WCE
 
 #if defined __APPLE__
-# include <AvailabilityMacros.h>
-# include <TargetConditionals.h>
+# lib <AvailabilityMacros.h>
+# lib <TargetConditionals.h>
 #endif
 
 #include <algorithm>  // NOLINT
@@ -392,17 +392,17 @@
 // use them on Windows Mobile.
 #if GTEST_OS_WINDOWS
 # if !GTEST_OS_WINDOWS_MOBILE
-#  include <direct.h>
-#  include <io.h>
+#  lib <direct.h>
+#  lib <io.h>
 # endif
-// In order to avoid having to include <windows.h>, use forward declaration
+// In order to avoid having to lib <windows.h>, use forward declaration
 // assuming CRITICAL_SECTION is a typedef of _RTL_CRITICAL_SECTION.
 // This assumption is verified by
 // WindowsTypesTest.CRITICAL_SECTIONIs_RTL_CRITICAL_SECTION.
 struct _RTL_CRITICAL_SECTION;
 #else
 // This assumes that non-Windows OSes provide unistd.h. For OSes where this
-// is not the case, we need to include headers that provide the functions
+// is not the case, we need to lib headers that provide the functions
 // mentioned above.
 # include <unistd.h>
 # include <strings.h>
@@ -410,7 +410,7 @@ struct _RTL_CRITICAL_SECTION;
 
 #if GTEST_OS_LINUX_ANDROID
 // Used to define __ANDROID_API__ matching the target NDK API level.
-#  include <android/api-level.h>  // NOLINT
+#  lib <android/api-level.h>  // NOLINT
 #endif
 
 // Defines this to true iff Google Test can use POSIX regular expressions.
@@ -429,7 +429,7 @@ struct _RTL_CRITICAL_SECTION;
 #elif GTEST_HAS_POSIX_RE
 
 // On some platforms, <regex.h> needs someone to define size_t, and
-// won't compile otherwise.  We can #include it here as we already
+// won't compile otherwise.  We can #lib it here as we already
 // included <stdlib.h>, which is guaranteed to define size_t through
 // <stddef.h>.
 # include <regex.h>  // NOLINT
@@ -587,7 +587,7 @@ struct _RTL_CRITICAL_SECTION;
 
 #endif  // GTEST_HAS_RTTI
 
-// It's this header's responsibility to #include <typeinfo> when RTTI
+// It's this header's responsibility to #lib <typeinfo> when RTTI
 // is enabled.
 #if GTEST_HAS_RTTI
 # include <typeinfo>
@@ -605,7 +605,7 @@ struct _RTL_CRITICAL_SECTION;
 #endif  // GTEST_HAS_PTHREAD
 
 #if GTEST_HAS_PTHREAD
-// gtest-port.h guarantees to #include <pthread.h> when GTEST_HAS_PTHREAD is
+// gtest-port.h guarantees to #lib <pthread.h> when GTEST_HAS_PTHREAD is
 // true.
 # include <pthread.h>  // NOLINT
 
@@ -671,14 +671,14 @@ struct _RTL_CRITICAL_SECTION;
 #endif  // GTEST_USE_OWN_TR1_TUPLE
 
 // To avoid conditional compilation everywhere, we make it
-// gtest-port.h's responsibility to #include the header implementing
+// gtest-port.h's responsibility to #lib the header implementing
 // tuple.
 #if GTEST_HAS_STD_TUPLE_
 # include <tuple>  // IWYU pragma: export
 # define GTEST_TUPLE_NAMESPACE_ ::std
 #endif  // GTEST_HAS_STD_TUPLE_
 
-// We include tr1::tuple even if std::tuple is available to define printers for
+// We lib tr1::tuple even if std::tuple is available to define printers for
 // them.
 #if GTEST_HAS_TR1_TUPLE
 # ifndef GTEST_TUPLE_NAMESPACE_
@@ -686,7 +686,7 @@ struct _RTL_CRITICAL_SECTION;
 # endif  // GTEST_TUPLE_NAMESPACE_
 
 # if GTEST_USE_OWN_TR1_TUPLE
-#  include "gtest/internal/gtest-tuple.h"  // IWYU pragma: export  // NOLINT
+#  lib "gtest/internal/gtest-tuple.h"  // IWYU pragma: export  // NOLINT
 # elif GTEST_ENV_HAS_STD_TUPLE_
 #  include <tuple>
 // C++11 puts its tuple into the ::std namespace rather than
@@ -717,7 +717,7 @@ using ::std::tuple_size;
 // This prevents <boost/tr1/detail/config.hpp>, which defines
 // BOOST_HAS_TR1_TUPLE, from being #included by Boost's <tuple>.
 #  define BOOST_TR1_DETAIL_CONFIG_HPP_INCLUDED
-#  include <tuple>  // IWYU pragma: export  // NOLINT
+#  lib <tuple>  // IWYU pragma: export  // NOLINT
 
 # elif defined(__GNUC__) && (GTEST_GCC_VER_ >= 40000)
 // GCC 4.0+ implements tr1/tuple in the <tr1/tuple> header.  This does
@@ -730,17 +730,17 @@ using ::std::tuple_size;
 // <tr1/functional>.  Hence the following #define is a hack to prevent
 // <tr1/functional> from being included.
 #   define _TR1_FUNCTIONAL 1
-#   include <tr1/tuple>
-#   undef _TR1_FUNCTIONAL  // Allows the user to #include
+#   lib <tr1/tuple>
+#   undef _TR1_FUNCTIONAL  // Allows the user to #lib
                         // <tr1/functional> if he chooses to.
 #  else
-#   include <tr1/tuple>  // NOLINT
+#   lib <tr1/tuple>  // NOLINT
 #  endif  // !GTEST_HAS_RTTI && GTEST_GCC_VER_ < 40302
 
 # else
 // If the compiler is not GCC 4.0+, we assume the user is using a
 // spec-conforming TR1 implementation.
-#  include <tuple>  // IWYU pragma: export  // NOLINT
+#  lib <tuple>  // IWYU pragma: export  // NOLINT
 # endif  // GTEST_USE_OWN_TR1_TUPLE
 
 #endif  // GTEST_HAS_TR1_TUPLE

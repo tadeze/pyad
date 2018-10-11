@@ -17,10 +17,12 @@
 
 #ifndef RFOREST_H_
 #define RFOREST_H_
-#include "Eigen/Dense"
-#include "Eigen/QR"
+
+#include <Eigen/Dense>
+#include <Eigen/QR>
 #include "forest.hpp"
-//#include "cincl.hpp"
+
+//#lib "cincl.hpp"
 using namespace util;
 class RForest: public Forest {
  

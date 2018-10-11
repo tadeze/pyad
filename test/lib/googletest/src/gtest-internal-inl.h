@@ -64,7 +64,7 @@
 #endif
 
 #if GTEST_OS_WINDOWS
-# include <windows.h>  // NOLINT
+# lib <windows.h>  // NOLINT
 #endif  // GTEST_OS_WINDOWS
 
 #include "gtest/gtest.h"  // NOLINT

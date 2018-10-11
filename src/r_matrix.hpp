@@ -5,7 +5,6 @@
 #ifndef OSU_IFOREST_RSTYLE_EIGEN_HPP
 #define OSU_IFOREST_RSTYLE_EIGEN_HPP
 #include <Eigen/Core>
-
 #include <set>
 #include <iostream>
 #include <fstream>

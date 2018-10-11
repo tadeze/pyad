@@ -1,7 +1,7 @@
 //
 // Created by tadeze on 9/15/17.
 //
-#include "include/parser/parser.hh"
+#include "lib/parser/parser.hh"
 #include "command_parser.hpp"
 #include<fstream>
 

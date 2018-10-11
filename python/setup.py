@@ -42,7 +42,7 @@ ext = Extension("pyad",
                                  SRC_DIR + "tree.cpp", SRC_DIR + "forest.cpp", SRC_DIR + "isolation_forest.cpp"],
                  language="c++",
                 extra_compile_args=['-std=c++11'],
-                include_dirs=[numpy.get_include(), SRC_DIR+"include"])
+                include_dirs=[numpy.get_include(), SRC_DIR+"lib"])
 
 EXTENSIONS = [ext]
 

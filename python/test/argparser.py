@@ -47,7 +47,7 @@ def main():
     parser.add_argument('-g', '--gtcolumn',
                         help='skip column', type=int)
     parser.add_argument('-c', '--column',
-                        help='Column to include defualt use all column.E.g. 1-10 or 1,3')
+                        help='Column to lib defualt use all column.E.g. 1-10 or 1,3')
     parser.add_argument('-m', '--model',
                         type=argparse.FileType('w'),
                         help='Save trained model to file. Provide file name')

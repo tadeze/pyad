@@ -1,6 +1,6 @@
 #ifndef METRIC_HPP_
 #define METRIC_HPP_
-//#include "utility.hpp"
+//#lib "utility.hpp"
 #include <vector>
  #include <algorithm>
  #include <iostream>

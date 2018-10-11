@@ -32,7 +32,7 @@
 // The Google C++ Testing Framework (Google Test)
 //
 // This header file defines the public API for death tests.  It is
-// #included by gtest.h so a user doesn't need to include this
+// #included by gtest.h so a user doesn't need to lib this
 // directly.
 
 #ifndef GTEST_INCLUDE_GTEST_GTEST_DEATH_TEST_H_
@@ -244,7 +244,7 @@ class GTEST_API_ KilledBySignal {
 // mode, usually due to a DCHECK or LOG(DFATAL), but returns the
 // appropriate fallback value (12 in this case) in opt mode. If you
 // need to test that a function has appropriate side-effects in opt
-// mode, include assertions against the side-effects.  A general
+// mode, lib assertions against the side-effects.  A general
 // pattern for this is:
 //
 // EXPECT_DEBUG_DEATH({
