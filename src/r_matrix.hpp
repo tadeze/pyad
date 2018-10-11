@@ -4,14 +4,18 @@
 
 #ifndef OSU_IFOREST_RSTYLE_EIGEN_HPP
 #define OSU_IFOREST_RSTYLE_EIGEN_HPP
+#include <Eigen/Dense>
 #include <Eigen/Core>
 #include <set>
 #include <iostream>
 #include <fstream>
 #include<vector>
+#include <random>
+
 #define PRINT(X) std::cout << #X << ":\n" << X << std::endl << std::endl
 
 using DoubleMatrix = Eigen::MatrixXd;
+using DoubleRow = Eigen::VectorXd;
 /**
  * @brief  Gives a new shape to an array without changing its data.
  *         This function is based on numpy.reshape
@@ -310,7 +314,53 @@ long nrows(DoubleMatrix &matrix){
     return matrix.rows();
 }
 // Slicing matrix data.
+DoubleMatrix random_rotation(int n) {
+    std::default_random_engine eng;
+    std::normal_distribution<double> distribution(0.0, 1.0);
+    DoubleMatrix A(n, n);
+
+    const Eigen::VectorXd ones(Eigen::VectorXd::Ones(n));
+    for (int i = 0; i<n; i++)
+        for (int j = 0; j<n; j++)
+            A(i, j) = distribution(eng);
 
 
+    const Eigen::HouseholderQR<DoubleMatrix> qr(A);
+    const DoubleMatrix Q = qr.householderQ();
+    DoubleMatrix M = Q*(qr.matrixQR().diagonal().array() <0).select(-ones, ones).asDiagonal();
+    if (M.determinant()<0)
+        for (int i = 0; i<n; i++)
+            M(i, 0) = -M(i, 0);
+    return M;
+
+}
+double min(DoubleMatrix &doublematrix){
+    return doublematrix.minCoeff();
+}
+double max(DoubleMatrix &doublematrix){
+    return doublematrix.maxCoeff();
+}
+struct DoubleFrame{
+private:
+    int nrow, ncol;
+
+    std::set<std::string> cols;
+public:
+    DoubleMatrix data;
+    virtual ~DoubleFrame(){};
+    DoubleFrame(DoubleMatrix &matrix, std::set<std::string> &cols){
+        data = matrix;
+        cols = cols;
+    }
+    //DoubleMatrix data(){ return data}
+    int nrows(){return nrow;}
+    int ncols() { return ncol;}
+
+    double& operator[] (int i, int j) {
+        return data(i, j);
+    }
+
+
+};
 
 #endif //OSU_IFOREST_RSTYLE_EIGEN_HPP
