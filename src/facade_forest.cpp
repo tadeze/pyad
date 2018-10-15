@@ -4,7 +4,7 @@
 
 #include "facade_forest.hpp"
 #ifdef  SERIALIZATION
-#include <cereal/archives/json.hpp>
+#include "cereal/archives/json.hpp"
 #include "cereal/archives/binary.hpp"
 #endif
 

@@ -5,8 +5,8 @@
 #ifndef OSU_IFOREST_R_MATRIX_HPP
 #define OSU_IFOREST_R_MATRIX_HPP
 
-#include "eigen/Eigen/Dense"
-#include "eigen/Eigen/Core"
+#include <Eigen/Dense>
+#include <Eigen/Core>
 
 #include <set>
 #include <iostream>

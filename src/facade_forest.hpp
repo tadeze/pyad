@@ -4,9 +4,9 @@
 
 #ifndef FacadeFOREST_HPP
 #define FacadeFOREST_HPP
-#ifdef __linux__
-#define SERIALIZATION
-#endif
+//#ifdef __linux__
+//#define SERIALIZATION
+//#endif
 
 #include "main.hpp"
 
