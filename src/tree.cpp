@@ -8,6 +8,7 @@
 #include "globals.hpp"
 #include<stack>
 #include<cmath>
+
 using namespace osu::ad;
 bool Tree::rangeCheck = false;
 //double const MISSING_VALUE = -9999.0;
@@ -205,7 +206,7 @@ double Tree::pathLength(std::vector<double> &inst, bool cmv ){
 	//Checking missing data for the attribute.
 
 	if(cmv){
-		if(isnan(instAttVal)) {
+		if(std::isnan(instAttVal)) {
 			//util::logfile
 
 		    double leftNodeSize = (double)this->leftChild->nodeSize/(double)this->nodeSize;

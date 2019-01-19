@@ -19,7 +19,7 @@ namespace osu {
             inline std::vector<int> findNAFeature(std::vector<double> &inst){
                 std::vector<int> naIndex;
                 for(int i=0; i<inst.size(); i++)
-                    if(isnan(inst[i]))
+                    if(std::isnan(inst[i]))
                         naIndex.push_back(i);
                 return naIndex;
 

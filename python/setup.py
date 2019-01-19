@@ -7,7 +7,7 @@ import os
 os.environ["CC"] = "g++"  
 NAME = "pyad"
 VERSION = "0.1"
-DESCR = "A python wrapper for c++ iForest using Cython"
+DESCR = "Anomaly detection usin Isolation Forest"
 URL = "http://eecs.oregonstate.edu"
 REQUIRES = ['numpy', 'cython']
 

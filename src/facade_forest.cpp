@@ -146,7 +146,7 @@ void FacadeForest::displayData(std::vector<std::vector<double> >   &_df) {
               << df->ncol << ")\n";
     for (auto row : df->data) {
         for (auto cell : row){
-     	 	double ff = isnan(cell)?-9999.0:cell;
+     	 	double ff = std::isnan(cell)?-9999.0:cell;
 		std::cout <<ff<<"\t";
 	}
         std::cout << "\n";

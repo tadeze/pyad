@@ -1,8 +1,5 @@
 
 # c++ interface to cython
-#import numpy as np
-#import cPickle
-#from collections import defaultdict
 from libcpp.vector cimport vector
 from libcpp.map cimport map
 from libcpp cimport bool
@@ -33,13 +30,8 @@ cdef extern from "src/facade_forest.hpp" namespace "osu::ad":
 cdef extern from "src/tree.hpp" namespace "osu::ad":
     cdef cppclass Tree "osu::ad::Tree":
         Tree()
-<<<<<<< HEAD
         void iTree(vector[int] &, vector[vector[double]], int, int, bool)
         double pathLength(vector[double] &, bool)
-=======
-        void iTree(vector[int] &, vector[vector[double]], int, int, bool,vector[int]&)
-        double pathLength(vector[double] &)
->>>>>>> csubsample
         int maxTreeDepth()
         int getNodeSize()
         int getSplittingAtt()

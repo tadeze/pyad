@@ -8,9 +8,8 @@ import numpy as np
 import cPickle
 # TODO: Modify the loda and optimze it.
 from cpyad cimport *
-#include "loda.py"
-#import loda 
 NA = -9999.0
+
 cdef class IsolationForest:
     
     cdef FacadeForest * thisptr
