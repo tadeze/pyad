@@ -30,7 +30,7 @@ cdef extern from "src/facade_forest.hpp" namespace "osu::ad":
 cdef extern from "src/tree.hpp" namespace "osu::ad":
     cdef cppclass Tree "osu::ad::Tree":
         Tree()
-        void iTree(vector[int] &, vector[vector[double]], int, int, bool)
+        void iTree(vector[int] &, vector[vector[double]], int, int, bool, vector[int] &)
         double pathLength(vector[double] &, bool)
         int maxTreeDepth()
         int getNodeSize()
