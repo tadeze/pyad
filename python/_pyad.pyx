@@ -2,13 +2,17 @@
 @Author: Tadesse Zemicheal
 
 """
+__all__ = ['IsolationForest','IsolationTree', 'IForest', 'RotationForest']
+
 from collections import defaultdict
 cimport numpy as np
 import numpy as np
 import cPickle
-# TODO: Modify the loda and optimze it.
 from cpyad cimport *
 NA = -9999.0
+
+
+
 
 cdef class IsolationForest:
     
@@ -101,7 +105,7 @@ cdef class IsolationForest:
     def score(self, test_data, cmv=False):
         """
         Generate anomaly score from trained Forest.
-        @param cmv : check missing value, default False
+        
         Args:
             test_data: Testdata to score in ndarray format(numpy 2d-matrix), it should be the same dimension as training dataset.
             cmv: Check missing value in the test data. Default false.
@@ -255,8 +259,9 @@ cdef class IsolationTree:
         del self.thisptr
     def iTree(self, train_index, train_data, height=0, maxheight=0, stopheight=False,column_subsample=[]):
         """
+         Args:
 
-        :param train_index: list of index of samples used for training tree
+        :train_index: list of index of samples used for training tree
         :param train_data: ndarray training data
         :param height: Current depth of tree. Root is 0.
         :param maxheight: Maximum depth to grow. Default 0, means grow trees to full depth.
