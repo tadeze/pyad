@@ -7,7 +7,7 @@ __all__ = ['IsolationForest','IsolationTree', 'IForest', 'RotationForest']
 from collections import defaultdict
 cimport numpy as np
 import numpy as np
-import cPickle
+import pickle
 from cpyad cimport *
 NA = -9999.0
 
@@ -151,7 +151,7 @@ cdef class IsolationForest:
         self.validate_model()  # check
         return self.thisptr.averageDepth()
 
-    def save(self, model_name):
+    def save(self, model_name=None):
         """
         Save trained Isolation Forest model as binary or json.
         Args:
@@ -160,9 +160,13 @@ cdef class IsolationForest:
         Returns:
 
         """
-        return self.thisptr.save(model_name)
 
-    def load(self, model_name, forest_type="iforest"):
+        if model_name is None:
+            raise ValueError("Provide file name to save")
+        cdef string cppstring = model_name.encode('UTF-8')
+        return self.thisptr.save(cppstring)
+    @classmethod
+    def load(cls, model_name, forest_type="iforest"):
         """
         Load trained iForest model from JSON/binary file
         Args:
@@ -173,8 +177,11 @@ cdef class IsolationForest:
 
         """
 
-        if DataValidator.validate_file_exists(model_name):
-            return self.thisptr.load(model_name)
+        DataValidator.validate_file_exists(model_name)
+        cdef string model_name_str = model_name.encode("UTF-8")
+        iforest_model = IsolationForest()
+        iforest_model.thisptr.load(model_name_str)
+        return iforest_model
 
     def get_ntree(self):
         """
@@ -435,10 +442,10 @@ cdef class IForest(object):
     #@staticmethod
     def save(self, model_name):
         # First save trees and rotation matrix.
-        cPickle.dump(self, open(model_name, 'w'))
+        pickle.dump(self, open(model_name, 'w'))
 
     def load(self, model_name):
-        return cPickle.load(open(model_name, "r"))
+        return pickle.load(open(model_name, "r"))
 
 class RotationForest(object):
     """
@@ -519,10 +526,10 @@ class RotationForest(object):
     #@staticmethod
     def save(self, model_name):
         # First save trees and rotation matrix.
-        cPickle.dump(self, open(model_name, 'w'))
+        pickle.dump(self, open(model_name, 'w'))
 
     def load(self, model_name):
-        return cPickle.load(open(model_name, "r"))
+        return pickle.load(open(model_name, "r"))
 
 
 # Error flags
