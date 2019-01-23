@@ -4,7 +4,7 @@ import distutils.sysconfig
 import numpy
 import os
 
-os.environ["CC"] = "g++"
+os.environ["CC"] = "g++"  
 NAME = "pyad"
 VERSION = "0.1"
 DESCR = "Anomaly detection usin Isolation Forest"
@@ -16,7 +16,7 @@ EMAIL = "tadesse.habte@gmail.com"
 
 LICENSE = "Apache 2.0"
 SRC_DIR = "src/"
-CYTH_DIR = "./"
+CYTH_DIR = "python/"
 PACKAGES = [CYTH_DIR]
 
 # Remove the "-Wstrict-protypes" compiler option, which isn't valid to c++
@@ -25,7 +25,7 @@ CFLAGS = cfg_vars.get('CFLAGS')
 
 if CFLAGS is not None:
   cfg_vars['CFLAGS'] = CFLAGS.replace("-Wstrict-prototypes", "")
-# Check cython installed
+# Check cython installed 
 cmdclass = {}
 USE_CYTHON = os.getenv('USE_CYTHON', True)
 if USE_CYTHON:
@@ -37,7 +37,7 @@ else:
 
 
 
-ext = Extension("pyad",
+ext = Extension("pyad", 
                   sources=[module_src,SRC_DIR + "facade_forest.cpp", SRC_DIR + "utility.cpp",
                                  SRC_DIR + "tree.cpp", SRC_DIR + "forest.cpp", SRC_DIR + "isolation_forest.cpp"],
                  language="c++",

@@ -1925,12 +1925,10 @@ static const char __pyx_k_m[] = "m";
 static const char __pyx_k_n[] = "n";
 static const char __pyx_k_r[] = "r";
 static const char __pyx_k_w[] = "w";
-static const char __pyx_k_NA[] = "NA";
 static const char __pyx_k_OK[] = "OK";
 static const char __pyx_k_np[] = "np";
 static const char __pyx_k_os[] = "os";
 static const char __pyx_k_qr[] = "qr";
-static const char __pyx_k_all[] = "__all__";
 static const char __pyx_k_bst[] = "bst";
 static const char __pyx_k_cmv[] = "cmv";
 static const char __pyx_k_det[] = "det";
@@ -2118,7 +2116,6 @@ static PyObject *__pyx_n_s_IsolationForest;
 static PyObject *__pyx_n_s_IsolationTree;
 static PyObject *__pyx_n_s_M;
 static PyObject *__pyx_kp_s_Max_depth_cann_t_be_negative;
-static PyObject *__pyx_n_s_NA;
 static PyObject *__pyx_n_s_NO_TEST_DATA;
 static PyObject *__pyx_n_s_NameError;
 static PyObject *__pyx_kp_s_No_test_data_given_to_the_model;
@@ -2147,7 +2144,6 @@ static PyObject *__pyx_kp_s_UTF_8;
 static PyObject *__pyx_n_s_ValueError;
 static PyObject *__pyx_kp_s_You_set_0_number_of_trees_then_i;
 static PyObject *__pyx_n_s_adaptive;
-static PyObject *__pyx_n_s_all;
 static PyObject *__pyx_n_s_append;
 static PyObject *__pyx_n_s_array;
 static PyObject *__pyx_n_s_average_depth;
@@ -2355,7 +2351,6 @@ static PyObject *__pyx_float_0_0;
 static PyObject *__pyx_float_2_0;
 static PyObject *__pyx_float_0_01;
 static PyObject *__pyx_float_0_5772156649;
-static PyObject *__pyx_float_neg_9999_0;
 static PyObject *__pyx_int_0;
 static PyObject *__pyx_int_1;
 static PyObject *__pyx_int_2;
@@ -15870,7 +15865,6 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_IsolationTree, __pyx_k_IsolationTree, sizeof(__pyx_k_IsolationTree), 0, 0, 1, 1},
   {&__pyx_n_s_M, __pyx_k_M, sizeof(__pyx_k_M), 0, 0, 1, 1},
   {&__pyx_kp_s_Max_depth_cann_t_be_negative, __pyx_k_Max_depth_cann_t_be_negative, sizeof(__pyx_k_Max_depth_cann_t_be_negative), 0, 0, 1, 0},
-  {&__pyx_n_s_NA, __pyx_k_NA, sizeof(__pyx_k_NA), 0, 0, 1, 1},
   {&__pyx_n_s_NO_TEST_DATA, __pyx_k_NO_TEST_DATA, sizeof(__pyx_k_NO_TEST_DATA), 0, 0, 1, 1},
   {&__pyx_n_s_NameError, __pyx_k_NameError, sizeof(__pyx_k_NameError), 0, 0, 1, 1},
   {&__pyx_kp_s_No_test_data_given_to_the_model, __pyx_k_No_test_data_given_to_the_model, sizeof(__pyx_k_No_test_data_given_to_the_model), 0, 0, 1, 0},
@@ -15899,7 +15893,6 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_ValueError, __pyx_k_ValueError, sizeof(__pyx_k_ValueError), 0, 0, 1, 1},
   {&__pyx_kp_s_You_set_0_number_of_trees_then_i, __pyx_k_You_set_0_number_of_trees_then_i, sizeof(__pyx_k_You_set_0_number_of_trees_then_i), 0, 0, 1, 0},
   {&__pyx_n_s_adaptive, __pyx_k_adaptive, sizeof(__pyx_k_adaptive), 0, 0, 1, 1},
-  {&__pyx_n_s_all, __pyx_k_all, sizeof(__pyx_k_all), 0, 0, 1, 1},
   {&__pyx_n_s_append, __pyx_k_append, sizeof(__pyx_k_append), 0, 0, 1, 1},
   {&__pyx_n_s_array, __pyx_k_array, sizeof(__pyx_k_array), 0, 0, 1, 1},
   {&__pyx_n_s_average_depth, __pyx_k_average_depth, sizeof(__pyx_k_average_depth), 0, 0, 1, 1},
@@ -16524,7 +16517,6 @@ static CYTHON_SMALL_CODE int __Pyx_InitGlobals(void) {
   __pyx_float_2_0 = PyFloat_FromDouble(2.0); if (unlikely(!__pyx_float_2_0)) __PYX_ERR(0, 1, __pyx_L1_error)
   __pyx_float_0_01 = PyFloat_FromDouble(0.01); if (unlikely(!__pyx_float_0_01)) __PYX_ERR(0, 1, __pyx_L1_error)
   __pyx_float_0_5772156649 = PyFloat_FromDouble(0.5772156649); if (unlikely(!__pyx_float_0_5772156649)) __PYX_ERR(0, 1, __pyx_L1_error)
-  __pyx_float_neg_9999_0 = PyFloat_FromDouble(-9999.0); if (unlikely(!__pyx_float_neg_9999_0)) __PYX_ERR(0, 1, __pyx_L1_error)
   __pyx_int_0 = PyInt_FromLong(0); if (unlikely(!__pyx_int_0)) __PYX_ERR(0, 1, __pyx_L1_error)
   __pyx_int_1 = PyInt_FromLong(1); if (unlikely(!__pyx_int_1)) __PYX_ERR(0, 1, __pyx_L1_error)
   __pyx_int_2 = PyInt_FromLong(2); if (unlikely(!__pyx_int_2)) __PYX_ERR(0, 1, __pyx_L1_error)
@@ -16859,32 +16851,8 @@ if (!__Pyx_RefNanny) {
   if (__Pyx_patch_abc() < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   #endif
 
-  /* "pyad.pyx":5
- * 
- * """
- * __all__ = ['IsolationForest','IsolationTree', 'IForest', 'RotationForest']             # <<<<<<<<<<<<<<
- * 
- * from collections import defaultdict
- */
-  __pyx_t_1 = PyList_New(4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 5, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_INCREF(__pyx_n_s_IsolationForest);
-  __Pyx_GIVEREF(__pyx_n_s_IsolationForest);
-  PyList_SET_ITEM(__pyx_t_1, 0, __pyx_n_s_IsolationForest);
-  __Pyx_INCREF(__pyx_n_s_IsolationTree);
-  __Pyx_GIVEREF(__pyx_n_s_IsolationTree);
-  PyList_SET_ITEM(__pyx_t_1, 1, __pyx_n_s_IsolationTree);
-  __Pyx_INCREF(__pyx_n_s_IForest);
-  __Pyx_GIVEREF(__pyx_n_s_IForest);
-  PyList_SET_ITEM(__pyx_t_1, 2, __pyx_n_s_IForest);
-  __Pyx_INCREF(__pyx_n_s_RotationForest);
-  __Pyx_GIVEREF(__pyx_n_s_RotationForest);
-  PyList_SET_ITEM(__pyx_t_1, 3, __pyx_n_s_RotationForest);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_all, __pyx_t_1) < 0) __PYX_ERR(0, 5, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-
   /* "pyad.pyx":7
- * __all__ = ['IsolationForest','IsolationTree', 'IForest', 'RotationForest']
+ * #__all__ = ['IsolationForest','IsolationTree', 'IForest', 'RotationForest']
  * 
  * from collections import defaultdict             # <<<<<<<<<<<<<<
  * cimport numpy as np
@@ -16921,21 +16889,12 @@ if (!__Pyx_RefNanny) {
  * import numpy as np
  * import pickle             # <<<<<<<<<<<<<<
  * from cpyad cimport *
- * NA = -9999.0
+ * #NA = -9999.0
  */
   __pyx_t_2 = __Pyx_Import(__pyx_n_s_pickle, 0, -1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 10, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_pickle, __pyx_t_2) < 0) __PYX_ERR(0, 10, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-
-  /* "pyad.pyx":12
- * import pickle
- * from cpyad cimport *
- * NA = -9999.0             # <<<<<<<<<<<<<<
- * 
- * 
- */
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_NA, __pyx_float_neg_9999_0) < 0) __PYX_ERR(0, 12, __pyx_L1_error)
 
   /* "pyad.pyx":65
  * 

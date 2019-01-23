@@ -2,14 +2,14 @@
 @Author: Tadesse Zemicheal
 
 """
-__all__ = ['IsolationForest','IsolationTree', 'IForest', 'RotationForest']
+#__all__ = ['IsolationForest','IsolationTree', 'IForest', 'RotationForest']
 
 from collections import defaultdict
 cimport numpy as np
 import numpy as np
 import pickle
 from cpyad cimport *
-NA = -9999.0
+#NA = -9999.0
 
 
 
