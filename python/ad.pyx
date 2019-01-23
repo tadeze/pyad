@@ -8,7 +8,7 @@ from collections import defaultdict
 cimport numpy as np
 import numpy as np
 import pickle
-from cpyad cimport *
+from python.ad cimport *
 #NA = -9999.0
 
 

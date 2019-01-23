@@ -30,10 +30,10 @@ cmdclass = {}
 USE_CYTHON = os.getenv('USE_CYTHON', True)
 if USE_CYTHON:
     from Cython.Build import build_ext
-    module_src = CYTH_DIR+"_pyad.pyx"
+    module_src = CYTH_DIR+"ad.pyx"
     cmdclass = {"build_ext":build_ext}
 else:
-    module_src = "_pyad.cpp"
+    module_src = "ad.cpp"
 
 
 
