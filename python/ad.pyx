@@ -22,14 +22,14 @@ cdef class IsolationForest:
     cdef bool rotate, adaptive, rangecheck
     # cdef bool is_trained = False
 
-    def __cinit__(self, traindf=None, ntree=100, nsample=512, maxheight=0,
+    def __cinit__(self, x=None, ntree=100, nsample=512, maxheight=0,
                   rotate=False, adaptive=False, rangecheck=True, rho=0.01, stoplimit=5):
         """
         Create IsolationForest object. If parameters are given, the forest is trained using train() method, otherwise empty
         object is created to be trained later.
 
         Args:
-            traindf: Training dataset of ndarray(numpy matrix) format. Required field
+            x: Training dataset of ndarray(numpy matrix) format. Required field
             ntree: Number of trees used. Default 100
             nsample: Number of subsample size for training. Defualt 512. If nsample = 0 all training data is used. 
             maxheight: Maximum depth of the binary trees. Default 0 means grow tree until full isolation.
@@ -40,7 +40,7 @@ cdef class IsolationForest:
                  Default value 0.01. Used only if adaptive is True.
             stoplimit:Number of common successive top K for adaptive process. Default 5.Used only if adaptiv is True
         E.g.
-        >> ff = IsolationForest(traindf=train_data, ntree=100, nsample=100)
+        >> ff = IsolationForest(x=train_data, ntree=100, nsample=100)
 
         Returns: IsolationForest object. 
         """
@@ -54,14 +54,14 @@ cdef class IsolationForest:
         self.rangecheck = rangecheck
         self.rho = rho
         self.stoplimit = stoplimit
-        if traindf is not None:
-            self.train(traindf, ntree, nsample, maxheight, rotate, adaptive, rangecheck,
+        if x is not None:
+            self.train(x, ntree, nsample, maxheight, rotate, adaptive, rangecheck,
                        rho, stoplimit)
 
     def __dealloc__(self):
         del self.thisptr
 
-    def train(self, traindf, ntree=100, nsample=512, maxheight=0, rotate=False,
+    def train(self, x, ntree=100, nsample=512, maxheight=0, rotate=False,
               adaptive=False, rangecheck=True, rho=0.01, stoplimit=5, column_subsample=[]):
         """
         Train Isolation Forest model.
@@ -69,7 +69,7 @@ cdef class IsolationForest:
         column_subsample=[]):
 
         Args:
-            traindf: Training dataset of ndarray(numpy matrix) format. Required field
+            x: Training dataset of ndarray(numpy matrix) format. Required field
             ntree: Number of trees used. Default 100
             nsample: Number of subsample size for training. Defualt 512
             maxheight: Maximum depth of the binary trees. Default 0 means grow tree until full isolation.
@@ -82,14 +82,14 @@ cdef class IsolationForest:
         Returns: Trained IsolationForest object 
         """
 
-        DataValidator.validate_dataset(traindf)
+        DataValidator.validate_dataset(x)
         if self.ntree < 0:
             raise NameError("Number of trees cann't be less than 0")
         if self.ntree == 0:
             print ("You set 0 number of trees, then it is adaptive way of growing")
             adaptive = True
-        if self.nsample > len(traindf) or self.nsample == 0:
-            nsample = len(traindf)
+        if self.nsample > len(x) or self.nsample == 0:
+            nsample = len(x)
             print(
                 "Number of samples cann't be greater than sample size,then data will be used")
         if self.maxheight < 0:
@@ -98,27 +98,27 @@ cdef class IsolationForest:
             raise NameError("rho value should be less than 1")
         #self.is_trained = True
 
-        return self.thisptr.trainForest(traindf, ntree, nsample, maxheight,
+        return self.thisptr.trainForest(x, ntree, nsample, maxheight,
                                         rotate, adaptive, rangecheck, rho, stoplimit, column_subsample)
 
 
-    def score(self, test_data, cmv=False):
+    def score(self, x, cmv=False):
         """
         Generate anomaly score from trained Forest.
         
         Args:
-            test_data: Testdata to score in ndarray format(numpy 2d-matrix), it should be the same dimension as training dataset.
+            x: Testdata to score in ndarray format(numpy 2d-matrix), it should be the same dimension as training dataset.
             cmv: Check missing value in the test data. Default false.
         Returns: anomaly score value b/n 0 and 1.
-        >> score = ff.score(test_data,cmv=True)
+        >> score = ff.score(x,cmv=True)
         """
 
         if self.thisptr.isValidModel() == 1:
             raise NameError("The iForest model is not yet trained.")
-        DataValidator.validate_dataset(test_data)
-        if test_data.ndim < 2:
-            test_data = test_data.reshape([1, test_data.size])
-        self.thisptr.testForest(test_data, cmv)
+        DataValidator.validate_dataset(x)
+        if x.ndim < 2:
+            x = x.reshape([1, x.size])
+        self.thisptr.testForest(x, cmv)
         return self.thisptr.getScore()
 
     def validate_model(self):

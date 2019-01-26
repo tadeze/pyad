@@ -104,7 +104,7 @@ dt = pd.read_csv('synthetic_hard_100.csv')
 train_df = dt.ix[:, 1:].as_matrix()
 print train_df.shape
 ff = pft.IsolationForest()
-ff.train(traindf=train_df, ntree=100, nsample=256)
+ff.train(x=train_df, ntree=100, nsample=256)
 # ff.load('firstmodel.if
 sc = ff.score(train_df)
 # print sc[1:10]

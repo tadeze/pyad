@@ -11,7 +11,7 @@ def iForest(ntree, nsample, train_data, test_data, max_height=0, stop_height=0,
 
     iff = IsolationForest()
     if model_name is None:
-        trees = iff.train(traindf=train_data, ntree=ntree, nsample=nsample, maxheight=max_height,
+        trees = iff.train(x=train_data, ntree=ntree, nsample=nsample, maxheight=max_height,
                           rotate=rotate, adaptive=adaptive, rho=0.01, stoplimit=5)
     else:
         iff.load(model_name)
