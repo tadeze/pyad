@@ -1,7 +1,8 @@
-recursive-include src/ *
+recursive-include pyad/ *
 
-include *.md python/*.py
-include python/*.pxd
-include python/*.pyx
+include *.md pyad/*.py
+include pyad/*.pxd
+include pyad/*.pyx
 prune build
 prune dist
+prune examples

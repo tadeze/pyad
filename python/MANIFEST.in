@@ -1,4 +1,0 @@
-recursive-include src/ *
-include *.md *.py
-include *.pxd
-include *.pyx

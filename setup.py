@@ -1,13 +1,14 @@
 from setuptools import setup, Extension
 from setuptools.command.build_ext import build_ext as _build_ext
+from Cython.Build import cythonize
 import distutils.sysconfig
 import numpy
 import os
 
 os.environ["CC"] = "g++"
 LICENSE = "Apache 2.0"
-SRC_DIR = "src/"
-CYTH_DIR = "python/"
+SRC_DIR = "pyad/src/"
+CYTH_DIR = "pyad/"
 PACKAGES = [CYTH_DIR]
 
 class build_ext(_build_ext):
@@ -36,14 +37,14 @@ else:
 
 
 
-ext = Extension("pyad",
-                  sources=[module_src,SRC_DIR + "facade_forest.cpp", SRC_DIR + "utility.cpp",
+ext = cythonize(Extension("*",
+                  sources=[module_src, SRC_DIR + "facade_forest.cpp", SRC_DIR + "utility.cpp",
                                  SRC_DIR + "tree.cpp", SRC_DIR + "forest.cpp", SRC_DIR + "isolation_forest.cpp"],
                  language="c++",
                 extra_compile_args=['-std=c++11'],
-                include_dirs=[numpy.get_include(), SRC_DIR+"include"])
+                include_dirs=[numpy.get_include(), SRC_DIR+"include"]))
 
-EXTENSIONS = [ext]
+EXTENSIONS = ext
 
 
 if __name__ == "__main__":
