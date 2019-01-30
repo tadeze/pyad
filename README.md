@@ -20,7 +20,7 @@ To install library to the python library directory.
 **MIT License**
 
 
-```Copyright (c) 2017 Tadesse Zemicheal
+``` Copyright (c) 2017 Tadesse Zemicheal
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
