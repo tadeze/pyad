@@ -12,13 +12,14 @@
 
 To install library to the python library directory.
 
-python setup.py install
+*python setup.py install*
 
 
 
 **MIT License**
-`
-Copyright (c) 2017 Tadesse Zemicheal
+
+
+```Copyright (c) 2017 Tadesse Zemicheal
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -36,8 +37,7 @@ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
 AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-`
+SOFTWARE.```
 
 ### Status
 [![Build Status](https://travis-ci.com/tadeze/pyad.svg?token=4ykfwWQySq2ndZvpPqdz&branch=master)](https://travis-ci.com/tadeze/pyad)
