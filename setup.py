@@ -7,7 +7,7 @@ import os
 
 __version__ = "0.1"
 os.environ["CC"] = "g++"
-LICENSE = "Apache 2.0"
+LICENSE = "MIT"
 SRC_DIR = "pyad/src/"
 CYTH_DIR = "pyad/"
 PACKAGES = [CYTH_DIR]
@@ -38,7 +38,7 @@ else:
 
 
 
-ext = cythonize([Extension("*",
+EXTENSIONS = cythonize([Extension("*",
                   sources= [module_src, SRC_DIR + "facade_forest.cpp", SRC_DIR + "utility.cpp",
                                  SRC_DIR + "tree.cpp", SRC_DIR + "forest.cpp", SRC_DIR + "isolation_forest.cpp"],
                  language="c++",
@@ -50,8 +50,21 @@ ext = cythonize([Extension("*",
                 include_dirs=[numpy.get_include()])
                 ])
 
-EXTENSIONS = ext
-
+CLASSIFIERS = ['Development Status :: 1 - Beta',
+               'Environment :: Console',
+               'Programming Language :: Cython',
+               'Programming Language :: Python :: 2.7',
+               'Programming Language :: Python :: 3.4',
+               'Programming Language :: Python :: 3.5',
+               'Programming Language :: Python :: 3.6',
+               'Programming Language :: Python :: 3.7',
+               'Operating System :: OS Independent',
+               'Intended Audience :: End Users/Desktop',
+               'Intended Audience :: Developers',
+               'Intended Audience :: Science/Research',
+               'Natural Language :: English',
+               'License :: OSI Approved :: MIT License',
+               'Topic :: Scientific/Engineering']
 
 if __name__ == "__main__":
   setup(install_requires=['numpy', 'cython'],
@@ -65,6 +78,9 @@ if __name__ == "__main__":
         url= "http://eecs.oregonstate.edu/~zemichet",
         license=LICENSE,
         cmdclass=cmdclass,
-        ext_modules=EXTENSIONS
+        ext_modules=EXTENSIONS,
+        classifiers=CLASSIFIERS,
+        download_url="https://github.com/tadeze/pyad"
+
         )
 
