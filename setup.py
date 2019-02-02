@@ -5,6 +5,7 @@ import distutils.sysconfig
 import numpy
 import os
 
+__version__ = "0.1"
 os.environ["CC"] = "g++"
 LICENSE = "Apache 2.0"
 SRC_DIR = "pyad/src/"
@@ -57,7 +58,7 @@ if __name__ == "__main__":
         packages=PACKAGES,
         zip_safe=False,
         name="pyad",
-        version="0.1",
+        version= __version__
         description="Anomaly detection usin Isolation Forest",
         author="Tadesse Zemicheal",
         author_email="zemichet@oregonstate.edu",

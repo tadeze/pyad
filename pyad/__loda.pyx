@@ -1,9 +1,12 @@
 
-#from common import *
+import logging
+logger = logging.getLogger(__name__)
+
 cimport numpy
 #from libc.math import isnan
 cimport libc.math as cmath
 import numpy as np
+NA = np.nan #-9999.0
 
 # Initial code adopted from Moy 
 
@@ -75,8 +78,8 @@ def matrix(d, nrow=None, ncol=None, byrow=False):
     if not d_rows * d_cols == nrow * ncol:
         raise ValueError("input dimensions (%d, %d) not compatible with output dimensions (%d, %d)" %
                          (d_rows, d_cols, nrow, ncol))
-    if isinstance(d, csr_matrix):
-        return d.reshape((nrow, ncol), order=order)
+   # if isinstance(d, csr_matrix):
+   #     return d.reshape((nrow, ncol), order=order)
     else:
         return np.reshape(d, (nrow, ncol), order=order)
 
@@ -574,7 +577,7 @@ class Loda(object):
         self.pvh = pvh
     def score(self, test_x, check_miss=False):
         if not self.fitted:
-            raise NamedError("The Loda model is not trained. Use train() to train.")
+            raise ValueError("The Loda model is not trained. Use train() to train.")
         nll = self.get_neg_ll_all_hist(test_x, self.pvh.pvh.w, self.pvh.pvh.hists, inf_replace = np.nan, check_miss = check_miss)
         anom_ranks = np.arange(nrow(test_x))
         anom_ranks = anom_ranks[order(-nll)]
