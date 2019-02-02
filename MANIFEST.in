@@ -3,6 +3,7 @@ recursive-include pyad/ *
 include *.md pyad/*.py
 include pyad/*.pxd
 include pyad/*.pyx
+include pyad/loda/*.pyx pyad/loda/*.py
 prune build
 prune dist
 prune examples

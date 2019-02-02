@@ -30,19 +30,24 @@ cmdclass = {}
 USE_CYTHON = os.getenv('USE_CYTHON', True)
 if USE_CYTHON:
     from Cython.Build import build_ext
-    module_src = CYTH_DIR+"ad.pyx"
+    module_src = CYTH_DIR+"__ad.pyx"
     cmdclass = {"build_ext":build_ext}
 else:
-    module_src = "ad.cpp"
+    module_src = "__ad.cpp"
 
 
 
-ext = cythonize(Extension("*",
-                  sources=[module_src, SRC_DIR + "facade_forest.cpp", SRC_DIR + "utility.cpp",
+ext = cythonize([Extension("*",
+                  sources= [module_src, SRC_DIR + "facade_forest.cpp", SRC_DIR + "utility.cpp",
                                  SRC_DIR + "tree.cpp", SRC_DIR + "forest.cpp", SRC_DIR + "isolation_forest.cpp"],
                  language="c++",
                 extra_compile_args=['-std=c++11'],
-                include_dirs=[numpy.get_include(), SRC_DIR+"include"]))
+                include_dirs=[numpy.get_include(), SRC_DIR+"include"]),
+                Extension("*", 
+                sources=[CYTH_DIR+"__loda.pyx"],
+                language="c++",
+                include_dirs=[numpy.get_include()])
+                ])
 
 EXTENSIONS = ext
 

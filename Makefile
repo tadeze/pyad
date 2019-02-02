@@ -1,9 +1,9 @@
 default: build 
 ### FILES ### 
-FILES=pyadlib setup.py MANIFEST.in
-pyadlib: ../src
-	cp -R ../src .
-	cp -R ../README.md .
+FILES=setup.py MANIFEST.in
+# pyadlib: ../src
+# 	cp -R ../src .
+# 	cp -R ../README.md .
 all: ${FILES}
 	python setup.py build_ext --inplace
 install: ${FILES}
@@ -32,9 +32,9 @@ tests:ls
 	hash nosetests 2>/dev/null || { echo -e >&2 "############ Required nosetest package"; exit 1;}
 	nosetests --logging-level=INFO tests/ 
 clean-cpp:
-	rm *.cpp -rf 
+	rm pyad/*.cpp -rf 
 clean:
-	rm *.so *.pyc -rf 
+	rm pyad/*.so pyad/*.pyc -rf 
 	rm dist build pyad.egg-info src -rf 
 clean-all:clean clean-cpp
 
