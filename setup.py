@@ -58,8 +58,8 @@ if __name__ == "__main__":
         packages=PACKAGES,
         zip_safe=False,
         name="pyad",
-        version= __version__
-        description="Anomaly detection usin Isolation Forest",
+        version= __version__,
+        description="Anomaly detection algorithms",
         author="Tadesse Zemicheal",
         author_email="zemichet@oregonstate.edu",
         url= "http://eecs.oregonstate.edu/~zemichet",
