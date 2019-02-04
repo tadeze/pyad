@@ -1,16 +1,16 @@
-## Anomaly detection using Isolation Forest.
+## Anomaly detection algorithms.
 
 **Requirement**
 
-1. GCC version 4.9.3 or more.
+1. Compiler with c++11 support (gcc.4.9 or more)
 2. Cython 0.23 or more
 3. preinstalled numpy
 
 **Install package**
 
-To install library to the python library directory.
+Installing to the python library directory.
 
-*python setup.py install*
+``python setup.py install``
 
 
 ### Status
