@@ -113,6 +113,7 @@ def histogram_r(x, g1=1., g2=1., g3=-1., verbose=False):
     # density, breaks = np.histogram(x, bins=nbinsmax, density=True)
 
     # the below implements Birge technique that recomputes the bin sizes...
+    # np.histogram are the bottleneck for computation. TODO: Remove or update the histograms
     y = np.sort(x)
     likelihood = np.zeros(nbinsmax, dtype=float)
     pen = np.arange(1, nbinsmax + 1, dtype=float) + ((np.log(np.arange(1, nbinsmax + 1, dtype=float))) ** 2.5)
