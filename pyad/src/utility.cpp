@@ -6,284 +6,211 @@
  */
 
 #include "utility.hpp"
-using namespace std;
-using namespace osu::ad;
-    //default_random_engine gen(400);  //Debugging
 
-    default_random_engine gen(time(NULL));  //Production
-    template<typename T>
-    T util::randomT(T min, T max) {
-        uniform_real_distribution<T> dist(min, max);
-        return dist(gen);
+//default_random_engine gen(400);  //Debugging
 
-    }
+std::default_random_engine gen(time(NULL));  //Production
 
-    double util::randomD(double min, double max) {
-        uniform_real_distribution<double> dist(min, max);
-        return dist(gen);
-    }
+double osu::ad::util::rand_double(double min, double max) {
+	std::uniform_real_distribution<double> dist(min, max);
+	return dist(gen);
+}
 
-    int util::randomI(int min, int max) {
+int osu::ad::util::rand_int(int min, int max) {
 
-        uniform_int_distribution<unsigned> dist(min, max);
-        return dist(gen);
-    }
+	std::uniform_int_distribution<unsigned> dist(min, max);
+	return dist(gen);
+}
 
-    int util::randomEx(int min, int max, set<int> &exlude) {
-        int num;
-        num = randomI(min, max);            //(int) (min + (rand() % (max - min+1)));
-        return exlude.find(num) != exlude.end() ? randomEx(min, max, exlude) : num;
+int osu::ad::util::random_exclude(int min, int max, std::set<int> &exlude) {
+	int num = rand_int(min, max);
+	return exlude.find(num) != exlude.end() ? random_exclude(min, max, exlude) : num;
 
-    }
+}
 
-    void util::sampleI(int min, int max, int nsample, vector<int> &samples) {
-        int cnt = 0;
-        int rndI;
-        set<int> duplicate;
-        while (cnt < nsample) {
-            rndI = randomEx(min, max, duplicate);
-            samples.push_back(rndI);
-            duplicate.insert(rndI);
-            cnt++;
+void osu::ad::util::sample_int(int min, int max, int nsample, std::vector<int> &samples) {
+	int count = 0;
+	int rand_num;
+	std::set<int> duplicate;
+	while (count < nsample) {
+		rand_num = random_exclude(min, max, duplicate);
+		samples.push_back(rand_num);
+		duplicate.insert(rand_num);
+		count++;
+	}
 
-        }
+}
 
-    }
+double osu::ad::util::avg_pl(int n) {
 
-    double util::avgPL(int n) {
+	return (((n - 1) <= 0) ?
+			0.0 :
+			((2.0 * (std::log((double) (n - 1)) + 0.5772156649))
+					- (2.0 * (double) (n - 1)) / (1.0 + (double) (n - 1))));
 
-        return (((n - 1) <= 0) ?
-                0.0 :
-                ((2.0 * (log((double) (n - 1)) + 0.5772156649))
-                 - (2.0 * (double) (n - 1)) / (1.0 + (double) (n - 1))));
+}
+double osu::ad::util::score(double depth, int n) {
+	return std::pow(2, -depth / avg_pl(n));
+}
 
-    }
-    double util::score(double depth, int n) {
-        return pow(2, -depth / avgPL(n));
-    }
-    template<typename T>
-    void util::swapInt(T a, T b, T *x) {
-        T hold;
-        hold = x[a];
-        x[a] = x[b];
-        x[b] = hold;
-    }
 
-//template<typename T>
-/*
- * Sample mean of points
- */
-    double util::mean(vector<double> points) {
-        double sum = 0;
-        for (int f = 0; f < (int) points.size(); f++)
-            sum += points[f];
-        return sum / (double) points.size();
-    }
+double osu::ad::util::mean(std::vector<double> points) {
+	auto sum = 0.0;
+	for (double point : points)
+		sum += point;
+	return sum / (double) points.size();
+}
 
-/*
- * Calculate sample variance from vector of doublen numbers
- */
-    double util::variance(vector<double> &x) {
-        double sum = 0.0;
-        double mn = mean(x);
-        for (double elem : x) {
-            sum += pow(elem - mn, 2);
-        }
-        return sum / (double) (x.size() - 1);
-    }
+double osu::ad::util::variance(std::vector<double> &x) {
+	double sum = 0.0;
+	double mn = mean(x);
+	for (double elem : x) {
+		sum += std::pow(elem - mn, 2);
+	}
+	return sum / (double) (x.size() - 1);
+}
 
 /* T-confidence interval
  *
  */
-    double util::tconf(vector<double> &points, double sigma = 0.95) {
-        double sd = sqrt(variance(points));
-        double tvalue = 1.64 * sd / (double) sqrt(points.size());
-        return tvalue;
-    }
-
+double osu::ad::util::tconf(std::vector<double> &points, double sigma = 0.95) {
+	double sd = sqrt(variance(points));
+	return 1.64 * sd / std::sqrt(points.size());
+}
 
 /*
  * Read csv file into vector,
  * used for testing
  */
 
-    vector<vector<double> > util::readcsv(const char *filename, char delim = ',',
-                                    bool header = true) {
-        vector<vector<double> > values;
-        vector<double> valueline;
-        ifstream fin(filename);
-        string item;
-        if (header)  //if header available
-            getline(fin, item);
+std::vector<std::vector<double> > osu::ad::util::readcsv(const char *filename, char delim = ',',
+																			bool header = true) {
+	std::vector<std::vector<double> > values;
+	std::vector<double> value_line;
+	std::ifstream fin(filename);
+	std::string item;
+	if (header)  //if header available
+		getline(fin, item);
 
-        for (string line; getline(fin, line);) {
-            istringstream in(line);
-            while (getline(in, item, delim)) {
-                valueline.push_back(atof(item.c_str()));
-            }
-            values.push_back(valueline);
-            valueline.clear();
-        }
-        return values;
-    }
+	for (std::string line; getline(fin, line);) {
+		std::istringstream in(line);
+		while (getline(in, item, delim)) {
+			value_line.push_back(std::atof(item.c_str()));
+		}
+		values.push_back(value_line);
+		value_line.clear();
+	}
+	return values;
+}
 
 /*
  * Calculate the cumulative distribution function
  */
-    map<double, double> util::ecdf(vector<double> points) {
-        map<double, double> cdfm;
+std::map<double, double> osu::ad::util::ECDF(std::vector<double> points) {
 
-        sort(points.begin(), points.end());
-        int j = -1;
-        double len = (double) points.size();
-        for (unsigned i = 0; i < points.size(); ++i) {
-            if (i == 0 || points[i - 1] != points[i]) {
-                j++;
-                cdfm.insert({points.at(i), (double) (i + 1) / len});
-            } else {
-                cdfm[points.at(i)] = (double) (i + 1) / len;
-            }
-        }
-        return cdfm;
+	std::map<double, double> cdf_value;
+	sort(points.begin(), points.end());
+	int j = -1;
+	auto len = points.size();
+	for (unsigned i = 0; i < points.size(); ++i) {
+		if (i == 0 || points[i - 1] != points[i]) {
+			j++;
+			cdf_value.insert({points.at(i), static_cast<double>(i + 1) / len});
+		} else {
+			cdf_value[points.at(i)] = static_cast<double>(i + 1) / len;
+		}
+	}
+	return cdf_value;
 
-    }
+}
 
-
-    template<typename T>
-    vector<T> flatten(const vector<vector<T>> &v) {
-        size_t total_size = 0;
-        for (const auto &sub : v)
-            total_size += sub.size();
-        vector<T> result;
-        result.reserve(total_size);
-        for (const auto &sub : v)
-            result.insert(result.end(), sub.begin(), sub.end());
-        return result;
-    }
-
-
+template<typename T>
+std::vector<T> flatten(const std::vector<std::vector<T>> &v) {
+	size_t total_size = 0;
+	for (const auto &sub : v)
+		total_size += sub.size();
+	std::vector<T> result;
+	result.reserve(total_size);
+	for (const auto &sub : v)
+		result.insert(result.end(), sub.begin(), sub.end());
+	return result;
+}
 
 /*
- * Compute the Anderson-Darling distance for the depth distribution of each point
- * input: 2-d depth row X tree_depth
+ * Compute the Anderson-Darling distance for the depth_ distribution of each point
+ * input: 2-d depth_ row X tree_depth
  * return 1-D score of each point
  */
 
-    vector<double> ADdistance(vector<vector<double> > depths, bool weightToTail =
-    false) {
-        //flatten 2-d to 1-d and compute alldepth ECDF of using all points depths
-        vector<double> alldepth = flatten(depths);
-        map<double, double> Fxm = util::ecdf(alldepth); //all depth cdf
+std::vector<double> ADdistance(std::vector<std::vector<double> > depths, bool weightToTail =
+false) {
+	//flatten 2-d to 1-d and compute all_depth ECDF of using all points depths
+	std::vector<double> all_depth = flatten(depths);
+	std::map<double, double> Fxm = osu::ad::util::ECDF(all_depth); //all depth_ cdf
 
-        vector<double> scores;
-        /*
-         * compute score of each point
-         * sort the depth, compute its ECDF
-         */
-        for (vector<double> x : depths) {
-            sort(x.begin(), x.end());
-            map<double, double>::iterator iter = Fxm.begin();
-            map<double, double> fxn = util::ecdf(x);  //empirical cdf of the point
-            double sum = 0;
-            for (double elem : x) {
-                double val;
-                while (iter != Fxm.end()) {
-                    //cout<<elem<<"\t"<<iter->first<<"\t"<<iter->second<<endl;
-                    if (iter->first > elem) //x.at(i))
-                    {
+	std::vector<double> scores;
+	/*
+	 * compute score of each point
+	 * sort the depth_, compute its ECDF
+	 */
+	for (std::vector<double> x : depths) {
+		std::sort(x.begin(), x.end());
+		std::map<double, double>::iterator iter = Fxm.begin();
+		std::map<double, double> fxn = osu::ad::util::ECDF(x);  //empirical cdf of the point
+		double val, sum = 0.0;
+		for (double elem : x) {
 
-                        val = (--iter)->second; //= ((i==0)?.0:(--iter)->second);
-                        break;
-                    }
-                    ++iter;
-                }
-                if (iter == Fxm.end())
-                    val = 0.99999999; //close to 1 at the end of the distribution
-                double cdfDiff = max((fxn[elem] - val), 0.0);
-                sum += weightToTail ? cdfDiff / sqrt(val) : cdfDiff; //distance of each point in the vector
+			while (iter != Fxm.end()) {
+				if (iter->first > elem) {
 
+					val = (--iter)->second; //= ((i==0)?.0:(--iter)->second);
+					break;
+				}
+				++iter;
+			}
+			if (iter == Fxm.end())
+				val = 0.99999999; //close to 1 at the end of the distribution
+			auto cdf_diff = std::max((fxn[elem] - val), 0.0);
+			sum += weightToTail ? cdf_diff / sqrt(val) : cdf_diff; //distance of each point in the vector
 
-            }
-            scores.push_back(sum);
-        }
-        return scores;
-
-    }
-
-    /* Logging functions
-     * /
-     */
-
-/*
-    void init_log(std::string filename){
-        logfile.open(filename);
-
-    }
-    void write_log(std::string &msg){
-        logfile<<msg;
-    }
-    void close_log(){
-        logfile.close();
-    }
-
-void convertVtoDf(std::vector<std::vector<double> > &sourceVec,doubleframe* df)
-{
-	int _ncol =(int) sourceVec[0].size();
-	int _nrow =(int) sourceVec.size();
-
-	for(int i=0;i<_nrow;i++)
-	{
-		for(int j=0;j<_ncol;j++)
-		{
-			df->data[i][j] = sourceVec[i][j];
 
 		}
+		scores.push_back(sum);
 	}
-	df->ncol = _ncol;
-	df->nrow = _nrow;
+	return scores;
 
 }
-*/
 
+std::string osu::ad::util::filename() {
+	std::string file_name("/home/tadeze/projects/iForestCodes/pyiForest/test/unittest/synthetic5d34.csv");
+	return file_name;
+}
 
-    std::string util::filename() {
-        std::string filename("/home/tadeze/projects/iForestCodes/pyiForest/test/unittest/synthetic5d34.csv");
-        return filename;
-    }
+std::shared_ptr<osu::ad::util::Dataset> osu::ad::util::make_dataset(std::vector<std::vector<double> > &data) {
+	std::shared_ptr<util::Dataset> dt = std::make_shared<util::Dataset>(); //new util::Dataset();
+	dt->data = data;
+	dt->ncol = (int) data[0].size();
+	dt->nrow = (int) data.size();
+	return dt;
+}
 
-    std::shared_ptr<util::dataset> util::makeDataset(std::vector<std::vector<double> > &data) {
-        std::shared_ptr<util::dataset> dt = std::make_shared<util::dataset>(); //new util::dataset();
-        dt->data = data;
-        dt->ncol = (int) data[0].size();
-        dt->nrow = (int) data.size();
-        return dt;
-    }
+void osu::ad::util::display_vec(std::vector<double> &data) {
+	for (double row : data) {
+		std::cout << row << "\t";
+	}
+};
 
-    void util::displayVec(std::vector<double> &data) {
-        for (double row : data) {
-            std::cout << row << "\t";
-        }
-    };
+std::vector<std::vector<double> > osu::ad::util::synthetic_data(int D, int N) {
+	std::vector<std::vector<double> > data;
 
-    void util::displayVec(std::vector<std::vector<double> > data) {
-        for (auto row : data) {
-            displayVec(row);
-        }
-        std::cout << "\n";
-    }
-
-
-    std::vector<std::vector<double> > util::syntheticData(int D, int N) {
-        std::vector<std::vector<double> > data;
-
-        for (int k = 0; k < N; k++) {
-            std::vector<double> row;
-            for (int j = 0; j < D; j++)
-                row.push_back(util::randomD(0, 2));
-            data.push_back(row);
-        }
-        return data;
-    }
+	for (int k = 0; k < N; k++) {
+		std::vector<double> row;
+		for (int j = 0; j < D; j++)
+			row.push_back(util::rand_double(0, 2));
+		data.push_back(row);
+	}
+	return data;
+}
 
 
 

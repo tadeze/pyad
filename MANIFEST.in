@@ -4,5 +4,4 @@ include *.md pyad/*.py LICENSE
 include pyad/*.pxd
 include pyad/*.pyx
 prune build
-prune dist
-prune examples
+prune dist 

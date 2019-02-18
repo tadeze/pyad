@@ -7,30 +7,30 @@
 
 #include "forest.hpp"
 using namespace osu::ad;
-double Forest::getdepth(std::vector<double> &inst, const std::shared_ptr<Tree> &tree) {
-    return tree->pathLength(inst,this->cmv);
+double Forest::get_depth(std::vector<double> &instance, const std::shared_ptr<Tree> &tree) {
+    return tree->path_length(instance, this->check_missing_value_);
 }
 
 
 /*
  * Accepts single point (row) and return Anomaly Score
  */
-double Forest::instanceScore(std::vector<double> &inst) {
+double Forest::instance_score(std::vector<double> &instance) {
 
-    double avgPathLength = util::mean(pathLength(inst));
-    double scores = pow(2, -avgPathLength / util::avgPL(this->nsample));
+    double avgPathLength = util::mean(path_length(instance));
+    double scores = pow(2, -avgPathLength / util::avg_pl(this->num_sample_));
     return scores;
 
 }
 
 /*
- * Score for  a set of dataframe in dataset
+ * Score for  a set of dataframe_ in Dataset
  */
-std::vector<double> Forest::AnomalyScore(std::shared_ptr<util::dataset> df) {
-    std::vector<double> scores;
+std::vector<double> Forest::anomaly_score(std::shared_ptr<util::Dataset> dataset) {
+    std::vector<double> scores(dataset->nrow);
     //iterate through all points
-    for (int inst = 0; inst < df->nrow; inst++) {
-        scores.push_back(instanceScore(df->data[inst]));
+    for (int inst = 0; inst < dataset->nrow; inst++) {
+        scores.push_back(instance_score(dataset->data[inst]));
     }
     return scores;
 }
@@ -44,13 +44,13 @@ std::vector<double> Forest::AnomalyScore(std::shared_ptr<util::dataset> df) {
 
 
 /*
- * Return instance depth in all trees
+ * Return instance depth_ in all trees_
 */
 
-std::vector<double> Forest::pathLength(std::vector<double> &inst) {
+std::vector<double> Forest::path_length(std::vector<double> &instance) {
     std::vector<double> depth;
-       for(auto const &tree : this->trees)
-        depth.push_back(getdepth(inst,tree)); //#tree->pathLength(inst,cmv));
+       for(auto const &tree : this->trees_)
+        depth.push_back(get_depth(instance, tree)); //#tree->path_length(instance,check_missing_value_));
 
 
     return depth;
@@ -59,10 +59,10 @@ std::vector<double> Forest::pathLength(std::vector<double> &inst) {
 
 /* PathLength for all points
 */
-std::vector<std::vector<double> > Forest::pathLength(std::shared_ptr<util::dataset> data) {
+std::vector<std::vector<double> > Forest::path_length(std::shared_ptr<util::Dataset> data) {
     std::vector<std::vector<double> > depths;
     for (int r = 0; r < data->nrow; r++)
-        depths.push_back(pathLength(data->data[r]));
+        depths.push_back(path_length(data->data[r]));
     return depths;
 }
 
@@ -71,10 +71,10 @@ std::vector<std::vector<double> > Forest::pathLength(std::shared_ptr<util::datas
  * output: feature importance
  * status: Incomplete!!
  */
-std::map<int, double> Forest::importance(std::vector<double> &inst) {
+std::map<int, double> Forest::importance(std::vector<double> &instance) {
     //Need to be re-implemented
     std::map<int, double> totalexplan;
-    auto featureExplanation = Forest::featureContrib(inst);
+    auto featureExplanation = Forest::feature_contrib(instance);
     for (const auto feature : featureExplanation) {
         for (auto explan : feature) {
             if (totalexplan.count(explan.first) > 0)
@@ -88,12 +88,12 @@ std::map<int, double> Forest::importance(std::vector<double> &inst) {
 }
 
 //Sample data from the datset
-void Forest::getSample(std::vector<int> &sampleIndex, const int nsample, bool rsample, int nrow) {
-    sampleIndex.clear();
-    if (rsample && nsample < nrow)
-        util::sampleI(0, nrow - 1, nsample, sampleIndex); //sample nsample
+void Forest::get_sample(std::vector<int> &sample_index, const int nsample, bool use_subsample, int nrow) {
+    sample_index.clear();
+    if (use_subsample && nsample < nrow)
+      util::sample_int(0, nrow - 1, nsample, sample_index); //sample num_sample_
     else
-        util::sampleI(0, nrow - 1, nrow, sampleIndex); //shuffle all index of the data
+      util::sample_int(0, nrow - 1, nrow, sample_index); //shuffle all index of the data
 
 }
 
@@ -101,23 +101,23 @@ void Forest::getSample(std::vector<int> &sampleIndex, const int nsample, bool rs
 /*
  * Feature contribution
  */
-    std::vector<std::map<int, double> > Forest::featureContrib(std::vector<double> &inst) {
-        // Iterate through all trees and collect their contributions
+    std::vector<std::map<int, double> > Forest::feature_contrib(std::vector<double> &instance) {
+        // Iterate through all trees_ and collect their contributions
 
         std::vector<std::map<int, double> > contributions;
-        for (auto &tree : this->trees) {
-            auto treeexplanation = tree->featureContribution(inst).featureContribution();
+        for (auto &tree : this->trees_) {
+            auto treeexplanation = tree->feature_contribution(instance).featureContribution();
             contributions.push_back(treeexplanation);
         }
 
         return contributions;
     }
 
-void Forest::tracePath(std::vector<double> &inst, std::ostream &out){
+void Forest::trace_path(std::vector<double> &inst, std::ostream &out){
 
-    auto featureCont = Forest::featureContrib(inst);
-    for (const auto tree : this->trees) {
-        auto treePath = tree->featureContribution(inst).contributions;
+    auto featureCont = Forest::feature_contrib(inst);
+    for (const auto tree : this->trees_) {
+        auto treePath = tree->feature_contribution(inst).contributions;
         for(auto feat : treePath) {
             out <<tree->getParent_id()<<","<<feat.first << "," << inst[feat.first]<<",[";
             for(auto depth_path: feat.second)

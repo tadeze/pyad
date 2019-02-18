@@ -4,7 +4,7 @@
 
 1. Compiler with c++11 support (gcc.4.9 or more)
 2. Cython 0.23 or more
-3. preinstalled numpy
+3. Numpy
 
 **Install package**
 
@@ -45,6 +45,7 @@ iforest_score = iforest.score(w_score)
 print("AUC(loda): {}, AUC(iForest): {}".format(mt.roc_auc_score(label, loda_score), 
 mt.roc_auc_score(label, iforest_score)))
 ```
+
 ### Status
 [![Build Status](https://travis-ci.com/tadeze/pyad.svg?token=4ykfwWQySq2ndZvpPqdz&branch=master)](https://travis-ci.com/tadeze/pyad)
 

@@ -42,8 +42,8 @@ namespace osu {
                 for (const auto &contr : contributions) {
                     double expl = 0.0;
                     expl = 1.0 / contr.second[0]; //This consider the top most cut.
-                    //for(auto depth : contr.second) // if we consider all cuts
-                    //   expl += 1.0/depth;
+                    //for(auto depth_ : contr.second) // if we consider all cuts
+                    //   expl += 1.0/depth_;
                     explanation.insert({contr.first, expl});
 
                 }

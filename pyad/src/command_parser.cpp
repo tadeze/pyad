@@ -14,13 +14,13 @@
 	-m COLS, --metacol=COLS
 		Specify columns to preserve as meta-data. (Separated by ',' Use '-' to specify ranges).
 	-t N, --ntrees=N
-		Specify number of trees to build.(Value 0 indicates to use adaptive tree growing)
+		Specify number of trees_ to build.(Value 0 indicates to use adaptive tree growing)
 		Default value is 100.
 	-s S, --sampsize=S
 		Specify subsampling rate for each tree. (Value of 0 indicates to use entire data set).
 		Default value is 2048.
 	-d MAX, --maxdepth=MAX
-		Specify maximum depth of trees. (Value of 0 indicates no maximum).
+		Specify maximum depth_ of trees_. (Value of 0 indicates no maximum).
 		Default value is 0.
 	-H, --header
 		Toggle whether or not to expect a header input.
@@ -38,7 +38,7 @@
 		specify number of columns to use.
 		Default value is 0.
 	-p, --pathlength
-		Toggle whether to display  depth of all trees (Default is false)
+		Toggle whether to display  depth_ of all trees_ (Default is false)
 		Default value is false.
 	-x FILE, --testfile=FILE
 		Specify path to test file. (optional).
@@ -79,19 +79,19 @@ bool checkExist(std::string fileName){
     return true;
 }
 void Parser::display_argument() {
-std::cout<<"Num trees: "<<ntrees;
+std::cout<<"Num trees_: "<<ntrees;
 }
 void Parser::parse_argument(int argc, char **argv) {
 
 
     optionparser::parser p("IsolationForest commandline options ");
 
-    p.add_option("--ntree", "-t")
-            .help("Number of trees.")
+    p.add_option("--num_trees_", "-t")
+            .help("Number of trees_.")
             .required(true)
             .mode(optionparser::store_value)
             .default_value(100);
-    p.add_option("--nsample","-s").help("Sample size. Default 512.")
+    p.add_option("--num_sample_","-s").help("Sample size. Default 512.")
             .mode(optionparser::store_value)
             .required(false)
             .default_value(512);
@@ -107,12 +107,12 @@ void Parser::parse_argument(int argc, char **argv) {
     p.add_option("--metacols","-m")
             .help("Metacolumn to skip. ")
             .mode(optionparser::store_mult_values);
-    p.add_option("--maxheight", "-d")
-             .help("Max depth for the tree to grow. Defualt 0 (grow until separation)")
+    p.add_option("--max_height_", "-d")
+             .help("Max depth_ for the tree to grow. Defualt 0 (grow until separation)")
              .default_value(0)
             .mode(optionparser::store_value);
     p.add_option("--pathlength","-p")
-            .help("Toggle whether to display depth of all trees or not. Default false")
+            .help("Toggle whether to display depth_ of all trees_ or not. Default false")
             .mode(optionparser::store_true).default_value(false);
     p.add_option("--testfile", "-x")
             .help("Specify path to test file. (optional)")
@@ -140,12 +140,12 @@ void Parser::parse_argument(int argc, char **argv) {
         //input_name = names;
         checkExist(input_name);
     }
-    if(p.get_value("nsample")) {
-        nsample = p.get_value<int>("nsample");
+    if(p.get_value("num_sample_")) {
+        nsample = p.get_value<int>("num_sample_");
     }
 
-    if(p.get_value("ntree")) {
-        ntrees = p.get_value<int>("ntree");
+    if(p.get_value("num_trees_")) {
+        ntrees = p.get_value<int>("num_trees_");
         if (ntrees==0)
             adaptive=true;
     }
@@ -153,8 +153,8 @@ void Parser::parse_argument(int argc, char **argv) {
     if(p.get_value("output")) {
         output_name = p.get_value<std::string>("output");
     }
-    if(p.get_value("maxheight"))
-        maxdepth = p.get_value<int>("maxheight");
+    if(p.get_value("max_height_"))
+        maxdepth = p.get_value<int>("max_height_");
     if(p.get_value("pathlength"))
         pathlength = p.get_value<bool>("pathlength");
     if(p.get_value("testfile")) {
@@ -178,11 +178,5 @@ void Parser::parse_argument(int argc, char **argv) {
     if(p.get_value("missvalue"))
         range_check = p.get_value<bool>("missvalue");
 
-
-//    if (p.get_value("knn")){
-//        auto names = p.get_value<int>("knn");
-//        k = names;
-//
-//    }
 
 }
