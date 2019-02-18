@@ -372,9 +372,10 @@ class Loda(object):
         self.keep = keep
         self.exclude = exclude
         self.original_dims = original_dims
+        self.fitted = False 
         if train_x is not None:
             self.train(train_x)
-        self.fitted = False 
+        
         
     def get_random_proj(self, nproj, d, sp, keep=None, exclude=None):
         nzeros = int(np.floor(d * sp))

@@ -105,7 +105,7 @@ cdef class IsolationForest:
         >> score = ff.score(x,cmv=True)
         """
 
-        self.validate_model()
+        #self.validate_model()
         DataValidator.validate_dataset(x)
         if x.ndim < 2:
             x = x.reshape([1, x.size])
