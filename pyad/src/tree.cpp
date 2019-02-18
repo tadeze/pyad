@@ -100,11 +100,11 @@ void osu::ad::Tree::iTree(std::vector<int> const &sample_index,
 		else
 			left_node_data.push_back(i);
 
-	left_child_ = std::make_shared<Tree>(); //new Tree(); //&dataL,height+1,max_height);
+	left_child_ = std::make_shared<Tree>(); //new Tree(); //&dataL,height+1,max_height_);
 	//left_child_->parent_ = this;
 	left_child_->setParent_id(this->getParent_id());  // uniqualy identify each trees_.
 	left_child_->iTree(left_node_data, dataset, this->depth_ + 1, max_height, stop_height);
-	right_child_ = std::make_shared<Tree>();// new Tree(); //&dataR,height+1,max_height);
+	right_child_ = std::make_shared<Tree>();// new Tree(); //&dataR,height+1,max_height_);
 	right_child_->setParent_id(this->getParent_id());
 
 	//right_child_->parent_ = this;
@@ -187,51 +187,51 @@ const std::shared_ptr<osu::ad::Tree> &osu::ad::Tree::getRightChild() const {
 	return right_child_;
 }
 
-int osu::ad::Tree::getNodeSize() const {
+int osu::ad::Tree::node_size() const {
 	return node_size_;
 }
 
-void osu::ad::Tree::setNodeSize(int nodeSize) {
+void osu::ad::Tree::node_size(int nodeSize) {
 	Tree::node_size_ = nodeSize;
 }
 
-int osu::ad::Tree::getSplittingAtt() const {
+int osu::ad::Tree::splitting_attribute() const {
 	return splitting_attribute_;
 }
 
-void osu::ad::Tree::setSplittingAtt(int splittingAtt) {
+void osu::ad::Tree::splitting_attribute(int splittingAtt) {
 	Tree::splitting_attribute_ = splittingAtt;
 }
 
-int osu::ad::Tree::getDepth() const {
+int osu::ad::Tree::depth() const {
 	return depth_;
 }
 
-void osu::ad::Tree::setDepth(int depth) {
+void osu::ad::Tree::depth(int depth) {
 	Tree::depth_ = depth;
 }
 
-double osu::ad::Tree::getSplittingPoint() const {
+double osu::ad::Tree::splitting_point() const {
 	return splitting_point_;
 }
 
-void osu::ad::Tree::setSplittingPoint(double splittingPoint) {
+void osu::ad::Tree::splitting_point(double splittingPoint) {
 	Tree::splitting_point_ = splittingPoint;
 }
 
-double osu::ad::Tree::getMinAttVal() const {
+double osu::ad::Tree::min_attribute_value() const {
 	return min_attribute_val_;
 }
 
-void osu::ad::Tree::setMinAttVal(double minAttVal) {
+void osu::ad::Tree::min_attribute_value(double minAttVal) {
 	Tree::min_attribute_val_ = minAttVal;
 }
 
-double osu::ad::Tree::getMaxAttVal() const {
+double osu::ad::Tree::max_attribute_value() const {
 	return max_attribute_val_;
 }
 
-void osu::ad::Tree::setMaxAttVal(double maxAttVal) {
+void osu::ad::Tree::max_attribute_value(double maxAttVal) {
 	Tree::max_attribute_val_ = maxAttVal;
 }
 

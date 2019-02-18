@@ -95,11 +95,11 @@ int main(int argc, char** argv) {
 
   /*  bool use_subsample_ = num_sample_ != 0;
     bool stop_height_ = max_height_ != 0;
-    int stopLimit = pargs->adaptive;
+    int stop_limit_ = pargs->adaptive_;
     bool rangecheck = pargs->rangecheck;
-    bool rotate = pargs->rotate;
+    bool rotate_ = pargs->rotate_;
     bool pathlength = pargs->pathlength;
-    float rho = pargs->precision;
+    float rho_ = pargs->precision;
     float alpha = pargs->alpha;
     int epoch = pargs->epoch;
     bool oob = pargs->oobag;
@@ -140,8 +140,8 @@ void experimentalCodes(){
     // From facadeForest
   osu::ad::FacadeForest ff;
     std::vector<int> columnindx = {}; //0,1,2};
-    ff.trainForest(dataxx, 100, 256, 0, false, false, false, 0.01, 0, columnindx);
-    std::cout << ff.getNSample() << " ==" << ff.getNTree() << std::endl;
+  ff.train(dataxx, 100, 256, 0, false, false, false, 0.01, 0, columnindx);
+    std::cout << ff.num_sample() << " ==" << ff.num_trees() << std::endl;
     std::cout <<"Size of training set"
               <<dataxx.size()
               <<","<<dataxx[0].size()<<std::endl;
@@ -161,8 +161,8 @@ void experimentalCodes(){
 //    dataxx[4][1] = NAN;
 //    dataxx[4][2] = NAN;
 
-    ff.testForest(dataxx,check_missing_value);
-    std::vector<double> score = ff.getScore();
+  ff.score(dataxx, check_missing_value);
+    std::vector<double> score = ff.anomaly_score();
 
     std::cout<<"Checking scores\n";
 //    for (auto const &sce : score)
@@ -179,7 +179,7 @@ void experimentalCodes(){
     //std::string forest_name = "facadeforest.bin";
 //    std::ofstream tracedpath("tracedpath2.csv");
 //    ff.explanation(dataxx[2]);
-//    ff.tracepath(dataxx[2],tracedpath);
+//    ff.trace_path(dataxx[2],tracedpath);
 //    tracedpath.close();
 
     //ff.save(forest_name,true);
@@ -225,8 +225,8 @@ void experimentalCodes(){
          cereal::BinaryInputArchive iarchive(ifile); // Create an input archive
           iarchive(newff);
 
-          newff.testForest(data,check_missing_value);
-          auto  new_score = newff.getScore();
+          newff.score(data,check_missing_value);
+          auto  new_score = newff.anomaly_score();
          for(auto &sc : new_score)
              std::cout<<sc<<"\t";
   */
@@ -276,9 +276,9 @@ void experimentalCodes(){
 
      std::cout<<dt->nrow<<","<<dt->ncol<<" Row/column"<<std::endl;
 
-     IsolationForest iff(100,dt,256,0,false,false);
-     iff.fixed_forest();
-     std::vector<double> score = iff.anomaly_score(dt);
+     IsolationForest forest_(100,dt,256,0,false,false);
+     forest_.fixed_forest();
+     std::vector<double> score = forest_.anomaly_score(dt);
      for(auto sc : score){
          std::cout<<sc<<std::endl;
 

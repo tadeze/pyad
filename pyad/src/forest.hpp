@@ -78,7 +78,7 @@ namespace osu {
 				}
 			};
 
-			/* virtual function for adaptive forest*/
+			/* virtual function for adaptive_ forest*/
 			virtual int adaptive_forest(double alpha, int stopLimit) { return 0; };
 
 			/*Fixed tree forest */

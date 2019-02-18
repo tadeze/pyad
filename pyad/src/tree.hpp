@@ -37,29 +37,29 @@ namespace  osu {
 
             const std::shared_ptr<Tree> &getRightChild() const;
 
-            int getNodeSize() const;
+            int node_size() const;
 
-            void setNodeSize(int nodeSize);
+            void node_size(int nodeSize);
 
-            int getSplittingAtt() const;
+            int splitting_attribute() const;
 
-            void setSplittingAtt(int splittingAtt);
+            void splitting_attribute(int splittingAtt);
 
-            int getDepth() const;
+            int depth() const;
 
-            void setDepth(int depth);
+            void depth(int depth);
 
-            double getSplittingPoint() const;
+            double splitting_point() const;
 
-            void setSplittingPoint(double splittingPoint);
+            void splitting_point(double splittingPoint);
 
-            double getMinAttVal() const;
+            double min_attribute_value() const;
 
-            void setMinAttVal(double minAttVal);
+            void min_attribute_value(double minAttVal);
 
-            double getMaxAttVal() const;
+            double max_attribute_value() const;
 
-            void setMaxAttVal(double maxAttVal);
+            void max_attribute_value(double maxAttVal);
 
             static bool range_check;
 

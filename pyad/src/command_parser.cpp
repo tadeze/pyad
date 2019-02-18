@@ -14,7 +14,7 @@
 	-m COLS, --metacol=COLS
 		Specify columns to preserve as meta-data. (Separated by ',' Use '-' to specify ranges).
 	-t N, --ntrees=N
-		Specify number of trees_ to build.(Value 0 indicates to use adaptive tree growing)
+		Specify number of trees_ to build.(Value 0 indicates to use adaptive_ tree growing)
 		Default value is 100.
 	-s S, --sampsize=S
 		Specify subsampling rate for each tree. (Value of 0 indicates to use entire data set).
@@ -28,11 +28,11 @@
 	-v, --verbose
 		Toggle verbose output.
 		Default value is false.
-	-a (null), --adaptive=(null)
-		Number of common successive top K for adaptive process.
+	-a (null), --adaptive_=(null)
+		Number of common successive top K for adaptive_ process.
 		Default value is 5.
-	-r, --rotate
-		Toggle whether to rotate data or not.
+	-r, --rotate_
+		Toggle whether to rotate_ data or not.
 		Default value is false.
 	-c N, --columns=N
 		specify number of columns to use.
@@ -46,7 +46,7 @@
 		Toggle whether to use range check or not during testing (Default false)
 		Default value is false.
 	-j P, --precision=P
-		Specify rho precision confidence interval for stopping criteria Value (0.01 to 0.08) works
+		Specify rho_ precision confidence interval for stopping criteria Value (0.01 to 0.08) works
 		Default value is -3.0.
 	-q Q, --alpha=Q
 		Anomaly proportion. Default 0.01

@@ -14,20 +14,17 @@ namespace osu {
     namespace ad {
         class FacadeForest {
         private:
-            int ntree;
-            int nsample;
-            int maxHeight;
-            bool rotate;
-            bool adaptive;
-            bool rangeCheck;
-            double rho;
-            int stopLimit;
-            bool cmv;
-
-            std::shared_ptr<util::Dataset> traindf, testdf;
-            //std::shared_ptr<util::Dataset> testdf;
-            std::shared_ptr<Forest> iff;
-
+            int num_trees_;
+            int num_sample_;
+            int max_height_;
+            bool rotate_;
+            bool adaptive_;
+            bool range_check_;
+            double rho_;
+            int stop_limit_;
+            bool check_missing_value_;
+            std::shared_ptr<util::Dataset> train_dataset_, test_dataset_;
+            std::shared_ptr<Forest> forest_;
 
             const int FOREST_NOT_TRAINED = 1;
             const int NO_TEST_DATA = 2;
@@ -43,93 +40,98 @@ namespace osu {
             virtual ~FacadeForest() {};
 
 
-            FacadeForest();
+					FacadeForest() {
+						num_trees_ = 0;
+						num_sample_ = 0;
+						rotate_ = false;
+						max_height_ = 0;
+						adaptive_ = false;
+						range_check_ = false;
+						train_dataset_ = nullptr;
+						test_dataset_ = nullptr;
+						rho_ = 0.01;
+						stop_limit_ = 0;
+						forest_ = nullptr;
 
-            void tracepath(std::vector<double> &inst, std::ostream &out) {
-              iff->trace_path(inst, out);
+					}
+
+            inline void trace_path(std::vector<double> &inst, std::ostream &out) {
+              forest_->trace_path(inst, out);
             }
 
-            int getNTree() const {
-                return iff->num_trees_;
+            int num_trees() const {
+                return forest_->num_trees_;
 
             }
 
-            int getNSample() const {
-                return iff->num_sample_;
+            int num_sample() const {
+                return forest_->num_sample_;
             }
 
-            /*
-             *
-             void setNsample(int num_sample_) {
-                  FacadeForest::num_sample_ = num_sample_;
-              }
-              */
-
-            int getMaxDepth() const {
-                return iff->max_height_;
+            int max_height() const {
+                return forest_->max_height_;
             }
 
 
-            bool isAdaptive() const {
-                return this->adaptive;
+            bool adaptive() const {
+                return this->adaptive_;
             }
 
-            bool isRotate() const {
-                return rotate;
+            bool rotate() const {
+                return rotate_;
             }
 
-            bool isRangeCheck() const {
-                return rangeCheck;
+            bool range_check() const {
+                return range_check_;
             }
 
-            void setRangeCheck(bool rangecheck) {
-                FacadeForest::rangeCheck = rangecheck;
+            void range_check(bool rangecheck) {
+                FacadeForest::range_check_ = rangecheck;
             }
 
-            const std::shared_ptr<Forest> getIff() const {
-                return iff;
+            const std::shared_ptr<Forest> forest() const {
+                return forest_;
+
             }
 
-            const std::shared_ptr<util::Dataset> getTestdf() const {
-                return testdf;
+            const std::shared_ptr<util::Dataset> test_dataset() const {
+                return test_dataset_;
             }
 
-            const std::shared_ptr<util::Dataset> getTraindf() const {
-                return traindf;
+            const std::shared_ptr<util::Dataset> train_dataset() const {
+                return train_dataset_;
             }
 
             //Methods
 
-            int trainForest(std::vector<std::vector<double> > &traindf, int _ntree,
-                            int _nsample, int _maxheight, bool _rotate, bool _adaptive,
-                            bool _rangecheck, double _rho, int _stopLimit,
-                            std::vector<int> const &columnIndex = std::vector<int>());
+            int train(std::vector<std::vector<double> > &train_dataset, int num_tree,
+											int num_sample, int max_height, bool rotate, bool adaptive,
+											bool range_check, double rho, int stop_limit,
+											std::vector<int> const &column_index = std::vector<int>());
 
-            int trainForest(std::vector<std::vector<double> > &traindf, int _ntree,
-                            int _nsample, int _maxheight, bool _rotate) {
-                return trainForest(traindf, _ntree, _nsample, _maxheight, _rotate, false, true, 0.01, 5);
+            int train(std::vector<std::vector<double> > &train_dataset, int num_trees,
+											int num_sample, int max_height, bool rotate) {
+                return train(train_dataset, num_trees, num_sample, max_height, rotate, false, true, 0.01, 5);
             };
 
 
-            void testForest(std::vector<std::vector<double> > &testdf, bool cmv = false);
+            void score(std::vector<std::vector<double> > &test_dataset, bool check_missing_value = false);
 
-            // void saveModel(std::string modelName);
 
-            //void loadModel(std::string modelName,std::string forest_type);
-            std::vector<double> getScore();
+            std::vector<double> anomaly_score();
 
-            std::vector<std::vector<double> > pathLength();
+            std::vector<std::vector<double> > path_length();
 
-            std::vector<double> averageDepth();
+            std::vector<double> average_depth();
 
-            std::map<int, double> explanation(std::vector<double> &inst);
+            std::map<int, double> explanation(std::vector<double> &instance);
 
-            void displayData(std::vector<std::vector<double> > &_df);
+            void display_data(std::vector<std::vector<double> > &dataset);
 
-            int isValidModel() const;
+            int is_valid() const;
 
-            void load(const std::string &filename, bool binaryFormat = true); //OUTPUT_FORMAT output_format);
-            void save(const std::string &filenam, bool binaryFormat = true); //, OUTPUT_FORMAT output_format);
+            void load(const std::string &file_name, bool binaryFormat = true); //OUTPUT_FORMAT output_format);
+            void save(const std::string &file_name, bool binaryFormat = true); //, OUTPUT_FORMAT output_format);
 
 #ifdef SERIALIZATION
 
@@ -137,12 +139,12 @@ namespace osu {
             void serialize(Archive &archive) {
 
                 /*archive(cereal::make_nvp("num_trees_",num_trees_),cereal::make_nvp("num_sample_",num_sample_),
-                        cereal::make_nvp("maxHeight",maxHeight),cereal::make_nvp("stopLimit",stopLimit),
-                        cereal::make_nvp("rho",rho),cereal::make_nvp("rotate",rotate),
-                        cereal::make_nvp("adaptive",adaptive),cereal::make_nvp("forest",iff));
+                        cereal::make_nvp("max_height_",max_height_),cereal::make_nvp("stop_limit_",stop_limit_),
+                        cereal::make_nvp("rho_",rho_),cereal::make_nvp("rotate_",rotate_),
+                        cereal::make_nvp("adaptive_",adaptive_),cereal::make_nvp("forest",forest_));
                 */
-                archive(ntree, nsample, maxHeight, stopLimit,
-                        rho, rotate, adaptive, iff);
+                archive(num_trees_, num_sample_, max_height_, stop_limit_,
+                        rho_, rotate_, adaptive_, forest_);
             };
 #endif
 
