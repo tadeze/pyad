@@ -5,7 +5,7 @@ import distutils.sysconfig
 import numpy
 import os
 
-__version__ = "0.1"
+__version__ = "1.0.1"
 os.environ["CC"] = "g++"
 LICENSE = "MIT"
 SRC_DIR = "pyad/src/"
@@ -50,7 +50,7 @@ EXTENSIONS = cythonize([Extension("*",
                 include_dirs=[numpy.get_include()])
                 ])
 
-CLASSIFIERS = ['Development Status :: 1 - Beta',
+CLASSIFIERS = ['Development Status :: 3 - Alpha',
                'Environment :: Console',
                'Programming Language :: Cython',
                'Programming Language :: Python :: 2.7',

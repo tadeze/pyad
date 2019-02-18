@@ -30,72 +30,64 @@
 #endif
 */
 namespace osu {
-    namespace ad {
-        namespace util {
-            using  DoubleMatrix = std::vector<std::vector<double> >;
+namespace ad {
+namespace util {
+using DoubleMatrix = std::vector<std::vector<double> >;
 ////default_random_engine gen(time(NULL));
-            struct dataset {
-                int ncol;
-                int nrow;
-                DoubleMatrix data;
-                //std::vector<std::vector<double> > data;
-                void print(int ix) {
-                    for (auto elem : data[ix])
-                        std::cout << elem << "\t";
-                }
-            };
+struct Dataset {
+	int ncol;
+	int nrow;
+	DoubleMatrix data;
+	//std::vector<std::vector<double> > data;
+	void print(int ix) {
+		for (auto elem : data[ix])
+			std::cout << elem << "\t";
+	}
+};
 
-            int randomI(int min, int max);
+int rand_int(int min, int max);
 
-            int randomEx(int min, int max, std::set<int> &exlude);
+int random_exclude(int min, int max, std::set<int> &exlude);
 
-            void sampleI(int min, int max, int nsample, std::vector<int> &sampleIndx);
+void sample_int(int min, int max, int nsample, std::vector<int> &sampleIndx);
 
-            double avgPL(int n);
+double avg_pl(int n);
 
-            double randomD(double min, double max);
-
-            template<typename T>
-            T randomT(T min, T max);
-
-            template<typename T>
-            void swapInt(T a, T b, T *x);
+double rand_double(double min, double max);
 
 //template<typename T>
-            double variance(std::vector<double> &x);
+double variance(std::vector<double> &x);
 
 //template<typename T>
-            double mean(std::vector<double> points);
+double mean(std::vector<double> points);
 
-            double tconf(std::vector<double> &points, double sigma);
+double tconf(std::vector<double> &points, double sigma);
 
-            std::vector<std::vector<double> > readcsv(const char *filename, char delim,
-                                                      bool header);
+std::vector<std::vector<double> > readcsv(const char *filename, char delim,
+																					bool header);
 
-            extern std::ofstream logfile; //("log.txt");
-            std::map<double, double> ecdf(std::vector<double> points);
+extern std::ofstream log_file; //("log.txt");
+std::map<double, double> ECDF(std::vector<double> points);
 
-            std::vector<double> ADdistance(const std::vector<std::vector<double> > &depths, bool weightToTail);
+std::vector<double> AD_distance(const std::vector<std::vector<double> > &depths, bool weightToTail);
 
 //log file
-            extern std::string tmpVar;
+extern std::string tmpVar;
 
-            double score(double depth, int n);
+double score(double depth, int n);
 
 //extern Data *dt;
-            extern std::string filename();
+extern std::string filename();
 
-            std::shared_ptr<util::dataset> makeDataset(DoubleMatrix &data);
+std::shared_ptr<util::Dataset> make_dataset(DoubleMatrix &data);
 
-            void displayVec(std::vector<double> &data);
+void display_vec(std::vector<double> &data);
 
-            void displayVec(std::vector<std::vector<double> > data);
+std::vector<std::vector<double> > synthetic_data(int D, int N);
 
-            std::vector<std::vector<double> > syntheticData(int D, int N);
+}
 
-        }
-
-    }
+}
 }
 #endif
 /* UTITLITY_H_ */

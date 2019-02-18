@@ -14,24 +14,18 @@ namespace osu {
 
 		class IsolationForest : public Forest {
 		public:
-			IsolationForest() {};
+			IsolationForest()= default;
 
-			IsolationForest(int _ntree, std::shared_ptr<util::dataset> _df,
-							int _nsample, int _maxheight, bool _stopheight, bool _rsample,
-							std::vector<int> const &columnIndex=std::vector<int>());
+			IsolationForest(int num_trees, std::shared_ptr<util::Dataset> dataset,
+							int num_sample, int max_height, bool stop_height, bool use_subsample,
+							std::vector<int> const &column_index=std::vector<int>());
 
-			//int adaptiveForest(double alpha,int stopLimit);
-			void buildForest();
+			void build_forest();
+			virtual ~IsolationForest()= default;
 
-			virtual ~IsolationForest() {
-			}
+			int adaptive_forest(double alpha, int stopLimit);
 
-			//convergent iForest
-			int adaptiveForest(double alpha, int stopLimit);
-
-			void fixedTreeForest();
-
-			int confTree(double alpha, double rho, int init_tree);
+			void fixed_forest();
 
 		};
 

@@ -20,11 +20,11 @@ namespace  osu {
     namespace ad {
         class Tree : public std::enable_shared_from_this<Tree> {
         private:
-            std::shared_ptr<Tree> leftChild, rightChild, parent;
-            int nodeSize, splittingAtt, depth;
-            double splittingPoint, minAttVal, maxAttVal;
-            int important_att;
-            std::shared_ptr<util::dataset> makeDataset(std::vector<std::vector<double> > &data);
+            std::shared_ptr<Tree> left_child_, right_child_, parent_;
+            int node_size_, splitting_attribute_, depth_;
+            double splitting_point_, min_attribute_val_, max_attribute_val_;
+            int important_attribute_;
+            std::shared_ptr<util::Dataset> make_dataset(std::vector<std::vector<double> > &data);
 
             int parent_id;
         public:
@@ -61,46 +61,42 @@ namespace  osu {
 
             void setMaxAttVal(double maxAttVal);
 
-            static bool rangeCheck;
+            static bool range_check;
 
-//    json tracePath(std::vector<double> &inst);
-            Tree() : leftChild(nullptr), rightChild(nullptr), parent(nullptr),
-                     nodeSize(0), splittingAtt(-1), depth(0), splittingPoint(-9999), minAttVal(0), maxAttVal(0),
-                     important_att(0){};
+//    json trace_path(std::vector<double> &inst);
+            Tree() : left_child_(nullptr), right_child_(nullptr), parent_(nullptr),
+                     node_size_(0), splitting_attribute_(-1), depth_(0), splitting_point_(-9999), min_attribute_val_(0), max_attribute_val_(0),
+                     important_attribute_(0){};
 
             virtual ~Tree() {};
 
             void
-            iTree(std::vector<int> const &dIndex, const std::shared_ptr<util::dataset> dt, int height, int maxHeight,
-                  bool stopheight, std::vector<int> const &columnIndex=std::vector<int>());
+            iTree(const std::vector<int> &sample_index, const std::shared_ptr<util::Dataset> dataset, int height, int max_height,
+                  bool stop_height, std::vector<int> const &column_index=std::vector<int>());
 
-            void iTree(std::vector<int> const &dIndex, std::vector<std::vector<double> > traindata, int height,
-                       int maxHeight, bool stopheight,std::vector<int> const &columnIndex=std::vector<int>());
+            void iTree(const std::vector<int>  &sample_index, std::vector<std::vector<double> > train_data, int height,
+                       int max_height, bool stop_height,std::vector<int> const &column_index=std::vector<int>());
 
-            double pathLength(std::vector<double> &inst, bool cmv = false);
+            double path_length(std::vector<double> &instance, bool check_missing_value = false);
 
-            double pathLengthM(std::vector<double> &inst);
+          //Contribution
+            contrib feature_contribution(std::vector<double> &instance) const;
 
-            int maxTreeDepth();
-
-            //Contribution
-            contrib featureContribution(std::vector<double> &inst) const;
-
-            std::map<int, double> explanation(std::vector<double> &inst) const;
+            std::map<int, double> explanation(std::vector<double> &instance) const;
            // std::vector<int> allUsedAttributes(); TODO: Return all used attributes in a tree.
 #ifdef SERIALIZATION
             // Serialization
             template<class Archive>
             void serialize(Archive &archive) {
-                /*archive(cereal::make_nvp("nodesize",nodeSize),cereal::make_nvp("depth",depth),
-                        cereal::make_nvp("splittingAtt",splittingAtt),cereal::make_nvp("splittingPoint",splittingPoint),
-                        cereal::make_nvp("minAttVal",minAttVal),cereal::make_nvp("maxAttVal",maxAttVal),
-                        cereal::make_nvp("leftChild",leftChild),cereal::make_nvp("rightChild",rightChild)
+                /*archive(cereal::make_nvp("nodesize",node_size_),cereal::make_nvp("depth_",depth_),
+                        cereal::make_nvp("splitting_attribute_",splitting_attribute_),cereal::make_nvp("splitting_point_",splitting_point_),
+                        cereal::make_nvp("min_attribute_val_",min_attribute_val_),cereal::make_nvp("max_attribute_val_",max_attribute_val_),
+                        cereal::make_nvp("left_child_",left_child_),cereal::make_nvp("right_child_",right_child_)
 
                 );*/
-                archive(nodeSize, depth,
-                        splittingAtt, splittingPoint,
-                        minAttVal, maxAttVal, leftChild, rightChild
+                archive(node_size_, depth_,
+                        splitting_attribute_, splitting_point_,
+                        min_attribute_val_, max_attribute_val_, left_child_, right_child_
 
                 );
             }

@@ -9,41 +9,42 @@
 #include<stack>
 #include<cmath>
 
-using namespace osu::ad;
-bool Tree::rangeCheck = false;
+bool osu::ad::Tree::range_check = false;
 //double const MISSING_VALUE = -9999.0;
 //int const NULL_TREE_CHILD_DEPTH = -999;
 
-//std::ofstream util::logfile("logfile.log");
+//std::ofstream util::log_file("log_file.log");
 /*
  *@param data input data as double vector
  */
-std::shared_ptr<util::dataset> Tree::makeDataset(std::vector<std::vector<double> > &data) {
-    std::shared_ptr<util::dataset> dt = std::make_shared<util::dataset>();//new util::dataset();
+std::shared_ptr<osu::ad::util::Dataset> osu::ad::Tree::make_dataset(std::vector<std::vector<double> > &data) {
+	std::shared_ptr<util::Dataset> dt = std::make_shared<util::Dataset>();//new util::Dataset();
 	dt->data = data;
 	dt->ncol = (int) data[0].size();
 	dt->nrow = (int) data.size();
 	return dt;
 }
-std::vector<double> data_variance(const std::shared_ptr<util::dataset> dt, std::vector<int> const &dIndex){
 
-}
-
-void Tree::iTree(std::vector<int> const &dIndex,
-        std::vector<std::vector<double> > traindata, int height, int maxheight, bool stopheight,std::vector<int> const &columnIndex ){
-    std::shared_ptr<util::dataset> dt = makeDataset(traindata);
-   this->iTree(dIndex,dt,height,maxheight,stopheight,columnIndex);
+void osu::ad::Tree::iTree(std::vector<int> const &sample_index,
+													std::vector<std::vector<double> > train_data,
+													int height,
+													int max_height,
+													bool stop_height,
+													std::vector<int> const &column_index) {
+	std::shared_ptr<util::Dataset> dt = make_dataset(train_data);
+	this->iTree(sample_index, dt, height, max_height, stop_height, column_index);
 //   delete dt;
 }
 
-
-void Tree::iTree(std::vector<int> const &dIndex,const std::shared_ptr<util::dataset> dt, int height, int maxheight,
-                 bool stopheight, std::vector<int> const &columnIndex){
-	this->depth = height; //Tree height
-	// Set size of the node
-	nodeSize = dIndex.size();
-	//stop growing if condition
-	if (dIndex.size() <= 1 || (stopheight && this->depth > maxheight) || columnIndex.empty()){
+void osu::ad::Tree::iTree(std::vector<int> const &sample_index,
+													const std::shared_ptr<osu::ad::util::Dataset> dataset,
+													int height,
+													int max_height,
+													bool stop_height,
+													std::vector<int> const &column_index) {
+	depth_ = height;
+	node_size_ = static_cast<int>(sample_index.size());
+	if (sample_index.size() <= 1 || (stop_height && this->depth_ > max_height) || column_index.empty()) {
 		return;
 	}
 	//*** Need modification
@@ -52,458 +53,193 @@ void Tree::iTree(std::vector<int> const &dIndex,const std::shared_ptr<util::data
 	std::vector<std::vector<double> > minmax;
 	std::vector<double> tmp;
 
-	//for (int j = 0; j < dt->ncol; j++){
-    for(int j : columnIndex){
-        //initialize max and min to random value
-		tmp.push_back(dt->data[dIndex[0]][j]);
-		tmp.push_back(dt->data[dIndex[0]][j]);
+	//for (int j = 0; j < dataset->ncol; j++){
+	for (int j : column_index) {
+		//initialize max and min to random value
+		tmp.push_back(dataset->data[sample_index[0]][j]);
+		tmp.push_back(dataset->data[sample_index[0]][j]);
 		minmax.push_back(tmp);
 		tmp.clear();
 	}
 
-    //Compute max and min of each attribute
-	for (unsigned i = 0; i <dIndex.size() ; i++){
+	//Compute max and min of each attribute
+	for (int i : sample_index) {
 		//vector<double> inst = data->data[i];
-        for(int j : columnIndex){
-            if (dt->data[dIndex.at(i)][j] < minmax[j].at(0))
-				minmax[j].at(0) =dt->data[dIndex.at(i)][j];
-			if (dt->data[dIndex.at(i)][j] > minmax.at(j).at(1))
-				minmax[j].at(1) = dt->data[dIndex.at(i)][j];
+		for (int j : column_index) {
+			if (dataset->data[i][j] < minmax[j].at(0))
+				minmax[j].at(0) = dataset->data[i][j];
+			if (dataset->data[i][j] > minmax.at(j).at(1))
+				minmax[j].at(1) = dataset->data[i][j];
 		}
 
 	}
 
 	//use only valid attributes
-   	 std::vector<int> attributes;
-    for(int j : columnIndex)
-        if (minmax[j][0] < minmax[j][1])
+	std::vector<int> attributes;
+	for (int j : column_index)
+		if (minmax[j][0] < minmax[j][1])
 			attributes.push_back(j);
 	//return if no valid attribute found
-	if (attributes.size() == 0)
+	if (attributes.empty())
 		return;
-//
-//	 if (important_att > 0){
-//		 auto att_variance = data_variance(dt, dIndex);
-//	 }
-
 
 	// /Randomly pick an attribute and a split point
 
-	this->splittingAtt = attributes[util::randomI(0,attributes.size()-1)]; //randx];
-	this->splittingPoint =util::randomD(minmax[this->splittingAtt][0],minmax[this->splittingAtt][1]);
-	this->minAttVal =minmax[this->splittingAtt][0];
-	this->maxAttVal = minmax[this->splittingAtt][1];
-	std::vector <int> lnodeData;
-	std::vector <int> rnodeData;
+	this->splitting_attribute_ = attributes[util::rand_int(0, attributes.size() - 1)]; //randx];
+	this->splitting_point_ =
+			util::rand_double(minmax[this->splitting_attribute_][0], minmax[this->splitting_attribute_][1]);
+	this->min_attribute_val_ = minmax[this->splitting_attribute_][0];
+	this->max_attribute_val_ = minmax[this->splitting_attribute_][1];
+	std::vector<int> left_node_data;
+	std::vector<int> right_node_data;
 	//Split the node into two
-	for (unsigned i = 0; i < dIndex.size(); i++)
-		if ( dt->data[dIndex.at(i)][splittingAtt] >= splittingPoint &&
-				(dt->data[dIndex.at(i)][splittingAtt]!=minmax[this->splittingAtt][0]))
-			rnodeData.push_back(dIndex.at(i));
+	for (int i : sample_index)
+		if (dataset->data[i][splitting_attribute_] >= splitting_point_ &&
+				(dataset->data[i][splitting_attribute_] != minmax[this->splitting_attribute_][0]))
+			right_node_data.push_back(i);
 		else
-			lnodeData.push_back(dIndex.at(i));
-		
-	
-	leftChild = std::make_shared<Tree>(); //new Tree(); //&dataL,height+1,maxheight);
-	//leftChild->parent = this;
-    leftChild->setParent_id(this->getParent_id());  // uniqualy identify each trees.
-	leftChild->iTree(lnodeData,dt, this->depth + 1, maxheight, stopheight);
-	rightChild =std::make_shared<Tree>();// new Tree(); //&dataR,height+1,maxheight);
-    rightChild->setParent_id(this->getParent_id());
+			left_node_data.push_back(i);
 
-    //rightChild->parent = this;
-	rightChild->iTree(rnodeData,dt, this->depth + 1, maxheight, stopheight);
+	left_child_ = std::make_shared<Tree>(); //new Tree(); //&dataL,height+1,max_height);
+	//left_child_->parent_ = this;
+	left_child_->setParent_id(this->getParent_id());  // uniqualy identify each trees_.
+	left_child_->iTree(left_node_data, dataset, this->depth_ + 1, max_height, stop_height);
+	right_child_ = std::make_shared<Tree>();// new Tree(); //&dataR,height+1,max_height);
+	right_child_->setParent_id(this->getParent_id());
+
+	//right_child_->parent_ = this;
+	right_child_->iTree(right_node_data, dataset, this->depth_ + 1, max_height, stop_height);
 }
 
+double osu::ad::Tree::path_length(std::vector<double> &instance, bool check_missing_value) {
 
-
-
-/*
- * takes instance as vector of double
- *//*
- * takes instance as vector of double
- */
-double Tree::pathLengthM(std::vector<double> &inst){
-
-
-	double instAttVal;
-	double depth=0.0;
-
-	std::shared_ptr<Tree> root = this->shared_from_this(); //std::enable_shared_from_this<Tree>;// = this;
-	while(root!= nullptr){
-		instAttVal = inst[this->splittingAtt];
-
-
-
-		if(Tree::rangeCheck){
-
-			if(instAttVal < this->minAttVal && util::randomD(instAttVal,this->minAttVal)<this->minAttVal)
-				return root->depth+1.0;
-			if(instAttVal >this->minAttVal && util::randomD(instAttVal,this->maxAttVal)>this->maxAttVal)
-				return root->depth+1.0;
-		}
-
-		if ( instAttVal >= root->splittingPoint)
-			root= root->rightChild;
-		else
-			root = root->leftChild;
-
+	if (this->left_child_ == nullptr || this->right_child_ == nullptr) { ///referenced as null for some input data .
+		return osu::ad::util::avg_pl(this->node_size_);
 	}
-
-	return root->depth+util::avgPL(root->nodeSize);
-}
-
-
-//double Tree::path_length(std::vector<double> &inst, bool cmv ) {
-//	Tree root = this->shared_from_this();
-//	double min, max, instAttVal, temp;
-//
-//	while((root->rightChild != nullptr) || (root->leftChild!= nullptr)) {
-//		if(root->nodeSize<=1) break;
-//		instAttVal = inst[root->splittingAtt];
-//
-//		if (instAttVal >= root->splittingPoint)
-//			root = root->rightChild;
-//		else
-//			root = root->leftChild ;
-//		depth = depth +1.0;
-//		if (root->splittingAtt!=-1)
-//			contribution.addcont(root->splittingAtt,depth+util::avgPL(root->nodeSize));
-//	}
-//
-//}
-
-
-/*
- * takes instance as vector of double
- */
-
-double Tree::pathLength(std::vector<double> &inst, bool cmv ){
-
-
- 	if (this->leftChild==NULL||this->rightChild==NULL) { ///referenced as null for some input data .
-               	return util::avgPL(this->nodeSize);
-        }
 	//Range check added
-    double instAttVal = inst[this->splittingAtt];
+	double instance_attribute_value = instance[this->splitting_attribute_];
 
-	if(Tree::rangeCheck) {
+	if (Tree::range_check) {
 
-		if(instAttVal < this->minAttVal && util::randomD(instAttVal,this->minAttVal)<this->minAttVal)
+		if (instance_attribute_value < this->min_attribute_val_
+				&& osu::ad::util::rand_double(instance_attribute_value, this->min_attribute_val_) < this->min_attribute_val_)
 			return 1.0;
-		if(instAttVal >this->minAttVal && util::randomD(instAttVal,this->maxAttVal)>this->maxAttVal)
+		if (instance_attribute_value > this->min_attribute_val_
+				&& osu::ad::util::rand_double(instance_attribute_value, this->max_attribute_val_) > this->max_attribute_val_)
 			return 1.0;
 
 	}
-
-   //util::logfile<<
-//				std::cout<<this->getParent_id()<<","<<nodeSize<<","
-//			 <<splittingAtt<<","<<splittingPoint<<","
-//			 <<instAttVal<<","<<depth<<","<<leftChild->nodeSize<<","
-//             <<rightChild->nodeSize<<"\n";
-
 
 	//Checking missing data for the attribute.
 
-	if(cmv){
-		if(std::isnan(instAttVal)) {
-			//util::logfile
+	if (check_missing_value) {
+		if (std::isnan(instance_attribute_value)) {
 
-		    double leftNodeSize = (double)this->leftChild->nodeSize/(double)this->nodeSize;
-			double right_depth = (1.0-leftNodeSize)*(this->rightChild->pathLength(inst,cmv) + 1.0);
-			double left_depth =  leftNodeSize*(this->leftChild->pathLength(inst, cmv) + 1.0);
+			auto left_child_size = (double) this->left_child_->node_size_ / (double) this->node_size_;
+			double
+					right_depth = (1.0 - left_child_size) * (this->right_child_->path_length(instance, check_missing_value) + 1.0);
+			double left_depth = left_child_size * (this->left_child_->path_length(instance, check_missing_value) + 1.0);
 			return right_depth + left_depth;
-	 	}
+		}
 	}
 
- 	//Logging the isolation process
-// 	logfile<<this->splittingAtt<<","<<this->splittingPoint<<"\n";
-
-	if (instAttVal >= this->splittingPoint) 
-		return this->rightChild->pathLength(inst, cmv) + 1.0;
-	else 
-		return this->leftChild->pathLength(inst, cmv) + 1.0;
+	if (instance_attribute_value >= this->splitting_point_)
+		return this->right_child_->path_length(instance, check_missing_value) + 1.0;
+	else
+		return this->left_child_->path_length(instance, check_missing_value) + 1.0;
 }
 
 
+struct osu::ad::Contrib osu::ad::Tree::feature_contribution(std::vector<double> &instance) const {
 
+	//Tree *root = this;
+	auto root = this->shared_from_this();
+	double instance_attribute_value;
+	double depth = 0.0;
+	Contrib contribution;
+	while ((root->right_child_ != nullptr) || (root->left_child_ != nullptr)) {
+		instance_attribute_value = instance[root->splitting_attribute_];
 
+		//contributions[root->splitting_attribute_] = depth_ + util::avg_pl(root->node_size_);
 
-//std::vector<std::vector<double>>
-//std::map<int,double>
-struct Contrib Tree::featureContribution(std::vector<double> &inst) const{
-
-    //Tree *root = this;
-    auto root = this->shared_from_this();
-    double instAttVal;
-    double depth =0.0;
-    Contrib contribution;
-    while((root->rightChild != nullptr) || (root->leftChild!= nullptr)) {
-        instAttVal = inst[root->splittingAtt];
-
-        //contributions[root->splittingAtt] = depth + util::avgPL(root->nodeSize);
-
-        if (instAttVal >= root->splittingPoint)
-             root = root->rightChild;
-        else
-            root = root->leftChild ;
-        depth = depth +1.0;
-        if (root->splittingAtt!=-1)
-        contribution.addcont(root->splittingAtt,depth+util::avgPL(root->nodeSize));
-    }
-   // depth = util::avgPL(root->nodeSize) + depth;
-    return contribution;//.featureContribution();
-}
-
-
-int Tree::maxTreeDepth(){
-	if (!this) return 0;
-	std::stack<std::shared_ptr<Tree> > s;
-	s.push(this->shared_from_this());
-	int maxDepth=0;
-	std::shared_ptr<Tree> prev =NULL;
-	 while (!s.empty()) {
-	    auto curr = s.top();
-	    if (!prev || prev->leftChild == curr || prev->rightChild== curr) {
-	    if(curr->leftChild)
-	    	s.push(curr->leftChild);
-	     else if (curr->rightChild)
-	        s.push(curr->rightChild);
-	    }
-	    else if (curr->leftChild == prev) {
-	      if (curr->rightChild)
-	        s.push(curr->rightChild);
-	    }
-	    else {
-	      s.pop();
-	    }
-
-	    prev = curr;
-	    if ((int)s.size() > maxDepth)
-	      maxDepth = s.size();
-	  }
-	  return maxDepth;
-
-}
-
-std::map<int,double> Tree::explanation(std::vector<double> &inst) const {
-
-    return featureContribution(inst).featureContribution();
-
-}
-const std::shared_ptr<Tree> &Tree::getLeftChild() const {
-    return leftChild;
-}
-
-const std::shared_ptr<Tree> &Tree::getRightChild() const {
-    return rightChild;
-}
-
-int Tree::getNodeSize() const {
-    return nodeSize;
-}
-
-void Tree::setNodeSize(int nodeSize) {
-    Tree::nodeSize = nodeSize;
-}
-
-int Tree::getSplittingAtt() const {
-    return splittingAtt;
-}
-
-void Tree::setSplittingAtt(int splittingAtt) {
-    Tree::splittingAtt = splittingAtt;
-}
-
-int Tree::getDepth() const {
-    return depth;
-}
-
-void Tree::setDepth(int depth) {
-    Tree::depth = depth;
-}
-
-double Tree::getSplittingPoint() const {
-    return splittingPoint;
-}
-
-void Tree::setSplittingPoint(double splittingPoint) {
-    Tree::splittingPoint = splittingPoint;
-}
-
-double Tree::getMinAttVal() const {
-    return minAttVal;
-}
-
-void Tree::setMinAttVal(double minAttVal) {
-    Tree::minAttVal = minAttVal;
-}
-
-double Tree::getMaxAttVal() const {
-    return maxAttVal;
-}
-
-void Tree::setMaxAttVal(double maxAttVal) {
-    Tree::maxAttVal = maxAttVal;
-}
-
-int Tree::getParent_id() const {
-    return parent_id;
-}
-
-void Tree::setParent_id(int parent_id) {
-    Tree::parent_id = parent_id;
-}
-
-/*
-json Tree::to_json(){
-
-	json jroot;
-
-	// Define empty queute
-	std::queue<Tree*> qtree ;
-	qtree.push(this);
-	int i=0;
-	while(!qtree.empty()) {
-		json j;
-		Tree* nextTree = qtree.front();
-		qtree.pop();
-		if(nextTree==NULL){
-			j["depth"] =  NULL_TREE_CHILD_DEPTH;
-		}
-		else {
-			j["depth"] = nextTree->depth;
-			j["splittingAtt"] = nextTree->splittingAtt;
-			j["splittingPoint"] = nextTree->splittingPoint;
-			j["depth"]= nextTree->depth;
-			j["nodesize"]=nextTree->nodeSize;
-			j["minAttVal"] = nextTree->minAttVal;
-			j["maxAttVal"] = nextTree->maxAttVal;
-			qtree.push(nextTree->leftChild);
-			qtree.push(nextTree->rightChild);
-		}
-
-		jroot.push_back(j);
-		i++;
-	}
-
-	return jroot;
-
-}
-void Tree::assignTree(Tree* tr,json* rtree){
-
-    tr->depth = (*rtree)["depth"];
-    tr->splittingAtt = (*rtree)["splittingAtt"];
-    tr->splittingPoint= (*rtree)["splittingPoint"];
-    tr->nodeSize = (*rtree)["nodesize"];
-    tr->minAttVal  = (*rtree)["minAttVal"];
-    tr->maxAttVal = (*rtree)["maxAttVal"];
-}
-void Tree::from_json(json &jsontree){
-    Tree* root;
-    std::queue<Tree*> qTree;
-    int iNode =0;
-    auto numNodes = jsontree.size();    //rootTree.size();
-    while(iNode<numNodes){
-        if(iNode==0){  //root node
-            root = this;//new Tree();
-            assignTree(root, &jsontree[iNode]);
-            qTree.push(root);
-            iNode++;
-        }
-        else {
-            Tree* node = qTree.front();
-            qTree.pop();
-            json* jleft = &jsontree[iNode];//ootTree[iNode];
-            json* jright=NULL;
-
-            if(iNode<(numNodes-1))
-                jright =&jsontree[iNode+1];
-
-            if(jleft!=NULL && (*jleft)["depth"]>0) {
-                node->leftChild = new Tree();
-                assignTree(node->leftChild,jleft);
-                qTree.push(node->leftChild);
-            }
-            if(jright!=NULL && (*jright)["depth"]>0){
-                node->rightChild = new Tree();
-                assignTree(node->rightChild,jright);
-                qTree.push(node->rightChild);
-            }
-            iNode +=2;
-        }
-    }
-
-}
-*/
-/*
-
-//Need to be fixed later.
-json Tree::tracePath(std::vector<double> &inst)
-{
-	json jroot,j;
-	// Define empty queute
-	std::queue<Tree*> qtree ;
-	qtree.push(this);
-
-	double instAttVal = inst[this->splittingAtt];
-	double depth=0.0;
-
-while(!qtree.empty())
-    {
-
-        Tree* nextTree = qtree.front();
-        qtree.pop();
-        if(nextTree==NULL){
-            j = NULL;
-           break;
-        }
-        else
-        {
-		if(Tree::rangeCheck==true)
- 		{
-
-			if((instAttVal < this->minAttVal && util::randomD(instAttVal,this->minAttVal)<this->minAttVal) ||
-			(instAttVal >this->minAttVal && util::randomD(instAttVal,this->maxAttVal)>this->maxAttVal))
-				{
-				depth+=1.0;
-				 continue;
-				}
-		}
-
-
- 		instAttVal = inst[nextTree->splittingAtt];
-
-
-		if ( instAttVal >= nextTree->splittingPoint)
-		   qtree.push(nextTree->rightChild);
-	//	temp= temp->rightChild;
+		if (instance_attribute_value >= root->splitting_point_)
+			root = root->right_child_;
 		else
-		  	 qtree.push(nextTree->leftChild);
-
-	//temp = temp->leftChild;
-
-
-            j["depth"] = nextTree->depth;
-            j["splittingAtt"] = nextTree->splittingAtt;
-            j["splittingPoint"] = nextTree->splittingPoint;
-            j["depth"]= nextTree->depth;
-            j["nodesize"]=nextTree->nodeSize;
-            j["minAttVal"] = nextTree->minAttVal;
-            j["maxAttVal"] = nextTree->maxAttVal;
-
-
-	//if(nextTree->leftChild!=NULL){ //Assuming balanced tree
-           // qtree.push(nextTree->leftChild);
-           // qtree.push(nextTree->rightChild);
-          }
-     jroot.push_back(j);
-        }
-
-return jroot;
-
+			root = root->left_child_;
+		depth = depth + 1.0;
+		if (root->splitting_attribute_ != -1)
+			contribution.addcont(root->splitting_attribute_, depth + util::avg_pl(root->node_size_));
+	}
+	// depth_ = util::avg_pl(root->node_size_) + depth_;
+	return contribution;//.feature_contribution();
 }
 
-*/
+std::map<int, double> osu::ad::Tree::explanation(std::vector<double> &instance) const {
 
+	return feature_contribution(instance).featureContribution();
+
+}
+const std::shared_ptr<osu::ad::Tree> &osu::ad::Tree::getLeftChild() const {
+	return left_child_;
+}
+
+const std::shared_ptr<osu::ad::Tree> &osu::ad::Tree::getRightChild() const {
+	return right_child_;
+}
+
+int osu::ad::Tree::getNodeSize() const {
+	return node_size_;
+}
+
+void osu::ad::Tree::setNodeSize(int nodeSize) {
+	Tree::node_size_ = nodeSize;
+}
+
+int osu::ad::Tree::getSplittingAtt() const {
+	return splitting_attribute_;
+}
+
+void osu::ad::Tree::setSplittingAtt(int splittingAtt) {
+	Tree::splitting_attribute_ = splittingAtt;
+}
+
+int osu::ad::Tree::getDepth() const {
+	return depth_;
+}
+
+void osu::ad::Tree::setDepth(int depth) {
+	Tree::depth_ = depth;
+}
+
+double osu::ad::Tree::getSplittingPoint() const {
+	return splitting_point_;
+}
+
+void osu::ad::Tree::setSplittingPoint(double splittingPoint) {
+	Tree::splitting_point_ = splittingPoint;
+}
+
+double osu::ad::Tree::getMinAttVal() const {
+	return min_attribute_val_;
+}
+
+void osu::ad::Tree::setMinAttVal(double minAttVal) {
+	Tree::min_attribute_val_ = minAttVal;
+}
+
+double osu::ad::Tree::getMaxAttVal() const {
+	return max_attribute_val_;
+}
+
+void osu::ad::Tree::setMaxAttVal(double maxAttVal) {
+	Tree::max_attribute_val_ = maxAttVal;
+}
+
+int osu::ad::Tree::getParent_id() const {
+	return parent_id;
+}
+
+void osu::ad::Tree::setParent_id(int parent_id) {
+	Tree::parent_id = parent_id;
+}
 

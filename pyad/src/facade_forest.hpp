@@ -24,8 +24,8 @@ namespace osu {
             int stopLimit;
             bool cmv;
 
-            std::shared_ptr<util::dataset> traindf, testdf;
-            //std::shared_ptr<util::dataset> testdf;
+            std::shared_ptr<util::Dataset> traindf, testdf;
+            //std::shared_ptr<util::Dataset> testdf;
             std::shared_ptr<Forest> iff;
 
 
@@ -46,27 +46,27 @@ namespace osu {
             FacadeForest();
 
             void tracepath(std::vector<double> &inst, std::ostream &out) {
-                iff->tracePath(inst, out);
+              iff->trace_path(inst, out);
             }
 
             int getNTree() const {
-                return iff->ntree;
+                return iff->num_trees_;
 
             }
 
             int getNSample() const {
-                return iff->nsample;
+                return iff->num_sample_;
             }
 
             /*
              *
-             void setNsample(int nsample) {
-                  FacadeForest::nsample = nsample;
+             void setNsample(int num_sample_) {
+                  FacadeForest::num_sample_ = num_sample_;
               }
               */
 
             int getMaxDepth() const {
-                return iff->maxheight;
+                return iff->max_height_;
             }
 
 
@@ -90,11 +90,11 @@ namespace osu {
                 return iff;
             }
 
-            const std::shared_ptr<util::dataset> getTestdf() const {
+            const std::shared_ptr<util::Dataset> getTestdf() const {
                 return testdf;
             }
 
-            const std::shared_ptr<util::dataset> getTraindf() const {
+            const std::shared_ptr<util::Dataset> getTraindf() const {
                 return traindf;
             }
 
@@ -136,7 +136,7 @@ namespace osu {
             template<class Archive>
             void serialize(Archive &archive) {
 
-                /*archive(cereal::make_nvp("ntree",ntree),cereal::make_nvp("nsample",nsample),
+                /*archive(cereal::make_nvp("num_trees_",num_trees_),cereal::make_nvp("num_sample_",num_sample_),
                         cereal::make_nvp("maxHeight",maxHeight),cereal::make_nvp("stopLimit",stopLimit),
                         cereal::make_nvp("rho",rho),cereal::make_nvp("rotate",rotate),
                         cereal::make_nvp("adaptive",adaptive),cereal::make_nvp("forest",iff));

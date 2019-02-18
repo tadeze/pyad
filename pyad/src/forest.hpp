@@ -15,69 +15,62 @@ namespace osu {
 		class Forest {
 
 		public:
+			std::vector<std::shared_ptr<Tree> > trees_;
+			int num_trees_;
+			bool use_subsample_;
+			int num_sample_;
+			bool stop_height_;
+			int max_height_;
+			bool range_check_;
+			bool check_missing_value_;
+			std::vector<int> column_index_;
+			std::shared_ptr<util::Dataset> dataframe_;
 
-			//std::vector<Tree*> trees;
-			std::vector<std::shared_ptr<Tree> > trees;
-			int ntree;
-			bool rsample;
-			int nsample;
-			bool stopheight;
-			int maxheight;
-			bool rangecheck;
-			bool cmv;
-			std::vector<int> columnIndex;
-			std::shared_ptr<util::dataset> dataframe;
-
-			//std::unique_ptr<util::dataset> dataframe;
+			//std::unique_ptr<util::Dataset> dataframe_;
 			Forest() {
-				rsample = false;
-				ntree = 0;
-				nsample = 256;
-				dataframe = NULL;
-				cmv = false;
+				use_subsample_ = false;
+				num_trees_ = 0;
+				num_sample_ = 256;
+				dataframe_ = nullptr;
+				check_missing_value_ = false;
 			};
 
-			Forest(int _ntree, std::shared_ptr<util::dataset> _dataset, int _nsample,
-				   int _maxheight, bool _stopheight, bool _rsample,
-				   std::vector<int> const &_columnIndex= std::vector<int>()) {
-				ntree = _ntree;
-				dataframe = _dataset;
-				nsample = _nsample;
-				stopheight = _stopheight;
-				maxheight = _maxheight;
-				rsample = _rsample;
-				if(_columnIndex.empty())
-					for(int i=0;i<_dataset->ncol;i++)
-						columnIndex.push_back(i);
+			Forest(int _ntree, std::shared_ptr<util::Dataset> dataset, int num_sample,
+				   int max_height, bool stop_height, bool use_subsample,
+				   std::vector<int> const &column_index= std::vector<int>()) {
+				num_trees_ = _ntree;
+				dataframe_ = dataset;
+				num_sample_ = num_sample;
+				stop_height_ = stop_height;
+				max_height_ = max_height;
+				use_subsample_ = use_subsample;
+				if(column_index.empty())
+					for(int i=0;i<dataset->ncol;i++)
+						column_index_.push_back(i);
 				else
-					columnIndex = _columnIndex;
+					column_index_ = column_index;
 			};
 
-			virtual ~Forest() {};
+			virtual ~Forest()= default;
 
-			/*{
-                for (std::vector<Tree*>::iterator it = trees.begin(); it != trees.end();
-                        ++it) {
-                    delete (*it);
-                }
-            }*/
-			double instanceScore(std::vector<double> &inst);
 
-			std::vector<double> AnomalyScore(std::shared_ptr<util::dataset> df);
+			double instance_score(std::vector<double> &instance);
 
-			virtual std::vector<double> pathLength(std::vector<double> &inst);
+			std::vector<double> anomaly_score(std::shared_ptr<util::Dataset> dataset);
 
-			std::vector<std::vector<double> > pathLength(std::shared_ptr<util::dataset> data);
+			virtual std::vector<double> path_length(std::vector<double> &instance);
+
+			std::vector<std::vector<double> > path_length(std::shared_ptr<util::Dataset> data);
 
 			std::vector<double> meandepth();
 
 			std::vector<double> ADtest(const std::vector<std::vector<double> > &pathlength, bool weighttotail);
 
-			std::map<int, double> importance(std::vector<double> &inst);
+			std::map<int, double> importance(std::vector<double> &instance);
 
-			virtual double getdepth(std::vector<double> &inst, const std::shared_ptr<Tree> &tree);
+			virtual double get_depth(std::vector<double> &instance, const std::shared_ptr<Tree> &tree);
 
-			void getSample(std::vector<int> &sampleIndex, const int nsample, bool rSample, int nrow);
+			void get_sample(std::vector<int> &sample_index, int num_sample, bool use_subsample, int nrow);
 
 			struct larger {
 				bool operator()(const std::pair<int, double> p1, const std::pair<int, double> p2) {
@@ -86,19 +79,17 @@ namespace osu {
 			};
 
 			/* virtual function for adaptive forest*/
-			virtual int adaptiveForest(double alpha, int stopLimit) { return 0; };
+			virtual int adaptive_forest(double alpha, int stopLimit) { return 0; };
 
 			/*Fixed tree forest */
-			virtual void fixedTreeForest() {};
-
-			virtual int confTree(double alpha, double rho, int init_tree) { return 0; };
+			virtual void fixed_forest() {};;
 
 			/*
              * @input two vector v1 and
             * @return proporation of intersection ,[0,1]
             */
 
-			double topcommonK(std::vector<int> &v1, std::vector<int> &v2) {
+			double top_common_k(std::vector<int> &v1, std::vector<int> &v2) {
 				std::vector<int> v3;
 				std::sort(v1.begin(), v1.end());
 				std::sort(v2.begin(), v2.end());
@@ -106,20 +97,18 @@ namespace osu {
 				return (double) v3.size() / (double) v1.size();
 			}
 
-//json to_json();
-//void from_json(std::ifstream &input);
-			void tracePath(std::vector<double> &inst, std::ostream &out);
+			void trace_path(std::vector<double> &inst, std::ostream &out);
 
-			virtual std::vector<std::map<int, double> > featureContrib(std::vector<double> &inst);
+			virtual std::vector<std::map<int, double> > feature_contrib(std::vector<double> &instance);
 #ifdef SERIALIZATION
 			// Serialization
 			template<class Archive>
 			void serialize(Archive &archive) {
-				/*archive(cereal::make_nvp("ntree",ntree),cereal::make_nvp("nsample",nsample),
-                        cereal::make_nvp("rsample",rsample),cereal::make_nvp("stopheight",stopheight),
-                        cereal::make_nvp("trees",trees));*/
-				archive(ntree, nsample, rsample,
-						stopheight, trees);
+				/*archive(cereal::make_nvp("num_trees_",num_trees_),cereal::make_nvp("num_sample_",num_sample_),
+                        cereal::make_nvp("use_subsample_",use_subsample_),cereal::make_nvp("stop_height_",stop_height_),
+                        cereal::make_nvp("trees_",trees_));*/
+				archive(num_trees_, num_sample_, use_subsample_,
+						stop_height_, trees_);
 
 			}
 

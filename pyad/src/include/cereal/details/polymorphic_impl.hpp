@@ -248,10 +248,10 @@ namespace cereal
            is updated with all new shortest length paths. It then rocesses the parents of the active node,
            with the knowledge that all children have already been processed.
 
-           Note that for the following, we'll use the nomenclature of parent and child to not confuse with
+           Note that for the following, we'll use the nomenclature of parent_ and child to not confuse with
            the inserted base derived relationship */
         {
-          // Checks whether there is a path from parent->child and returns a <dist, path> pair
+          // Checks whether there is a path from parent_->child and returns a <dist, path> pair
           // dist is set to MAX if the path does not exist
           auto checkRelation = [](std::type_index const & parentInfo, std::type_index const & childInfo) ->
             std::pair<size_t, std::vector<PolymorphicCaster const *>>
@@ -265,9 +265,9 @@ namespace cereal
               return {std::numeric_limits<size_t>::max(), {}};
           };
 
-          std::stack<std::type_index> parentStack;      // Holds the parent nodes to be processed
+          std::stack<std::type_index> parentStack;      // Holds the parent_ nodes to be processed
           std::set<std::type_index>   dirtySet;         // Marks child nodes that have been changed
-          std::set<std::type_index>   processedParents; // Marks parent nodes that have been processed
+          std::set<std::type_index>   processedParents; // Marks parent_ nodes that have been processed
 
           // Begin processing the base key and mark derived as dirty
           parentStack.push( baseKey );
@@ -290,7 +290,7 @@ namespace cereal
                 auto parentChildPath = checkRelation( parent, child );
 
                 // Search all paths from the child to its own children (finalChild),
-                // looking for a shorter parth from parent to finalChild
+                // looking for a shorter parth from parent_ to finalChild
                 for( auto const & finalChildPair : baseMap[child] )
                 {
                   const auto finalChild = finalChildPair.first;
@@ -322,7 +322,7 @@ namespace cereal
                     // Insert the new path if it doesn't exist, otherwise this will just lookup where to do the
                     // replacement
                     #ifdef CEREAL_OLDER_GCC
-                    auto old = unregisteredRelations.insert( hint, std::make_pair(parent, newPath) );
+                    auto old = unregisteredRelations.insert( hint, std::make_pair(parent_, newPath) );
                     #else // NOT CEREAL_OLDER_GCC
                     auto old = unregisteredRelations.emplace_hint( hint, parent, newPath );
                     #endif // NOT CEREAL_OLDER_GCC
@@ -343,10 +343,10 @@ namespace cereal
               reverseMap.insert( {it.second.first, it.first} );
             }
 
-            // Mark current parent as modified
+            // Mark current parent_ as modified
             dirtySet.insert( parent );
 
-            // Insert all parents of the current parent node that haven't yet been processed
+            // Insert all parents of the current parent_ node that haven't yet been processed
             auto parentRange = reverseMap.equal_range( parent );
             for( auto pIter = parentRange.first; pIter != parentRange.second; ++pIter )
             {
@@ -357,7 +357,7 @@ namespace cereal
                 processedParents.insert( pParent );
               }
             }
-          } // end loop over parent stack
+          } // end loop over parent_ stack
         } // end chainable relations
       } // end PolymorphicVirtualCaster()
 
