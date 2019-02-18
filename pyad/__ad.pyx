@@ -29,19 +29,20 @@ cdef class IsolationForest:
         object is created to be trained later.
 
         Args:
-            x: Training dataset of ndarray(numpy matrix) format. Required field
-            ntree: Number of trees used. Default 100
-            nsample: Number of subsample size for training. Defualt 512. If nsample = 0 all training data is used. 
-            maxheight: Maximum depth of the binary trees. Default 0 means grow tree until full isolation.
-            rotate: Toggle for rotating forest or not. Default false.
-            adaptive: Toggle for using adaptive method of growing trees. Default false.
-            rangecheck: Toggle for rangecheck during scoring points. Default true.
-            rho: Specify rho precision confidence interval for stopping criteria Value (0.01 to 0.08) works. 
+            x: (ndarray) Training dataset of ndarray(numpy matrix) format. Required field
+            ntree: (int) Number of trees used. Default 100
+            nsample: (int) Number of subsample size for training. Defualt 512. If nsample = 0 all training data is used. 
+            maxheight: (int) Maximum depth of the binary trees. Default 0 means grow tree until full isolation.
+            rotate: (bool) Toggle for rotating forest or not. Default false.
+            adaptive: (bool) Toggle for using adaptive method of growing trees. Default false.
+            rangecheck: (bool) Toggle for rangecheck during scoring points. Default true.
+            rho: (float) Specify rho precision confidence interval for stopping criteria Value (0.01 to 0.08) works. 
                  Default value 0.01. Used only if adaptive is True.
-            stoplimit:Number of common successive top K for adaptive process. Default 5.Used only if adaptiv is True
+            stoplimit: (bool) Number of common successive top K for adaptive process. Default 5.Used only if adaptiv is True
         E.g.
         >> ff = IsolationForest(x=train_data, ntree=100, nsample=100)
-
+        >> ff.score(x=test_data)
+        
         Returns: IsolationForest object. 
         """
         #self.is_trained = False
@@ -55,14 +56,12 @@ cdef class IsolationForest:
         self.rho = rho
         self.stoplimit = stoplimit
         if x is not None:
-            self.train(x, ntree, nsample, maxheight, rotate, adaptive, rangecheck,
-                       rho, stoplimit)
+            self.train(x)
 
     def __dealloc__(self):
         del self.thisptr
 
-    def train(self, x, ntree=100, nsample=512, maxheight=0, rotate=False,
-              adaptive=False, rangecheck=True, rho=0.01, stoplimit=5, column_subsample=[]):
+    def train(self, x, column_subsample=[]):
         """
         Train Isolation Forest model.
         ff.train_forest(_traindf,_ntree=100,_nsample=512,_maxheight=0,_rotate=False,_adaptive=False,_rangecheck=True,_rho=0.01,_stoplimit=5,
@@ -70,14 +69,6 @@ cdef class IsolationForest:
 
         Args:
             x: Training dataset of ndarray(numpy matrix) format. Required field
-            ntree: Number of trees used. Default 100
-            nsample: Number of subsample size for training. Defualt 512
-            maxheight: Maximum depth of the binary trees. Default 0 means grow tree until full isolation.
-            rotate: Toggle for rotating forest or not. Default false.
-            adaptive: Toggle for using adaptive method of growing trees. Default false.
-            rangecheck: Toggle for rangecheck during scoring points. Default true.
-            rho: Specify rho precision confidence interval for stopping criteria Value (0.01 to 0.08) works. Default value 0.01.Used only if adaptive is True.
-            stoplimit:Number of common successive top K for adaptive process. Default 5.Used only if adaptiv is True
             column_subsample: if specified it uses only column specified. 
         Returns: Trained IsolationForest object 
         """
@@ -89,7 +80,7 @@ cdef class IsolationForest:
             print ("You set 0 number of trees, then it is adaptive way of growing")
             adaptive = True
         if self.nsample > len(x) or self.nsample == 0:
-            nsample = len(x)
+            self.nsample = len(x)
             print(
                 "Number of samples cann't be greater than sample size,then data will be used")
         if self.maxheight < 0:
@@ -98,8 +89,9 @@ cdef class IsolationForest:
             raise NameError("rho value should be less than 1")
         #self.is_trained = True
 
-        return self.thisptr.trainForest(x, ntree, nsample, maxheight,
-                                        rotate, adaptive, rangecheck, rho, stoplimit, column_subsample)
+        return self.thisptr.trainForest(x, self.ntree, self.nsample, self.maxheight,
+                                        self.rotate, self.adaptive, self.rangecheck, self.rho,
+                                        self.stoplimit, column_subsample)
 
 
     def score(self, x, cmv=False):
@@ -189,6 +181,7 @@ cdef class IsolationForest:
         Returns: number of trees used for building the forest
 
         """
+        self.validate_model()
         return self.thisptr.getNTree()
 
     def get_nsample(self):
@@ -197,6 +190,7 @@ cdef class IsolationForest:
         Returns: sample size used for training
 
         """
+        self.validate_model()
         return self.thisptr.getNSample()
 
     def get_max_depth(self):
@@ -204,12 +198,14 @@ cdef class IsolationForest:
         Returns: Maximum depth of the trees
 
         """
+        self.validate_model()
         return self.thisptr.getMaxDepth()
 
     def is_adaptive(self):
         """
         Return: True if the Forest is built with adaptive way
         """
+        self.validate_model()
         self.thisptr.isAdaptive()
 
     def is_range_check(self):
@@ -218,6 +214,7 @@ cdef class IsolationForest:
         Returns: True if rangeCheck is set during scoring
 
         """
+        self.validate_model()
         return self.thisptr.isRangeCheck()
 
     def is_rotate(self):
@@ -226,6 +223,7 @@ cdef class IsolationForest:
         Returns: True if rotation forest is used
 
         """
+        self.validate_model()
         return self.thisptr.isRotate()
 
     def is_valid_model(self):
@@ -252,6 +250,7 @@ cdef class IsolationForest:
         Return: Explanations 
 
         """
+        self.validate_model()
         return self.thisptr.explanation(x)
 
 cdef class IsolationTree:
