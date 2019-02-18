@@ -89,7 +89,7 @@ cdef class IsolationForest:
             raise NameError("rho value should be less than 1")
         #self.is_trained = True
 
-        return self.thisptr.trainForest(x, self.ntree, self.nsample, self.maxheight,
+        return self.thisptr.train(x, self.ntree, self.nsample, self.maxheight,
                                         self.rotate, self.adaptive, self.rangecheck, self.rho,
                                         self.stoplimit, column_subsample)
 
@@ -105,18 +105,17 @@ cdef class IsolationForest:
         >> score = ff.score(x,cmv=True)
         """
 
-        if self.thisptr.isValidModel() == 1:
-            raise NameError("The iForest model is not yet trained.")
+        self.validate_model()
         DataValidator.validate_dataset(x)
         if x.ndim < 2:
             x = x.reshape([1, x.size])
-        self.thisptr.testForest(x, cmv)
-        return self.thisptr.getScore()
+        self.thisptr.score(x, cmv)
+        return self.thisptr.anomaly_score()
 
     def validate_model(self):
-        if self.thisptr.isValidModel() == 1:
+        if self.thisptr.is_valid() == 1:
             raise NameError("The iForest model is not yet trained.")
-        if self.thisptr.isValidModel() == 2:
+        if self.thisptr.is_valid() == 2:
             raise NameError("Test data not given")
 
     def anomaly_score(self):
@@ -124,7 +123,7 @@ cdef class IsolationForest:
         Returns: Returns anomaly score from the trained model
         """
         self.validate_model()
-        return self.thisptr.getScore()
+        return self.thisptr.anomaly_score()
 
     def path_length(self):
         """
@@ -132,7 +131,7 @@ cdef class IsolationForest:
 
         """
         self.validate_model()
-        return self.thisptr.pathLength()
+        return self.thisptr.path_length()
 
     def average_depth(self):
         """
@@ -141,7 +140,7 @@ cdef class IsolationForest:
         >> ff.average_depth() # returns average depth of all point passed in score method.
         """
         self.validate_model()  # check
-        return self.thisptr.averageDepth()
+        return self.thisptr.average_depth()
 
     def save(self, model_name=None):
         """
@@ -182,7 +181,7 @@ cdef class IsolationForest:
 
         """
         self.validate_model()
-        return self.thisptr.getNTree()
+        return self.thisptr.num_trees()
 
     def get_nsample(self):
         """
@@ -191,7 +190,7 @@ cdef class IsolationForest:
 
         """
         self.validate_model()
-        return self.thisptr.getNSample()
+        return self.thisptr.num_sample()
 
     def get_max_depth(self):
         """
@@ -199,14 +198,14 @@ cdef class IsolationForest:
 
         """
         self.validate_model()
-        return self.thisptr.getMaxDepth()
+        return self.thisptr.max_height()
 
     def is_adaptive(self):
         """
         Return: True if the Forest is built with adaptive way
         """
         self.validate_model()
-        self.thisptr.isAdaptive()
+        self.thisptr.adaptive()
 
     def is_range_check(self):
         """
@@ -215,7 +214,7 @@ cdef class IsolationForest:
 
         """
         self.validate_model()
-        return self.thisptr.isRangeCheck()
+        return self.thisptr.range_check()
 
     def is_rotate(self):
         """
@@ -224,7 +223,7 @@ cdef class IsolationForest:
 
         """
         self.validate_model()
-        return self.thisptr.isRotate()
+        return self.thisptr.rotate()
 
     def is_valid_model(self):
         """
@@ -232,7 +231,7 @@ cdef class IsolationForest:
         Returns: True if the model is valid
 
         """
-        return self.thisptr.isValidModel()
+        return self.thisptr.is_valid()
 
     def display_data(self, df):
         """
@@ -241,7 +240,7 @@ cdef class IsolationForest:
 
         """
         #assert isinstance(df, np.ndarray)
-        return self.thisptr.displayData(df)
+        return self.thisptr.display_data(df)
 
     def explanation(self, x):
         """
@@ -290,9 +289,9 @@ cdef class IsolationTree:
         assert isinstance(test_data, np.ndarray)
 
         if test_data.ndim<2:
-            return self.thisptr.pathLength(test_data, check_miss)
+            return self.thisptr.path_length(test_data, check_miss)
         else:
-            return [ self.thisptr.pathLength(row, check_miss) for row in test_data]
+            return [ self.thisptr.path_length(row, check_miss) for row in test_data]
         #return self.thisptr.pathLength(test_data, check_miss)
 
     def explanation(self, test_data):
@@ -302,33 +301,33 @@ cdef class IsolationTree:
         """
         return self.thisptr.explanation(test_data)
 
-    def max_depth(self):
-        """
-        :return: Returns maximum depth.
-        """
-        return self.thisptr.maxTreeDepth()
+    # def max_depth(self):
+    #     """
+    #     :return: Returns maximum depth.
+    #     """
+    #     return self.thisptr.maxTreeDepth()
 
     def get_nodesize(self):
         """
 
         :return: Number of instance in the node.
         """
-        return self.thisptr.getNodeSize()
+        return self.thisptr.node_size()
 
     def get_splittingAtt(self):
-        return self.thisptr.getSplittingAtt()
+        return self.thisptr.splitting_attribute()
 
     def get_splittingPoint(self):
-        return self.thisptr.getSplittingPoint()
+        return self.thisptr.splitting_point()
 
     def get_depth(self):
-        return self.thisptr.getDepth()
+        return self.thisptr.depth()
 
     def get_minAttVal(self):
-        return self.thisptr.getMinAttVal()
+        return self.thisptr.min_attribute_value()
 
     def get_maxAttVal(self):
-        return self.thisptr.getMaxAttVal()
+        return self.thisptr.max_attribute_value()
 
 
 cdef class IForest(object):
