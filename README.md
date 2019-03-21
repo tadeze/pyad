@@ -12,6 +12,10 @@ Installing to the python library directory.
 
 ``python setup.py install``
 
+From pypi
+
+`pip install pyada` 
+
 **Example**
 ```python
 import numpy as np 
