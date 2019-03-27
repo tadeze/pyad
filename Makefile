@@ -32,10 +32,10 @@ tests:ls
 	hash nosetests 2>/dev/null || { echo -e >&2 "############ Required nosetest package"; exit 1;}
 	nosetests --logging-level=INFO tests/ 
 clean-cpp:
-	rm pyad/*.cpp -rf 
+	rm pyada/*.cpp -rf 
 clean:
-	rm pyad/*.so pyad/*.pyc -rf 
-	rm dist build pyad.egg-info src -rf 
+	rm pyada/*.so pyada/*.pyc -rf 
+	rm dist build pyada.egg-info src -rf 
 clean-all:clean clean-cpp
 
 

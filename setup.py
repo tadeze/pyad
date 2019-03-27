@@ -8,8 +8,8 @@ import os
 __version__ = "1.0.1"
 os.environ["CC"] = "g++"
 LICENSE = "MIT"
-SRC_DIR = "pyad/src/"
-CYTH_DIR = "pyad/"
+SRC_DIR = "pyada/src/"
+CYTH_DIR = "pyada/"
 PACKAGES = [CYTH_DIR]
 
 class build_ext(_build_ext):
@@ -44,7 +44,7 @@ EXTENSIONS = cythonize([Extension("*",
                  language="c++",
                 extra_compile_args=['-std=c++11'],
                 include_dirs=[numpy.get_include(), SRC_DIR+"include"]),
-                Extension("*", 
+                Extension("*",
                 sources=[CYTH_DIR+"__loda.pyx"],
                 language="c++",
                 include_dirs=[numpy.get_include()])
@@ -70,9 +70,9 @@ if __name__ == "__main__":
   setup(install_requires=['numpy', 'cython'],
         packages=PACKAGES,
         zip_safe=False,
-        name="pyad",
+        name="pyada",
         version= __version__,
-        description="Anomaly detection algorithms",
+        description="Python Anomaly Detection Algorithms",
         author="Tadesse Zemicheal",
         author_email="zemichet@oregonstate.edu",
         url= "http://eecs.oregonstate.edu/~zemichet",
