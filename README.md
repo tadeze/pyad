@@ -51,13 +51,11 @@ mt.roc_auc_score(label, iforest_score)))
 ```
 ### cite 
 ```
-@misc{dietterich2018anomaly,
-    title={Anomaly Detection in the Presence of Missing Values},
-    author={Thomas G. Dietterich and Tadesse Zemicheal},
-    year={2018},
-    eprint={1809.01605},
-    archivePrefix={arXiv},
-    primaryClass={cs.LG}
+@article{dietterich2018anomaly,
+  title={Anomaly Detection in the Presence of Missing Values},
+  author={Dietterich, Thomas G and Zemicheal, Tadesse},
+  journal={arXiv preprint arXiv:1809.01605},
+  year={2018}
 }
 ```
 
