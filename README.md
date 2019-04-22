@@ -49,6 +49,18 @@ iforest_score = iforest.score(w_score)
 print("AUC(loda): {}, AUC(iForest): {}".format(mt.roc_auc_score(label, loda_score), 
 mt.roc_auc_score(label, iforest_score)))
 ```
+### cite 
+```
+@misc{dietterich2018anomaly,
+    title={Anomaly Detection in the Presence of Missing Values},
+    author={Thomas G. Dietterich and Tadesse Zemicheal},
+    year={2018},
+    eprint={1809.01605},
+    archivePrefix={arXiv},
+    primaryClass={cs.LG}
+}
+```
+
 
 ### Status
 [![Build Status](https://travis-ci.com/tadeze/pyad.svg?token=4ykfwWQySq2ndZvpPqdz&branch=master)](https://travis-ci.com/tadeze/pyad)
