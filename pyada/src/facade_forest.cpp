@@ -75,10 +75,11 @@ int osu::ad::FacadeForest::train(util::DoubleMatrix &train_dataset,
   return num_trees_;  //Return number of trees_ used. Useful incase of adaptive_ tree growing
 }
 
-void osu::ad::FacadeForest::score(std::vector<std::vector<double> > &test_dataset, bool check_missing_value) {
+std::vector<double> osu::ad::FacadeForest::score(std::vector<std::vector<double> > &test_dataset, bool check_missing_value) {
 
   this->test_dataset_ = make_dataset(test_dataset);
   forest_->check_missing_value_ = check_missing_value;
+  return forest_->anomaly_score(test_dataset_);
 }
 
 

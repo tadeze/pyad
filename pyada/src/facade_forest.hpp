@@ -115,7 +115,7 @@ namespace osu {
             };
 
 
-            void score(std::vector<std::vector<double> > &test_dataset, bool check_missing_value = false);
+            std::vector<double> score(std::vector<std::vector<double> > &test_dataset, bool check_missing_value = false);
 
 
             std::vector<double> anomaly_score();
