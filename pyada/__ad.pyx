@@ -109,7 +109,7 @@ cdef class IsolationForest:
         DataValidator.validate_dataset(x)
         if x.ndim < 2:
             x = x.reshape([1, x.size])
-        return np.array(self.thisptr.score(x, cmv))
+        return self.thisptr.score(x, cmv)
         #return self.thisptr.anomaly_score()
 
     def validate_model(self):

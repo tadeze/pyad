@@ -27,7 +27,7 @@ double Forest::instance_score(std::vector<double> &instance) {
  * Score for  a set of dataframe_ in Dataset
  */
 std::vector<double> Forest::anomaly_score(std::shared_ptr<util::Dataset> dataset) {
-    std::vector<double> scores(dataset->nrow);
+    std::vector<double> scores;
     //iterate through all points
     for (int inst = 0; inst < dataset->nrow; inst++) {
         scores.push_back(instance_score(dataset->data[inst]));

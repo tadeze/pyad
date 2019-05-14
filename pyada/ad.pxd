@@ -11,7 +11,7 @@ cdef extern from "src/facade_forest.hpp" namespace "osu::ad":
         void display_data(vector[vector[double]]&)
         int train(vector[vector[double]] &, int, int, int,
                         bool, bool, bool, double, int,vector[int]&)
-        void score(vector[vector[double]] &, bool)
+        vector[double] score(vector[vector[double]] &, bool)
         vector[double]  anomaly_score()
         vector[vector[double]] path_length()
         vector[double] average_depth()

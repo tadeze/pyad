@@ -80,6 +80,8 @@ std::vector<double> osu::ad::FacadeForest::score(std::vector<std::vector<double>
   this->test_dataset_ = make_dataset(test_dataset);
   forest_->check_missing_value_ = check_missing_value;
   return forest_->anomaly_score(test_dataset_);
+  //std::cout<<"Size of the data"<<_score.size();
+  
 }
 
 
