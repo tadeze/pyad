@@ -5,7 +5,7 @@ import distutils.sysconfig
 import numpy
 import os
 
-__version__ = "1.0.1"
+__version__ = "1.0.1.1"
 os.environ["CC"] = "g++"
 LICENSE = "MIT"
 SRC_DIR = "pyada/src/"
