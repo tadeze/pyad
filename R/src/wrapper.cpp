@@ -19,19 +19,30 @@ private:
   FacadeForest ff;
 public:
   void train(NumericMatrix x_train, int n_trees, int num_sample, int max_height, bool rotate){
-    Rcout<<x_train.size();
-    auto vec = Rcpp::as<std::vector<std::vector<double> > >(x_train);
+   
+    auto vec =  to_vv(x_train);//Rcpp::as<std::vector<std::vector<double> > >(x_train);
   
     
     ff.train(vec, n_trees, num_sample, max_height, rotate);
   
     
   };
-  
+  std::vector<std::vector<double> > to_vv(NumericMatrix &df){
+    int n_rows = df.nrow();
+    int n_col = df.ncol();
+    std::vector<std::vector<double> > vvd; 
+    
+    for(int i=0;i<n_rows;i++){
+      std::vector<double> row = Rcpp::as<std::vector<double> >((NumericVector)df.row(i));
+      vvd.push_back(row);
+    }
+    return vvd;
+    
+  }
              //std::vector<int> const &column_index = std::vector<int>())
   NumericVector score(NumericMatrix x_test, bool check_missing_value = false){
     
-    auto vec = Rcpp::as<std::vector<std::vector<double> > >(x_test);
+    auto vec = to_vv(x_test);    //Rcpp::as<std::vector<std::vector<double> > >(x_test);
   
     auto  scores = ff.score(vec, check_missing_value);
     NumericVector nv_score(scores.begin(), scores.end());
@@ -40,6 +51,7 @@ public:
   
   void load(const std::string &file_name, bool binaryFormat = true){
     ff.load(file_name, binaryFormat);
+  
   }; //OUTPUT_FORMAT output_format);
   
   void save(const std::string &file_name, bool binaryFormat = true){
