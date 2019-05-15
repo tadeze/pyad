@@ -1,12 +1,11 @@
 Package:RIF
 Type: Package
-Title: What the Package Does in One 'Title Case' Line
+Title: R interface for IsolationForest 
 Version: 1.0
 Date: 2019-05-14
-Author: Your Name
-Maintainer: Your Name <your@email.com>
-Description: One paragraph description of what the package does as one or more full
-         sentences.
+Author: Tadesse Zemicheal
+Maintainer: zemichet@oregonstate.edu
+Description: Anomaly detection algorithm using Isolation Forest. Interface for C++ code.
 License: GPL (>= 2)
 Imports: Rcpp (>= 1.0.0)
 LinkingTo: Rcpp
