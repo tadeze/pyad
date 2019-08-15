@@ -1,4 +1,4 @@
-#' @name RIF-package
+#' @name RIF
 #' @author T
 #' @docType package
 #' @useDynLib RIF

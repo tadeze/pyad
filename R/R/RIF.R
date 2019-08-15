@@ -7,7 +7,7 @@
 #'@export
 
 
-isolation_trees.RIF<-function(x, ntrees=100, nsample=512, height=0, rotate=FALSE){
+isolation_trees<-function(x, ntrees=100, nsample=512, height=0, rotate=FALSE){
   
   x_train <- as.matrix(x)
   if(nsample>nrow(x_train)){
@@ -23,7 +23,7 @@ isolation_trees.RIF<-function(x, ntrees=100, nsample=512, height=0, rotate=FALSE
 #' @param x a matrix of test dataset with equal
 #' @param rif trained IsolationForest type object
 #' @param check_missing if TRUE handles missing value for test data. 
-anomaly_score.RIF<-function(rif, x, check_missing=TRUE){
+anomaly_score<-function(rif, x, check_missing=TRUE){
   x_test <- as.matrix(x)
   # if(ncol(x_test)!=rif$feature_size){
   #   stop("The number of features in test data should be equal to the training dataset.")
@@ -36,12 +36,12 @@ print.RIF <-function(x,...){
   cat(format(x$iforest,...),sep="\n")
 }
 #' Output path length or depth of the points
-path_length.RIF <-function(rif, x){
+path_length <-function(rif){
   x_test <- as.matrix(x)
   # if(ncol(x_test)!=rif$feature_size){
   #   stop("The number of features in test data should be equal to the training dataset.")
   # }
-  return(rif$iforest$path_length(x_test))
+  return(rif$iforest$path_length())
 }
 
 #' Save module to file 

@@ -3,8 +3,8 @@ Type: Package
 Title: R interface for IsolationForest 
 Version: 1.0
 Date: 2019-05-14
-Author: Tadesse Zemicheal
-Maintainer: zemichet@oregonstate.edu
+Author: Tadesse Zemicheal <zemichet@oregonstate.edu>
+Maintainer: Tadesse <zemichet@oregonstate.edu>
 Description: Anomaly detection algorithm using Isolation Forest. Interface for C++ code.
 License: GPL (>= 2)
 Imports: Rcpp (>= 1.0.0)

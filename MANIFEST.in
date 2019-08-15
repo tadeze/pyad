@@ -1,7 +1,7 @@
-recursive-include pyad/ *
+recursive-include pyada/ *
 
-include *.md pyad/*.py LICENSE
-include pyad/*.pxd
-include pyad/*.pyx
+include *.md pyada/*.py LICENSE
+include pyada/*.pxd
+include pyada/*.pyx
 prune build
 prune dist 

@@ -36,6 +36,8 @@ void osu::ad::Tree::iTree(std::vector<int> const &sample_index,
 //   delete dt;
 }
 
+
+
 void osu::ad::Tree::iTree(std::vector<int> const &sample_index,
 													const std::shared_ptr<osu::ad::util::Dataset> dataset,
 													int height,
@@ -110,6 +112,8 @@ void osu::ad::Tree::iTree(std::vector<int> const &sample_index,
 	//right_child_->parent_ = this;
 	right_child_->iTree(right_node_data, dataset, this->depth_ + 1, max_height, stop_height);
 }
+//double splitting_value(){
+//}
 
 double osu::ad::Tree::path_length(std::vector<double> &instance, bool check_missing_value) {
 

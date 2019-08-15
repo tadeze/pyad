@@ -18,6 +18,8 @@ class iForestRcpp{
 private:
   FacadeForest ff;
 public:
+  // constructor 
+  iForestRcpp(){};
   void train(NumericMatrix x_train, int n_trees, int num_sample, int max_height, bool rotate){
    
     auto vec =  to_vv(x_train);//Rcpp::as<std::vector<std::vector<double> > >(x_train);
@@ -39,6 +41,17 @@ public:
     return vvd;
     
   }
+  NumericMatrix path_length(){
+    auto depths = ff.path_length();
+    Rcpp::Rcout<<depths.size()<<depths[0].size();
+    NumericMatrix nm_depths(depths[0].size(), depths.size());
+    for(int i=0;i<depths[0].size();i++){
+      for(int j=0;j<depths.size();j++)
+ // #NumericVector nv(depths[i].begin(), depths[i].end());
+      nm_depths(i,j) = depths[i][j];
+    }
+    return nm_depths;
+  }
              //std::vector<int> const &column_index = std::vector<int>())
   NumericVector score(NumericMatrix x_test, bool check_missing_value = false){
     
@@ -58,9 +71,23 @@ public:
     ff.save(file_name, binaryFormat);
   }; //, OUTPUT_FORMAT output_format);
   
-  // constructor 
-  iForestRcpp(){};
+  // NumericVector path_length(NumericMatrix x_test){
+  //   auto vec = to_vv(x_test);
+  //   auto depths = ff.path_length(x_test)
+  //   NumericVector nv_path()
+  // }
+
 };
+// // [[Rcpp:export]]
+// class TreeRcpp{
+// private:
+//   Tree itree;
+// public:
+//   void build_tree();
+//   void depth();
+//   
+// };
+
 
 RCPP_EXPOSED_CLASS_NODECL(iForestRcpp)
 RCPP_MODULE(iForestModule) {
@@ -68,6 +95,7 @@ RCPP_MODULE(iForestModule) {
   .constructor()
   .method("train", &iForestRcpp::train)
   .method("score", &iForestRcpp::score)
+  .method("path_length", &iForestRcpp::path_length)
   .method("save", &iForestRcpp::save)
   .method("load", &iForestRcpp::load);
 }
