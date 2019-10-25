@@ -1,3 +1,7 @@
+
+[![Build Status](https://travis-ci.com/tadeze/pyad.svg?token=4ykfwWQySq2ndZvpPqdz&branch=master)](https://travis-ci.com/tadeze/pyad)
+[![PyPI version](https://badge.fury.io/py/pyada.svg)](https://badge.fury.io/py/pyada)
+
 ## Anomaly detection algorithms.
 
 **Requirement**
@@ -5,6 +9,7 @@
 1. Compiler with C++11 support (gcc.4.9 or more)
 2. Cython 0.23 or more
 3. Numpy
+
 
 **Install package**
 
@@ -58,10 +63,6 @@ mt.roc_auc_score(label, iforest_score)))
   year={2018}
 }
 ```
-
-
-### Status
-[![Build Status](https://travis-ci.com/tadeze/pyad.svg?token=4ykfwWQySq2ndZvpPqdz&branch=master)](https://travis-ci.com/tadeze/pyad)
 
 
   
