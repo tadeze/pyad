@@ -182,7 +182,7 @@ false) {
 }
 
 std::string osu::ad::util::filename() {
-	std::string file_name("/home/tadeze/projects/iForestCodes/pyiForest/test/unittest/synthetic5d34.csv");
+	std::string file_name("/home/tadeze/projects/iForestCodes/pyiForest/test/unittest/synthetic5d34.csv"); //for testing purpose.
 	return file_name;
 }
 
@@ -211,12 +211,6 @@ std::vector<std::vector<double> > osu::ad::util::synthetic_data(int D, int N) {
 	}
 	return data;
 }
-
-
-
-
-
-
 
 /* UTITLITY_H_ */
 

@@ -1,0 +1,15 @@
+# ninja log v5
+2	5546	1571979634	src/CMakeFiles/iforestlib.dir/forest.cpp.o	1ab1d23169bfc108
+17	6477	1571979635	src/CMakeFiles/iforestlib.dir/utility.cpp.o	25bd470fe8a1d3e3
+12	6681	1571979635	src/CMakeFiles/iforestlib.dir/isolation_forest.cpp.o	593cbcc47b883703
+1	7270	1571979636	src/CMakeFiles/iforestlib.dir/tree.cpp.o	713e548fb4aa58b8
+6681	7805	1571979637	src/CMakeFiles/iforestlib.dir/stat/io_parser.cpp.o	80a4bbb2a9c216e0
+5547	7844	1571979637	src/CMakeFiles/iforestlib.dir/metric.cpp.o	18354397215256a1
+7270	8750	1571979638	src/CMakeFiles/iforestlib.dir/log_writer.cpp.o	f11aa905ce4b246c
+1	10980	1571979640	CMakeFiles/iforest.dir/src/main.cpp.o	e17c9de55b344840
+8750	11160	1571979640	test/lib/googletest/CMakeFiles/gtest_main.dir/src/gtest_main.cc.o	d6a488745fcd2fe5
+7844	11769	1571979641	src/CMakeFiles/iforestlib.dir/bagged_forest.cpp.o	a6eb97e57d7beac2
+7806	13031	1571979642	src/CMakeFiles/iforestlib.dir/command_parser.cpp.o	a23fb7e42f90e8c6
+6477	14641	1571979643	src/CMakeFiles/iforestlib.dir/main.cpp.o	df6b2286dae530ea
+10980	19133	1571979648	test/lib/googletest/CMakeFiles/gtest.dir/src/gtest-all.cc.o	c88fb4634c217c49
+18	19756	1571979649	src/CMakeFiles/iforestlib.dir/facade_forest.cpp.o	c9a483acf2d064c9

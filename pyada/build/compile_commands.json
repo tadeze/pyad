@@ -1,0 +1,115 @@
+[
+{
+  "directory": "/home/tad/projects/pyad/pyada/build",
+  "command": "/usr/bin/g++   -I../src -I../src/include   -std=c++11 -g   -o CMakeFiles/iforest.dir/src/main.cpp.o -c /home/tad/projects/pyad/pyada/src/main.cpp",
+  "file": "/home/tad/projects/pyad/pyada/src/main.cpp"
+},
+
+{
+  "directory": "/home/tad/projects/pyad/pyada/build",
+  "command": "/usr/bin/g++   -I../src/include   -std=c++11 -g   -std=c++11 -o src/CMakeFiles/iforestlib.dir/tree.cpp.o -c /home/tad/projects/pyad/pyada/src/tree.cpp",
+  "file": "/home/tad/projects/pyad/pyada/src/tree.cpp"
+},
+
+{
+  "directory": "/home/tad/projects/pyad/pyada/build",
+  "command": "/usr/bin/g++   -I../src/include   -std=c++11 -g   -std=c++11 -o src/CMakeFiles/iforestlib.dir/forest.cpp.o -c /home/tad/projects/pyad/pyada/src/forest.cpp",
+  "file": "/home/tad/projects/pyad/pyada/src/forest.cpp"
+},
+
+{
+  "directory": "/home/tad/projects/pyad/pyada/build",
+  "command": "/usr/bin/g++   -I../src/include   -std=c++11 -g   -std=c++11 -o src/CMakeFiles/iforestlib.dir/isolation_forest.cpp.o -c /home/tad/projects/pyad/pyada/src/isolation_forest.cpp",
+  "file": "/home/tad/projects/pyad/pyada/src/isolation_forest.cpp"
+},
+
+{
+  "directory": "/home/tad/projects/pyad/pyada/build",
+  "command": "/usr/bin/g++   -I../src/include   -std=c++11 -g   -std=c++11 -o src/CMakeFiles/iforestlib.dir/utility.cpp.o -c /home/tad/projects/pyad/pyada/src/utility.cpp",
+  "file": "/home/tad/projects/pyad/pyada/src/utility.cpp"
+},
+
+{
+  "directory": "/home/tad/projects/pyad/pyada/build",
+  "command": "/usr/bin/g++   -I../src/include   -std=c++11 -g   -std=c++11 -o src/CMakeFiles/iforestlib.dir/facade_forest.cpp.o -c /home/tad/projects/pyad/pyada/src/facade_forest.cpp",
+  "file": "/home/tad/projects/pyad/pyada/src/facade_forest.cpp"
+},
+
+{
+  "directory": "/home/tad/projects/pyad/pyada/build",
+  "command": "/usr/bin/g++   -I../src/include   -std=c++11 -g   -std=c++11 -o src/CMakeFiles/iforestlib.dir/metric.cpp.o -c /home/tad/projects/pyad/pyada/src/metric.cpp",
+  "file": "/home/tad/projects/pyad/pyada/src/metric.cpp"
+},
+
+{
+  "directory": "/home/tad/projects/pyad/pyada/build",
+  "command": "/usr/bin/g++   -I../src/include   -std=c++11 -g   -std=c++11 -o src/CMakeFiles/iforestlib.dir/main.cpp.o -c /home/tad/projects/pyad/pyada/src/main.cpp",
+  "file": "/home/tad/projects/pyad/pyada/src/main.cpp"
+},
+
+{
+  "directory": "/home/tad/projects/pyad/pyada/build",
+  "command": "/usr/bin/g++   -I../src/include   -std=c++11 -g   -std=c++11 -o src/CMakeFiles/iforestlib.dir/stat/io_parser.cpp.o -c /home/tad/projects/pyad/pyada/src/stat/io_parser.cpp",
+  "file": "/home/tad/projects/pyad/pyada/src/stat/io_parser.cpp"
+},
+
+{
+  "directory": "/home/tad/projects/pyad/pyada/build",
+  "command": "/usr/bin/g++   -I../src/include   -std=c++11 -g   -std=c++11 -o src/CMakeFiles/iforestlib.dir/log_writer.cpp.o -c /home/tad/projects/pyad/pyada/src/log_writer.cpp",
+  "file": "/home/tad/projects/pyad/pyada/src/log_writer.cpp"
+},
+
+{
+  "directory": "/home/tad/projects/pyad/pyada/build",
+  "command": "/usr/bin/g++   -I../src/include   -std=c++11 -g   -std=c++11 -o src/CMakeFiles/iforestlib.dir/command_parser.cpp.o -c /home/tad/projects/pyad/pyada/src/command_parser.cpp",
+  "file": "/home/tad/projects/pyad/pyada/src/command_parser.cpp"
+},
+
+{
+  "directory": "/home/tad/projects/pyad/pyada/build",
+  "command": "/usr/bin/g++   -I../src/include   -std=c++11 -g   -std=c++11 -o src/CMakeFiles/iforestlib.dir/bagged_forest.cpp.o -c /home/tad/projects/pyad/pyada/src/bagged_forest.cpp",
+  "file": "/home/tad/projects/pyad/pyada/src/bagged_forest.cpp"
+},
+
+{
+  "directory": "/home/tad/projects/pyad/pyada/build",
+  "command": "/usr/bin/g++   -I../src -I../src/include -I../test/lib/googletest/include -I../test/lib/googletest   -std=c++11 -g    -std=c++11 -Wall -Wshadow -DGTEST_HAS_PTHREAD=1 -fexceptions -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -o test/lib/googletest/CMakeFiles/gtest_main.dir/src/gtest_main.cc.o -c /home/tad/projects/pyad/pyada/test/lib/googletest/src/gtest_main.cc",
+  "file": "/home/tad/projects/pyad/pyada/test/lib/googletest/src/gtest_main.cc"
+},
+
+{
+  "directory": "/home/tad/projects/pyad/pyada/build",
+  "command": "/usr/bin/g++   -I../src -I../src/include -I../test/lib/googletest/include -I../test/lib/googletest   -std=c++11 -g    -std=c++11 -Wall -Wshadow -DGTEST_HAS_PTHREAD=1 -fexceptions -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -o test/lib/googletest/CMakeFiles/gtest.dir/src/gtest-all.cc.o -c /home/tad/projects/pyad/pyada/test/lib/googletest/src/gtest-all.cc",
+  "file": "/home/tad/projects/pyad/pyada/test/lib/googletest/src/gtest-all.cc"
+},
+
+{
+  "directory": "/home/tad/projects/pyad/pyada/build",
+  "command": "/usr/bin/g++   -I../src -I../src/include -I../test/lib/googletest/include -I../test/lib/googletest   -std=c++11 -g   -o test/unittest/CMakeFiles/runIforestTests.dir/test_tree.cpp.o -c /home/tad/projects/pyad/pyada/test/unittest/test_tree.cpp",
+  "file": "/home/tad/projects/pyad/pyada/test/unittest/test_tree.cpp"
+},
+
+{
+  "directory": "/home/tad/projects/pyad/pyada/build",
+  "command": "/usr/bin/g++   -I../src -I../src/include -I../test/lib/googletest/include -I../test/lib/googletest   -std=c++11 -g   -o test/unittest/CMakeFiles/runIforestTests.dir/common_util.cpp.o -c /home/tad/projects/pyad/pyada/test/unittest/common_util.cpp",
+  "file": "/home/tad/projects/pyad/pyada/test/unittest/common_util.cpp"
+},
+
+{
+  "directory": "/home/tad/projects/pyad/pyada/build",
+  "command": "/usr/bin/g++   -I../src -I../src/include -I../test/lib/googletest/include -I../test/lib/googletest   -std=c++11 -g   -o test/unittest/CMakeFiles/runIforestTests.dir/test_utility.cpp.o -c /home/tad/projects/pyad/pyada/test/unittest/test_utility.cpp",
+  "file": "/home/tad/projects/pyad/pyada/test/unittest/test_utility.cpp"
+},
+
+{
+  "directory": "/home/tad/projects/pyad/pyada/build",
+  "command": "/usr/bin/g++   -I../src -I../src/include -I../test/lib/googletest/include -I../test/lib/googletest   -std=c++11 -g   -o test/unittest/CMakeFiles/runIforestTests.dir/test_Forest.cpp.o -c /home/tad/projects/pyad/pyada/test/unittest/test_Forest.cpp",
+  "file": "/home/tad/projects/pyad/pyada/test/unittest/test_Forest.cpp"
+},
+
+{
+  "directory": "/home/tad/projects/pyad/pyada/build",
+  "command": "/usr/bin/g++   -I../src -I../src/include -I../test/lib/googletest/include -I../test/lib/googletest   -std=c++11 -g   -o test/unittest/CMakeFiles/runIforestTests.dir/test_basiccheck.cpp.o -c /home/tad/projects/pyad/pyada/test/unittest/test_basiccheck.cpp",
+  "file": "/home/tad/projects/pyad/pyada/test/unittest/test_basiccheck.cpp"
+}
+]

@@ -63,7 +63,7 @@ namespace  osu {
 
             static bool range_check;
 
-//    json trace_path(std::vector<double> &inst);
+
             Tree() : left_child_(nullptr), right_child_(nullptr), parent_(nullptr),
                      node_size_(0), splitting_attribute_(-1), depth_(0), splitting_point_(-9999), min_attribute_val_(0), max_attribute_val_(0),
                      important_attribute_(0){};

@@ -1,10 +1,4 @@
-//TODO: Random rotation with reduced dimension of ceil(sqrt(d)/2) +2
-//TODO: Remove the doubleframe and replace with dataset array.
 #include "r_forest.hpp"
-/*
- * Class for RandomRotation Matrix
- *
- */
 using namespace Eigen;
 
 /*Take Matrix and return doubleframe
