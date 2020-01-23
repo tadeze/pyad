@@ -18,6 +18,7 @@
 #include "feature_contribution.hpp"
 namespace  osu {
     namespace ad {
+    
         class Tree : public std::enable_shared_from_this<Tree> {
         private:
             std::shared_ptr<Tree> left_child_, right_child_, parent_;
@@ -25,7 +26,7 @@ namespace  osu {
             double splitting_point_, min_attribute_val_, max_attribute_val_;
             int important_attribute_;
             std::shared_ptr<util::Dataset> make_dataset(std::vector<std::vector<double> > &data);
-
+            double random_norm;
             int parent_id;
         public:
             int getParent_id() const;
@@ -66,7 +67,7 @@ namespace  osu {
 
             Tree() : left_child_(nullptr), right_child_(nullptr), parent_(nullptr),
                      node_size_(0), splitting_attribute_(-1), depth_(0), splitting_point_(-9999), min_attribute_val_(0), max_attribute_val_(0),
-                     important_attribute_(0){};
+                     important_attribute_(0), random_norm(1.0){};
 
             virtual ~Tree() {};
 
@@ -83,7 +84,7 @@ namespace  osu {
             contrib feature_contribution(std::vector<double> &instance) const;
 
             std::map<int, double> explanation(std::vector<double> &instance) const;
-           // std::vector<int> allUsedAttributes(); TODO: Return all used attributes in a tree.
+           
 #ifdef SERIALIZATION
             // Serialization
             template<class Archive>
@@ -94,7 +95,7 @@ namespace  osu {
                         cereal::make_nvp("left_child_",left_child_),cereal::make_nvp("right_child_",right_child_)
 
                 );*/
-                archive(node_size_, depth_,
+                archive(node_size_, depth_, random_norm,
                         splitting_attribute_, splitting_point_,
                         min_attribute_val_, max_attribute_val_, left_child_, right_child_
 

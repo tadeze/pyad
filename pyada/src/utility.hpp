@@ -44,7 +44,7 @@ struct Dataset {
 			std::cout << elem << "\t";
 	}
 };
-
+double rand_norm(double mn, double sd);
 int rand_int(int min, int max);
 
 int random_exclude(int min, int max, std::set<int> &exlude);

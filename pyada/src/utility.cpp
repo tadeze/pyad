@@ -27,6 +27,10 @@ int osu::ad::util::random_exclude(int min, int max, std::set<int> &exlude) {
 	return exlude.find(num) != exlude.end() ? random_exclude(min, max, exlude) : num;
 
 }
+double osu::ad::util::rand_norm(double mn=0, double sd=1){
+	std::normal_distribution<> d(mn, sd);
+	return d(gen);
+}
 
 void osu::ad::util::sample_int(int min, int max, int nsample, std::vector<int> &samples) {
 	int count = 0;
