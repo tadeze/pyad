@@ -25,7 +25,7 @@ From pypi
 ```python
 import numpy as np 
 import sklearn.metrics as mt 
-import pyad  
+import pyada
 #%%
 # data 
 N, D = 400, 5
@@ -34,10 +34,10 @@ w_score = w.copy()
 
 # Train anomlay detector
 # LODA
-loda = pyad.Loda()
+loda = pyada.Loda()
 loda.train(w)
 # IForest
-iforest = pyad.IsolationForest()
+iforest = pyada.IsolationForest()
 iforest.train(w)
 
 # Add anomalies 
@@ -55,6 +55,7 @@ print("AUC(loda): {}, AUC(iForest): {}".format(mt.roc_auc_score(label, loda_scor
 mt.roc_auc_score(label, iforest_score)))
 ```
 ### cite 
+
 ```
 @article{dietterich2018anomaly,
   title={Anomaly Detection in the Presence of Missing Values},

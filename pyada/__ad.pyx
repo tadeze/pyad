@@ -1,18 +1,8 @@
-"""
-@Author: Tadesse Zemicheal
-
-"""
-#__all__ = ['IsolationForest','IsolationTree', 'IForest', 'RotationForest']
-
 from collections import defaultdict
 cimport numpy as np
 import numpy as np
 import pickle
 from .ad cimport *
-#NA = -9999.0
-
-
-
 
 cdef class IsolationForest:
     
@@ -530,7 +520,6 @@ class RotationForest(object):
         return pickle.load(open(model_name, "r"))
 
 
-# Error flags
 class DataValidator(object):
     def __init__(self):
         self.FOREST_NOT_TRAINED = 1

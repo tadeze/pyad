@@ -219,7 +219,7 @@ cdef numpy.ndarray pdf_hist_w(numpy.ndarray x, int n, HistogramR h, double minpd
     return pd
 
 
-cpdef pdf_hist(x, HistogramR h, double minpdf=1e-8):
+cdef pdf_hist(x, HistogramR h, double minpdf=1e-8):
 
     #pdf_hist(x, h.breaks, h.density, minpdf)
 
@@ -256,10 +256,10 @@ cdef all_hist_pdfs_miss(numpy.ndarray a, list hists, numpy.ndarray w, int n):
     return hpdfs
 
 
-cpdef numpy.ndarray cy_get_all_hist_pdfs_miss(numpy.ndarray a, numpy.ndarray w, list hists):
+cdef numpy.ndarray cy_get_all_hist_pdfs_miss(numpy.ndarray a, numpy.ndarray w, list hists):
     cdef int  a_c = a.shape[0], hist_len = len(hists)
     # x = a.dot(w)
-    cpdef numpy.ndarray hpdfs = np.zeros(shape=(len(a), len(hists)), dtype=float)
+    cdef numpy.ndarray hpdfs = np.zeros(shape=(len(a), len(hists)), dtype=float)
     cdef numpy.ndarray x
     cdef numpy.ndarray miss_column
     for i in range(0, a_c):
